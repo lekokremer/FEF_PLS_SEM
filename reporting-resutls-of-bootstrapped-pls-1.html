@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4.4 Reporting resutls of bootstrapped PLS | PLS-SEM FEF model exploration and iterations</title>
+  <meta name="description" content="4.4 Reporting resutls of bootstrapped PLS | PLS-SEM FEF model exploration and iterations" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4.4 Reporting resutls of bootstrapped PLS | PLS-SEM FEF model exploration and iterations" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4.4 Reporting resutls of bootstrapped PLS | PLS-SEM FEF model exploration and iterations" />
+  
+  
+  
+
+<meta name="author" content="Lauren Kremer" />
+
+
+<meta name="date" content="2024-10-27" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="bootstrapping-for-significance-1.html"/>
+
+<script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="assets/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="assets/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="assets/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="assets/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="assets/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="assets/viz-1.8.2/viz.js"></script>
+<link href="assets/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="assets/grViz-binding-1.0.11/grViz.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="about.html"><a href="about.html"><i class="fa fa-check"></i><b>1.1</b> About</a></li>
+<li class="chapter" data-level="1.2" data-path="usage.html"><a href="usage.html"><i class="fa fa-check"></i><b>1.2</b> Usage</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="partial-least-squares-structural-equation-modeling-pls-sem.html"><a href="partial-least-squares-structural-equation-modeling-pls-sem.html"><i class="fa fa-check"></i><b>2</b> Partial least squares – Structural Equation Modeling (PLS-SEM)</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="building-the-path-model.html"><a href="building-the-path-model.html"><i class="fa fa-check"></i><b>2.1</b> Building the path model</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="building-the-path-model.html"><a href="building-the-path-model.html#path-diagram-of-our-model-with-tested-indicators"><i class="fa fa-check"></i><b>2.1.1</b> Path diagram of our model with tested indicators</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="data-managment-transformation.html"><a href="data-managment-transformation.html"><i class="fa fa-check"></i><b>2.2</b> Data managment / transformation</a></li>
+<li class="chapter" data-level="2.3" data-path="reporting-initial-results-and-evaluating-the-quality-of-reflective-measurement-models.html"><a href="reporting-initial-results-and-evaluating-the-quality-of-reflective-measurement-models.html"><i class="fa fa-check"></i><b>2.3</b> Reporting initial results and evaluating the quality of reflective measurement models</a></li>
+<li class="chapter" data-level="2.4" data-path="bootstrapping-for-significance.html"><a href="bootstrapping-for-significance.html"><i class="fa fa-check"></i><b>2.4</b> Bootstrapping for significance</a></li>
+<li class="chapter" data-level="2.5" data-path="reporting-resutls-of-bootstrapped-pls.html"><a href="reporting-resutls-of-bootstrapped-pls.html"><i class="fa fa-check"></i><b>2.5</b> Reporting resutls of bootstrapped PLS</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="addition-of-precipitation-and-runoff-data.html"><a href="addition-of-precipitation-and-runoff-data.html"><i class="fa fa-check"></i><b>3</b> Addition of precipitation and runoff data</a></li>
+<li class="chapter" data-level="4" data-path="testing-iterations-of-the-pls-sem-fef-model.html"><a href="testing-iterations-of-the-pls-sem-fef-model.html"><i class="fa fa-check"></i><b>4</b> Testing iterations of the PLS-SEM FEF model</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="data-managment-transformation-1.html"><a href="data-managment-transformation-1.html"><i class="fa fa-check"></i><b>4.1</b> Data managment / transformation</a></li>
+<li class="chapter" data-level="4.2" data-path="reporting-initial-results-and-evaluating-the-quality-of-reflective-measurement-models-1.html"><a href="reporting-initial-results-and-evaluating-the-quality-of-reflective-measurement-models-1.html"><i class="fa fa-check"></i><b>4.2</b> Reporting initial results and evaluating the quality of reflective measurement models</a></li>
+<li class="chapter" data-level="4.3" data-path="bootstrapping-for-significance-1.html"><a href="bootstrapping-for-significance-1.html"><i class="fa fa-check"></i><b>4.3</b> Bootstrapping for significance</a></li>
+<li class="chapter" data-level="4.4" data-path="reporting-resutls-of-bootstrapped-pls-1.html"><a href="reporting-resutls-of-bootstrapped-pls-1.html"><i class="fa fa-check"></i><b>4.4</b> Reporting resutls of bootstrapped PLS</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">PLS-SEM FEF model exploration and iterations</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="reporting-resutls-of-bootstrapped-pls-1" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Reporting resutls of bootstrapped PLS<a href="reporting-resutls-of-bootstrapped-pls-1.html#reporting-resutls-of-bootstrapped-pls-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="reporting-resutls-of-bootstrapped-pls-1.html#cb16-1" tabindex="-1"></a><span class="co"># Extract the bootstrapped HTMT</span></span>
+<span id="cb16-2"><a href="reporting-resutls-of-bootstrapped-pls-1.html#cb16-2" tabindex="-1"></a>sum_boot_fef <span class="ot">&lt;-</span> <span class="fu">summary</span>(boot_simple_fef, <span class="at">alpha=</span> <span class="fl">0.10</span>)</span>
+<span id="cb16-3"><a href="reporting-resutls-of-bootstrapped-pls-1.html#cb16-3" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="reporting-resutls-of-bootstrapped-pls-1.html#cb16-4" tabindex="-1"></a>sum_boot_fef<span class="sc">$</span>bootstrapped_HTMT</span></code></pre></div>
+<pre><code>##                      Original Est. Bootstrap Mean Bootstrap SD T Stat. 5% CI
+## TOPO  -&gt;  LANDCOVER          0.817          0.816        0.048  17.133 0.727
+## TOPO  -&gt;  HYDRO              0.265          0.267        0.079   3.340 0.140
+## TOPO  -&gt;  DOC                0.053          0.097        0.054   0.982 0.029
+## LANDCOVER  -&gt;  HYDRO         0.493          0.490        0.137   3.592 0.255
+## LANDCOVER  -&gt;  DOC           0.048          0.079        0.049   0.990 0.020
+## HYDRO  -&gt;  DOC               0.013          0.046        0.036   0.364 0.004
+##                      95% CI
+## TOPO  -&gt;  LANDCOVER   0.887
+## TOPO  -&gt;  HYDRO       0.395
+## TOPO  -&gt;  DOC         0.195
+## LANDCOVER  -&gt;  HYDRO  0.702
+## LANDCOVER  -&gt;  DOC    0.173
+## HYDRO  -&gt;  DOC        0.113</code></pre>
+<p>This gives us the confidence intervals of the HTMT ratio. Again, our bootstrapped HTMT ratio indicating the high correlation between topography and landcover.</p>
+<p>The bootstrapping procedure yields t-values for the indicator weights (and other model parameters). We need to compare these t-values with the critical values from the standard normal distribution to decide whether the coefficients are significantly different from zero. Assuming a significance level of 5%, a t-value above 1.96 (two-tailed test) suggests that the indicator weight is statistically significant.</p>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-4ef2ee02d00782e8b394" style="width:960px;height:384px;"></div>
+<script type="application/json" data-for="htmlwidget-4ef2ee02d00782e8b394">{"x":{"diagram":"digraph G {\n\n// ----------------------\n// General graph settings\n// ----------------------\ngraph [\ncharset = \"UTF-8\",\nlayout = dot,\nlabel = \"Bootstrapped Model\",\nfontsize = 24,\nfontcolor = black,\nfontname = helvetica,\nrankdir = LR,\nlabelloc = t,\nsplines = TRUE\nbgcolor = transparent\n]\n\n// --------------------\n// The structural model\n// --------------------\nsubgraph sm {\nrankdir = LR;\nnode [\nshape = ellipse,\ncolor = black,\nfillcolor = white,\nstyle = filled,\nfontsize = 12,\nfontcolor = black,\nheight = 0.919303385416667,\nwidth = 0.918636067708333,\nfontname = helvetica,\nfixedsize = true\n]\n\"TOPO\" [label=<<B>TOPO <\/B>>, shape = hexagon]\n\"LANDCOVER\" [label=<<B>LANDCOVER <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.576<\/FONT>>, shape = hexagon]\n\"HYDRO\" [label=<<B>HYDRO <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.216<\/FONT>>, shape = hexagon]\n\"DOC\" [label=<<B>DOC <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.002<\/FONT>>, shape = hexagon]\nedge [\ncolor = black,\nfontsize = 9,\nfontcolor = black,\nfontname = helvetica,\ndir = both,\narrowhead = normal,\narrowtail = none\n]\n\"TOPO\" -> {\"HYDRO\"}[weight = 1, label = < 𝛽 = 0.154<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.091, 0.436]   <\/FONT> >, penwidth = 1.27, style = solid, color = black]\n\"TOPO\" -> {\"LANDCOVER\"}[weight = 1, label = < 𝛽 = 0.759***<BR /><FONT POINT-SIZE=\"7\">95% CI [0.68, 0.823]   <\/FONT> >, penwidth = 4.295, style = solid, color = black]\n\"TOPO\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = 0.009<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.246, 0.366]   <\/FONT> >, penwidth = 0.545, style = solid, color = black]\n\"LANDCOVER\" -> {\"HYDRO\"}[weight = 1, label = < 𝛽 = -0.571**<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.966, -0.172]   <\/FONT> >, penwidth = 3.355, style = dashed, color = black]\n\"LANDCOVER\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = -0.058<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.357, 0.185]   <\/FONT> >, penwidth = 0.79, style = dashed, color = black]\n\"HYDRO\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = -0.011<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.138, 0.138]   <\/FONT> >, penwidth = 0.555, style = dashed, color = black]\n}\n// ---------------------\n// The measurement model\n// ---------------------\n\nsubgraph construct_1 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"topo_1\" [label = \"topo_1\", shape = box]\n\"topo_2\" [label = \"topo_2\", shape = box]\n\"topo_3\" [label = \"topo_3\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"topo_1\" -> {\"TOPO\"}[weight = 1000, label = < 𝜆 = 0.893*** >, penwidth = 3.179, style = solid, color = dimgrey]\n\"topo_2\" -> {\"TOPO\"}[weight = 1000, label = < 𝜆 = 0.951*** >, penwidth = 3.353, style = solid, color = dimgrey]\n\"topo_3\" -> {\"TOPO\"}[weight = 1000, label = < 𝜆 = 0.903*** >, penwidth = 3.209, style = solid, color = dimgrey]\n\n}\nsubgraph construct_2 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"landcover_1\" [label = \"landcover_1\", shape = box]\n\"landcover_2\" [label = \"landcover_2\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"landcover_1\" -> {\"LANDCOVER\"}[weight = 1000, label = < 𝜆 = 0.947*** >, penwidth = 3.341, style = solid, color = dimgrey]\n\"landcover_2\" -> {\"LANDCOVER\"}[weight = 1000, label = < 𝜆 = 0.93*** >, penwidth = 3.29, style = solid, color = dimgrey]\n\n}\nsubgraph construct_3 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"hydro_1\" [label = \"hydro_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"hydro_1\" -> {\"HYDRO\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_4 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"doc_1\" [label = \"doc_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = normal\narrowtail = none\n]\n\"DOC\" -> {\"doc_1\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<p>Interpretation:
+As an example between Landcover and DOC B = -0.068: This is the standardized path coefficient between the two latent variables. A negative value (-0.068) indicates a weak negative relationship, meaning that as one variable increases slightly, the other decreases slightly, though the effect is minimal here.
+95% CI [-0.332, 0.261]: This is the 95% confidence interval for the beta value, giving a range within which the true beta value is likely to fall, with 95% confidence. Since this interval includes zero (spanning from -0.332 to 0.261), the effect could be statistically insignificant.
+So, in this current configuration, the standardized path coefficients between TOPO and LANDCOVER are significant and TOPO and DOC are significant (as our TOPO indicator variables increase, the fragment of DOC that is protein-like increases), but as the model is organized now, the effect of Landcover and hydrology are minimal and not significant.</p>
+
+</div>
+<!-- </div> -->
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="bootstrapping-for-significance-1.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+},
+"toolbar": {
+"position": "static"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

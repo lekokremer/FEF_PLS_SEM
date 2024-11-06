@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3 PLS-SEM Guide Demo | PLS_SEM_FEF_alongside_demo</title>
+  <meta name="description" content="3 PLS-SEM Guide Demo | PLS_SEM_FEF_alongside_demo" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3 PLS-SEM Guide Demo | PLS_SEM_FEF_alongside_demo" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3 PLS-SEM Guide Demo | PLS_SEM_FEF_alongside_demo" />
+  
+  
+  
+
+<meta name="author" content="Lauren Kremer" />
+
+
+<meta name="date" content="2024-10-27" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="reporting-resutls-of-bootstrapped-pls.html"/>
+
+<script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="assets/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="assets/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="assets/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="assets/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="assets/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="assets/viz-1.8.2/viz.js"></script>
+<link href="assets/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="assets/grViz-binding-1.0.11/grViz.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="about.html"><a href="about.html"><i class="fa fa-check"></i><b>1.1</b> About</a></li>
+<li class="chapter" data-level="1.2" data-path="usage.html"><a href="usage.html"><i class="fa fa-check"></i><b>1.2</b> Usage</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="partial-least-squares-structural-equation-modeling-pls-sem.html"><a href="partial-least-squares-structural-equation-modeling-pls-sem.html"><i class="fa fa-check"></i><b>2</b> Partial least squares – Structural Equation Modeling (PLS-SEM)</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="building-the-path-model.html"><a href="building-the-path-model.html"><i class="fa fa-check"></i><b>2.1</b> Building the path model</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="building-the-path-model.html"><a href="building-the-path-model.html#path-diagram-of-our-model-with-tested-indicators"><i class="fa fa-check"></i><b>2.1.1</b> Path diagram of our model with tested indicators</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="data-managment-transformation.html"><a href="data-managment-transformation.html"><i class="fa fa-check"></i><b>2.2</b> Data managment / transformation</a></li>
+<li class="chapter" data-level="2.3" data-path="reporting-initial-results-and-evaluating-the-quality-of-reflective-measurement-models.html"><a href="reporting-initial-results-and-evaluating-the-quality-of-reflective-measurement-models.html"><i class="fa fa-check"></i><b>2.3</b> Reporting initial results and evaluating the quality of reflective measurement models</a></li>
+<li class="chapter" data-level="2.4" data-path="bootstrapping-for-significance.html"><a href="bootstrapping-for-significance.html"><i class="fa fa-check"></i><b>2.4</b> Bootstrapping for significance</a></li>
+<li class="chapter" data-level="2.5" data-path="reporting-resutls-of-bootstrapped-pls.html"><a href="reporting-resutls-of-bootstrapped-pls.html"><i class="fa fa-check"></i><b>2.5</b> Reporting resutls of bootstrapped PLS</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="pls-sem-guide-demo.html"><a href="pls-sem-guide-demo.html"><i class="fa fa-check"></i><b>3</b> PLS-SEM Guide Demo</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">PLS_SEM_FEF_alongside_demo</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="pls-sem-guide-demo" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">3</span> PLS-SEM Guide Demo<a href="pls-sem-guide-demo.html#pls-sem-guide-demo" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="pls-sem-guide-demo.html#cb10-1" tabindex="-1"></a><span class="fu">data</span>(corp_rep_data)</span>
+<span id="cb10-2"><a href="pls-sem-guide-demo.html#cb10-2" tabindex="-1"></a><span class="fu">head</span>(corp_rep_data)</span></code></pre></div>
+<pre><code>##   serviceprovider servicetype csor_1 csor_2 csor_3 csor_4 csor_5 csor_global attr_1 attr_2
+## 1               3           2      3      3      3      3      3           3      5      1
+## 2               3           2      2      5      6      4      6           6      6      6
+## 3               3           2      3      1      2      2      4           4      5      6
+## 4               3           2      3      3      5      3      5           5      3      7
+## 5               3           2      4      3      4      4      4           4      6      6
+## 6               3           2      3      3      4      3      3           4      4      1
+##   attr_3 attr_global perf_1 perf_2 perf_3 perf_4 perf_5 perf_global qual_1 qual_2 qual_3
+## 1      3           5      5      4      2      5      6           6      5      6      4
+## 2      6           6      6      6      6      6      6           6      6      6      6
+## 3      5           6      4      4      2      5      4           5      3      4      3
+## 4      5           7      5      5      5      3      6           6      5      6      6
+## 5      6           6      5      6      7      6      5           7      6      5      7
+## 6      5           5      6      6      4      5      6           6      5      5      5
+##   qual_4 qual_5 qual_6 qual_7 qual_8 qual_global like_1 like_2 like_3 comp_1 comp_2 comp_3
+## 1      2      4      4      2      5           6      3      1      2      4      5      5
+## 2      6      5      6      6      5           6      6      6      6      6      7      6
+## 3      4      3      5      4      4           5      5      5      5      4      5      2
+## 4      7      5      4      5      6           7      6      5      6      6      4      4
+## 5      7      6      6      6      7           7      6      6      7      6      4      6
+## 6      6      5      6      3      4           6      6      7      7      3      4      4
+##   cusl_1 cusl_2 cusl_3 cusa age education occupation nphh sample_type mga_1 mga_2 mga_3
+## 1      5      3      3    5   2         3         11    5           1     2     1     1
+## 2      7      7      7    7   6         3        -99    2           1     2     1     1
+## 3      7      7      5    6   2         3         11    2           1     2     1     1
+## 4      7      7      7    6   3         4         11    1           1     2     1     1
+## 5      6      7      7    6   2         2         12    5           1     2     1     1
+## 6      7      7      7    6   2         2         11    1           1     2     1     1
+##   mga_4 switch_1 switch_2 switch_3 switch_4
+## 1     1        3        1        3        2
+## 2     1        5        5        4        4
+## 3     1        4        3        2        3
+## 4     1        3        4        4        2
+## 5     1        5        5        5        4
+## 6     1        5        2        4        4</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="pls-sem-guide-demo.html#cb12-1" tabindex="-1"></a><span class="fu">str</span>(corp_rep_data)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    344 obs. of  50 variables:
+##  $ serviceprovider: int  3 3 3 3 3 3 1 1 3 3 ...
+##  $ servicetype    : int  2 2 2 2 2 2 1 1 1 2 ...
+##  $ csor_1         : int  3 2 3 3 4 3 7 4 7 4 ...
+##  $ csor_2         : int  3 5 1 3 3 3 5 1 5 1 ...
+##  $ csor_3         : int  3 6 2 5 4 4 7 3 6 5 ...
+##  $ csor_4         : int  3 4 2 3 4 3 3 3 4 2 ...
+##  $ csor_5         : int  3 6 4 5 4 3 3 2 6 4 ...
+##  $ csor_global    : int  3 6 4 5 4 4 7 4 7 5 ...
+##  $ attr_1         : int  5 6 5 3 6 4 5 4 6 5 ...
+##  $ attr_2         : int  1 6 6 7 6 1 7 1 3 1 ...
+##  $ attr_3         : int  3 6 5 5 6 5 3 5 7 6 ...
+##  $ attr_global    : int  5 6 6 7 6 5 7 5 7 6 ...
+##  $ perf_1         : int  5 6 4 5 5 6 4 5 7 6 ...
+##  $ perf_2         : int  4 6 4 5 6 6 7 6 7 5 ...
+##  $ perf_3         : int  2 6 2 5 7 4 6 6 4 4 ...
+##  $ perf_4         : int  5 6 5 3 6 5 5 4 6 6 ...
+##  $ perf_5         : int  6 6 4 6 5 6 4 7 7 5 ...
+##  $ perf_global    : int  6 6 5 6 7 6 7 7 7 6 ...
+##  $ qual_1         : int  5 6 3 5 6 5 5 6 7 6 ...
+##  $ qual_2         : int  6 6 4 6 5 5 5 3 7 6 ...
+##  $ qual_3         : int  4 6 3 6 7 5 6 2 6 5 ...
+##  $ qual_4         : int  2 6 4 7 7 6 4 1 7 6 ...
+##  $ qual_5         : int  4 5 3 5 6 5 7 6 6 7 ...
+##  $ qual_6         : int  4 6 5 4 6 6 7 5 7 7 ...
+##  $ qual_7         : int  2 6 4 5 6 3 4 1 6 4 ...
+##  $ qual_8         : int  5 5 4 6 7 4 4 5 7 7 ...
+##  $ qual_global    : int  6 6 5 7 7 6 7 6 7 7 ...
+##  $ like_1         : int  3 6 5 6 6 6 4 4 7 6 ...
+##  $ like_2         : int  1 6 5 5 6 7 1 3 5 6 ...
+##  $ like_3         : int  2 6 5 6 7 7 7 4 7 6 ...
+##  $ comp_1         : int  4 6 4 6 6 3 7 6 5 6 ...
+##  $ comp_2         : int  5 7 5 4 4 4 5 6 7 5 ...
+##  $ comp_3         : int  5 6 2 4 6 4 7 6 6 5 ...
+##  $ cusl_1         : int  5 7 7 7 6 7 7 5 5 6 ...
+##  $ cusl_2         : int  3 7 7 7 7 7 7 4 7 6 ...
+##  $ cusl_3         : int  3 7 5 7 7 7 7 6 7 7 ...
+##  $ cusa           : int  5 7 6 6 6 6 7 4 6 6 ...
+##  $ age            : int  2 6 2 3 2 2 1 5 1 3 ...
+##  $ education      : int  3 3 3 4 2 2 2 2 1 2 ...
+##  $ occupation     : int  11 -99 11 11 12 11 11 3 11 2 ...
+##  $ nphh           : int  5 2 2 1 5 1 3 3 4 2 ...
+##  $ sample_type    : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ mga_1          : int  2 2 2 2 2 2 1 1 1 2 ...
+##  $ mga_2          : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ mga_3          : int  1 1 1 1 1 1 2 2 1 1 ...
+##  $ mga_4          : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ switch_1       : int  3 5 4 3 5 5 5 4 5 5 ...
+##  $ switch_2       : int  1 5 3 4 5 2 3 1 5 3 ...
+##  $ switch_3       : int  3 4 2 4 5 4 5 5 5 5 ...
+##  $ switch_4       : int  2 4 3 2 4 4 4 3 4 4 ...</code></pre>
+<p>A dataframe of all integers</p>
+<p>Specifying the measurement models (or outer models)-
+SEMinR uses the constructs() function to specify the list of all construct measurement models. Within this list, we can then define various constructs:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="pls-sem-guide-demo.html#cb14-1" tabindex="-1"></a><span class="co"># Create measurement model. compiles the list of constructs and their respective</span></span>
+<span id="cb14-2"><a href="pls-sem-guide-demo.html#cb14-2" tabindex="-1"></a><span class="co">#measurement model definitions. We must supply it with any number of individual</span></span>
+<span id="cb14-3"><a href="pls-sem-guide-demo.html#cb14-3" tabindex="-1"></a><span class="co">#composite(), interaction_term(), or higher_composite()</span></span>
+<span id="cb14-4"><a href="pls-sem-guide-demo.html#cb14-4" tabindex="-1"></a><span class="co">#constructs using their respective functions. Note that neither a dataset nor a structural</span></span>
+<span id="cb14-5"><a href="pls-sem-guide-demo.html#cb14-5" tabindex="-1"></a><span class="co">#model is specified in the measurement model stage, so we can reuse the measurement</span></span>
+<span id="cb14-6"><a href="pls-sem-guide-demo.html#cb14-6" tabindex="-1"></a><span class="co">#model object across different datasets and structural models.</span></span>
+<span id="cb14-7"><a href="pls-sem-guide-demo.html#cb14-7" tabindex="-1"></a></span>
+<span id="cb14-8"><a href="pls-sem-guide-demo.html#cb14-8" tabindex="-1"></a>simple_mm <span class="ot">&lt;-</span> <span class="fu">constructs</span>(</span>
+<span id="cb14-9"><a href="pls-sem-guide-demo.html#cb14-9" tabindex="-1"></a><span class="fu">composite</span>(<span class="st">&quot;COMP&quot;</span>, <span class="fu">multi_items</span>(<span class="st">&quot;comp_&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)),</span>
+<span id="cb14-10"><a href="pls-sem-guide-demo.html#cb14-10" tabindex="-1"></a><span class="fu">composite</span>(<span class="st">&quot;LIKE&quot;</span>, <span class="fu">multi_items</span>(<span class="st">&quot;like_&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)),</span>
+<span id="cb14-11"><a href="pls-sem-guide-demo.html#cb14-11" tabindex="-1"></a><span class="fu">composite</span>(<span class="st">&quot;CUSA&quot;</span>, <span class="fu">single_item</span>(<span class="st">&quot;cusa&quot;</span>)),</span>
+<span id="cb14-12"><a href="pls-sem-guide-demo.html#cb14-12" tabindex="-1"></a><span class="fu">composite</span>(<span class="st">&quot;CUSL&quot;</span>, <span class="fu">multi_items</span>(<span class="st">&quot;cusl_&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)))</span></code></pre></div>
+<p>Corresponding path model is on page 52</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="pls-sem-guide-demo.html#cb15-1" tabindex="-1"></a><span class="co"># Create structural model</span></span>
+<span id="cb15-2"><a href="pls-sem-guide-demo.html#cb15-2" tabindex="-1"></a>simple_sm <span class="ot">&lt;-</span> <span class="fu">relationships</span>(</span>
+<span id="cb15-3"><a href="pls-sem-guide-demo.html#cb15-3" tabindex="-1"></a><span class="fu">paths</span>(<span class="at">from =</span> <span class="fu">c</span>(<span class="st">&quot;COMP&quot;</span>, <span class="st">&quot;LIKE&quot;</span>), <span class="at">to =</span> <span class="fu">c</span>(<span class="st">&quot;CUSA&quot;</span>, <span class="st">&quot;CUSL&quot;</span>)),</span>
+<span id="cb15-4"><a href="pls-sem-guide-demo.html#cb15-4" tabindex="-1"></a><span class="fu">paths</span>(<span class="at">from =</span> <span class="fu">c</span>(<span class="st">&quot;CUSA&quot;</span>), <span class="at">to =</span> <span class="fu">c</span>(<span class="st">&quot;CUSL&quot;</span>)))</span></code></pre></div>
+
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="pls-sem-guide-demo.html#cb16-1" tabindex="-1"></a><span class="co"># Move up one directory from the current working directory</span></span>
+<span id="cb16-2"><a href="pls-sem-guide-demo.html#cb16-2" tabindex="-1"></a>file <span class="ot">&lt;-</span> <span class="fu">normalizePath</span>(<span class="fu">file.path</span>(<span class="fu">getwd</span>(), <span class="st">&quot;/datafiles/fluoro_vege_manually_corrected.csv&quot;</span>))</span>
+<span id="cb16-3"><a href="pls-sem-guide-demo.html#cb16-3" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="pls-sem-guide-demo.html#cb16-4" tabindex="-1"></a><span class="co"># Read the CSV file</span></span>
+<span id="cb16-5"><a href="pls-sem-guide-demo.html#cb16-5" tabindex="-1"></a>sample_vege_fluro_topo <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(file) <span class="sc">%&gt;%</span></span>
+<span id="cb16-6"><a href="pls-sem-guide-demo.html#cb16-6" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span> <span class="fu">c</span>(shapefile_x, shapefile_y, shapefile, datetime))<span class="sc">%&gt;%</span></span>
+<span id="cb16-7"><a href="pls-sem-guide-demo.html#cb16-7" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">mdy</span>(date))  <span class="co"># Create a new date column</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="pls-sem-guide-demo.html#cb17-1" tabindex="-1"></a><span class="co"># import runoff and SWE data:</span></span>
+<span id="cb17-2"><a href="pls-sem-guide-demo.html#cb17-2" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="pls-sem-guide-demo.html#cb17-3" tabindex="-1"></a><span class="co"># Load data from the input files</span></span>
+<span id="cb17-4"><a href="pls-sem-guide-demo.html#cb17-4" tabindex="-1"></a>inputs_dh1_2021 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;datafiles/inputsim_dh1_2021.csv&quot;</span>)</span>
+<span id="cb17-5"><a href="pls-sem-guide-demo.html#cb17-5" tabindex="-1"></a>inputs_dh1_2022 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;datafiles/inputsim_dh1_2022.csv&quot;</span>)</span>
+<span id="cb17-6"><a href="pls-sem-guide-demo.html#cb17-6" tabindex="-1"></a>fool_input_2021 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;datafiles/fool_input_2021.csv&quot;</span>)</span>
+<span id="cb17-7"><a href="pls-sem-guide-demo.html#cb17-7" tabindex="-1"></a>fool_input_2022 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">&quot;datafiles/fool_input_2022.csv&quot;</span>)</span>
+<span id="cb17-8"><a href="pls-sem-guide-demo.html#cb17-8" tabindex="-1"></a></span>
+<span id="cb17-9"><a href="pls-sem-guide-demo.html#cb17-9" tabindex="-1"></a><span class="co"># Combine the &#39;inputs_dh1&#39; files (for &#39;dh&#39; and &#39;lexen&#39; watersheds)</span></span>
+<span id="cb17-10"><a href="pls-sem-guide-demo.html#cb17-10" tabindex="-1"></a>dh_input_combined <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(inputs_dh1_2021, inputs_dh1_2022) <span class="sc">%&gt;%</span></span>
+<span id="cb17-11"><a href="pls-sem-guide-demo.html#cb17-11" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">watershed =</span> <span class="st">&quot;dh&quot;</span>,</span>
+<span id="cb17-12"><a href="pls-sem-guide-demo.html#cb17-12" tabindex="-1"></a>         <span class="at">date =</span> <span class="fu">mdy</span>(date))</span>
+<span id="cb17-13"><a href="pls-sem-guide-demo.html#cb17-13" tabindex="-1"></a></span>
+<span id="cb17-14"><a href="pls-sem-guide-demo.html#cb17-14" tabindex="-1"></a><span class="co"># Combine the &#39;fool_input&#39; files (for &#39;fc&#39; watershed)</span></span>
+<span id="cb17-15"><a href="pls-sem-guide-demo.html#cb17-15" tabindex="-1"></a>fool_input_combined <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(fool_input_2021, fool_input_2022) <span class="sc">%&gt;%</span></span>
+<span id="cb17-16"><a href="pls-sem-guide-demo.html#cb17-16" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">watershed =</span> <span class="st">&quot;fc&quot;</span>,</span>
+<span id="cb17-17"><a href="pls-sem-guide-demo.html#cb17-17" tabindex="-1"></a>         <span class="at">date =</span> <span class="fu">ymd</span>(date))</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="pls-sem-guide-demo.html#cb18-1" tabindex="-1"></a><span class="co"># For inputs_dh_combined</span></span>
+<span id="cb18-2"><a href="pls-sem-guide-demo.html#cb18-2" tabindex="-1"></a>dh_input_combined <span class="ot">&lt;-</span> dh_input_combined <span class="sc">%&gt;%</span></span>
+<span id="cb18-3"><a href="pls-sem-guide-demo.html#cb18-3" tabindex="-1"></a>  <span class="fu">arrange</span>(date) <span class="sc">%&gt;%</span></span>
+<span id="cb18-4"><a href="pls-sem-guide-demo.html#cb18-4" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb18-5"><a href="pls-sem-guide-demo.html#cb18-5" tabindex="-1"></a>    <span class="at">snowpack_3day_avg =</span> <span class="fu">rollapply</span>(SWE.mm, <span class="dv">3</span>, mean, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">align =</span> <span class="st">&quot;right&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb18-6"><a href="pls-sem-guide-demo.html#cb18-6" tabindex="-1"></a>                        <span class="fu">round</span>(<span class="at">digits =</span> <span class="dv">2</span>),  <span class="co"># Adjust digits as needed</span></span>
+<span id="cb18-7"><a href="pls-sem-guide-demo.html#cb18-7" tabindex="-1"></a>    <span class="at">melt_snow_interact =</span> Input.mm <span class="sc">*</span> SWE.mm</span>
+<span id="cb18-8"><a href="pls-sem-guide-demo.html#cb18-8" tabindex="-1"></a>  )</span>
+<span id="cb18-9"><a href="pls-sem-guide-demo.html#cb18-9" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="pls-sem-guide-demo.html#cb18-10" tabindex="-1"></a><span class="co"># For fool_input_combined</span></span>
+<span id="cb18-11"><a href="pls-sem-guide-demo.html#cb18-11" tabindex="-1"></a>fool_input_combined <span class="ot">&lt;-</span> fool_input_combined <span class="sc">%&gt;%</span></span>
+<span id="cb18-12"><a href="pls-sem-guide-demo.html#cb18-12" tabindex="-1"></a>  <span class="fu">arrange</span>(date) <span class="sc">%&gt;%</span></span>
+<span id="cb18-13"><a href="pls-sem-guide-demo.html#cb18-13" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb18-14"><a href="pls-sem-guide-demo.html#cb18-14" tabindex="-1"></a>    <span class="at">snowpack_3day_avg =</span> <span class="fu">rollapply</span>(SWE.mm, <span class="dv">3</span>, mean, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">align =</span> <span class="st">&quot;right&quot;</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb18-15"><a href="pls-sem-guide-demo.html#cb18-15" tabindex="-1"></a>                        <span class="fu">round</span>(<span class="at">digits =</span><span class="dv">2</span>),</span>
+<span id="cb18-16"><a href="pls-sem-guide-demo.html#cb18-16" tabindex="-1"></a>    <span class="at">melt_snow_interact =</span> runoff_input <span class="sc">*</span> SWE.mm</span>
+<span id="cb18-17"><a href="pls-sem-guide-demo.html#cb18-17" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="pls-sem-guide-demo.html#cb19-1" tabindex="-1"></a>sample_fc <span class="ot">&lt;-</span> sample_vege_fluro_topo <span class="sc">%&gt;%</span></span>
+<span id="cb19-2"><a href="pls-sem-guide-demo.html#cb19-2" tabindex="-1"></a>  <span class="fu">filter</span>(watershed <span class="sc">==</span> <span class="st">&quot;fc&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb19-3"><a href="pls-sem-guide-demo.html#cb19-3" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
+<span id="cb19-4"><a href="pls-sem-guide-demo.html#cb19-4" tabindex="-1"></a>    fool_input_combined <span class="sc">%&gt;%</span></span>
+<span id="cb19-5"><a href="pls-sem-guide-demo.html#cb19-5" tabindex="-1"></a>      <span class="fu">rename</span>(<span class="at">Input.mm =</span> runoff_input) <span class="sc">%&gt;%</span>  <span class="co"># Rename before selecting and joining</span></span>
+<span id="cb19-6"><a href="pls-sem-guide-demo.html#cb19-6" tabindex="-1"></a>      <span class="fu">select</span>(date, watershed, Input.mm, snowpack_3day_avg, melt_snow_interact),</span>
+<span id="cb19-7"><a href="pls-sem-guide-demo.html#cb19-7" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;date&quot;</span>, <span class="st">&quot;watershed&quot;</span>)</span>
+<span id="cb19-8"><a href="pls-sem-guide-demo.html#cb19-8" tabindex="-1"></a>  )</span>
+<span id="cb19-9"><a href="pls-sem-guide-demo.html#cb19-9" tabindex="-1"></a></span>
+<span id="cb19-10"><a href="pls-sem-guide-demo.html#cb19-10" tabindex="-1"></a></span>
+<span id="cb19-11"><a href="pls-sem-guide-demo.html#cb19-11" tabindex="-1"></a><span class="co"># Join for the &#39;dh&#39; watersheds (including &#39;lexen&#39;)</span></span>
+<span id="cb19-12"><a href="pls-sem-guide-demo.html#cb19-12" tabindex="-1"></a>sample_dh <span class="ot">&lt;-</span> sample_vege_fluro_topo <span class="sc">%&gt;%</span></span>
+<span id="cb19-13"><a href="pls-sem-guide-demo.html#cb19-13" tabindex="-1"></a>  <span class="fu">filter</span>(watershed <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;dh&quot;</span>,<span class="st">&quot;dhs&quot;</span>, <span class="st">&quot;dhn&quot;</span>, <span class="st">&quot;lexen&quot;</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb19-14"><a href="pls-sem-guide-demo.html#cb19-14" tabindex="-1"></a>  <span class="fu">left_join</span>(</span>
+<span id="cb19-15"><a href="pls-sem-guide-demo.html#cb19-15" tabindex="-1"></a>    dh_input_combined <span class="sc">%&gt;%</span> </span>
+<span id="cb19-16"><a href="pls-sem-guide-demo.html#cb19-16" tabindex="-1"></a>      <span class="fu">select</span>(date, watershed, Input.mm, snowpack_3day_avg, melt_snow_interact),</span>
+<span id="cb19-17"><a href="pls-sem-guide-demo.html#cb19-17" tabindex="-1"></a>    <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;date&quot;</span> <span class="ot">=</span> <span class="st">&quot;date&quot;</span>)</span>
+<span id="cb19-18"><a href="pls-sem-guide-demo.html#cb19-18" tabindex="-1"></a>  )</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="pls-sem-guide-demo.html#cb20-1" tabindex="-1"></a><span class="co"># Combine both samples</span></span>
+<span id="cb20-2"><a href="pls-sem-guide-demo.html#cb20-2" tabindex="-1"></a>sample_combined <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(sample_fc, sample_dh)</span>
+<span id="cb20-3"><a href="pls-sem-guide-demo.html#cb20-3" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="pls-sem-guide-demo.html#cb20-4" tabindex="-1"></a><span class="fu">head</span>(sample_combined)</span></code></pre></div>
+<pre><code>##   watershed reach position  ID mean_well_depth_cm      lat       lon elevation doc_mg.l
+## 1        fc   fc1      lw2  46              118.0 39.89099 -105.8678        NA    4.810
+## 2        fc   fc1      lw2 317              118.0 39.89099 -105.8678        NA    5.040
+## 3        fc   fc1      lw2 304              118.0 39.89099 -105.8678        NA    2.890
+## 4        fc   fc2      lw2 319              117.5 39.88252 -105.8654        NA   10.060
+## 5        fc   fc3   stream  52                 NA 39.87742 -105.8633        NA    3.120
+## 6        fc   fc2      rw2 321              117.0 39.88261 -105.8653        NA    1.926
+##         TYPE  Time doc_mg.l.1 tdn_mg.l na_mg.l nh4_mg.l K_mg.l Mg_mg.l Ca_mg.l F_mg.l
+## 1 monitoring 18:02      4.810     0.25      NA       NA     NA      NA      NA     NA
+## 2 monitoring 15:05      5.040       NA    3.32     0.03   1.36    2.40   12.93   0.04
+## 3 monitoring 16:35      2.890       NA    2.33     0.03   1.33    2.50   22.28   0.05
+## 4 monitoring 15:55     10.060       NA    2.23     0.01   0.66    0.88    4.63   0.09
+## 5 monitoring 16:30      3.120     0.20    2.44     0.04   0.63    0.81    4.14   0.04
+## 6   synoptic 16:15      1.926       NA    3.16     0.01   0.83    2.17   10.46   0.06
+##   Cl_mg.l NO3_mg.l PO4_mg.l SO4_mg.l usfs_DOC MSU_DOC       date        fullid Int_Abs
+## 1      NA       NA       NA       NA     4.81      NA 2021-06-02                    NA
+## 2    0.66     0.11        0     2.46       NA   5.040 2022-06-06                    NA
+## 3    0.61     0.06        0     3.48       NA   2.890 2022-05-30 FEF3040308i1h 1739.00
+## 4    0.56     0.09        0     1.05       NA  10.060 2022-06-06                    NA
+## 5    0.23     0.09        0     2.02     3.12      NA 2021-06-09                    NA
+## 6    0.27     0.13        0     2.43       NA   1.926 2022-06-06 FEF3210308i1h  281.18
+##   dec_254 dec_300 dec_562    a300    a305    a313    a320    a340   a380   a395   a412
+## 1      NA      NA      NA      NA      NA      NA      NA      NA     NA     NA     NA
+## 2      NA      NA      NA      NA      NA      NA      NA      NA     NA     NA     NA
+## 3 25.3790 14.2030       0 32.7100 30.7100 27.5560 24.9340 19.1330 9.5481 7.2694 5.8187
+## 4      NA      NA      NA      NA      NA      NA      NA      NA     NA     NA     NA
+## 5      NA      NA      NA      NA      NA      NA      NA      NA     NA     NA     NA
+## 6  4.4909  2.2598       0  5.2044  4.8091  4.2866  3.8338  2.9712 1.7623 1.4885 1.2434
+##   Slope_ratio Int_Fluor peak_A_250.450 peak_C_350.450 peak_T_275.340 Fluorescence_Index
+## 1          NA        NA             NA             NA             NA                 NA
+## 2          NA        NA             NA             NA             NA                 NA
+## 3  0.69171+0i    166000         32.625         10.078         15.342             1.4418
+## 4          NA        NA             NA             NA             NA                 NA
+## 5          NA        NA             NA             NA             NA                 NA
+## 6  1.17990+0i    224000        106.720         12.428         17.841             1.6217
+##    SUVA254 peak_ratioAT peak_ratioCA peak_ratioCT   Filename  area_m analysis area_km
+## 1       NA           NA           NA           NA    fc1_lw2    9100     dinf  0.0091
+## 2       NA           NA           NA           NA    fc1_lw2    9100     dinf  0.0091
+## 3 8.781661     2.126515    0.3089042    0.6568896    fc1_lw2    9100     dinf  0.0091
+## 4       NA           NA           NA           NA    fc2_lw2  136200     dinf  0.1362
+## 5       NA           NA           NA           NA fc3_stream  949200     dinf  0.9492
+## 6 2.331724     5.981727    0.1164543    0.6965977    fc2_rw2 1390600     dinf  1.3906
+##   transect      Qm3_s  fraction reachposition count_1.5 count_6.10 count_11.15 count_.15
+## 1        1 0.07993572 1.0000000       FC1_lw2        90        156          21         1
+## 2        1 0.08313822 1.0000000       FC1_lw2        90        156          21         1
+## 3        1 0.05629386 1.0000000       FC1_lw2        90        156          21         1
+## 4        2 0.08497881 0.6436947       FC2_lw2      4118       2767         270        12
+## 5        3 0.15373272 0.4003675    FC3_stream      5698       4320         711        60
+## 6        2 0.08639465 0.6436947       FC2_rw2      9048       7567        1022        90
+##   percent_1.5 percent_6.10 percent_11.15 percent_.15 site year ndmi_raster_mean
+## 1    33.58209     58.20896      7.835821   0.3731343  fc1 2021       0.05824208
+## 2    33.58209     58.20896      7.835821   0.3731343  fc1 2022       0.05824208
+## 3    33.58209     58.20896      7.835821   0.3731343  fc1 2022       0.05824208
+## 4    57.45779     38.60751      3.767267   0.1674341  fc2 2022       0.10090984
+## 5    52.81305     40.04078      6.590045   0.5561220  fc3 2021       0.10651602
+## 6    51.04079     42.68630      5.765217   0.5077001  fc2 2022       0.10169668
+##   ndmi_raster_median ndvi_raster_mean ndvi_raster_median twi_mean twi_median slope_mean
+## 1         0.05734724        0.2028289          0.2051587 5.295591   5.261716   14.86990
+## 2         0.05734724        0.2028289          0.2051587 5.295591   5.261716   14.86990
+## 3         0.05734724        0.2028289          0.2051587 5.295591   5.261716   14.86990
+## 4         0.10511939        0.2206730          0.2193882 7.003667   7.048162   11.37826
+## 5         0.10768735        0.2147641          0.2111630 6.840259   6.730142   13.87410
+## 6         0.10286105        0.2097540          0.2070497 6.864738   6.705465   14.53551
+##   slope_median elevabovestreams_mean elevabovestreams_median disttostreams_mean
+## 1     14.88346              62.89420                64.41553           281.6699
+## 2     14.88346              62.89420                64.41553           281.6699
+## 3     14.88346              62.89420                64.41553           281.6699
+## 4     11.02703              58.41825                47.44165           306.4286
+## 5     12.86095              77.51624                55.39111           322.2694
+## 6     13.75001              73.36018                54.27869           299.0694
+##   disttostreams_median aspect_mean aspect_median resampled_mean resampled_median
+## 1             288.7006    30.15632      27.69858       3001.303         3008.031
+## 2             288.7006    30.15632      27.69858       3001.303         3008.031
+## 3             288.7006    30.15632      27.69858       3001.303         3008.031
+## 4             262.1320   121.89550      31.28812       3297.120         3284.064
+## 5             263.1371   221.28420     313.68322       3342.635         3358.759
+## 6             245.5635   201.62133     305.40282       3283.804         3284.621
+##   distance.to.outlet percent_Beetle.kill percent_Meadows percent_Old.Forest
+## 1               0.00            47.61905        0.000000           38.09524
+## 2               0.00            47.61905        0.000000           38.09524
+## 3               0.00            47.61905        0.000000           38.09524
+## 4             582.10            17.67810        0.000000           40.89710
+## 5             910.22            58.58102        7.094919           12.08054
+## 6             582.10            45.56474        4.297521           24.40771
+##   percent_cut.regenerating percent_Tundra          stage stage_num Input.mm
+## 1                 14.28571              0 Ascending Limb         4  0.00000
+## 2                 14.28571              0 Ascending Limb         4  0.00000
+## 3                 14.28571              0 Ascending Limb         4  0.00000
+## 4                 41.42480              0 Ascending Limb         4  0.00000
+## 5                 22.24353              0 Ascending Limb         4 20.64301
+## 6                 25.73003              0 Ascending Limb         4  0.00000
+##   snowpack_3day_avg melt_snow_interact watershed.x watershed.y
+## 1            286.47              0.000        &lt;NA&gt;        &lt;NA&gt;
+## 2            194.12              0.000        &lt;NA&gt;        &lt;NA&gt;
+## 3            281.34              0.000        &lt;NA&gt;        &lt;NA&gt;
+## 4            194.12              0.000        &lt;NA&gt;        &lt;NA&gt;
+## 5            114.59           1641.685        &lt;NA&gt;        &lt;NA&gt;
+## 6            194.12              0.000        &lt;NA&gt;        &lt;NA&gt;</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="pls-sem-guide-demo.html#cb22-1" tabindex="-1"></a><span class="co"># Export sample_combined as a .csv file in the &quot;datafiles&quot; folder</span></span>
+<span id="cb22-2"><a href="pls-sem-guide-demo.html#cb22-2" tabindex="-1"></a><span class="fu">write.csv</span>(sample_combined, <span class="st">&quot;datafiles/fluoro_vege_manually_corrected_melt.csv&quot;</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code></pre></div>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="reporting-resutls-of-bootstrapped-pls.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+},
+"toolbar": {
+"position": "static"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

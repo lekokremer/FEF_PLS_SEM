@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3.3 1. Relative loadings | PLS-SEM FEF model exploration and iterations</title>
+  <meta name="description" content="3.3 1. Relative loadings | PLS-SEM FEF model exploration and iterations" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3.3 1. Relative loadings | PLS-SEM FEF model exploration and iterations" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3.3 1. Relative loadings | PLS-SEM FEF model exploration and iterations" />
+  
+  
+  
+
+<meta name="author" content="Lauren Kremer" />
+
+
+<meta name="date" content="2024-10-27" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="structure.html"/>
+<link rel="next" href="normalized-doc.html"/>
+<script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="assets/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="assets/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="assets/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="assets/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="assets/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="assets/viz-1.8.2/viz.js"></script>
+<link href="assets/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="assets/grViz-binding-1.0.11/grViz.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="about.html"><a href="about.html"><i class="fa fa-check"></i><b>1.1</b> About</a></li>
+<li class="chapter" data-level="1.2" data-path="usage.html"><a href="usage.html"><i class="fa fa-check"></i><b>1.2</b> Usage</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="addition-of-precipitation-and-runoff-data.html"><a href="addition-of-precipitation-and-runoff-data.html"><i class="fa fa-check"></i><b>2</b> Addition of precipitation and runoff data</a></li>
+<li class="chapter" data-level="3" data-path="correlations-plots.html"><a href="correlations-plots.html"><i class="fa fa-check"></i><b>3</b> Correlations plots:</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="parafac-results-summary-figures.html"><a href="parafac-results-summary-figures.html"><i class="fa fa-check"></i><b>3.1</b> PARAFAC results summary figures:</a></li>
+<li class="chapter" data-level="3.2" data-path="structure.html"><a href="structure.html"><i class="fa fa-check"></i><b>3.2</b> Structure:</a></li>
+<li class="chapter" data-level="3.3" data-path="relative-loadings.html"><a href="relative-loadings.html"><i class="fa fa-check"></i><b>3.3</b> 1. Relative loadings</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="relative-loadings.html"><a href="relative-loadings.html#a.-box-plots---relative-loadings"><i class="fa fa-check"></i><b>3.3.1</b> 1.A. Box plots - Relative loadings</a></li>
+<li class="chapter" data-level="3.3.2" data-path="relative-loadings.html"><a href="relative-loadings.html#b.-distance-correlation-matricies"><i class="fa fa-check"></i><b>3.3.2</b> 1.B. Distance Correlation matricies</a></li>
+<li class="chapter" data-level="3.3.3" data-path="relative-loadings.html"><a href="relative-loadings.html#b.-pearson-correlation-matrices---relative-loadings"><i class="fa fa-check"></i><b>3.3.3</b> 1.B. Pearson correlation matrices - Relative loadings</a></li>
+<li class="chapter" data-level="3.3.4" data-path="relative-loadings.html"><a href="relative-loadings.html#c.-hydrograph---fool-creek-fractions-with-hydrograph"><i class="fa fa-check"></i><b>3.3.4</b> 1.C. Hydrograph - Fool Creek fractions with hydrograph</a></li>
+<li class="chapter" data-level="3.3.5" data-path="relative-loadings.html"><a href="relative-loadings.html#d.-data-preparation-for-multivariate-statistical-analysis---dimension-reduction-techniques"><i class="fa fa-check"></i><b>3.3.5</b> 1.D. Data preparation for multivariate statistical analysis - dimension reduction techniques</a></li>
+<li class="chapter" data-level="3.3.6" data-path="relative-loadings.html"><a href="relative-loadings.html#e.-partial-least-squares"><i class="fa fa-check"></i><b>3.3.6</b> 1.E. Partial least squares</a></li>
+<li class="chapter" data-level="3.3.7" data-path="relative-loadings.html"><a href="relative-loadings.html#e.-rda-redundancy-analysis"><i class="fa fa-check"></i><b>3.3.7</b> 1.E. RDA (Redundancy Analysis)</a></li>
+<li class="chapter" data-level="3.3.8" data-path="relative-loadings.html"><a href="relative-loadings.html#f.-pca-all-data"><i class="fa fa-check"></i><b>3.3.8</b> 1.F. PCA All data</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="normalized-doc.html"><a href="normalized-doc.html"><i class="fa fa-check"></i><b>3.4</b> Normalized DOC</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="normalized-doc.html"><a href="normalized-doc.html#box-plots---doc-normalized-loadings"><i class="fa fa-check"></i><b>3.4.1</b> Box plots - DOC normalized loadings</a></li>
+<li class="chapter" data-level="3.4.2" data-path="normalized-doc.html"><a href="normalized-doc.html#correlation-matrices---normalized-loadings"><i class="fa fa-check"></i><b>3.4.2</b> Correlation matrices - Normalized loadings</a></li>
+<li class="chapter" data-level="3.4.3" data-path="normalized-doc.html"><a href="normalized-doc.html#correlation---summer-subset-2022-mid-june-to-mid-july"><i class="fa fa-check"></i><b>3.4.3</b> Correlation - Summer subset 2022 (mid-June to mid July)</a></li>
+<li class="chapter" data-level="3.4.4" data-path="normalized-doc.html"><a href="normalized-doc.html#hydrograph---fluorescence-intensities-in-fool-creek-with-2022-hydrograph"><i class="fa fa-check"></i><b>3.4.4</b> Hydrograph - Fluorescence intensities in Fool creek with 2022 hydrograph</a></li>
+</ul></li>
+<li class="chapter" data-level="3.5" data-path="pca.html"><a href="pca.html"><i class="fa fa-check"></i><b>3.5</b> PCA</a></li>
+<li class="chapter" data-level="3.6" data-path="rda-redundancy-analysis.html"><a href="rda-redundancy-analysis.html"><i class="fa fa-check"></i><b>3.6</b> RDA (Redundancy Analysis)</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="partial-least-squares-structural-equation-modeling-pls-sem.html"><a href="partial-least-squares-structural-equation-modeling-pls-sem.html"><i class="fa fa-check"></i><b>4</b> Partial least squares – Structural Equation Modeling (PLS-SEM)</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="building-the-path-model.html"><a href="building-the-path-model.html"><i class="fa fa-check"></i><b>4.1</b> Building the path model</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="building-the-path-model.html"><a href="building-the-path-model.html#path-diagram-of-our-model-with-tested-indicators"><i class="fa fa-check"></i><b>4.1.1</b> Path diagram of our model with tested indicators</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="data-managment-transformation.html"><a href="data-managment-transformation.html"><i class="fa fa-check"></i><b>4.2</b> Data managment / transformation</a></li>
+<li class="chapter" data-level="4.3" data-path="reporting-initial-results-and-evaluating-the-quality-of-reflective-measurement-models.html"><a href="reporting-initial-results-and-evaluating-the-quality-of-reflective-measurement-models.html"><i class="fa fa-check"></i><b>4.3</b> Reporting initial results and evaluating the quality of reflective measurement models</a></li>
+<li class="chapter" data-level="4.4" data-path="bootstrapping-for-significance.html"><a href="bootstrapping-for-significance.html"><i class="fa fa-check"></i><b>4.4</b> Bootstrapping for significance</a></li>
+<li class="chapter" data-level="4.5" data-path="reporting-resutls-of-bootstrapped-pls.html"><a href="reporting-resutls-of-bootstrapped-pls.html"><i class="fa fa-check"></i><b>4.5</b> Reporting resutls of bootstrapped PLS</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="testing-iterations-of-the-pls-sem-fef-model.html"><a href="testing-iterations-of-the-pls-sem-fef-model.html"><i class="fa fa-check"></i><b>5</b> Testing iterations of the PLS-SEM FEF model</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="model-1-flow-stage-classifier-as-a-latent-variable.-total-protein-like-component.html"><a href="model-1-flow-stage-classifier-as-a-latent-variable.-total-protein-like-component.html"><i class="fa fa-check"></i><b>5.1</b> MODEL 1: Flow stage classifier as a latent variable. Total protein-like component <br></a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="model-1-flow-stage-classifier-as-a-latent-variable.-total-protein-like-component.html"><a href="model-1-flow-stage-classifier-as-a-latent-variable.-total-protein-like-component.html#results-of-bootstrapped-pls"><i class="fa fa-check"></i><b>5.1.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="model-2-include-a-flow-stage-classifier-as-a-latent-variable-where-response-is-protein-like-fraction-of-dom..html"><a href="model-2-include-a-flow-stage-classifier-as-a-latent-variable-where-response-is-protein-like-fraction-of-dom..html"><i class="fa fa-check"></i><b>5.2</b> MODEL 2: include a flow stage classifier as a latent variable where response is protein-like fraction of DOM.</a></li>
+<li class="chapter" data-level="5.3" data-path="model-3-remove-flow-as-a-latent-variable-where-response-is-protein-like-fraction-of-dom..html"><a href="model-3-remove-flow-as-a-latent-variable-where-response-is-protein-like-fraction-of-dom..html"><i class="fa fa-check"></i><b>5.3</b> MODEL 3: Remove flow as a latent variable where response is protein-like fraction of DOM.</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="model-3-remove-flow-as-a-latent-variable-where-response-is-protein-like-fraction-of-dom..html"><a href="model-3-remove-flow-as-a-latent-variable-where-response-is-protein-like-fraction-of-dom..html#results-of-bootstrapped-pls-1"><i class="fa fa-check"></i><b>5.3.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="model-4-remove-hydrology-altogether-as-a-latent-variable-where-response-is-protein-like-fraction-of-dom..html"><a href="model-4-remove-hydrology-altogether-as-a-latent-variable-where-response-is-protein-like-fraction-of-dom..html"><i class="fa fa-check"></i><b>5.4</b> MODEL 4: Remove hydrology altogether as a latent variable where response is protein-like fraction of DOM.</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="model-4-remove-hydrology-altogether-as-a-latent-variable-where-response-is-protein-like-fraction-of-dom..html"><a href="model-4-remove-hydrology-altogether-as-a-latent-variable-where-response-is-protein-like-fraction-of-dom..html#results-of-bootstrapped-pls-2"><i class="fa fa-check"></i><b>5.4.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+<li class="chapter" data-level="5.5" data-path="model-5-change-landcover-types-to-harvest-regeneration-from-beetlekill.html"><a href="model-5-change-landcover-types-to-harvest-regeneration-from-beetlekill.html"><i class="fa fa-check"></i><b>5.5</b> MODEL 5: Change landcover types to harvest regeneration from beetlekill</a>
+<ul>
+<li class="chapter" data-level="5.5.1" data-path="model-5-change-landcover-types-to-harvest-regeneration-from-beetlekill.html"><a href="model-5-change-landcover-types-to-harvest-regeneration-from-beetlekill.html#results-of-bootstrapped-pls-3"><i class="fa fa-check"></i><b>5.5.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+<li class="chapter" data-level="5.6" data-path="model-6-add-back-hydrology-as-a-latent-variable-landcover-regenerating-forest.html"><a href="model-6-add-back-hydrology-as-a-latent-variable-landcover-regenerating-forest.html"><i class="fa fa-check"></i><b>5.6</b> MODEL 6: Add back hydrology as a latent variable, landcover = regenerating forest</a>
+<ul>
+<li class="chapter" data-level="5.6.1" data-path="model-6-add-back-hydrology-as-a-latent-variable-landcover-regenerating-forest.html"><a href="model-6-add-back-hydrology-as-a-latent-variable-landcover-regenerating-forest.html#results-of-bootstrapped-pls-4"><i class="fa fa-check"></i><b>5.6.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+<li class="chapter" data-level="5.7" data-path="model-7-change-response-to-fraction-of-humic-dom.html"><a href="model-7-change-response-to-fraction-of-humic-dom.html"><i class="fa fa-check"></i><b>5.7</b> MODEL 7: Change response to fraction of humic DOM</a>
+<ul>
+<li class="chapter" data-level="5.7.1" data-path="model-7-change-response-to-fraction-of-humic-dom.html"><a href="model-7-change-response-to-fraction-of-humic-dom.html#results-of-bootstrapped-pls-5"><i class="fa fa-check"></i><b>5.7.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+<li class="chapter" data-level="5.8" data-path="model-8-change-response-to-fraction-of-humic-dom-with-beetlekill.html"><a href="model-8-change-response-to-fraction-of-humic-dom-with-beetlekill.html"><i class="fa fa-check"></i><b>5.8</b> MODEL 8: Change response to fraction of humic DOM with Beetlekill %</a>
+<ul>
+<li class="chapter" data-level="5.8.1" data-path="model-8-change-response-to-fraction-of-humic-dom-with-beetlekill.html"><a href="model-8-change-response-to-fraction-of-humic-dom-with-beetlekill.html#results-of-bootstrapped-pls-6"><i class="fa fa-check"></i><b>5.8.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+<li class="chapter" data-level="5.9" data-path="model-9-tundra-influence-on-change-to-fraction-of-humic-dom.html"><a href="model-9-tundra-influence-on-change-to-fraction-of-humic-dom.html"><i class="fa fa-check"></i><b>5.9</b> MODEL 9: Tundra influence on change to fraction of humic DOM</a>
+<ul>
+<li class="chapter" data-level="5.9.1" data-path="model-9-tundra-influence-on-change-to-fraction-of-humic-dom.html"><a href="model-9-tundra-influence-on-change-to-fraction-of-humic-dom.html#results-of-bootstrapped-pls-7"><i class="fa fa-check"></i><b>5.9.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="reporting-initial-results-and-evaluating-the-quality-of-our-favorite-model.html"><a href="reporting-initial-results-and-evaluating-the-quality-of-our-favorite-model.html"><i class="fa fa-check"></i><b>6</b> Reporting initial results and evaluating the quality of our favorite model</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">PLS-SEM FEF model exploration and iterations</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="relative-loadings" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> 1. Relative loadings<a href="relative-loadings.html#relative-loadings" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Relative loadings for each sample (i.e., loading for each component/total loading for the sample in the 3 component model). This tells us how much of each component contributes to the total fluorescence of that particular sample.
+<img src="images/component3_loadings_proportions_plot.png" alt="Relative fluoresence of each component im each sample" /></p>
+<div id="a.-box-plots---relative-loadings" class="section level3 hasAnchor" number="3.3.1">
+<h3><span class="header-section-number">3.3.1</span> 1.A. Box plots - Relative loadings<a href="relative-loadings.html#a.-box-plots---relative-loadings" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol start="2" style="list-style-type: decimal">
+<li>Boxplots are visualizing <strong>relative loadings</strong> (component loading/total loading for the sample). These are not normalized by DOC concentration. This allows for comparisons between sites with varying DOC concentrations while avoiding the confounding effects of variations in DOC concentration. (i.e., regardless of the overall fluorescence intensity or DOC concentration)</li>
+</ol>
+<div id="a.i.-protein-like" class="section level4 hasAnchor" number="3.3.1.1">
+<h4><span class="header-section-number">3.3.1.1</span> 1.A.i. Protein-like<a href="relative-loadings.html#a.i.-protein-like" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-11"></span>
+<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-11-1.png" alt="Figure. Box plots showing the relationships between the sample proportion of PARAFAC component 3 (protein-like) and watershed. dh,dhn and dhs = Deadhorse, fc = Fool Creek. Horizontal bars indicate sample median, asterisks indicate sample mean. Whiskers (vertical lines) extend to the most extreme data point which is no more than range times the interquartile range from the box" width="960" />
+<p class="caption">
+Figure 3.1: Figure. Box plots showing the relationships between the sample proportion of PARAFAC component 3 (protein-like) and watershed. dh,dhn and dhs = Deadhorse, fc = Fool Creek. Horizontal bars indicate sample median, asterisks indicate sample mean. Whiskers (vertical lines) extend to the most extreme data point which is no more than range times the interquartile range from the box
+</p>
+</div>
+</div>
+<div id="a.ii.-humic" class="section level4 hasAnchor" number="3.3.1.2">
+<h4><span class="header-section-number">3.3.1.2</span> 1.A.ii. Humic<a href="relative-loadings.html#a.ii.-humic" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-12"></span>
+<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-12-1.png" alt="Figure. Box plots showing the relationships between the sample proportion of PARAFAC component 1 (humic-type) and watershed. dh,dhn and dhs = Deadhorse, fc = Fool Creek" width="960" />
+<p class="caption">
+Figure 3.2: Figure. Box plots showing the relationships between the sample proportion of PARAFAC component 1 (humic-type) and watershed. dh,dhn and dhs = Deadhorse, fc = Fool Creek
+</p>
+</div>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-13"></span>
+<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-13-1.png" alt="Figure. Box plots showing the relationships between the sample proportion of PARAFAC component 2 (humic-type) and watershed. dh,dhn and dhs = Deadhorse, fc = Fool Creek" width="960" />
+<p class="caption">
+Figure 3.3: Figure. Box plots showing the relationships between the sample proportion of PARAFAC component 2 (humic-type) and watershed. dh,dhn and dhs = Deadhorse, fc = Fool Creek
+</p>
+</div>
+</div>
+</div>
+<div id="b.-distance-correlation-matricies" class="section level3 hasAnchor" number="3.3.2">
+<h3><span class="header-section-number">3.3.2</span> 1.B. Distance Correlation matricies<a href="relative-loadings.html#b.-distance-correlation-matricies" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>While Pearson’s correlation assumes linear relationships and normal distributions among variables, and Spearman assumptions are that data is monotonic (distribution consistently increases or decreases), most of our data for both response and explanatory variables are skewed or bimodal.</p>
+<p>For an initial exploration, we’ll start with a matrix of distance correlations. Distance correlation measures both linear and non-linear associations (unlike Pearson’s) using distances between observations. So we can also use it for continuous or categorical data, and skewed or other non-normal data. A drawback is that we can see dependence between variables, but we wont see the direction or type of dependence…so it might not be intuitive.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="relative-loadings.html#cb2-1" tabindex="-1"></a><span class="fu">library</span>(energy)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="relative-loadings.html#cb3-1" tabindex="-1"></a><span class="co"># We can only use numeric columns for this correlation matrix, so let&#39;s first split response and predictor variables into separate matrices, and then make sure all columns are numeric:</span></span>
+<span id="cb3-2"><a href="relative-loadings.html#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="relative-loadings.html#cb3-3" tabindex="-1"></a><span class="co"># Define response and predictor variables</span></span>
+<span id="cb3-4"><a href="relative-loadings.html#cb3-4" tabindex="-1"></a>response_vars <span class="ot">&lt;-</span> merged_df <span class="sc">%&gt;%</span></span>
+<span id="cb3-5"><a href="relative-loadings.html#cb3-5" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(relative_load_comp_1, relative_load_comp_2, relative_load_comp_3, PARAF_comp_1, PARAF_comp_2, PARAF_comp_3, total_loadings, doc_mg.l, peak_A_250<span class="fl">.450</span>, peak_C_350<span class="fl">.450</span>, peak_T_275<span class="fl">.340</span>, Fluorescence_Index, SUVA254, peak_ratioAT, peak_ratioCA, peak_ratioCT)</span>
+<span id="cb3-6"><a href="relative-loadings.html#cb3-6" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="relative-loadings.html#cb3-7" tabindex="-1"></a>explanatory_vars <span class="ot">&lt;-</span> merged_df <span class="sc">%&gt;%</span></span>
+<span id="cb3-8"><a href="relative-loadings.html#cb3-8" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(doc_mg.l, na_mg.l, nh4_mg.l, K_mg.l, Mg_mg.l, Ca_mg.l,   F_mg.l, Cl_mg.l, NO3_mg.l, PO4_mg.l, SO4_mg.l, area_km, Qm3_s, percent_1<span class="fl">.5</span>, percent_6<span class="fl">.10</span>, percent_11<span class="fl">.15</span>, percent_<span class="fl">.15</span>, ndmi_raster_mean, ndmi_raster_median, ndvi_raster_mean, ndvi_raster_median, twi_mean,      twi_median, slope_mean, slope_median, elevabovestreams_mean,   elevabovestreams_median, disttostreams_mean, disttostreams_median, aspect_mean, aspect_median, resampled_mean, resampled_median,   distance.to.outlet, percent_Beetle.kill, percent_Meadows,       percent_Old.Forest, percent_cut.regenerating, percent_Tundra, stage_num)</span></code></pre></div>
+<p>Explanatory variable distributions:</p>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-16"></span>
+<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-16-1.png" alt="Figure. Plotting original distribution of explanatory variables" width="672" />
+<p class="caption">
+Figure 3.4: Figure. Plotting original distribution of explanatory variables
+</p>
+</div>
+<div id="b.i." class="section level4 hasAnchor" number="3.3.2.1">
+<h4><span class="header-section-number">3.3.2.1</span> 1.B.i.<a href="relative-loadings.html#b.i." class="anchor-section" aria-label="Anchor link to header"></a></h4>
+</div>
+</div>
+<div id="b.-pearson-correlation-matrices---relative-loadings" class="section level3 hasAnchor" number="3.3.3">
+<h3><span class="header-section-number">3.3.3</span> 1.B. Pearson correlation matrices - Relative loadings<a href="relative-loadings.html#b.-pearson-correlation-matrices---relative-loadings" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="b.i.-all-samples-with-eems" class="section level4 hasAnchor" number="3.3.3.1">
+<h4><span class="header-section-number">3.3.3.1</span> 1.B.i. All samples with EEMs<a href="relative-loadings.html#b.i.-all-samples-with-eems" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><strong>If matrices are in a purple gradient, then the plot includes all dates. If green, then the plot represents a subset of dates</strong> <br></p>
+<p>By looking at these, we are answering: “How does DOC composition shift with different watershed features?”</p>
+<div id="b.i.a.-landcover---all-eems" class="section level5 hasAnchor" number="3.3.3.1.1">
+<h5><span class="header-section-number">3.3.3.1.1</span> 1.B.i.a. Landcover - all EEMS<a href="relative-loadings.html#b.i.a.-landcover---all-eems" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-17"></span>
+<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-17-1.png" alt="Figure. Combined plot showing the relationships between relative loadings of 3 PARAFAC components and landcover characteristics for all samples with EEMs data (July 2021- Oct 1, 2022). Color indicates direction and correlation value (Pearson's). Asterisks indicate level of significance." width="960" />
+<p class="caption">
+Figure 3.5: Figure. Combined plot showing the relationships between relative loadings of 3 PARAFAC components and landcover characteristics for all samples with EEMs data (July 2021- Oct 1, 2022). Color indicates direction and correlation value (Pearson’s). Asterisks indicate level of significance.
+</p>
+</div>
+<p>This figure indicates that: <br>
+- The <strong>humic</strong> fraction of the fluorescing DOM <strong>decreases</strong> with high percentages of tundra, and short canopy. <br>
+- The humic fraction <strong>increases</strong> with increasing watershed coverage with forest canopy between 6 and 10m, and increasing landcover classified as cut or regenerating. <br>
+- There are low but significant correlations between humic fractions and % catchment coverage by beetle-kill, meadows and old forest. Humic fractions increase slightly with % Beetle Kill and decrease with increased with increased meadow or old forest coverage. <br>
+- <strong>Protein-like</strong> fractions of the fluorescing DOM <strong>decrease</strong> with high percentages of cut or regenerating forest, and canopy between 6 and 10m, <br>
+- but <strong>increase</strong> with increased coverage by short canopy (&lt;5m) and Tundra.<br>
+- Significant but weaker correlations indicate that protein-like fractions increase with increasing meadow and old forest coverage.</p>
+</div>
+<div id="b.i.b.-topo-and-moisture---all-eems" class="section level5 hasAnchor" number="3.3.3.1.2">
+<h5><span class="header-section-number">3.3.3.1.2</span> 1.B.i.b. Topo and moisture - all EEMS<a href="relative-loadings.html#b.i.b.-topo-and-moisture---all-eems" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-18"></span>
+<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-18-1.png" alt="Figure. Combined plot showing the relationships between relative loadings of 3 PARAFAC components and topographic or moisture characteristics for all samples with EEMs data (July 2021- Oct 1, 2022). Color indicates direction and correlation value (Pearson's). Asterisks indicate level of significance." width="960" />
+<p class="caption">
+Figure 3.6: Figure. Combined plot showing the relationships between relative loadings of 3 PARAFAC components and topographic or moisture characteristics for all samples with EEMs data (July 2021- Oct 1, 2022). Color indicates direction and correlation value (Pearson’s). Asterisks indicate level of significance.
+</p>
+</div>
+<p>This figure indicates that:<br>
+- <strong>humic</strong> fraction of the fluorescing DOM <strong>increase</strong> with increasing discharge, watershed area, the distance that allochthonous water travels before reaching the stream channel (dist to streams mean), and increased watershed moisture (as indicated by NDMI and TWI).<br>
+- <strong>Humic</strong> fractions <strong>decrease</strong> with increasing watershed slope. <br>
+- <strong>Protein-like</strong> fractions of the fluorescing DOM <strong>increase</strong> with increasing slope <br>
+- and <strong>decrease</strong> with increasing Q, watershed area, increasing moisture indices, and increased mean distance to the stream channel.</p>
+</div>
+<div id="b.i.c.-ions---all-eems" class="section level5 hasAnchor" number="3.3.3.1.3">
+<h5><span class="header-section-number">3.3.3.1.3</span> 1.B.i.c. Ions - all EEMS<a href="relative-loadings.html#b.i.c.-ions---all-eems" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-19"></span>
+<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-19-1.png" alt="Figure. Combined plot showing the relationships between relative loadings of 3 PARAFAC components and DOC (mg/L), and ions (mg/L) for all samples with EEMs data (July 2021- Oct 1, 2022). Color indicates direction and correlation value (Pearson's). Asterisks indicate level of significance." width="960" />
+<p class="caption">
+Figure 3.7: Figure. Combined plot showing the relationships between relative loadings of 3 PARAFAC components and DOC (mg/L), and ions (mg/L) for all samples with EEMs data (July 2021- Oct 1, 2022). Color indicates direction and correlation value (Pearson’s). Asterisks indicate level of significance.
+</p>
+</div>
+<p>This figure indicates that:<br>
+- <strong>humic</strong> fraction of the fluorescing DOM <strong>increase</strong> with increasing DOM, sodium, potassium (K) and fluoride (F) concentration).<br>
+- <strong>Humic</strong> fractions <strong>decrease</strong> with increasing Ca+, Mg, and nitrate (NO3). <br>
+- <strong>Protein-like</strong> fractions of the fluorescing DOM <strong>increase</strong> with increasing Ca+, Mg, and nitrate (NO3 <br>
+- and <strong>decrease</strong> with increasing DOM, sodium, potassium (K) and fluoride (F) concentration).</p>
+<p>These correlations suggest that seasonal hydrological fluxes, rather than direct causation, drive changes in humic and protein fractions. Humic fractions are higher during periods of snowmelt and runoff compared to baseflow conditions. Snowmelt leads to elevated DOC as it is ‘flushed’ from the catchments.</p>
+<p>Correlations among ions and topographical or landcover features suggest co-correlation rather than causation….</p>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-20"></span>
+<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-20-1.png" alt="Figure. Combined plot showing the relationships between relative loadings of 3 PARAFAC components and DOC (mg/L), and ions (mg/L) for all samples with EEMs data (July 2021- Oct 1, 2022). Color indicates direction and correlation value (Pearson's). Asterisks indicate level of significance." width="960" />
+<p class="caption">
+Figure 3.8: Figure. Combined plot showing the relationships between relative loadings of 3 PARAFAC components and DOC (mg/L), and ions (mg/L) for all samples with EEMs data (July 2021- Oct 1, 2022). Color indicates direction and correlation value (Pearson’s). Asterisks indicate level of significance.
+</p>
+</div>
+</div>
+</div>
+<div id="b.ii.-correlation---summer-subset-2022-mid-june-to-mid-july" class="section level4 hasAnchor" number="3.3.3.2">
+<h4><span class="header-section-number">3.3.3.2</span> 1.B.ii. Correlation - Summer subset 2022 (mid-June to mid July)<a href="relative-loadings.html#b.ii.-correlation---summer-subset-2022-mid-june-to-mid-july" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="b.ii.a.-landcover---summer-2022" class="section level5 hasAnchor" number="3.3.3.2.1">
+<h5><span class="header-section-number">3.3.3.2.1</span> 1.B.ii.a. Landcover - summer 2022<a href="relative-loadings.html#b.ii.a.-landcover---summer-2022" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-21"></span>
+<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-21-1.png" alt="Figure. Combined plot showing the relationships between relative loadings of 3 PARAFAC components and landcover characteristics for EEMs samples collected between June 10 to July 15, 2022, which includes a synoptic sampling. Color indicates direction and correlation value (Pearson's). Asterisks indicate level of significance. This figure indicates that humic fraction of the fluorescing DOM increase with high percentages of tundra, and short canopy. Protein-like fractions of the fluorescing DOM increase with high percentages of cut or regenerating forest, and canopy between 6 and 10m." width="960" />
+<p class="caption">
+Figure 3.9: Figure. Combined plot showing the relationships between relative loadings of 3 PARAFAC components and landcover characteristics for EEMs samples collected between June 10 to July 15, 2022, which includes a synoptic sampling. Color indicates direction and correlation value (Pearson’s). Asterisks indicate level of significance. This figure indicates that humic fraction of the fluorescing DOM increase with high percentages of tundra, and short canopy. Protein-like fractions of the fluorescing DOM increase with high percentages of cut or regenerating forest, and canopy between 6 and 10m.
+</p>
+</div>
+</div>
+<div id="b.ii.b.-topography-and-moisture" class="section level5 hasAnchor" number="3.3.3.2.2">
+<h5><span class="header-section-number">3.3.3.2.2</span> 1.B.ii.b. Topography and Moisture<a href="relative-loadings.html#b.ii.b.-topography-and-moisture" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-22"></span>
+<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-22-1.png" alt="Figure. Combined plot showing the relationships between relative loadings of 3 PARAFAC components and topographic or moisture characteristics for EEMs samples collected between June 10 to July 15, 2022, which includes a synoptic sampling. Color indicates direction and correlation value (Pearson's). Asterisks indicate level of significance. This figure indicates that **humic** fraction of the fluorescing DOM **increase** with increasing discharge, the distance that allochthonous water travels before reaching the stream channel, and increased watershed moisture. **Humic** fractions **decrease** with watershed slope. **Protein-like** fractions of the fluorescing DOM **increase** with increasing slope and **decrease** with increasing Q, increasing moisture indices, and increased mean distance to the stream channel." width="960" />
+<p class="caption">
+Figure 3.10: Figure. Combined plot showing the relationships between relative loadings of 3 PARAFAC components and topographic or moisture characteristics for EEMs samples collected between June 10 to July 15, 2022, which includes a synoptic sampling. Color indicates direction and correlation value (Pearson’s). Asterisks indicate level of significance. This figure indicates that <strong>humic</strong> fraction of the fluorescing DOM <strong>increase</strong> with increasing discharge, the distance that allochthonous water travels before reaching the stream channel, and increased watershed moisture. <strong>Humic</strong> fractions <strong>decrease</strong> with watershed slope. <strong>Protein-like</strong> fractions of the fluorescing DOM <strong>increase</strong> with increasing slope and <strong>decrease</strong> with increasing Q, increasing moisture indices, and increased mean distance to the stream channel.
+</p>
+</div>
+</div>
+<div id="b.ii.c.-ions---summer-2022-mid-june-to-mid-july" class="section level5 hasAnchor" number="3.3.3.2.3">
+<h5><span class="header-section-number">3.3.3.2.3</span> 1.B.ii.c. Ions - summer 2022 (mid-June to mid July)<a href="relative-loadings.html#b.ii.c.-ions---summer-2022-mid-june-to-mid-july" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-23"></span>
+<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-23-1.png" alt="Figure. Combined plot showing the relationships between relative loadings of 3 PARAFAC components and DOC (mg/L), and ions (mg/L) EEMs samples collected between June 10 to July 15, 2022, which includes a synoptic sampling. Color indicates direction and correlation value (Pearson's). Asterisks indicate level of significance." width="960" />
+<p class="caption">
+Figure 3.11: Figure. Combined plot showing the relationships between relative loadings of 3 PARAFAC components and DOC (mg/L), and ions (mg/L) EEMs samples collected between June 10 to July 15, 2022, which includes a synoptic sampling. Color indicates direction and correlation value (Pearson’s). Asterisks indicate level of significance.
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="c.-hydrograph---fool-creek-fractions-with-hydrograph" class="section level3 hasAnchor" number="3.3.4">
+<h3><span class="header-section-number">3.3.4</span> 1.C. Hydrograph - Fool Creek fractions with hydrograph<a href="relative-loadings.html#c.-hydrograph---fool-creek-fractions-with-hydrograph" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-25"></span>
+<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-25-1.png" alt="Figure. relative loadings over time from Fool Creek outlet stream site only. Component 1 (humic) appears to increase with discharge while the fraction of Component 2 (humic) and Component 3 (protein-like) decrease during peak flow" width="960" />
+<p class="caption">
+Figure 3.12: Figure. relative loadings over time from Fool Creek outlet stream site only. Component 1 (humic) appears to increase with discharge while the fraction of Component 2 (humic) and Component 3 (protein-like) decrease during peak flow
+</p>
+</div>
+</div>
+<div id="d.-data-preparation-for-multivariate-statistical-analysis---dimension-reduction-techniques" class="section level3 hasAnchor" number="3.3.5">
+<h3><span class="header-section-number">3.3.5</span> 1.D. Data preparation for multivariate statistical analysis - dimension reduction techniques<a href="relative-loadings.html#d.-data-preparation-for-multivariate-statistical-analysis---dimension-reduction-techniques" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>So we have a lot of variables, both response and explanatory, so we’ll want to reduce the dimensionality and complexity of the data by using ordination methods that find best fitting components in multi-dimensional space. To decide on a method, we need to understand the relationships among our variables to decide if and how we want to deal with collinearity.</p>
+<p>In another workbook (.ipynb), we have seen collinearity between independent variables e.g. (slope and percent_Old.Forest). Multicollinearity can be a problem when fitting regression models as it makes it harder to interpret our coefficients. Using VIF (Variance Inflation Factor) we can explore collinearity between our independent variables.</p>
+<p>Interpreting the results:<br>
+If the VIF is less than 5, multicollinearity is typically not a concern.<br>
+If VIF is between 5 and 10, there may be some moderate multicollinearity.<br>
+If VIF is greater than 10, multicollinearity is likely a serious issue, and you may want to consider removing or transforming variables.</p>
+<div id="d.i.a.-multicollinearity" class="section level5 hasAnchor" number="3.3.5.0.1">
+<h5><span class="header-section-number">3.3.5.0.1</span> 1.D.i.a. Multicollinearity<a href="relative-loadings.html#d.i.a.-multicollinearity" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<pre><code>##                 doc_mg.l                  na_mg.l                 nh4_mg.l                   K_mg.l 
+##                 2.778940                 3.687201                 1.814268                 3.200284 
+##                  Mg_mg.l                  Ca_mg.l                   F_mg.l                  Cl_mg.l 
+##                 5.168057                 6.914420                 1.915917                 2.346317 
+##                 NO3_mg.l                  area_km                    Qm3_s              percent_1.5 
+##                 2.276190                 5.403615                 1.179126              1946.640744 
+##             percent_6.10            percent_11.15               slope_mean              aspect_mean 
+##              1094.583005               593.202414                 8.020170                 6.822729 
+##         ndmi_raster_mean         ndvi_raster_mean       disttostreams_mean      percent_Beetle.kill 
+##                12.756277                 6.261219                 4.602639               169.299285 
+##       percent_Old.Forest percent_cut.regenerating           percent_Tundra       distance.to.outlet 
+##               133.752341                39.423074               114.531399                10.082237</code></pre>
+<p>So given that we have a lot of mulitcollinearity, we can systematically remove variables that are non-essential or redundant:</p>
+<pre><code>##                  area_km               slope_mean              aspect_mean         ndmi_raster_mean 
+##                 1.835627                 3.142438                 4.079431                 4.826514 
+##         ndvi_raster_mean       disttostreams_mean      percent_Beetle.kill       percent_Old.Forest 
+##                 3.599633                 3.863261                84.406204                77.784414 
+## percent_cut.regenerating           percent_Tundra 
+##                22.503875                54.815622</code></pre>
+<p>But ultimately we have several variables contributing to a high VIF that are all important to our question. Therefore, we can use RDA and PCA as a dimension reduction technique, assuming we remove some of the most redundant variables. This should transform() the predictors into a smaller set of uncorrelated PCs (components) that still explain most of the variance.</p>
+</div>
+<div id="d.i.b.-distributions-and-standardization" class="section level5 hasAnchor" number="3.3.5.0.2">
+<h5><span class="header-section-number">3.3.5.0.2</span> 1.D.i.b. Distributions and standardization<a href="relative-loadings.html#d.i.b.-distributions-and-standardization" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p>To perform RDA and PCA, explanatory and response variables must be centered, standardized, transformed or normalized</p>
+<p>So these are all quantitative variables with different units and numerical ranges. Standardization transforms the variables so they have a mean of zero and a standard deviation of one.</p>
+Let’s view the scaled distributions of standardized explanatory variables:
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-32"></span>
+<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-32-1.png" alt="Figure. Checking out the distribution of explanatory variables " width="672" />
+<p class="caption">
+Figure 3.13: Figure. Checking out the distribution of explanatory variables
+</p>
+</div>
+Now we will check the distributions of our response variables
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-33"></span>
+<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-33-1.png" alt="Figure. Checking out the distribution of response variables " width="672" />
+<p class="caption">
+Figure 3.14: Figure. Checking out the distribution of response variables
+</p>
+</div>
+<p>Our response variables are both right and left-skewed unimodal. We may need to make the data more symmetrical or approximately normal, This can ensure that they contribute equally to the analysis and RDA assumes linear relationships between variables. But these may be be close enough to approximately normal once they are standardized/z-scored (subtracts the mean and divides by the standard deviation for each variable):</p>
+<p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<p>The scales are similar, the units are the same. Let’s move forward for now.</p>
+</div>
+</div>
+<div id="e.-partial-least-squares" class="section level3 hasAnchor" number="3.3.6">
+<h3><span class="header-section-number">3.3.6</span> 1.E. Partial least squares<a href="relative-loadings.html#e.-partial-least-squares" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><a href="https://mixomicsteam.github.io/mixOmics-Vignette/id_04.html#id_04:spls2" class="uri">https://mixomicsteam.github.io/mixOmics-Vignette/id_04.html#id_04:spls2</a></p>
+<p>Initial exploration with PCA
+Q² evaluates how well the model can predict unseen data based on the selected number of components.
+A higher Q² value indicates better predictive performance.
+Commonly, a Q² value greater than 0.095 is considered an acceptable threshold for a good predictive model.</p>
+<p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<p>None of our components have Q² total greater than 0.095. This suggests that the PLS model may not have enough predictive power to explain the relationship between the response variables and explanatory variables, based on cross-validation.</p>
+<p>We know the relationships between individual response variables and explanatory variables are strong. PLS does not assume normality of the data, though scaling does seem to help the Q2.</p>
+<p>From the tutorial: “We now set a grid of values - thin at the start, but also restricted to a small number of genes for a parsimonious model, which we will test for each of the two components in the tune.spls() function, using the MAE criterion.”
+So, in simpler terms, I think this means this piece of code is tuning a partial least squares (PLS) regression model using cross-validation to find the best number of variables to include in the model.
+I want to include all response variables at this point, so this is adapted from the tutorial:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="relative-loadings.html#cb6-1" tabindex="-1"></a><span class="co"># Define the number of response variables to keep (all 3 in this case)</span></span>
+<span id="cb6-2"><a href="relative-loadings.html#cb6-2" tabindex="-1"></a>list.keepY <span class="ot">&lt;-</span> <span class="fu">ncol</span>(respons_df)  <span class="co"># Assuming Y has 3 columns, this will set it to 3</span></span>
+<span id="cb6-3"><a href="relative-loadings.html#cb6-3" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="relative-loadings.html#cb6-4" tabindex="-1"></a><span class="co"># Define a list of explanatory variables to test</span></span>
+<span id="cb6-5"><a href="relative-loadings.html#cb6-5" tabindex="-1"></a>list.keepX <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">seq</span>(<span class="dv">5</span>, <span class="dv">12</span>, <span class="dv">1</span>))  <span class="co"># As before, testing selection from 5 to 50 variables in X</span></span>
+<span id="cb6-6"><a href="relative-loadings.html#cb6-6" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="relative-loadings.html#cb6-7" tabindex="-1"></a><span class="co"># Run the tuning with only list.keepX cross-validated</span></span>
+<span id="cb6-8"><a href="relative-loadings.html#cb6-8" tabindex="-1"></a>tune.spls.doc <span class="ot">&lt;-</span> <span class="fu">tune.spls</span>(expl_df, respons_df, </span>
+<span id="cb6-9"><a href="relative-loadings.html#cb6-9" tabindex="-1"></a>                             <span class="at">test.keepX =</span> list.keepX, </span>
+<span id="cb6-10"><a href="relative-loadings.html#cb6-10" tabindex="-1"></a>                             <span class="at">ncomp =</span> <span class="dv">2</span>, </span>
+<span id="cb6-11"><a href="relative-loadings.html#cb6-11" tabindex="-1"></a>                             <span class="at">nrepeat =</span> <span class="dv">1</span>, </span>
+<span id="cb6-12"><a href="relative-loadings.html#cb6-12" tabindex="-1"></a>                             <span class="at">folds =</span> <span class="dv">10</span>, </span>
+<span id="cb6-13"><a href="relative-loadings.html#cb6-13" tabindex="-1"></a>                             <span class="at">mode =</span> <span class="st">&#39;regression&#39;</span>, </span>
+<span id="cb6-14"><a href="relative-loadings.html#cb6-14" tabindex="-1"></a>                             <span class="at">measure =</span> <span class="st">&#39;cor&#39;</span>, </span>
+<span id="cb6-15"><a href="relative-loadings.html#cb6-15" tabindex="-1"></a>                             <span class="at">BPPARAM =</span> BiocParallel<span class="sc">::</span><span class="fu">SnowParam</span>(<span class="at">workers =</span> <span class="dv">14</span>)  <span class="co"># Optional parallelization</span></span>
+<span id="cb6-16"><a href="relative-loadings.html#cb6-16" tabindex="-1"></a>                            )</span></code></pre></div>
+<pre><code>## Warning: &lt;anonymous&gt;: ... may be used in an incorrect context: 
+##      spls(X = X, Y = Y, keepX = c(choice.keepX, keepX), keepY = c(choice.keepY, 
+##          keepY), ncomp = comp, mode = mode, ...)
+## Warning: &lt;anonymous&gt;: ... may be used in an incorrect context: 
+##      spls(X = X, Y = Y, keepX = c(choice.keepX, keepX), keepY = c(choice.keepY, 
+##          keepY), ncomp = comp, mode = mode, ...)</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="relative-loadings.html#cb8-1" tabindex="-1"></a><span class="co"># Plot the tuning results</span></span>
+<span id="cb8-2"><a href="relative-loadings.html#cb8-2" tabindex="-1"></a><span class="fu">plot</span>(tune.spls.doc)</span></code></pre></div>
+<p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-37-1.png" width="672" /></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="relative-loadings.html#cb9-1" tabindex="-1"></a><span class="co"># Standardize the data</span></span>
+<span id="cb9-2"><a href="relative-loadings.html#cb9-2" tabindex="-1"></a>X_scaled <span class="ot">&lt;-</span> <span class="fu">scale</span>(expl_df)</span>
+<span id="cb9-3"><a href="relative-loadings.html#cb9-3" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="relative-loadings.html#cb9-4" tabindex="-1"></a><span class="co"># Perform PCA</span></span>
+<span id="cb9-5"><a href="relative-loadings.html#cb9-5" tabindex="-1"></a>pca_result <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(X_scaled, <span class="at">center =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-6"><a href="relative-loadings.html#cb9-6" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="relative-loadings.html#cb9-7" tabindex="-1"></a><span class="co"># Check variance explained</span></span>
+<span id="cb9-8"><a href="relative-loadings.html#cb9-8" tabindex="-1"></a><span class="fu">summary</span>(pca_result)</span></code></pre></div>
+<pre><code>## Importance of components:
+##                           PC1    PC2    PC3    PC4     PC5     PC6    PC7     PC8    PC9    PC10
+## Standard deviation     2.1860 1.4916 1.3046 1.1224 0.91363 0.68046 0.6681 0.36959 0.3305 0.18584
+## Proportion of Variance 0.3982 0.1854 0.1418 0.1050 0.06956 0.03859 0.0372 0.01138 0.0091 0.00288
+## Cumulative Proportion  0.3982 0.5836 0.7254 0.8304 0.89997 0.93856 0.9758 0.98714 0.9962 0.99911
+##                           PC11      PC12
+## Standard deviation     0.10306 8.348e-11
+## Proportion of Variance 0.00089 0.000e+00
+## Cumulative Proportion  1.00000 1.000e+00</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="relative-loadings.html#cb11-1" tabindex="-1"></a><span class="co"># Choose the number of components (e.g., first 2 PCs)</span></span>
+<span id="cb11-2"><a href="relative-loadings.html#cb11-2" tabindex="-1"></a>X_pca <span class="ot">&lt;-</span> pca_result<span class="sc">$</span>x[, <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span>
+<span id="cb11-3"><a href="relative-loadings.html#cb11-3" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="relative-loadings.html#cb11-4" tabindex="-1"></a><span class="co"># Run PLS with PCA components</span></span>
+<span id="cb11-5"><a href="relative-loadings.html#cb11-5" tabindex="-1"></a>tune.frac.pls <span class="ot">&lt;-</span> <span class="fu">pls</span>(<span class="at">X =</span> X_pca, <span class="at">Y =</span> respons_df, <span class="at">ncomp =</span> <span class="dv">3</span>, <span class="at">mode =</span> <span class="st">&#39;regression&#39;</span>)</span></code></pre></div>
+<pre><code>## Warning: The SGCCA algorithm did not converge</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="relative-loadings.html#cb13-1" tabindex="-1"></a><span class="co"># Evaluate model performance</span></span>
+<span id="cb13-2"><a href="relative-loadings.html#cb13-2" tabindex="-1"></a>doc.frac.pls2 <span class="ot">&lt;-</span> <span class="fu">perf</span>(tune.frac.pls, <span class="at">validation =</span> <span class="st">&#39;Mfold&#39;</span>, <span class="at">folds =</span> <span class="dv">10</span>, <span class="at">nrepeat =</span> <span class="dv">5</span>)</span>
+<span id="cb13-3"><a href="relative-loadings.html#cb13-3" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="relative-loadings.html#cb13-4" tabindex="-1"></a><span class="fu">plot</span>(doc.frac.pls2)</span></code></pre></div>
+<p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+</div>
+<div id="e.-rda-redundancy-analysis" class="section level3 hasAnchor" number="3.3.7">
+<h3><span class="header-section-number">3.3.7</span> 1.E. RDA (Redundancy Analysis)<a href="relative-loadings.html#e.-rda-redundancy-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><a href="https://r.qcbs.ca/workshop10/book-en/redundancy-analysis.html" class="uri">https://r.qcbs.ca/workshop10/book-en/redundancy-analysis.html</a>
+Similar to PCA, but RDA is a <u>constrained</u> method that requries two datasets, one for response variables (e.g., PARAFAC component fractions) and one for explanatory variables (watershed characteristics)</p>
+<p>RDA identifies the portion of the variation in the response dataset that can be explained by the explanatory variables. So this tells us how much of the variability in the response variables is explained by the predictors.</p>
+<div id="e.i.-all-data---workflow-hidden-except-results-for-comparison-to-other-subsets" class="section level4 hasAnchor" number="3.3.7.1">
+<h4><span class="header-section-number">3.3.7.1</span> 1.E.i. All data - Workflow hidden except results for comparison to other subsets<a href="relative-loadings.html#e.i.-all-data---workflow-hidden-except-results-for-comparison-to-other-subsets" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>In the summary tables, the ‘Importance of components’ tells us the eigenvalues and their contributions to the variance for RDA components 1-3 and the PCs 1-3. ie. an eigenvalue represents the amount of variance explained by each component. Higher eigenvalues indicate that the component explains a larger portion of the total variance in the data. Then the Proportion Explained is the fraction of the total variance explained by each component. So at RDA1: Proportion Explained, we might see 0.32, which means RDA explains approximately 32% of the <strong>total</strong>variance. Then the cumulative Proportion tells us how much more of the variation is explianed as we add more components.</p>
+<p><strong>Summary of ‘ALL SAMPLES’ RDA</strong></p>
+<pre><code>## 
+## Call:
+## rda(formula = standardized_resp ~ aspect_mean + twi_mean + ndvi_raster_mean +      disttostreams_mean + percent_Beetle.kill + percent_Old.Forest +      percent_cut.regenerating + area_km + Qm3_s, data = explanatory_standardized,      na.action = na.exclude) 
+## 
+## Partitioning of variance:
+##               Inertia Proportion
+## Total           2.999     1.0000
+## Constrained     1.095     0.3649
+## Unconstrained   1.905     0.6351
+## 
+## Eigenvalues, and their contribution to the variance 
+## 
+## Importance of components:
+##                         RDA1     RDA2   PC1    PC2
+## Eigenvalue            1.0690 0.025593 1.599 0.3061
+## Proportion Explained  0.3564 0.008533 0.533 0.1020
+## Cumulative Proportion 0.3564 0.364941 0.898 1.0000
+## 
+## Accumulated constrained eigenvalues
+## Importance of components:
+##                         RDA1    RDA2
+## Eigenvalue            1.0690 0.02559
+## Proportion Explained  0.9766 0.02338
+## Cumulative Proportion 0.9766 1.00000</code></pre>
+</div>
+<div id="e.ii.-streams-only---workflow-retained-but-hidden" class="section level4 hasAnchor" number="3.3.7.2">
+<h4><span class="header-section-number">3.3.7.2</span> 1.E.ii. Streams only - workflow retained but hidden<a href="relative-loadings.html#e.ii.-streams-only---workflow-retained-but-hidden" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>results shown for comparison among other analyses</p>
+<p><strong>scaled:</strong></p>
+<p><strong>Summary of ‘STREAMS ONLY’ RDA</strong></p>
+<pre><code>## 
+## Call:
+## rda(formula = standardized_resp ~ aspect_mean + twi_mean + ndvi_raster_mean +      disttostreams_mean + percent_Beetle.kill + percent_Old.Forest +      percent_cut.regenerating + area_km + Qm3_s, data = explanatory_standardized,      na.action = na.exclude) 
+## 
+## Partitioning of variance:
+##               Inertia Proportion
+## Total           3.213     1.0000
+## Constrained     1.596     0.4967
+## Unconstrained   1.617     0.5033
+## 
+## Eigenvalues, and their contribution to the variance 
+## 
+## Importance of components:
+##                         RDA1     RDA2    PC1    PC2
+## Eigenvalue            1.5686 0.027649 1.3662 0.2510
+## Proportion Explained  0.4881 0.008604 0.4252 0.0781
+## Cumulative Proportion 0.4881 0.496737 0.9219 1.0000
+## 
+## Accumulated constrained eigenvalues
+## Importance of components:
+##                         RDA1    RDA2
+## Eigenvalue            1.5686 0.02765
+## Proportion Explained  0.9827 0.01732
+## Cumulative Proportion 0.9827 1.00000</code></pre>
+<p>The <u>Eigenvalues, and their contribution to the variance</u> table provides a broader comparison of RDA and PCA results, while the <u>Accumulated constrained eigenvalues</u> shows the effectiveness of RDA components in explaining the variance in the context of the response variables.</p>
+<p>With both response and explanatory variables scaled as z-scores using scale(), we get an RDA that explains much of the <strong>constrained</strong> variance (97%). Let’s look at the coefficients associated with the variables in RDA1. They indicate the strength and direction of the relationship between each explanatory variable and the RDA1 component.</p>
+</div>
+<div id="e.iii.-summer-synoptic" class="section level4 hasAnchor" number="3.3.7.3">
+<h4><span class="header-section-number">3.3.7.3</span> 1.E.iii. Summer synoptic:<a href="relative-loadings.html#e.iii.-summer-synoptic" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Shows entire workflow to derive best fitting RDA</p>
+<pre><code>## 
+## Call:
+## rda(formula = standardized_resp ~ aspect_mean + twi_mean + ndvi_raster_mean +      disttostreams_mean + percent_Beetle.kill + percent_Old.Forest +      percent_cut.regenerating + area_km + Qm3_s, data = explanatory_standardized,      na.action = na.exclude) 
+## 
+## Partitioning of variance:
+##               Inertia Proportion
+## Total          3.0000     1.0000
+## Constrained    2.1704     0.7235
+## Unconstrained  0.8296     0.2765
+## 
+## Eigenvalues, and their contribution to the variance 
+## 
+## Importance of components:
+##                         RDA1    RDA2    PC1     PC2
+## Eigenvalue            2.0177 0.15266 0.5835 0.24610
+## Proportion Explained  0.6726 0.05089 0.1945 0.08203
+## Cumulative Proportion 0.6726 0.72347 0.9180 1.00000
+## 
+## Accumulated constrained eigenvalues
+## Importance of components:
+##                         RDA1    RDA2
+## Eigenvalue            2.0177 0.15266
+## Proportion Explained  0.9297 0.07034
+## Cumulative Proportion 0.9297 1.00000</code></pre>
+<p>Significance testing:</p>
+<pre><code>## Permutation test for rda under reduced model
+## Permutation: free
+## Number of permutations: 999
+## 
+## Model: rda(formula = standardized_resp ~ aspect_mean + twi_mean + ndvi_raster_mean + disttostreams_mean + percent_Beetle.kill + percent_Old.Forest + percent_cut.regenerating + area_km + Qm3_s, data = explanatory_standardized, na.action = na.exclude)
+##          Df Variance      F Pr(&gt;F)    
+## Model     9  2.17041 8.7208  0.001 ***
+## Residual 30  0.82959                  
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>We can also test the significance of each canonical axis with by = “axis”. Recall that these axes represent the variation in explanatory variables in fewer dimensions.</p>
+<pre><code>## Permutation test for rda under reduced model
+## Forward tests for axes
+## Permutation: free
+## Number of permutations: 999
+## 
+## Model: rda(formula = standardized_resp ~ aspect_mean + twi_mean + ndvi_raster_mean + disttostreams_mean + percent_Beetle.kill + percent_Old.Forest + percent_cut.regenerating + area_km + Qm3_s, data = explanatory_standardized, na.action = na.exclude)
+##          Df Variance       F Pr(&gt;F)    
+## RDA1      1  2.01775 89.9920  0.001 ***
+## RDA2      1  0.15266  6.8087  0.782    
+## Residual 37  0.82959                   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>or we can test the significance of each variable:</p>
+<pre><code>## Permutation test for rda under reduced model
+## Terms added sequentially (first to last)
+## Permutation: free
+## Number of permutations: 999
+## 
+## Model: rda(formula = standardized_resp ~ aspect_mean + twi_mean + ndvi_raster_mean + disttostreams_mean + percent_Beetle.kill + percent_Old.Forest + percent_cut.regenerating + area_km + Qm3_s, data = explanatory_standardized, na.action = na.exclude)
+##                          Df Variance       F Pr(&gt;F)    
+## aspect_mean               1  0.09478  3.4274  0.059 .  
+## twi_mean                  1  1.06887 38.6529  0.001 ***
+## ndvi_raster_mean          1  0.20600  7.4496  0.005 ** 
+## disttostreams_mean        1  0.43123 15.5942  0.001 ***
+## percent_Beetle.kill       1  0.01110  0.4013  0.632    
+## percent_Old.Forest        1  0.21447  7.7558  0.012 *  
+## percent_cut.regenerating  1  0.00007  0.0025  0.998    
+## area_km                   1  0.10385  3.7556  0.049 *  
+## Qm3_s                     1  0.04004  1.4478  0.228    
+## Residual                 30  0.82959                   
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<p>A variable may appear to have a strong influence or a high loading but not be statistically significant. This could be due to the variable being strongly correlated with the main gradient in the data but lacking statistical robustness (due to multicollinearity?).
+Variables like this might capture major trends in the data but don’t significantly improve the fit of the model when tested. This could mean that they are redundant or that the sample size is too small to detect their significance.</p>
+<p>Less influential but statistically significant means they account for a relatively small but non-random portion of the total variation. Might not be the primary drivers of variation, but they can be still be important to our understanding of secondary influences/trends.</p>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-79"></span>
+<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-79-1.png" alt="Figure. RDA1 loadings tell us the direction and strength between each explantory variable and the RDA1 component." width="672" />
+<p class="caption">
+Figure 3.15: Figure. RDA1 loadings tell us the direction and strength between each explantory variable and the RDA1 component.
+</p>
+</div>
+<p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-80-1.png" width="672" /></p>
+<p>Interpreting loadings for RDA1: <br>
+Recall that there are three response variables here, each will have a loading that indicates its correlation with RDA1. Humic components 1 and 2 will have similar loadings (positive and negative) on RDA1, where the protein-like component will have the opposite loading. In the biplot, this should be visible as response variable vectors pointing in opposite directions.</p>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-81"></span>
+<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-81-1.png" alt="Figure. RDA biplot" width="672" />
+<p class="caption">
+Figure 3.16: Figure. RDA biplot
+</p>
+</div>
+</div>
+</div>
+<div id="f.-pca-all-data" class="section level3 hasAnchor" number="3.3.8">
+<h3><span class="header-section-number">3.3.8</span> 1.F. PCA All data<a href="relative-loadings.html#f.-pca-all-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="f.i.-all-data" class="section level4 hasAnchor" number="3.3.8.1">
+<h4><span class="header-section-number">3.3.8.1</span> 1.F.i. All data<a href="relative-loadings.html#f.i.-all-data" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-82"></span>
+<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-82-1.png" alt="Figure. " width="960" />
+<p class="caption">
+Figure 3.17: Figure.
+</p>
+</div>
+<pre><code>##          Eigenvalue Variance_Explained Cumulative_Variance
+## comp 1  4.342438811        39.47671647            39.47672
+## comp 2  1.886022429        17.14565845            56.62237
+## comp 3  1.581504209        14.37731099            70.99969
+## comp 4  0.898506305         8.16823914            79.16793
+## comp 5  0.764777292         6.95252084            86.12045
+## comp 6  0.661707308         6.01552098            92.13597
+## comp 7  0.433685986         3.94259987            96.07857
+## comp 8  0.225653909         2.05139917            98.12997
+## comp 9  0.149323029         1.35748208            99.48745
+## comp 10 0.052177182         0.47433802            99.96179
+## comp 11 0.004203539         0.03821399           100.00000</code></pre>
+<p>Although PC1 and PC2 explain a lot of the variance and most pubs focus on these, PC3 contributes a non-trivial amount of variance (14%). Together, the first three components explain the majority of the total variance, which (I think) is a better threshold for interpretation than &lt;50%. Let’s see.</p>
+<p>Visualize the PC1 loadings to see what our important drivers are:</p>
+<p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-84-1.png" width="672" />
+In this case, PC1 might represent a gradient related to DOC lability or stability across the landscape (e.g., a transition from microbial activity-driven DOC production in low slopes, southern aspects, more moist sub-watersheds, to more labile DOC driven by hydrological transport in older forests due to higher slopes, northern aspects and drier sub-watersheds. Subwatersheds with older forests tend to be on higher slopes, northern aspects, which receive less solar radiation (cooler, less microbial activity). These also retain snow for longer, sustaining humic inputs through the falling limb (we might see this in Lexen)? A lot more detail is applied to this below.</p>
+<p>…BUT, PCA is unsupervised and doesn’t directly consider the response variable. So how well does PC1 explain the variability of the first PARAFAC component (humic)?.</p>
+<p>Let’s look at PC1 in 2-D space by plotting it against our response variable to see how PC1 correlates with the sample fraction of Humic Component1. We can get a sense of the strength and direction of the relationship:
+<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-85-1.png" width="672" />
+Meh.</p>
+<p>Explore correlations between the first 3 PCs and the response variable:</p>
+<pre><code>##             [,1]
+## Dim.1  0.4673675
+## Dim.2 -0.1587496
+## Dim.3  0.1628407</code></pre>
+<p>Lets fit a linear model with the first few components as predictors:</p>
+<pre><code>## 
+## Call:
+## lm(formula = relative_load_comp_1 ~ Dim.1 + Dim.2 + Dim.3, data = pca_scores)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.30789 -0.03662  0.01534  0.05326  0.31390 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.598080   0.005839 102.429  &lt; 2e-16 ***
+## Dim.1        0.023549   0.002802   8.404 4.08e-15 ***
+## Dim.2       -0.012137   0.004252  -2.855  0.00469 ** 
+## Dim.3        0.013596   0.004643   2.928  0.00374 ** 
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.09046 on 236 degrees of freedom
+## Multiple R-squared:  0.2702, Adjusted R-squared:  0.2609 
+## F-statistic: 29.12 on 3 and 236 DF,  p-value: 4.698e-16</code></pre>
+<p>Conclusions Component1: The small coefficients, combined with the relatively low R-squared value, suggest that even though the relationships are significant, they might not be strong enough to drive substantial changes in relative_load_comp_1. I can increase the amount of variability by remove more variables from the PCA, but this still does not drastically improve the relationship between PC1 and PARAFAC component 1.</p>
+<p>Let’s look at Components 2 and 3 in the same fashion. It could be that Component 1 is driven by the fractions of 2 and 3…?</p>
+<p>COMPONENT 2
+<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-88-1.png" width="672" /></p>
+<p>Explore correlations between the first 3 PCs and the response variable:</p>
+<pre><code>##              [,1]
+## Dim.1  0.46462289
+## Dim.2 -0.04673344
+## Dim.3  0.31533479</code></pre>
+<p>Lets fit a linear model with the first few components as predictors:</p>
+<pre><code>## 
+## Call:
+## lm(formula = relative_load_comp_2 ~ Dim.1 + Dim.2 + Dim.3, data = pca_scores)
+## 
+## Residuals:
+##       Min        1Q    Median        3Q       Max 
+## -0.122254 -0.014929  0.004666  0.024158  0.070329 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.185939   0.002188  84.991  &lt; 2e-16 ***
+## Dim.1        0.009071   0.001050   8.640 8.62e-16 ***
+## Dim.2       -0.001384   0.001593  -0.869    0.386    
+## Dim.3        0.010201   0.001740   5.864 1.52e-08 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.03389 on 236 degrees of freedom
+## Multiple R-squared:  0.3175, Adjusted R-squared:  0.3088 
+## F-statistic: 36.59 on 3 and 236 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>COMPONENT 3
+<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-91-1.png" width="672" /></p>
+<p>Explore correlations between the first 3 PCs and the response variable:</p>
+<pre><code>##             [,1]
+## Dim.1 -0.4988821
+## Dim.2  0.1362872
+## Dim.3 -0.2196376</code></pre>
+<p>Lets fit a linear model with the first few components as predictors:</p>
+<pre><code>## 
+## Call:
+## lm(formula = relative_load_comp_3 ~ Dim.1 + Dim.2 + Dim.3, data = pca_scores)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.29205 -0.06526 -0.02330  0.04171  0.39464 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  0.215981   0.007337  29.438  &lt; 2e-16 ***
+## Dim.1       -0.032619   0.003521  -9.265  &lt; 2e-16 ***
+## Dim.2        0.013522   0.005342   2.531    0.012 *  
+## Dim.3       -0.023797   0.005834  -4.079 6.19e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.1137 on 236 degrees of freedom
+## Multiple R-squared:  0.3157, Adjusted R-squared:  0.307 
+## F-statistic: 36.29 on 3 and 236 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Not surprisingly, the coefficients are similar among humic components and while similar in absolute value, opposite for the protein-like component.</p>
+<p>Save this:
+Interpreting loadings for PC1: <br>
+<u>Negative Loadings</u> <br>
+Examples, clarifications:
+<strong>percent_Old.Forest</strong> as measured by a landcover classificaiton model (hand corrected Random Forest)
+<strong>percent_11.15</strong> is the percent of the each subwatershed containing by forest btwn 11 and 15m tall as measured pixel counts of the canopy height model. These trees are ‘old’ but not the rare ancients found in the riparian valley.
+A negative loading in PC1 means that higher values of these variables are associated with lower values of the principal component (PC1), which ‘represents a particular combination of the variation explained by the dataset’ or in my words, a regression line that best fits the multidimensional space created by all of the variables. I think this means these are related to reduced Component1 fractions. Again, this is counter to Fegel results and the logic that the older forests would contain more recalcitrant sources of DOC. However, higher <strong>slopes</strong> and more <strong>tundra-covered</strong> areas also may negatively influence Component 1 humic fractions. This makes sense, as DOM is likely hydrologically transported faster in these conditions, with less time or material for microbial activity, transporting DOC while it is still labile.</p>
+<p><u>Positive Loadings:</u>
+On the other hand, positive loadings mean that higher values of these variables contribute positively to PC1.
+Top examples, clarification: <br>
+<strong>aspect</strong> higher aspect values (180 to 270) represent south and west aspects, 0-90 represent north and east. Previous studies that conclude that microbial decomposition of soil organic matter and enzyme activities associated with soil C, N, and P cycling increased with increasing temperature: Liu et al 2021 in Effects of natural vegetation restoration on DOM..and they cite: Min et al., 2019; Nazaries et al., 2015; Pang et al., 2015.
+<strong>disttostreams_mean</strong> is derived from a whitebox raster that calculates the downslope distance to the nearest downslope stream cell. This is assumed to give us a relative idea of the retention time of allochthonous water. Larger distances to the stream mean potentially more time for microbial activity to improve recalcitrance before DOM enters the stream channel.
+<strong>percent_cut.regenerating</strong> is the percent of subwatershed area covered by ‘cut’ plots. Thse are potentially areas of ‘newer’ forests, and in Deadhorse, many of these appear similar to meadows. We might expect a decreased humic component with regenerating forest as they can have lower litter production, shallow root systems, leading to decreased input of humic subtances (notes from a Tim meeting). However, we might be at an older stage of succession at this point (40+ years post harvest at this point). Roots are deeper, litter and deadwood has likely had time to accumulate in these plots. This can enhance complex, recalcitrant carbon compounds, like our humic Component1.<br />
+<strong>percent_Beetle.kill</strong> Similar to above, beetle kill leaves the deadwood of old trees in place. We might expect these to be a source of recalcitrant carbon. <strong>TWI</strong> is arguably important in the fraction of humic components. Like distancetostreams, is likely an indication of the allochthonous water retention. In other words, increased water retention in areas with higher wetness indices, where DOM originating from surrounding soils (allochthonous DOM) can remain for extended periods may allow for greater microbial processing of DOM, leading to the accumulation of more recalcitrant, humic Components before the DOM is transported into the stream channel.</p>
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="structure.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="normalized-doc.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection",
+"depth": 1
+},
+"toolbar": {
+"position": "static"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
