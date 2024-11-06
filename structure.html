@@ -230,62 +230,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="structure" class="section level2 hasAnchor" number="3.2">
 <h2><span class="header-section-number">3.2</span> Structure:<a href="structure.html#structure" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>There are a few ways we can group and explore this data. We can observe the PARAFAC components as fractions of the total fluorescence, i.e., the DOC ‘community’ structure. We can also review the DOC normalized fluorescence intensity of each component. This could help us better examine lability of DOC and how much fluorescence signal is produced per unit of carbon and differences in overall DOM reactivity (i.e., does a larger proportion of DOM fluoresce in some samples relative to others). The workflow is structured as follows: <br></p>
-<ol style="list-style-type: decimal">
-<li><strong>Relative loadings:</strong> <br>
-<ul>
-<li><strong>A.</strong> Boxplots - response distributions by watershed<br>
-<ul>
-<li><strong>i.</strong> protein-like (more labile)<br></li>
-<li><strong>ii.</strong> humic (more recalcitrant)<br></li>
-</ul></li>
-<li><strong>B.</strong> Correlation matrices - since response variables are all the same unit and range, no transformation is done initially. Explanatory variables are grouped as:<br>
-<ul>
-<li><strong>i.</strong> All samples, regardless of sample date or position (i.e., well and stream) (n= 206) <br>
-<ul>
-<li><strong>a.</strong> landcover<br></li>
-<li><strong>b.</strong> topographic and moisture<br></li>
-<li><strong>c.</strong> ion concentrations<br></li>
-</ul></li>
-<li><strong>ii.</strong> Summer synoptic subset - all samples collected in the third week of June 2022 <br>
-<ul>
-<li><strong>a.</strong> landcover<br></li>
-<li><strong>b.</strong> topographic and moisture<br></li>
-<li><strong>c.</strong> ion concentrations<br></li>
-</ul></li>
-<li><strong>iii.</strong> Streams only - all samples collected from streams (any date) (n=91)<br>
-<ul>
-<li><strong>a.</strong> landcover<br></li>
-<li><strong>b.</strong> topographic and moisture<br></li>
-<li><strong>c.</strong> ion concentrations<br></li>
-</ul></li>
-</ul></li>
-<li><strong>C.</strong> Time series of componets with Fool Creek hydrograph <br>
-<ul>
-<li><strong>i.</strong> streams only <br></li>
-</ul></li>
-<li><strong>D.</strong> Redundancy analysis prep. <br>
-<ul>
-<li><strong>i.</strong> all data <br>
-<ul>
-<li><strong>a.</strong> Exploring multicollinearity <br></li>
-<li><strong>a.</strong> distribution and standardization <br></li>
-</ul></li>
-</ul></li>
-<li><strong>E.</strong> Redundancy analysis <br>
-<ul>
-<li><strong>i.</strong> all data<br></li>
-<li><strong>ii.</strong> streams only <br></li>
-</ul></li>
-<li><strong>F.</strong> PCA - all data <br>
-<ul>
-<li><strong>i.</strong> all data <br></li>
-<li><strong>ii.</strong> streams only <br>
-Then we repeat this workflow for DOC normalized fluorescence intensities:<br></li>
-</ul></li>
-</ul></li>
-<li><strong>Normalized Fluorescence intensities:</strong>… (see TOC to the left)</li>
-</ol>
+<p>There are a few ways we can group and explore this data. We can observe the PARAFAC components as fractions of the total fluorescence, i.e., the DOC ‘community’ structure. We can also review the DOC normalized fluorescence intensity of each component. This could help us better examine lability of DOC and how much fluorescence signal is produced per unit of carbon and differences in overall DOM reactivity (i.e., does a larger proportion of DOM fluoresce in some samples relative to others). The TOC while point to relative loadings vs normalized DOC workflows.</p>
 <div id="relative-loadings" class="section level3 hasAnchor" number="3.2.1">
 <h3><span class="header-section-number">3.2.1</span> 1. Relative loadings<a href="structure.html#relative-loadings" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>Relative loadings for each sample (i.e., loading for each component/total loading for the sample in the 3 component model). This tells us how much of each component contributes to the total fluorescence of that particular sample.
@@ -647,7 +592,7 @@ Similar to PCA, but RDA is a <u>constrained</u> method that requries two dataset
 ## Model: rda(formula = standardized_resp ~ aspect_mean + twi_mean + ndvi_raster_mean + disttostreams_mean + percent_Beetle.kill + percent_Old.Forest + percent_cut.regenerating + area_km + Qm3_s, data = explanatory_standardized, na.action = na.exclude)
 ##          Df Variance       F Pr(&gt;F)    
 ## RDA1      1  2.01775 89.9920  0.001 ***
-## RDA2      1  0.15266  6.8087  0.777    
+## RDA2      1  0.15266  6.8087  0.775    
 ## Residual 37  0.82959                   
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
@@ -659,15 +604,15 @@ Similar to PCA, but RDA is a <u>constrained</u> method that requries two dataset
 ## 
 ## Model: rda(formula = standardized_resp ~ aspect_mean + twi_mean + ndvi_raster_mean + disttostreams_mean + percent_Beetle.kill + percent_Old.Forest + percent_cut.regenerating + area_km + Qm3_s, data = explanatory_standardized, na.action = na.exclude)
 ##                          Df Variance       F Pr(&gt;F)    
-## aspect_mean               1  0.09478  3.4274  0.053 .  
+## aspect_mean               1  0.09478  3.4274  0.056 .  
 ## twi_mean                  1  1.06887 38.6529  0.001 ***
-## ndvi_raster_mean          1  0.20600  7.4496  0.011 *  
+## ndvi_raster_mean          1  0.20600  7.4496  0.007 ** 
 ## disttostreams_mean        1  0.43123 15.5942  0.001 ***
-## percent_Beetle.kill       1  0.01110  0.4013  0.615    
-## percent_Old.Forest        1  0.21447  7.7558  0.008 ** 
-## percent_cut.regenerating  1  0.00007  0.0025  1.000    
+## percent_Beetle.kill       1  0.01110  0.4013  0.636    
+## percent_Old.Forest        1  0.21447  7.7558  0.009 ** 
+## percent_cut.regenerating  1  0.00007  0.0025  0.997    
 ## area_km                   1  0.10385  3.7556  0.041 *  
-## Qm3_s                     1  0.04004  1.4478  0.229    
+## Qm3_s                     1  0.04004  1.4478  0.219    
 ## Residual                 30  0.82959                   
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
