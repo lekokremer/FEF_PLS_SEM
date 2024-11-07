@@ -1,0 +1,145 @@
+---
+title: "Precipitation and runoff"
+author: "Lauren Kremer"
+date: "2024-10-27"
+output: html_document
+---
+
+# Addition of precipitation and runoff data 
+This script will eventually be moved to an earlier chapter in the workflow once the data management and collection chapters are added to this book. For the time being, this generates a .csv that is imported to chapter 4.
+
+Inputs used in this script are inputsim_dh1_year and fool_input_year csvs that are generated from snowmelt models. Scripts are found in models_analysis/WECOH_deadhorse/1_precip/scripts/5_SNOTEL.SWE.Model.Deadhorse.LK.Rmd
+and a similar path for the Fool Creek WECOH workflow. 
+
+Runoff and snowmelt are modeled for both, one model for each side of the East S. Louis catchament. Therefore Deadhorse estimations are also applied to Lexen in the PLS analysis.
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# pkgTest is a helper function to load packages and install packages only when they are not installed yet.
+pkgTest <- function(x)
+{
+  if (x %in% rownames(installed.packages()) == FALSE) {
+    install.packages(x, dependencies= TRUE)
+  }
+  library(x, character.only = TRUE)
+}
+
+#"rstan", "devtools", "tidyverse",  "ggpmisc", "reshape2", 
+neededPackages <- c('tidyr', 'dplyr', 'lubridate', 'ggplot2', 'zoo')
+
+for (package in neededPackages){pkgTest(package)}
+```
+
+```{r, include=FALSE}
+# Move up one directory from the current working directory
+file <- normalizePath(file.path(getwd(), "/datafiles/fluoro_vege_manually_corrected.csv"))
+
+# Read the CSV file
+sample_vege_fluro_topo <- read.csv(file) %>%
+  dplyr::select(- c(shapefile_x, shapefile_y, shapefile, datetime))%>%
+  mutate(date = mdy(date))  # Create a new date column
+
+
+```
+
+```{r, include=FALSE}
+# import runoff and SWE data:
+
+# Load data from the input files
+inputs_dh1_2021 <- read.csv("datafiles/inputsim_dh1_2021.csv")
+inputs_dh1_2022 <- read.csv("datafiles/inputsim_dh1_2022.csv")
+fool_input_2021 <- read.csv("datafiles/fool_input_2021.csv")
+fool_input_2022 <- read.csv("datafiles/fool_input_2022.csv")
+
+# Combine the 'inputs_dh1' files (for 'dh' and 'lexen' watersheds)
+dh_input_combined <- bind_rows(inputs_dh1_2021, inputs_dh1_2022) %>%
+  mutate(watershed = "dh",
+         date = mdy(date))
+
+# Combine the 'fool_input' files (for 'fc' watershed)
+fool_input_combined <- bind_rows(fool_input_2021, fool_input_2022) %>%
+  mutate(watershed = "fc",
+         date = ymd(date))
+
+```
+
+```{r, include=FALSE}
+# For inputs_dh_combined
+dh_input_combined <- dh_input_combined %>%
+  arrange(date) %>%
+  mutate(
+    snowpack_3day_avg = rollapply(SWE.mm, 3, mean, fill = NA, align = "right") %>%
+                        round(digits = 2),  # Adjust digits as needed
+    melt_snow_interact = Input.mm * SWE.mm
+  )
+
+# For fool_input_combined
+fool_input_combined <- fool_input_combined %>%
+  arrange(date) %>%
+  mutate(
+    snowpack_3day_avg = rollapply(SWE.mm, 3, mean, fill = NA, align = "right")%>%
+                        round(digits =2),
+    melt_snow_interact = runoff_input * SWE.mm
+  )
+```
+
+```{r, include=FALSE}
+
+sample_fc <- sample_vege_fluro_topo %>%
+  filter(watershed == "fc") %>%
+  left_join(
+    fool_input_combined %>%
+      rename(Input.mm = runoff_input) %>%  # Rename before selecting and joining
+      dplyr::select(date, watershed, Input.mm, snowpack_3day_avg, melt_snow_interact),
+    by = c("date", "watershed")
+  )
+
+
+# Join for the 'dh' watersheds (including 'lexen')
+sample_dh <- sample_vege_fluro_topo %>%
+  filter(watershed %in% c("dh","dhs", "dhn", "lexen")) %>%
+  left_join(
+    dh_input_combined %>% 
+      dplyr::select(date, watershed, Input.mm, snowpack_3day_avg, melt_snow_interact),
+    by = c("date" = "date")
+  )
+
+sample_dh <- sample_dh %>%
+  dplyr::select(!watershed.y) %>%
+  rename(watershed = watershed.x)
+```
+
+```{r, echo = FALSE}
+# Combine both samples
+sample_combined <- bind_rows(sample_fc, sample_dh)
+
+#head(sample_combined)
+```
+
+```{r, echo=FALSE}
+# Assuming sample_combined is your dataframe
+# First, we will reshape the data for plotting
+sample_long <- sample_combined %>%
+  pivot_longer(cols = c(snowpack_3day_avg, Input.mm), 
+               names_to = "variable", 
+               values_to = "value")
+
+# Create the ggplot
+ggplot(sample_long, aes(x = date, y = value, color = variable, shape = watershed)) +
+  geom_point() +
+  labs(title = "Snowpack(mm) and Input(mm) (runoff and precip) by Watershed",
+       x = "Date",
+       y = "Value",
+       color = "Measurement Type",
+       shape = "Watershed") +
+  theme_minimal() +
+  theme(legend.position = "top")
+```
+
+This is a summary of the precip data added to the PLS test iteration workflow. Blue represents the snowpack, orange is input. Each point represents the 3 day rolling average of each sample at the time it was collected. 
+```{r, include = FALSE}
+# Export sample_combined as a .csv file in the "datafiles" folder
+write.csv(sample_combined, "datafiles/fluoro_vege_manually_corrected_melt.csv", row.names = FALSE)
+
+```
+

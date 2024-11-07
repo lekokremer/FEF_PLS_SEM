@@ -1,0 +1,51 @@
+--- 
+title: "PLS_rendered_book"
+author: "Lauren Kremer"
+date: "`r Sys.Date()`"
+output: bookdown::html_book
+---
+
+# Introduction
+
+This book records the workflow that was used for the FEF DOC poster presented at AGU 2024
+
+![](images/cover_image_1.jpg)
+
+description:  This book describes the workflow of the PLS FEF DOC analysis
+
+---
+
+## About
+
+This book currently documents the development of the PLS-SEM model used to identify a paths of variable influence in our watersheds. This analysis can provide insights into the direct and indirect influences within our system. By estimating path coefficients and measuring the strength and direction of relationships, PLS-SEM models help infer the structural connections among 'latent variables', guiding our understanding of complex causal mechanisms within the system. While PLS-SEM doesn't prove causation, it suggests plausible paths of influence within the system.
+
+PLS-SEM connects observed variables to their underlying concepts (latent variables). It combines factor analysis (which reduces reducing a large number of variables into a smaller set of factors, like PCA) with regression. However, unlike traditional regression, which focuses on directly observed variables, PLS-SEM aims to maximize the explained variance in the dependent variables and handles complex, indirect relationships and interactions in the system by evaluating two models at once.
+
+The measurement model evaluates relationships between our observed variables and underlying concepts (latent variables). For example, in our dataset, we might consider different measures of a latent variable 'topography' as watershed aspect, slope, elevation and indices derived from those measurements like the 'total wetness index' (indicators). We can simultaneously determine the relationships among our 'indicators' and between indicators and our latent variables while also evaluating the structural model, which looks for relationships between the latent variables. It is robust with non-normal data and 'small' samples. It can be used for both exploratory and confirmatory analysis. Here is a simple 2-min video: 
+
+```{r, echo=FALSE, results='asis'}
+cat('<iframe width="1080" height="608" src="https://www.youtube.com/embed/XR1bZp9IOmM" title="PLS SEM: Partial Least Squares Structural Equation Modeling" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>')
+```
+
+## Usage 
+
+**Addition of precipitation and runoff**: <br> 
+- This section will grow to include all data management files if Python can be included 
+
+**Correlations plots: data exploration**: <br>
+- Includes the results of PARAFAC analysis. Reviews correlations among compound measures and fluorescence indices. 
+
+**Partial least squares - SEM**: <br> 
+- a demo using FEF data to review terms and observe a basic model
+
+**Testing iterations of the PLS_SEM FEF**
+- multiple models in different combinations of indicator and latent variables. 
+
+
+
+```{r include=FALSE}
+# automatically create a bib database for R packages
+#knitr::write_bib(c(
+#  .packages(), 'bookdown', 'knitr', 'rmarkdown'
+#), 'packages.bib')
+```

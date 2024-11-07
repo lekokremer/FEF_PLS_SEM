@@ -1,0 +1,8 @@
+book_filename: "PLS_rendered_book"  # Optional: name of the output file
+delete_merged_file: TRUE
+language:
+  label:
+    fig: "Figure "
+    tab: "Table "
+rmd_files: ["index.Rmd", "02_add_precip_runoff.Rmd","03_BOD_results_summary.Rmd", "04_correlations_PARAFAC_ws.Rmd", "05_PLS_SEM_FEF_demo.Rmd", "06_PLS_SEM_iterations.Rmd"]
+
