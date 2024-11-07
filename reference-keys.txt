@@ -101,4 +101,5 @@ model-8-change-response-to-fraction-of-humic-dom-with-beetlekill
 results-of-bootstrapped-pls-6
 model-9-tundra-influence-on-change-to-fraction-of-humic-dom
 results-of-bootstrapped-pls-7
+grouping-response-variables
 reporting-initial-results-and-evaluating-the-quality-of-our-favorite-model
