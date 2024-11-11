@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="addition-of-precipitation-and-runoff-data.html"/>
-<link rel="next" href="first-plotting-daily_doc_loss.html"/>
+<link rel="next" href="daily-doc-loss-carbon.html"/>
 <script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -149,8 +149,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2" data-path="addition-of-precipitation-and-runoff-data.html"><a href="addition-of-precipitation-and-runoff-data.html"><i class="fa fa-check"></i><b>2</b> Addition of precipitation and runoff data</a></li>
 <li class="chapter" data-level="3" data-path="explore-data-from-biological-oxygen-demand-assays.html"><a href="explore-data-from-biological-oxygen-demand-assays.html"><i class="fa fa-check"></i><b>3</b> Explore data from Biological Oxygen Demand assays</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="first-plotting-daily_doc_loss.html"><a href="first-plotting-daily_doc_loss.html"><i class="fa fa-check"></i><b>3.1</b> First, plotting daily_DOC_loss</a></li>
-<li class="chapter" data-level="3.2" data-path="dissolved-oxygen-loss.html"><a href="dissolved-oxygen-loss.html"><i class="fa fa-check"></i><b>3.2</b> Dissolved oxygen loss:</a></li>
+<li class="chapter" data-level="3.1" data-path="daily-doc-loss-carbon.html"><a href="daily-doc-loss-carbon.html"><i class="fa fa-check"></i><b>3.1</b> Daily DOC loss (carbon)</a></li>
+<li class="chapter" data-level="3.2" data-path="dissolved-oxygen-loss.html"><a href="dissolved-oxygen-loss.html"><i class="fa fa-check"></i><b>3.2</b> Dissolved oxygen loss</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="dissolved-oxygen-loss.html"><a href="dissolved-oxygen-loss.html#explore-relationships."><i class="fa fa-check"></i><b>3.2.1</b> Explore relationships.</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="correlations-plots.html"><a href="correlations-plots.html"><i class="fa fa-check"></i><b>4</b> Correlations plots:</a>
 <ul>
@@ -259,7 +262,8 @@ microcosm end DOC -->
 <!--Format daily rate of change-->
 <!--These structures are used for plotting later-->
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="explore-data-from-biological-oxygen-demand-assays.html#cb2-1" tabindex="-1"></a>stat_subset <span class="ot">&lt;-</span> rates_of_change[rates_of_change<span class="sc">$</span>type <span class="sc">==</span> <span class="st">&#39;sample&#39;</span>, ] <span class="sc">%&gt;%</span></span>
-<span id="cb2-2"><a href="explore-data-from-biological-oxygen-demand-assays.html#cb2-2" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">&#39;sample&#39;</span>, watershed <span class="sc">!=</span> <span class="st">&#39;SSFP&#39;</span>)</span></code></pre></div>
+<span id="cb2-2"><a href="explore-data-from-biological-oxygen-demand-assays.html#cb2-2" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">&#39;sample&#39;</span>, watershed <span class="sc">!=</span> <span class="st">&#39;SSFP&#39;</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="explore-data-from-biological-oxygen-demand-assays.html#cb2-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>watershed)</span></code></pre></div>
 <p><strong>Workflow:</strong><br>
 In the script, three datasets were imported:<br>
 1. the DO depletion at 10min intervals as recorded by PreSens instrument as experimental microcosms <br>
@@ -287,7 +291,7 @@ We have two measurements from these experiments: the O2 within the microcosm mea
         </div>
       </div>
 <a href="addition-of-precipitation-and-runoff-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="first-plotting-daily_doc_loss.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="daily-doc-loss-carbon.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>

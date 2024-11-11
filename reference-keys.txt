@@ -39,8 +39,9 @@ about
 usage
 addition-of-precipitation-and-runoff-data
 explore-data-from-biological-oxygen-demand-assays
-first-plotting-daily_doc_loss
+daily-doc-loss-carbon
 dissolved-oxygen-loss
+explore-relationships.
 correlations-plots
 parafac-results-summary-figures
 structure

@@ -149,8 +149,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2" data-path="addition-of-precipitation-and-runoff-data.html"><a href="addition-of-precipitation-and-runoff-data.html"><i class="fa fa-check"></i><b>2</b> Addition of precipitation and runoff data</a></li>
 <li class="chapter" data-level="3" data-path="explore-data-from-biological-oxygen-demand-assays.html"><a href="explore-data-from-biological-oxygen-demand-assays.html"><i class="fa fa-check"></i><b>3</b> Explore data from Biological Oxygen Demand assays</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="first-plotting-daily_doc_loss.html"><a href="first-plotting-daily_doc_loss.html"><i class="fa fa-check"></i><b>3.1</b> First, plotting daily_DOC_loss</a></li>
-<li class="chapter" data-level="3.2" data-path="dissolved-oxygen-loss.html"><a href="dissolved-oxygen-loss.html"><i class="fa fa-check"></i><b>3.2</b> Dissolved oxygen loss:</a></li>
+<li class="chapter" data-level="3.1" data-path="daily-doc-loss-carbon.html"><a href="daily-doc-loss-carbon.html"><i class="fa fa-check"></i><b>3.1</b> Daily DOC loss (carbon)</a></li>
+<li class="chapter" data-level="3.2" data-path="dissolved-oxygen-loss.html"><a href="dissolved-oxygen-loss.html"><i class="fa fa-check"></i><b>3.2</b> Dissolved oxygen loss</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="dissolved-oxygen-loss.html"><a href="dissolved-oxygen-loss.html#explore-relationships."><i class="fa fa-check"></i><b>3.2.1</b> Explore relationships.</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="correlations-plots.html"><a href="correlations-plots.html"><i class="fa fa-check"></i><b>4</b> Correlations plots:</a>
 <ul>
@@ -416,25 +419,31 @@ If VIF is between 5 and 10, there may be some moderate multicollinearity.<br>
 If VIF is greater than 10, multicollinearity is likely a serious issue, and you may want to consider removing or transforming variables.</p>
 <div id="multicollinearity" class="section level4 hasAnchor" number="4.3.5.1">
 <h4><span class="header-section-number">4.3.5.1</span> Multicollinearity<a href="relative-loadings.html#multicollinearity" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<pre><code>##                 doc_mg.l                  na_mg.l                 nh4_mg.l                   K_mg.l 
-##                 2.778940                 3.687201                 1.814268                 3.200284 
-##                  Mg_mg.l                  Ca_mg.l                   F_mg.l                  Cl_mg.l 
-##                 5.168057                 6.914420                 1.915917                 2.346317 
-##                 NO3_mg.l                  area_km                    Qm3_s              percent_1.5 
-##                 2.276190                 5.403615                 1.179126              1946.640744 
-##             percent_6.10            percent_11.15               slope_mean              aspect_mean 
-##              1094.583005               593.202414                 8.020170                 6.822729 
-##         ndmi_raster_mean         ndvi_raster_mean       disttostreams_mean      percent_Beetle.kill 
-##                12.756277                 6.261219                 4.602639               169.299285 
-##       percent_Old.Forest percent_cut.regenerating           percent_Tundra       distance.to.outlet 
-##               133.752341                39.423074               114.531399                10.082237</code></pre>
+<pre><code>##                 doc_mg.l                  na_mg.l                 nh4_mg.l 
+##                 2.775841                 3.681136                 1.813084 
+##                   K_mg.l                  Mg_mg.l                  Ca_mg.l 
+##                 3.200446                 5.177041                 6.906595 
+##                   F_mg.l                  Cl_mg.l                 NO3_mg.l 
+##                 1.917985                 2.356509                 2.269223 
+##                  area_km                    Qm3_s              percent_1.5 
+##                 5.283833                 1.172452              1948.230940 
+##             percent_6.10            percent_11.15               slope_mean 
+##              1092.772846               592.763211                 7.985253 
+##              aspect_mean         ndmi_raster_mean         ndvi_raster_mean 
+##                 6.808133                12.712644                 6.260448 
+##       disttostreams_mean      percent_Beetle.kill       percent_Old.Forest 
+##                 4.601496               169.292336               133.702948 
+## percent_cut.regenerating           percent_Tundra       distance.to.outlet 
+##                39.159810               114.338273                10.036870</code></pre>
 <p>So given that we have a lot of mulitcollinearity, we can systematically remove variables that are non-essential or redundant:</p>
-<pre><code>##                  area_km               slope_mean              aspect_mean         ndmi_raster_mean 
-##                 1.835627                 3.142438                 4.079431                 4.826514 
-##         ndvi_raster_mean       disttostreams_mean      percent_Beetle.kill       percent_Old.Forest 
-##                 3.599633                 3.863261                84.406204                77.784414 
-## percent_cut.regenerating           percent_Tundra 
-##                22.503875                54.815622</code></pre>
+<pre><code>##                  area_km               slope_mean              aspect_mean 
+##                 1.821739                 3.137001                 4.071621 
+##         ndmi_raster_mean         ndvi_raster_mean       disttostreams_mean 
+##                 4.811914                 3.600649                 3.860539 
+##      percent_Beetle.kill       percent_Old.Forest percent_cut.regenerating 
+##                84.413534                77.730036                22.383774 
+##           percent_Tundra 
+##                54.771818</code></pre>
 <p>But ultimately we have several variables contributing to a high VIF that are all important to our question. Therefore, we can try RDA and PCA as a dimension reduction technique, assuming we remove some of the most redundant variables. This should transform() the predictors into a smaller set of uncorrelated PCs (components) that still explain most of the variance.</p>
 </div>
 <div id="distributions-and-standardization" class="section level4 hasAnchor" number="4.3.5.2">
@@ -476,14 +485,14 @@ I want to include all response variables at this point, so this is adapted from 
 ##          keepY), ncomp = comp, mode = mode, ...)</code></pre>
 <p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
 <pre><code>## Importance of components:
-##                           PC1    PC2    PC3    PC4     PC5     PC6    PC7     PC8    PC9    PC10
-## Standard deviation     2.1860 1.4916 1.3046 1.1224 0.91363 0.68046 0.6681 0.36959 0.3305 0.18584
-## Proportion of Variance 0.3982 0.1854 0.1418 0.1050 0.06956 0.03859 0.0372 0.01138 0.0091 0.00288
-## Cumulative Proportion  0.3982 0.5836 0.7254 0.8304 0.89997 0.93856 0.9758 0.98714 0.9962 0.99911
-##                           PC11      PC12
-## Standard deviation     0.10306 8.348e-11
-## Proportion of Variance 0.00089 0.000e+00
-## Cumulative Proportion  1.00000 1.000e+00</code></pre>
+##                           PC1    PC2    PC3    PC4     PC5     PC6    PC7     PC8
+## Standard deviation     2.1860 1.4916 1.3046 1.1224 0.91363 0.68046 0.6681 0.36959
+## Proportion of Variance 0.3982 0.1854 0.1418 0.1050 0.06956 0.03859 0.0372 0.01138
+## Cumulative Proportion  0.3982 0.5836 0.7254 0.8304 0.89997 0.93856 0.9758 0.98714
+##                           PC9    PC10    PC11      PC12
+## Standard deviation     0.3305 0.18584 0.10306 8.348e-11
+## Proportion of Variance 0.0091 0.00288 0.00089 0.000e+00
+## Cumulative Proportion  0.9962 0.99911 1.00000 1.000e+00</code></pre>
 <pre><code>## Warning: The SGCCA algorithm did not converge</code></pre>
 <p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
 </div>
@@ -503,24 +512,24 @@ Similar to PCA, but RDA is a <u>constrained</u> method that requries two dataset
 ## 
 ## Partitioning of variance:
 ##               Inertia Proportion
-## Total           2.999     1.0000
-## Constrained     1.095     0.3649
-## Unconstrained   1.905     0.6351
+## Total           3.000      1.000
+## Constrained     1.095      0.365
+## Unconstrained   1.905      0.635
 ## 
 ## Eigenvalues, and their contribution to the variance 
 ## 
 ## Importance of components:
 ##                         RDA1     RDA2   PC1    PC2
-## Eigenvalue            1.0690 0.025593 1.599 0.3061
-## Proportion Explained  0.3564 0.008533 0.533 0.1020
-## Cumulative Proportion 0.3564 0.364941 0.898 1.0000
+## Eigenvalue            1.0693 0.025721 1.599 0.3062
+## Proportion Explained  0.3564 0.008573 0.533 0.1020
+## Cumulative Proportion 0.3564 0.364986 0.898 1.0000
 ## 
 ## Accumulated constrained eigenvalues
 ## Importance of components:
 ##                         RDA1    RDA2
-## Eigenvalue            1.0690 0.02559
-## Proportion Explained  0.9766 0.02338
-## Cumulative Proportion 0.9766 1.00000</code></pre>
+## Eigenvalue            1.0693 0.02572
+## Proportion Explained  0.9765 0.02349
+## Cumulative Proportion 0.9765 1.00000</code></pre>
 </div>
 <div id="streams-only---workflow-retained-but-hidden" class="section level4 hasAnchor" number="4.3.6.2">
 <h4><span class="header-section-number">4.3.6.2</span> Streams only - workflow retained but hidden<a href="relative-loadings.html#streams-only---workflow-retained-but-hidden" class="anchor-section" aria-label="Anchor link to header"></a></h4>
@@ -601,7 +610,7 @@ Similar to PCA, but RDA is a <u>constrained</u> method that requries two dataset
 ## Model: rda(formula = standardized_resp ~ aspect_mean + twi_mean + ndvi_raster_mean + disttostreams_mean + percent_Beetle.kill + percent_Old.Forest + percent_cut.regenerating + area_km + Qm3_s, data = explanatory_standardized, na.action = na.exclude)
 ##          Df Variance       F Pr(&gt;F)    
 ## RDA1      1  2.01775 89.9920  0.001 ***
-## RDA2      1  0.15266  6.8087  0.778    
+## RDA2      1  0.15266  6.8087  0.779    
 ## Residual 37  0.82959                   
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
@@ -613,15 +622,15 @@ Similar to PCA, but RDA is a <u>constrained</u> method that requries two dataset
 ## 
 ## Model: rda(formula = standardized_resp ~ aspect_mean + twi_mean + ndvi_raster_mean + disttostreams_mean + percent_Beetle.kill + percent_Old.Forest + percent_cut.regenerating + area_km + Qm3_s, data = explanatory_standardized, na.action = na.exclude)
 ##                          Df Variance       F Pr(&gt;F)    
-## aspect_mean               1  0.09478  3.4274  0.063 .  
+## aspect_mean               1  0.09478  3.4274  0.053 .  
 ## twi_mean                  1  1.06887 38.6529  0.001 ***
-## ndvi_raster_mean          1  0.20600  7.4496  0.006 ** 
+## ndvi_raster_mean          1  0.20600  7.4496  0.007 ** 
 ## disttostreams_mean        1  0.43123 15.5942  0.001 ***
-## percent_Beetle.kill       1  0.01110  0.4013  0.607    
-## percent_Old.Forest        1  0.21447  7.7558  0.004 ** 
-## percent_cut.regenerating  1  0.00007  0.0025  0.996    
-## area_km                   1  0.10385  3.7556  0.048 *  
-## Qm3_s                     1  0.04004  1.4478  0.238    
+## percent_Beetle.kill       1  0.01110  0.4013  0.621    
+## percent_Old.Forest        1  0.21447  7.7558  0.013 *  
+## percent_cut.regenerating  1  0.00007  0.0025  0.998    
+## area_km                   1  0.10385  3.7556  0.044 *  
+## Qm3_s                     1  0.04004  1.4478  0.227    
 ## Residual                 30  0.82959                   
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
@@ -654,17 +663,17 @@ Figure 4.20: Figure.
 </p>
 </div>
 <pre><code>##          Eigenvalue Variance_Explained Cumulative_Variance
-## comp 1  4.342438811        39.47671647            39.47672
-## comp 2  1.886022429        17.14565845            56.62237
-## comp 3  1.581504209        14.37731099            70.99969
-## comp 4  0.898506305         8.16823914            79.16793
-## comp 5  0.764777292         6.95252084            86.12045
-## comp 6  0.661707308         6.01552098            92.13597
-## comp 7  0.433685986         3.94259987            96.07857
-## comp 8  0.225653909         2.05139917            98.12997
-## comp 9  0.149323029         1.35748208            99.48745
-## comp 10 0.052177182         0.47433802            99.96179
-## comp 11 0.004203539         0.03821399           100.00000</code></pre>
+## comp 1  4.333422113        39.39474648            39.39475
+## comp 2  1.889171786        17.17428896            56.56904
+## comp 3  1.576675692        14.33341538            70.90245
+## comp 4  0.905617183         8.23288348            79.13533
+## comp 5  0.764863096         6.95330087            86.08864
+## comp 6  0.662940684         6.02673349            92.11537
+## comp 7  0.435009130         3.95462845            96.07000
+## comp 8  0.225979827         2.05436207            98.12436
+## comp 9  0.149856401         1.36233092            99.48669
+## comp 10 0.052256648         0.47506044            99.96175
+## comp 11 0.004207441         0.03824946           100.00000</code></pre>
 <p>Although PC1 and PC2 explain a lot of the variance and most pubs focus on these, PC3 contributes a non-trivial amount of variance (14%). Together, the first three components explain the majority of the total variance, which (I think) is a better threshold for interpretation than &lt;50%. Let’s see.</p>
 <p>Visualize the PC1 loadings to see what our important drivers are:</p>
 <p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-100-1.png" width="672" /></p>
@@ -675,9 +684,9 @@ Figure 4.20: Figure.
 Meh.</p>
 <p>Explore correlations between the first 3 PCs and the response variable:</p>
 <pre><code>##             [,1]
-## Dim.1  0.4673675
-## Dim.2 -0.1587496
-## Dim.3  0.1628407</code></pre>
+## Dim.1  0.4658502
+## Dim.2 -0.1603960
+## Dim.3  0.1620947</code></pre>
 <p>Lets fit a linear model with the first few components as predictors:</p>
 <pre><code>## 
 ## Call:
@@ -685,57 +694,57 @@ Meh.</p>
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
-## -0.30789 -0.03662  0.01534  0.05326  0.31390 
+## -0.30807 -0.03691  0.01565  0.05362  0.31392 
 ## 
 ## Coefficients:
 ##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  0.598080   0.005839 102.429  &lt; 2e-16 ***
-## Dim.1        0.023549   0.002802   8.404 4.08e-15 ***
-## Dim.2       -0.012137   0.004252  -2.855  0.00469 ** 
-## Dim.3        0.013596   0.004643   2.928  0.00374 ** 
+## (Intercept)  0.597820   0.005864 101.950  &lt; 2e-16 ***
+## Dim.1        0.023529   0.002817   8.353 5.81e-15 ***
+## Dim.2       -0.012269   0.004266  -2.876  0.00440 ** 
+## Dim.3        0.013573   0.004670   2.906  0.00401 ** 
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 0.09046 on 236 degrees of freedom
-## Multiple R-squared:  0.2702, Adjusted R-squared:  0.2609 
-## F-statistic: 29.12 on 3 and 236 DF,  p-value: 4.698e-16</code></pre>
+## Residual standard error: 0.09065 on 235 degrees of freedom
+## Multiple R-squared:  0.269,  Adjusted R-squared:  0.2597 
+## F-statistic: 28.83 on 3 and 235 DF,  p-value: 6.572e-16</code></pre>
 <p>Conclusions Component1: The small coefficients, combined with the relatively low R-squared value, suggest that even though the relationships are significant, they might not be strong enough to drive substantial changes in relative_load_comp_1. I can increase the amount of variability by remove more variables from the PCA, but this still does not drastically improve the relationship between PC1 and PARAFAC component 1.</p>
 <p>Let’s look at Components 2 and 3 in the same fashion. It could be that Component 1 is driven by the fractions of 2 and 3…?</p>
 <p>COMPONENT 2
 <img src="PLS_rendered_book_files/figure-html/unnamed-chunk-104-1.png" width="672" /></p>
 <p>Explore correlations between the first 3 PCs and the response variable:</p>
 <pre><code>##              [,1]
-## Dim.1  0.46462289
-## Dim.2 -0.04673344
-## Dim.3  0.31533479</code></pre>
+## Dim.1  0.46403738
+## Dim.2 -0.04860088
+## Dim.3  0.31799194</code></pre>
 <p>Lets fit a linear model with the first few components as predictors:</p>
 <pre><code>## 
 ## Call:
 ## lm(formula = relative_load_comp_2 ~ Dim.1 + Dim.2 + Dim.3, data = pca_scores)
 ## 
 ## Residuals:
-##       Min        1Q    Median        3Q       Max 
-## -0.122254 -0.014929  0.004666  0.024158  0.070329 
+##      Min       1Q   Median       3Q      Max 
+## -0.12203 -0.01497  0.00452  0.02420  0.07025 
 ## 
 ## Coefficients:
 ##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  0.185939   0.002188  84.991  &lt; 2e-16 ***
-## Dim.1        0.009071   0.001050   8.640 8.62e-16 ***
-## Dim.2       -0.001384   0.001593  -0.869    0.386    
-## Dim.3        0.010201   0.001740   5.864 1.52e-08 ***
+## (Intercept)  0.185885   0.002194  84.709  &lt; 2e-16 ***
+## Dim.1        0.009086   0.001054   8.619 1.01e-15 ***
+## Dim.2       -0.001441   0.001597  -0.903    0.368    
+## Dim.3        0.010322   0.001748   5.906 1.22e-08 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 0.03389 on 236 degrees of freedom
-## Multiple R-squared:  0.3175, Adjusted R-squared:  0.3088 
-## F-statistic: 36.59 on 3 and 236 DF,  p-value: &lt; 2.2e-16</code></pre>
+## Residual standard error: 0.03392 on 235 degrees of freedom
+## Multiple R-squared:  0.3188, Adjusted R-squared:  0.3101 
+## F-statistic: 36.66 on 3 and 235 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>COMPONENT 3
 <img src="PLS_rendered_book_files/figure-html/unnamed-chunk-107-1.png" width="672" /></p>
 <p>Explore correlations between the first 3 PCs and the response variable:</p>
 <pre><code>##             [,1]
-## Dim.1 -0.4988821
-## Dim.2  0.1362872
-## Dim.3 -0.2196376</code></pre>
+## Dim.1 -0.4975613
+## Dim.2  0.1381072
+## Dim.3 -0.2198842</code></pre>
 <p>Lets fit a linear model with the first few components as predictors:</p>
 <pre><code>## 
 ## Call:
@@ -743,20 +752,20 @@ Meh.</p>
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
-## -0.29205 -0.06526 -0.02330  0.04171  0.39464 
+## -0.29212 -0.06541 -0.02312  0.04213  0.39494 
 ## 
 ## Coefficients:
 ##              Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  0.215981   0.007337  29.438  &lt; 2e-16 ***
-## Dim.1       -0.032619   0.003521  -9.265  &lt; 2e-16 ***
-## Dim.2        0.013522   0.005342   2.531    0.012 *  
-## Dim.3       -0.023797   0.005834  -4.079 6.19e-05 ***
+## (Intercept)  0.216295   0.007367  29.360  &lt; 2e-16 ***
+## Dim.1       -0.032614   0.003539  -9.216  &lt; 2e-16 ***
+## Dim.2        0.013711   0.005360   2.558   0.0112 *  
+## Dim.3       -0.023894   0.005867  -4.073 6.36e-05 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 0.1137 on 236 degrees of freedom
-## Multiple R-squared:  0.3157, Adjusted R-squared:  0.307 
-## F-statistic: 36.29 on 3 and 236 DF,  p-value: &lt; 2.2e-16</code></pre>
+## Residual standard error: 0.1139 on 235 degrees of freedom
+## Multiple R-squared:  0.315,  Adjusted R-squared:  0.3062 
+## F-statistic: 36.02 on 3 and 235 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>Not surprisingly, the coefficients are similar among humic components and while similar in absolute value, opposite for the protein-like component.</p>
 <p>Save this:
 Interpreting loadings for PC1: <br>

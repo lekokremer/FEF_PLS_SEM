@@ -149,8 +149,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2" data-path="addition-of-precipitation-and-runoff-data.html"><a href="addition-of-precipitation-and-runoff-data.html"><i class="fa fa-check"></i><b>2</b> Addition of precipitation and runoff data</a></li>
 <li class="chapter" data-level="3" data-path="explore-data-from-biological-oxygen-demand-assays.html"><a href="explore-data-from-biological-oxygen-demand-assays.html"><i class="fa fa-check"></i><b>3</b> Explore data from Biological Oxygen Demand assays</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="first-plotting-daily_doc_loss.html"><a href="first-plotting-daily_doc_loss.html"><i class="fa fa-check"></i><b>3.1</b> First, plotting daily_DOC_loss</a></li>
-<li class="chapter" data-level="3.2" data-path="dissolved-oxygen-loss.html"><a href="dissolved-oxygen-loss.html"><i class="fa fa-check"></i><b>3.2</b> Dissolved oxygen loss:</a></li>
+<li class="chapter" data-level="3.1" data-path="daily-doc-loss-carbon.html"><a href="daily-doc-loss-carbon.html"><i class="fa fa-check"></i><b>3.1</b> Daily DOC loss (carbon)</a></li>
+<li class="chapter" data-level="3.2" data-path="dissolved-oxygen-loss.html"><a href="dissolved-oxygen-loss.html"><i class="fa fa-check"></i><b>3.2</b> Dissolved oxygen loss</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="dissolved-oxygen-loss.html"><a href="dissolved-oxygen-loss.html#explore-relationships."><i class="fa fa-check"></i><b>3.2.1</b> Explore relationships.</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="correlations-plots.html"><a href="correlations-plots.html"><i class="fa fa-check"></i><b>4</b> Correlations plots:</a>
 <ul>
@@ -247,7 +250,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Inputs used in this script are inputsim_dh1_year and fool_input_year csvs that are generated from snowmelt models. Scripts are found in models_analysis/WECOH_deadhorse/1_precip/scripts/5_SNOTEL.SWE.Model.Deadhorse.LK.Rmd
 and a similar path for the Fool Creek WECOH workflow.</p>
 <p>Runoff and snowmelt are modeled for both, one model for each side of the East S. Louis catchament. Therefore Deadhorse estimations are also applied to Lexen in the PLS analysis.</p>
-<pre><code>## Warning: Removed 20 rows containing missing values or values outside the scale range (`geom_point()`).</code></pre>
+<pre><code>## Warning: Removed 20 rows containing missing values or values outside the scale range
+## (`geom_point()`).</code></pre>
 <p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>This is a summary of the precip data added to the PLS test iteration workflow. Blue represents the snowpack, orange is input. Each point represents the 3 day rolling average of each sample at the time it was collected.</p>
 

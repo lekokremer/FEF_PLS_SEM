@@ -149,8 +149,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2" data-path="addition-of-precipitation-and-runoff-data.html"><a href="addition-of-precipitation-and-runoff-data.html"><i class="fa fa-check"></i><b>2</b> Addition of precipitation and runoff data</a></li>
 <li class="chapter" data-level="3" data-path="explore-data-from-biological-oxygen-demand-assays.html"><a href="explore-data-from-biological-oxygen-demand-assays.html"><i class="fa fa-check"></i><b>3</b> Explore data from Biological Oxygen Demand assays</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="first-plotting-daily_doc_loss.html"><a href="first-plotting-daily_doc_loss.html"><i class="fa fa-check"></i><b>3.1</b> First, plotting daily_DOC_loss</a></li>
-<li class="chapter" data-level="3.2" data-path="dissolved-oxygen-loss.html"><a href="dissolved-oxygen-loss.html"><i class="fa fa-check"></i><b>3.2</b> Dissolved oxygen loss:</a></li>
+<li class="chapter" data-level="3.1" data-path="daily-doc-loss-carbon.html"><a href="daily-doc-loss-carbon.html"><i class="fa fa-check"></i><b>3.1</b> Daily DOC loss (carbon)</a></li>
+<li class="chapter" data-level="3.2" data-path="dissolved-oxygen-loss.html"><a href="dissolved-oxygen-loss.html"><i class="fa fa-check"></i><b>3.2</b> Dissolved oxygen loss</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="dissolved-oxygen-loss.html"><a href="dissolved-oxygen-loss.html#explore-relationships."><i class="fa fa-check"></i><b>3.2.1</b> Explore relationships.</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="correlations-plots.html"><a href="correlations-plots.html"><i class="fa fa-check"></i><b>4</b> Correlations plots:</a>
 <ul>
@@ -385,9 +388,9 @@ Figure 4.32: Figure.
 Meh.</p>
 <p>Explore correlations between the first 3 PCs and the response variable:</p>
 <pre><code>##              [,1]
-## Dim.1  0.04106679
-## Dim.2 -0.01112259
-## Dim.3  0.15737747</code></pre>
+## Dim.1  0.04510366
+## Dim.2 -0.01243532
+## Dim.3  0.16291848</code></pre>
 <p>Lets fit a linear model with the first few components as predictors:</p>
 <pre><code>## 
 ## Call:
@@ -395,20 +398,20 @@ Meh.</p>
 ## 
 ## Residuals:
 ##    Min     1Q Median     3Q    Max 
-## -8.301 -3.819 -1.435  1.692 29.909 
+## -8.399 -3.879 -1.433  1.648 29.937 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  8.05303    0.39914  20.176   &lt;2e-16 ***
-## Dim.1        0.12248    0.19154   0.639    0.523    
-## Dim.2       -0.05033    0.29064  -0.173    0.863    
-## Dim.3        0.77774    0.31739   2.450    0.015 *  
+## (Intercept)  8.07785    0.39962  20.214   &lt;2e-16 ***
+## Dim.1        0.13468    0.19197   0.702   0.4836    
+## Dim.2       -0.05624    0.29074  -0.193   0.8468    
+## Dim.3        0.80650    0.31825   2.534   0.0119 *  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 6.183 on 236 degrees of freedom
-## Multiple R-squared:  0.02658,    Adjusted R-squared:  0.0142 
-## F-statistic: 2.148 on 3 and 236 DF,  p-value: 0.09491</code></pre>
+## Residual standard error: 6.178 on 235 degrees of freedom
+## Multiple R-squared:  0.02873,    Adjusted R-squared:  0.01633 
+## F-statistic: 2.317 on 3 and 235 DF,  p-value: 0.07632</code></pre>
 <p>There is a significant and decent correlation with PC3:
 <img src="PLS_rendered_book_files/figure-html/unnamed-chunk-125-1.png" width="672" /></p>
 <p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-126-1.png" width="672" /></p>
@@ -422,16 +425,17 @@ Also, our response variables are right-skewed unimodal. We need to make the data
 <p>Ok, now our responses are approximately normal. The scales are similar, the units are the same. I am not sure if we want to standardize/z-score these as well. This can ensure that they contribute equally to the analysis…lets try both and see if scaling makes a difference:</p>
 <p><strong>scaled:</strong>
 <img src="PLS_rendered_book_files/figure-html/unnamed-chunk-132-1.png" width="672" /></p>
-<pre><code>## Call: rda(formula = standardized_resp ~ aspect_mean + twi_mean + ndvi_raster_mean +
-## disttostreams_mean + percent_Beetle.kill + percent_Old.Forest + percent_cut.regenerating +
-## area_km + Qm3_s, data = explanatory_standardized, na.action = na.exclude)
+<pre><code>## Call: rda(formula = standardized_resp ~ aspect_mean + twi_mean +
+## ndvi_raster_mean + disttostreams_mean + percent_Beetle.kill + percent_Old.Forest
+## + percent_cut.regenerating + area_km + Qm3_s, data = explanatory_standardized,
+## na.action = na.exclude)
 ## 
 ## -- Model Summary --
 ## 
 ##               Inertia Proportion Rank
-## Total          3.1161     1.0000     
-## Constrained    0.3609     0.1158    3
-## Unconstrained  2.7552     0.8842    3
+## Total          3.1168     1.0000     
+## Constrained    0.3693     0.1185    3
+## Unconstrained  2.7476     0.8815    3
 ## 
 ## Inertia is variance
 ## 
@@ -443,11 +447,11 @@ Also, our response variables are right-skewed unimodal. We need to make the data
 ## 
 ## Eigenvalues for constrained axes:
 ##    RDA1    RDA2    RDA3 
-## 0.23129 0.12801 0.00165 
+## 0.22780 0.13978 0.00167 
 ## 
 ## Eigenvalues for unconstrained axes:
 ##    PC1    PC2    PC3 
-## 2.4113 0.3132 0.0307</code></pre>
+## 2.4025 0.3142 0.0309</code></pre>
 <p><u>Constrained variance (0.009048, 48.1%):</u> This is the portion of the total variance in the response matrix explained by the explanatory variables (e.g., area, slope, NDVI, etc.). i.e., variables explain around 48% of the variation the PARAFAC component fractions.</p>
 <p><u>Unconstrained variance (0.009779, 51.9%):</u> This is <strong>not explained</strong> by the predictors, so more than half of the variation is not explained by the model.</p>
 <p>This returns the note
@@ -455,16 +459,17 @@ Some constraints or conditions were aliased because they were redundant. This ca
 <p>-Similar to PCA, but it is a <u>constrained</u> method that requries two datasets, one for response variables (e.g., PARAFAC component fractions) and one for explanatory variables (watershed characteristics)</p>
 <p>RDA identifies the portion of the variation in the response dataset that can be explained by the explanatory variables. So this tells us how much of the variability in the response variables is explained by the predictors.</p>
 <p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-134-1.png" width="672" /></p>
-<pre><code>## Call: rda(formula = response_matrix ~ aspect_mean + twi_mean + ndvi_raster_mean +
-## disttostreams_mean + percent_Beetle.kill + percent_Old.Forest + percent_cut.regenerating +
-## area_km + Qm3_s, data = explanatory_matrix, na.action = na.exclude)
+<pre><code>## Call: rda(formula = response_matrix ~ aspect_mean + twi_mean + ndvi_raster_mean
+## + disttostreams_mean + percent_Beetle.kill + percent_Old.Forest +
+## percent_cut.regenerating + area_km + Qm3_s, data = explanatory_matrix, na.action
+## = na.exclude)
 ## 
 ## -- Model Summary --
 ## 
-##                Inertia Proportion Rank
-## Total         57.25590    1.00000     
-## Constrained    5.60843    0.09795    3
-## Unconstrained 51.64747    0.90205    3
+##               Inertia Proportion Rank
+## Total         57.3073     1.0000     
+## Constrained    5.8002     0.1012    3
+## Unconstrained 51.5070     0.8988    3
 ## 
 ## Inertia is variance
 ## 
@@ -476,35 +481,35 @@ Some constraints or conditions were aliased because they were redundant. This ca
 ## 
 ## Eigenvalues for constrained axes:
 ##  RDA1  RDA2  RDA3 
-## 3.696 1.907 0.006 
+## 3.879 1.915 0.006 
 ## 
 ## Eigenvalues for unconstrained axes:
 ##   PC1   PC2   PC3 
-## 45.71  5.65  0.29</code></pre>
+## 45.55  5.67  0.29</code></pre>
 <pre><code>## 
 ## Call:
 ## rda(formula = response_matrix ~ aspect_mean + twi_mean + ndvi_raster_mean +      disttostreams_mean + percent_Beetle.kill + percent_Old.Forest +      percent_cut.regenerating + area_km + Qm3_s, data = explanatory_matrix,      na.action = na.exclude) 
 ## 
 ## Partitioning of variance:
 ##               Inertia Proportion
-## Total          57.256    1.00000
-## Constrained     5.608    0.09795
-## Unconstrained  51.647    0.90205
+## Total           57.31     1.0000
+## Constrained      5.80     0.1012
+## Unconstrained   51.51     0.8988
 ## 
 ## Eigenvalues, and their contribution to the variance 
 ## 
 ## Importance of components:
 ##                          RDA1    RDA2      RDA3     PC1     PC2      PC3
-## Eigenvalue            3.69610 1.90662 5.708e-03 45.7081 5.65249 0.286916
-## Proportion Explained  0.06455 0.03330 9.969e-05  0.7983 0.09872 0.005011
-## Cumulative Proportion 0.06455 0.09785 9.795e-02  0.8963 0.99499 1.000000
+## Eigenvalue            3.87920 1.91526 0.0057837 45.5493 5.66969 0.288070
+## Proportion Explained  0.06769 0.03342 0.0001009  0.7948 0.09893 0.005027
+## Cumulative Proportion 0.06769 0.10111 0.1012131  0.8960 0.99497 1.000000
 ## 
 ## Accumulated constrained eigenvalues
 ## Importance of components:
-##                        RDA1  RDA2     RDA3
-## Eigenvalue            3.696 1.907 0.005708
-## Proportion Explained  0.659 0.340 0.001018
-## Cumulative Proportion 0.659 0.999 1.000000</code></pre>
+##                         RDA1   RDA2      RDA3
+## Eigenvalue            3.8792 1.9153 0.0057837
+## Proportion Explained  0.6688 0.3302 0.0009971
+## Cumulative Proportion 0.6688 0.9990 1.0000000</code></pre>
 <p><strong>Take home: PCA and RDA do not work well with multicollinearity, yet many of our variables covary, not because they are redundant, rather they are likely driving each other in a path (i.e. topography influences landcover which influences hydrology which influences DOM)</strong></p>
 <p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-138-1.png" width="672" /></p>
 <p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-139-1.png" width="672" /></p>
