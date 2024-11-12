@@ -227,10 +227,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8" data-path="reporting-initial-results-and-evaluating-the-quality-of-our-favorite-model.html"><a href="reporting-initial-results-and-evaluating-the-quality-of-our-favorite-model.html"><i class="fa fa-check"></i><b>8</b> Reporting initial results and evaluating the quality of our favorite model</a></li>
 <li class="chapter" data-level="9" data-path="testing-iterations-of-the-pls-sem-fef-model-1.html"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html"><i class="fa fa-check"></i><b>9</b> Testing iterations of the PLS-SEM FEF model</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="model-1-flow-stage-classifier-as-a-latent-variable.-total-protein-like-component-1.html"><a href="model-1-flow-stage-classifier-as-a-latent-variable.-total-protein-like-component-1.html"><i class="fa fa-check"></i><b>9.1</b> MODEL 1: Flow stage classifier as a latent variable. Total protein-like component <br></a>
-<ul>
-<li class="chapter" data-level="9.1.1" data-path="model-1-flow-stage-classifier-as-a-latent-variable.-total-protein-like-component-1.html"><a href="model-1-flow-stage-classifier-as-a-latent-variable.-total-protein-like-component-1.html#results-of-bootstrapped-pls-8"><i class="fa fa-check"></i><b>9.1.1</b> Results of bootstrapped PLS</a></li>
-</ul></li>
+<li class="chapter" data-level="9.1" data-path="model-1.html"><a href="model-1.html"><i class="fa fa-check"></i><b>9.1</b> Model 1</a></li>
+<li class="chapter" data-level="9.2" data-path="model-2.html"><a href="model-2.html"><i class="fa fa-check"></i><b>9.2</b> Model 2</a></li>
 </ul></li>
 </ul>
 
@@ -424,41 +422,31 @@ If VIF is between 5 and 10, there may be some moderate multicollinearity.<br>
 If VIF is greater than 10, multicollinearity is likely a serious issue, and you may want to consider removing or transforming variables.</p>
 <div id="multicollinearity" class="section level4 hasAnchor" number="3.3.5.1">
 <h4><span class="header-section-number">3.3.5.1</span> Multicollinearity<a href="relative-loadings.html#multicollinearity" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<pre><code>##                 doc_mg.l                  na_mg.l 
-##                 2.775841                 3.681136 
-##                 nh4_mg.l                   K_mg.l 
-##                 1.813084                 3.200446 
-##                  Mg_mg.l                  Ca_mg.l 
-##                 5.177041                 6.906595 
-##                   F_mg.l                  Cl_mg.l 
-##                 1.917985                 2.356509 
-##                 NO3_mg.l                  area_km 
-##                 2.269223                 5.283833 
-##                    Qm3_s              percent_1.5 
-##                 1.172452              1948.230940 
-##             percent_6.10            percent_11.15 
-##              1092.772846               592.763211 
-##               slope_mean              aspect_mean 
-##                 7.985253                 6.808133 
-##         ndmi_raster_mean         ndvi_raster_mean 
-##                12.712644                 6.260448 
-##       disttostreams_mean      percent_Beetle.kill 
-##                 4.601496               169.292336 
-##       percent_Old.Forest percent_cut.regenerating 
-##               133.702948                39.159810 
-##           percent_Tundra       distance.to.outlet 
-##               114.338273                10.036870</code></pre>
+<pre><code>##                 doc_mg.l                  na_mg.l                 nh4_mg.l 
+##                 2.775841                 3.681136                 1.813084 
+##                   K_mg.l                  Mg_mg.l                  Ca_mg.l 
+##                 3.200446                 5.177041                 6.906595 
+##                   F_mg.l                  Cl_mg.l                 NO3_mg.l 
+##                 1.917985                 2.356509                 2.269223 
+##                  area_km                    Qm3_s              percent_1.5 
+##                 5.283833                 1.172452              1948.230940 
+##             percent_6.10            percent_11.15               slope_mean 
+##              1092.772846               592.763211                 7.985253 
+##              aspect_mean         ndmi_raster_mean         ndvi_raster_mean 
+##                 6.808133                12.712644                 6.260448 
+##       disttostreams_mean      percent_Beetle.kill       percent_Old.Forest 
+##                 4.601496               169.292336               133.702948 
+## percent_cut.regenerating           percent_Tundra       distance.to.outlet 
+##                39.159810               114.338273                10.036870</code></pre>
 <p>So given that we have a lot of mulitcollinearity, we can systematically remove variables that are non-essential or redundant:</p>
-<pre><code>##                  area_km               slope_mean 
-##                 1.821739                 3.137001 
-##              aspect_mean         ndmi_raster_mean 
-##                 4.071621                 4.811914 
-##         ndvi_raster_mean       disttostreams_mean 
-##                 3.600649                 3.860539 
-##      percent_Beetle.kill       percent_Old.Forest 
-##                84.413534                77.730036 
-## percent_cut.regenerating           percent_Tundra 
-##                22.383774                54.771818</code></pre>
+<pre><code>##                  area_km               slope_mean              aspect_mean 
+##                 1.821739                 3.137001                 4.071621 
+##         ndmi_raster_mean         ndvi_raster_mean       disttostreams_mean 
+##                 4.811914                 3.600649                 3.860539 
+##      percent_Beetle.kill       percent_Old.Forest percent_cut.regenerating 
+##                84.413534                77.730036                22.383774 
+##           percent_Tundra 
+##                54.771818</code></pre>
 <p>But ultimately we have several variables contributing to a high VIF that are all important to our question. Therefore, we can try RDA and PCA as a dimension reduction technique, assuming we remove some of the most redundant variables. This should transform() the predictors into a smaller set of uncorrelated PCs (components) that still explain most of the variance.</p>
 </div>
 <div id="distributions-and-standardization" class="section level4 hasAnchor" number="3.3.5.2">
@@ -500,18 +488,14 @@ I want to include all response variables at this point, so this is adapted from 
 ##          keepY), ncomp = comp, mode = mode, ...)</code></pre>
 <p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
 <pre><code>## Importance of components:
-##                           PC1    PC2    PC3    PC4     PC5     PC6
-## Standard deviation     2.1860 1.4916 1.3046 1.1224 0.91363 0.68046
-## Proportion of Variance 0.3982 0.1854 0.1418 0.1050 0.06956 0.03859
-## Cumulative Proportion  0.3982 0.5836 0.7254 0.8304 0.89997 0.93856
-##                           PC7     PC8    PC9    PC10    PC11
-## Standard deviation     0.6681 0.36959 0.3305 0.18584 0.10306
-## Proportion of Variance 0.0372 0.01138 0.0091 0.00288 0.00089
-## Cumulative Proportion  0.9758 0.98714 0.9962 0.99911 1.00000
-##                             PC12
-## Standard deviation     8.348e-11
-## Proportion of Variance 0.000e+00
-## Cumulative Proportion  1.000e+00</code></pre>
+##                           PC1    PC2    PC3    PC4     PC5     PC6    PC7     PC8
+## Standard deviation     2.1860 1.4916 1.3046 1.1224 0.91363 0.68046 0.6681 0.36959
+## Proportion of Variance 0.3982 0.1854 0.1418 0.1050 0.06956 0.03859 0.0372 0.01138
+## Cumulative Proportion  0.3982 0.5836 0.7254 0.8304 0.89997 0.93856 0.9758 0.98714
+##                           PC9    PC10    PC11      PC12
+## Standard deviation     0.3305 0.18584 0.10306 8.348e-11
+## Proportion of Variance 0.0091 0.00288 0.00089 0.000e+00
+## Cumulative Proportion  0.9962 0.99911 1.00000 1.000e+00</code></pre>
 <pre><code>## Warning: The SGCCA algorithm did not converge</code></pre>
 <p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-43-1.png" width="672" /></p>
 </div>
@@ -641,15 +625,15 @@ Similar to PCA, but RDA is a <u>constrained</u> method that requries two dataset
 ## 
 ## Model: rda(formula = standardized_resp ~ aspect_mean + twi_mean + ndvi_raster_mean + disttostreams_mean + percent_Beetle.kill + percent_Old.Forest + percent_cut.regenerating + area_km + Qm3_s, data = explanatory_standardized, na.action = na.exclude)
 ##                          Df Variance       F Pr(&gt;F)    
-## aspect_mean               1  0.09478  3.4274  0.068 .  
+## aspect_mean               1  0.09478  3.4274  0.083 .  
 ## twi_mean                  1  1.06887 38.6529  0.001 ***
-## ndvi_raster_mean          1  0.20600  7.4496  0.014 *  
+## ndvi_raster_mean          1  0.20600  7.4496  0.008 ** 
 ## disttostreams_mean        1  0.43123 15.5942  0.001 ***
-## percent_Beetle.kill       1  0.01110  0.4013  0.627    
+## percent_Beetle.kill       1  0.01110  0.4013  0.612    
 ## percent_Old.Forest        1  0.21447  7.7558  0.010 ** 
-## percent_cut.regenerating  1  0.00007  0.0025  0.991    
-## area_km                   1  0.10385  3.7556  0.049 *  
-## Qm3_s                     1  0.04004  1.4478  0.230    
+## percent_cut.regenerating  1  0.00007  0.0025  0.997    
+## area_km                   1  0.10385  3.7556  0.059 .  
+## Qm3_s                     1  0.04004  1.4478  0.221    
 ## Residual                 30  0.82959                   
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>

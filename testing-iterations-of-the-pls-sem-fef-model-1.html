@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="reporting-initial-results-and-evaluating-the-quality-of-our-favorite-model.html"/>
-<link rel="next" href="model-1-flow-stage-classifier-as-a-latent-variable.-total-protein-like-component-1.html"/>
+<link rel="next" href="model-1.html"/>
 <script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -227,10 +227,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8" data-path="reporting-initial-results-and-evaluating-the-quality-of-our-favorite-model.html"><a href="reporting-initial-results-and-evaluating-the-quality-of-our-favorite-model.html"><i class="fa fa-check"></i><b>8</b> Reporting initial results and evaluating the quality of our favorite model</a></li>
 <li class="chapter" data-level="9" data-path="testing-iterations-of-the-pls-sem-fef-model-1.html"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html"><i class="fa fa-check"></i><b>9</b> Testing iterations of the PLS-SEM FEF model</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="model-1-flow-stage-classifier-as-a-latent-variable.-total-protein-like-component-1.html"><a href="model-1-flow-stage-classifier-as-a-latent-variable.-total-protein-like-component-1.html"><i class="fa fa-check"></i><b>9.1</b> MODEL 1: Flow stage classifier as a latent variable. Total protein-like component <br></a>
-<ul>
-<li class="chapter" data-level="9.1.1" data-path="model-1-flow-stage-classifier-as-a-latent-variable.-total-protein-like-component-1.html"><a href="model-1-flow-stage-classifier-as-a-latent-variable.-total-protein-like-component-1.html#results-of-bootstrapped-pls-8"><i class="fa fa-check"></i><b>9.1.1</b> Results of bootstrapped PLS</a></li>
-</ul></li>
+<li class="chapter" data-level="9.1" data-path="model-1.html"><a href="model-1.html"><i class="fa fa-check"></i><b>9.1</b> Model 1</a></li>
+<li class="chapter" data-level="9.2" data-path="model-2.html"><a href="model-2.html"><i class="fa fa-check"></i><b>9.2</b> Model 2</a></li>
 </ul></li>
 </ul>
 
@@ -251,8 +249,34 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="testing-iterations-of-the-pls-sem-fef-model-1" class="section level1 hasAnchor" number="9">
 <h1><span class="header-section-number">9</span> Testing iterations of the PLS-SEM FEF model<a href="testing-iterations-of-the-pls-sem-fef-model-1.html#testing-iterations-of-the-pls-sem-fef-model-1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html#cb73-1" tabindex="-1"></a><span class="co">#ADD BOD data</span></span>
+<span id="cb73-2"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html#cb73-2" tabindex="-1"></a>file <span class="ot">&lt;-</span> <span class="fu">normalizePath</span>(<span class="fu">file.path</span>(<span class="fu">getwd</span>(), <span class="st">&quot;/datafiles/BODrates_cleaned.csv&quot;</span>))</span>
+<span id="cb73-3"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html#cb73-3" tabindex="-1"></a></span>
+<span id="cb73-4"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html#cb73-4" tabindex="-1"></a><span class="co"># Read the CSV file</span></span>
+<span id="cb73-5"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html#cb73-5" tabindex="-1"></a>bod <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(file) <span class="sc">%&gt;%</span></span>
+<span id="cb73-6"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html#cb73-6" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>watershed)</span>
+<span id="cb73-7"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html#cb73-7" tabindex="-1"></a></span>
+<span id="cb73-8"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html#cb73-8" tabindex="-1"></a><span class="co"># Merge PARAFAC, vegetation, topography and fluoro data with BOD results. </span></span>
+<span id="cb73-9"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html#cb73-9" tabindex="-1"></a>merged_df <span class="ot">&lt;-</span> <span class="fu">merge</span>(partial_df, bod, <span class="at">by=</span><span class="st">&#39;ID&#39;</span>,, <span class="at">all.x =</span> <span class="cn">TRUE</span> )</span></code></pre></div>
 <p>For this model demonstration, our EEMs dataset has been filtered to ‘stream’ samples only (no wells) (n= 91)</p>
-<p>Building on part 06_PLS_SEM, building responses using ‘labile’ and ‘recalcitrant’ indicators.</p>
+<p>Building on part 06_PLS_SEM, building responses using ‘labile’ and ‘recalcitrant’ indicators.
+Potential responses are from:
+<strong>1. EEMS:</strong> “peak_A_250.450”, “peak_C_350.450”, “peak_T_275.340”, “Fluorescence_Index”, “SUVA254”, “peak_ratioAT”, “peak_ratioCA”, “peak_ratioCT” <br>
+<u>Where: peak_A_250.450 and peak_C_350.450</u> are typically intersections on the emission-excitation matrix where a peak is associated with the presence humic-like substances. It is an indicator of humic content, which generally represents more refractory/recalcitrant (less biodegradable) dissolved organic matter (DOM). PeaK C may be less degraded, more recently produced (younger or more microbially souced?). Peak A may be more degraded,older derived from terrestrail souces with longer residence time. <br>
+<u>peak_T_275_340</u> - indicator of protein-like substances (tryptophan) and can be an indicator of recently produced, labile DOM.<br>
+<u>Fluorescence_Index:</u> helps distinguish between terrestrial and microbial sources of dissolved organic matter (DOM). It is the ratio of fluorescence intensities at emission 475 with excitation at 370 nm. <br>
+FI around 1.2 or lower: Indicates a stronger terrestrial DOM source, often linked to plant and soil organic matter inputs. <br>
+FI around 1.4 or higher: Suggests a more microbial DOM source, often derived from algae, bacteria, or other microbial production.<br>
+Microbially derived DOM is generally more labile than terrestrial DOM.<br>
+<u>SUVA:</u> is specific Ultraviolet Absorbance at 254nm (absorbance at 254nm normalized by DOC concentration) and is an indicator of aromacity (&gt;4L/mg.m) is higher aromatic content, usually associated with terrestrial, humic-like DOM, where lower (&lt;2-3L/mg.m) is usually associated with microbial, more labile sources.<br>
+<u>Peak ratios:</u> are ratios of the peaks A, C and T to get an idea of the relative abundances of humic: protein-like substances
+<strong>PARAFAC:</strong> norm_loadings, norm_PARAF_c1, norm_PARAF_c2, norm_PARAF_c3, PARAF_comp_1, PARAF_comp_2, PARAF_comp_3, total_loadings, Sample, relative_load_comp_1, relative_load_comp_2, relative_load_comp_3 <br><br />
+<u>Where: total_loadings </u> refers to the total absorbance of the entire sample, <u>norm_loadings </u> are the loadings normalized by the sample DOC concentration, and ‘relative load’ refers to the fraction of the total loading represented by each component. Component 1, 2 and 3 matrices are shown in section 3. 1 and 2 represent humic components. Component 3 matches protein-like component matrices.
+<strong>BOD:</strong> daily_DOC_loss, daily_rate_of_change_Ox <br>
+Total DOC consumed during biological oxygen demand assays were measured and normalized by the number of days that the experiment was run. Similarly, dissolved oxygen (DO) was measured at 10minute intervals, then a DO loss per day was calculated for each sample (04_BOD_results_summary). Preliminary data exploration suggests that few correlations exist between BOD results and other responses, or landscape characteristics, except maybe DOC normalized PARAFAC component loadings.</p>
+<p>To generate a two model analysis, I will group measured responses (i.e.indicators) into ‘humic’ or ‘protein-like’ latent variables. Then we will evaluate the relatedness of each indicator within the two variables to determine how each latent variable should be defined. PLS-SEM iteratively assigns weights to each indicator to maximize the explained variance of the latent variable in the structural model (this process is conceptually similar to PCA). In the bootstrapped model, we will see the strength of the relationship between each indicator and composite represented by lambda. So lambda indicates how well each indicator “loads” on its assigned latent variable after optimization (like PCA factor loadings). Higher lambda values mean that the indicator is strongly associated with the composite.</p>
+<p>potential humic indicators: “norm_PARAF_c1”, “norm_PARAF_c2”, “PARAF_comp_1”, “PARAF_comp_2”, relative_load_comp_1”, “relative_load_comp_2”, “daily_rate_of_change_Ox”, “daily_DOC_loss”, “peak_A_250.450”, “peak_C_350.450”, “Fluorescence_Index”, “SUVA254”, “peak_ratioCA”</p>
+<p>potential microbial/labile indicators: “norm_PARAF_c3”, “PARAF_comp_3”, “relative_load_comp_3”, “daily_rate_of_change_Ox”, “daily_DOC_loss”, “peak_T_275.340”, “Fluorescence_Index”, “SUVA254”, “peak_ratioAT”, “peak_ratioCT”</p>
 </div>
             </section>
 
@@ -260,7 +284,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         </div>
       </div>
 <a href="reporting-initial-results-and-evaluating-the-quality-of-our-favorite-model.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="model-1-flow-stage-classifier-as-a-latent-variable.-total-protein-like-component-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="model-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>

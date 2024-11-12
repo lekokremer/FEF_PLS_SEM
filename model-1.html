@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>5.1 Building the path model | PLS-SEM FEF model iterations with labile vs. non-labile response</title>
-  <meta name="description" content="5.1 Building the path model | PLS-SEM FEF model iterations with labile vs. non-labile response" />
+  <title>9.1 Model 1 | PLS-SEM FEF model iterations with labile vs. non-labile response</title>
+  <meta name="description" content="9.1 Model 1 | PLS-SEM FEF model iterations with labile vs. non-labile response" />
   <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="5.1 Building the path model | PLS-SEM FEF model iterations with labile vs. non-labile response" />
+  <meta property="og:title" content="9.1 Model 1 | PLS-SEM FEF model iterations with labile vs. non-labile response" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="5.1 Building the path model | PLS-SEM FEF model iterations with labile vs. non-labile response" />
+  <meta name="twitter:title" content="9.1 Model 1 | PLS-SEM FEF model iterations with labile vs. non-labile response" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="partial-least-squares-structural-equation-modeling-pls-sem.html"/>
-<link rel="next" href="data-managment-transformation.html"/>
+<link rel="prev" href="testing-iterations-of-the-pls-sem-fef-model-1.html"/>
+<link rel="next" href="model-2.html"/>
 <script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -247,39 +247,57 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="building-the-path-model" class="section level2 hasAnchor" number="5.1">
-<h2><span class="header-section-number">5.1</span> Building the path model<a href="building-the-path-model.html#building-the-path-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>We will work first with an initial model so I can define terminology. We will cover structural theory after covering vocabulary <br></p>
-<p><img src="images/innermodel_1.png" alt="FEF watershed simple path model, inner model with latent variables." width="800" height="400"></p>
-<div id="path-diagram-of-our-model-with-tested-indicators" class="section level3 hasAnchor" number="5.1.1">
-<h3><span class="header-section-number">5.1.1</span> Path diagram of our model with tested indicators<a href="building-the-path-model.html#path-diagram-of-our-model-with-tested-indicators" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><strong>NOTE</strong> You may disagree with the arrangement of some of these indicators as they relate to the latent variables. That is as intended. We want to use this model to test the validity measures and demonstrate how they can guide a more logical path model. <br></p>
-<p><strong>Latent variables</strong> are indirectly measured by means of variables which can be perfectly observed-measured. These types of variables are called manifest variables (MVs), also known as <strong>indicators</strong>. We use the information contained in indicators to obtain an approximate representation of the latent variable.</p>
-<p><img src="images/indicators_1.png" alt="FEF watershed simple path model, inner model with indicators." width="800" height="300"></p>
-<p><strong>Inner Model</strong> – Captures the relationships between latent variables (e.g., topography → landcover → runoff → DOC composition).</p>
-<p><img src="images/innermodel_2.png" alt="FEF watershed simple path model, inner model." width="800" height="300"></p>
-<p>The <strong>Outer Model</strong> Represents how the manifest variables/indicators load onto their corresponding latent variables.</p>
-<p>Here, we need to consider whether the lack of strong correlations within indicator sets on the “cause” side could limit the model’s explanatory power in capturing the full variance of latent variables like topography. There are checks to measure this. We will explore these after we run the model.</p>
-<p><img src="images/outermodel_1.png" alt="FEF watershed simple path model, outer model." width="800" height="300"></p>
-<p><strong>Exogeneous latent variables</strong> only explain other constructs in the model. (e.g. Topography) Indicators of these be called formative</p>
-<p><strong>Endogeneous latent variables</strong> are being explained in the model(Hydrological, landcover and DOM), according to Fig.1.1 in Hair et al. 2021, Indicators of these may be called reflexive variables</p>
-<p><strong>Measurement theory</strong> specifies how the latent variables are measured. Since these are unobservable variables, we can measure them with ‘reflective ’measurements (i.e., direction of the arrows is from the indicator to the latent variable) or ‘formative’ measurements (arrow is from the latent variable to the measurement, indicating that the latent variable ‘causes’ the measurement). <br></p>
-<p><img src="images/measurement_1.png" alt="FEF watershed simple path model showing reflexive and formative indicators." width="800" height="300"></p>
-<p><strong>Structural theory</strong> shows how the latent variables are related to one another.When the path model is developed, the sequence is from left to right, Variables on the left side of the path are independent variables, and variables on the right side are dependent. Moreover, variables on the left are show a sequentially preceding and predicting the variables on the right. When variables are in the middle of the model, the serve as both independent and dependent variables in the structural model.</p>
-<p><img src="images/structural_1.png" alt="FEF watershed simple path model showing reflexive and formative indicators." width="800" height="300"></p>
-<p><strong>Error terms</strong> are connected to the endogenous constructs and (reflectively) measured indicators. Error terms represent the unexplained variance when path models are estimated. i.e. the difference between the model’s in-sample prediction of a value and an observed value of an indicator or latent variable. <br></p>
-<p><img src="images/error_1.png" alt="FEF watershed simple path model with error terms indicated." width="800" height="300"></p>
-<p>In contrast, the <strong>formatively</strong> measured indicators (like those of topography) do not have error terms. And for DOM lability, the direction of the relationships between the latent variable and indicator are not relevant, as they are assumed to be equivalent. So, there is no error term associated with those indicators. <br></p>
-<p>Now that we have a path model, we need to test the theoretical relationships within that model. <br></p>
-</div>
+<div id="model-1" class="section level2 hasAnchor" number="9.1">
+<h2><span class="header-section-number">9.1</span> Model 1<a href="model-1.html#model-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Our indicators for each latent variable are as follows:<br>
+<strong>Topo:</strong> <br>
+–mean distance that allochthonous water has to travel to the stream channel<br>
+–mean aspect in radians<br>
+–mean subcatchment TWI <br>
+<strong>Landcover:</strong> <br>
+– % of subcatchment pixels with &gt;50% beetlekill<br>
+– mean NDVI <br>
+<strong>Hydro:</strong> <br>
+–log discharge/m2<br>
+<strong>Humic DOM:</strong> <br>
+– “norm_PARAF_c1”, “norm_PARAF_c2”, “PARAF_comp_1”, “PARAF_comp_2”, relative_load_comp_1”, “relative_load_comp_2”, “peak_A_250.450”, “peak_C_350.450”, “Fluorescence_Index”, “SUVA254”, “peak_ratioCA”</p>
+<p>#“daily_rate_of_change_Ox”, “daily_DOC_loss”, too many NA to include in this model</p>
+<p>Output summary <br>
+Recall that path coefficients indicate the relationship between the two latent variables and we generally want reliability indicators to be high. e.g., rhoC represents internal consistency reliability, which is the extent to which indicators measuring the same construct are associated with each other. values over 0.95 can indicate redundancy, but values over 0.7 are preferred.</p>
+<pre><code>## 
+## Results from  package seminr (2.3.4)
+## 
+## Path Coefficients:
+##            HYDRO LANDCOVER  HUMIC
+## R^2        0.215     0.577  0.525
+## AdjR^2     0.197     0.573  0.509
+## TOPO       0.157     0.760  0.562
+## LANDCOVER -0.572         .  0.149
+## HYDRO          .         . -0.109
+## 
+## Reliability:
+##           alpha  rhoC   AVE  rhoA
+## TOPO      0.907 0.940 0.839 0.952
+## LANDCOVER 0.865 0.936 0.880 0.886
+## HYDRO     1.000 1.000 1.000 1.000
+## HUMIC     0.779 0.770 0.392 0.850
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
+<p>A plot of result reliability measures:</p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="model-1.html#cb75-1" tabindex="-1"></a><span class="fu">plot</span>(summary_simple_fef<span class="sc">$</span>reliability)</span></code></pre></div>
+<p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-214-1.png" width="672" /></p>
+<p>Inspect the bootstrapped indicator loadings</p>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-436021fc15e3e1468c63" style="width:768px;height:384px;"></div>
+<script type="application/json" data-for="htmlwidget-436021fc15e3e1468c63">{"x":{"diagram":"digraph G {\n\n// ----------------------\n// General graph settings\n// ----------------------\ngraph [\ncharset = \"UTF-8\",\nlayout = dot,\nlabel = \"Bootstrapped Model\",\nfontsize = 24,\nfontcolor = black,\nfontname = helvetica,\nrankdir = LR,\nlabelloc = t,\nsplines = TRUE\nbgcolor = transparent\n]\n\n// --------------------\n// The structural model\n// --------------------\nsubgraph sm {\nrankdir = LR;\nnode [\nshape = ellipse,\ncolor = black,\nfillcolor = white,\nstyle = filled,\nfontsize = 12,\nfontcolor = black,\nheight = 0.919303385416667,\nwidth = 0.918636067708333,\nfontname = helvetica,\nfixedsize = true\n]\n\"TOPO\" [label=<<B>TOPO <\/B>>, shape = hexagon]\n\"LANDCOVER\" [label=<<B>LANDCOVER <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.577<\/FONT>>, shape = hexagon]\n\"HYDRO\" [label=<<B>HYDRO <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.215<\/FONT>>, shape = hexagon]\n\"HUMIC\" [label=<<B>HUMIC <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.525<\/FONT>>, shape = hexagon]\nedge [\ncolor = black,\nfontsize = 9,\nfontcolor = black,\nfontname = helvetica,\ndir = both,\narrowhead = normal,\narrowtail = none\n]\n\"TOPO\" -> {\"HYDRO\"}[weight = 1, label = < 𝛽 = 0.157<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.091, 0.44]   <\/FONT> >, penwidth = 1.285, style = solid, color = black]\n\"TOPO\" -> {\"LANDCOVER\"}[weight = 1, label = < 𝛽 = 0.76***<BR /><FONT POINT-SIZE=\"7\">95% CI [0.678, 0.828]   <\/FONT> >, penwidth = 4.3, style = solid, color = black]\n\"TOPO\" -> {\"HUMIC\"}[weight = 1, label = < 𝛽 = 0.562***<BR /><FONT POINT-SIZE=\"7\">95% CI [0.336, 0.783]   <\/FONT> >, penwidth = 3.31, style = solid, color = black]\n\"LANDCOVER\" -> {\"HYDRO\"}[weight = 1, label = < 𝛽 = -0.572**<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.97, -0.178]   <\/FONT> >, penwidth = 3.36, style = dashed, color = black]\n\"LANDCOVER\" -> {\"HUMIC\"}[weight = 1, label = < 𝛽 = 0.149<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.067, 0.397]   <\/FONT> >, penwidth = 1.245, style = solid, color = black]\n\"HYDRO\" -> {\"HUMIC\"}[weight = 1, label = < 𝛽 = -0.109<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.264, 0.062]   <\/FONT> >, penwidth = 1.045, style = dashed, color = black]\n}\n// ---------------------\n// The measurement model\n// ---------------------\n\nsubgraph construct_1 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"topo_1\" [label = \"topo_1\", shape = box]\n\"topo_2\" [label = \"topo_2\", shape = box]\n\"topo_3\" [label = \"topo_3\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"topo_1\" -> {\"TOPO\"}[weight = 1000, label = < 𝜆 = 0.894*** >, penwidth = 3.182, style = solid, color = dimgrey]\n\"topo_2\" -> {\"TOPO\"}[weight = 1000, label = < 𝜆 = 0.952*** >, penwidth = 3.356, style = solid, color = dimgrey]\n\"topo_3\" -> {\"TOPO\"}[weight = 1000, label = < 𝜆 = 0.901*** >, penwidth = 3.203, style = solid, color = dimgrey]\n\n}\nsubgraph construct_2 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"landcover_1\" [label = \"landcover_1\", shape = box]\n\"landcover_2\" [label = \"landcover_2\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"landcover_1\" -> {\"LANDCOVER\"}[weight = 1000, label = < 𝜆 = 0.95*** >, penwidth = 3.35, style = solid, color = dimgrey]\n\"landcover_2\" -> {\"LANDCOVER\"}[weight = 1000, label = < 𝜆 = 0.926*** >, penwidth = 3.278, style = solid, color = dimgrey]\n\n}\nsubgraph construct_3 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"hydro_1\" [label = \"hydro_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"hydro_1\" -> {\"HYDRO\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_4 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"humic_1\" [label = \"humic_1\", shape = box]\n\"humic_2\" [label = \"humic_2\", shape = box]\n\"humic_3\" [label = \"humic_3\", shape = box]\n\"humic_4\" [label = \"humic_4\", shape = box]\n\"humic_5\" [label = \"humic_5\", shape = box]\n\"humic_6\" [label = \"humic_6\", shape = box]\n\"humic_7\" [label = \"humic_7\", shape = box]\n\"humic_8\" [label = \"humic_8\", shape = box]\n\"humic_9\" [label = \"humic_9\", shape = box]\n\"humic_10\" [label = \"humic_10\", shape = box]\n\"humic_11\" [label = \"humic_11\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = normal\narrowtail = none\n]\n\"HUMIC\" -> {\"humic_1\"}[weight = 1000, label = < 𝜆 = 0.249 >, penwidth = 1.247, style = solid, color = dimgrey]\n\"HUMIC\" -> {\"humic_2\"}[weight = 1000, label = < 𝜆 = 0.253* >, penwidth = 1.259, style = solid, color = dimgrey]\n\"HUMIC\" -> {\"humic_3\"}[weight = 1000, label = < 𝜆 = 0.711*** >, penwidth = 2.633, style = solid, color = dimgrey]\n\"HUMIC\" -> {\"humic_4\"}[weight = 1000, label = < 𝜆 = 0.687*** >, penwidth = 2.561, style = solid, color = dimgrey]\n\"HUMIC\" -> {\"humic_5\"}[weight = 1000, label = < 𝜆 = 0.814*** >, penwidth = 2.942, style = solid, color = dimgrey]\n\"HUMIC\" -> {\"humic_6\"}[weight = 1000, label = < 𝜆 = 0.785*** >, penwidth = 2.855, style = solid, color = dimgrey]\n\"HUMIC\" -> {\"humic_7\"}[weight = 1000, label = < 𝜆 = 0.106 >, penwidth = 0.818, style = solid, color = dimgrey]\n\"HUMIC\" -> {\"humic_8\"}[weight = 1000, label = < 𝜆 = 0.726*** >, penwidth = 2.678, style = solid, color = dimgrey]\n\"HUMIC\" -> {\"humic_9\"}[weight = 1000, label = < 𝜆 = -0.814*** >, penwidth = 2.942, style = dashed, color = dimgrey]\n\"HUMIC\" -> {\"humic_10\"}[weight = 1000, label = < 𝜆 = 0.654*** >, penwidth = 2.462, style = solid, color = dimgrey]\n\"HUMIC\" -> {\"humic_11\"}[weight = 1000, label = < 𝜆 = 0.554*** >, penwidth = 2.162, style = solid, color = dimgrey]\n\n}\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<p>Here we are interested in the indicator loadings for DOM. We can see lambda values that are low and insignificant (e.g. dom_1 = norm_PARAF_c1 = DOM normalized absorbance for component 1.), but most are &gt; than |0.5| and significant. Let’s remove insignificant indicators and see what happens:</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="partial-least-squares-structural-equation-modeling-pls-sem.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="data-managment-transformation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="testing-iterations-of-the-pls-sem-fef-model-1.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="model-2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>

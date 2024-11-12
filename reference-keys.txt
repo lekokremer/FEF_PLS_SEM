@@ -111,5 +111,5 @@ results-of-bootstrapped-pls-7
 grouping-response-variables
 reporting-initial-results-and-evaluating-the-quality-of-our-favorite-model
 testing-iterations-of-the-pls-sem-fef-model-1
-model-1-flow-stage-classifier-as-a-latent-variable.-total-protein-like-component-1
-results-of-bootstrapped-pls-8
+model-1
+model-2

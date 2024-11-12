@@ -227,10 +227,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="8" data-path="reporting-initial-results-and-evaluating-the-quality-of-our-favorite-model.html"><a href="reporting-initial-results-and-evaluating-the-quality-of-our-favorite-model.html"><i class="fa fa-check"></i><b>8</b> Reporting initial results and evaluating the quality of our favorite model</a></li>
 <li class="chapter" data-level="9" data-path="testing-iterations-of-the-pls-sem-fef-model-1.html"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html"><i class="fa fa-check"></i><b>9</b> Testing iterations of the PLS-SEM FEF model</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="model-1-flow-stage-classifier-as-a-latent-variable.-total-protein-like-component-1.html"><a href="model-1-flow-stage-classifier-as-a-latent-variable.-total-protein-like-component-1.html"><i class="fa fa-check"></i><b>9.1</b> MODEL 1: Flow stage classifier as a latent variable. Total protein-like component <br></a>
-<ul>
-<li class="chapter" data-level="9.1.1" data-path="model-1-flow-stage-classifier-as-a-latent-variable.-total-protein-like-component-1.html"><a href="model-1-flow-stage-classifier-as-a-latent-variable.-total-protein-like-component-1.html#results-of-bootstrapped-pls-8"><i class="fa fa-check"></i><b>9.1.1</b> Results of bootstrapped PLS</a></li>
-</ul></li>
+<li class="chapter" data-level="9.1" data-path="model-1.html"><a href="model-1.html"><i class="fa fa-check"></i><b>9.1</b> Model 1</a></li>
+<li class="chapter" data-level="9.2" data-path="model-2.html"><a href="model-2.html"><i class="fa fa-check"></i><b>9.2</b> Model 2</a></li>
 </ul></li>
 </ul>
 
@@ -430,10 +428,10 @@ Also, our response variables are right-skewed unimodal. We need to make the data
 <p>Ok, now our responses are approximately normal. The scales are similar, the units are the same. I am not sure if we want to standardize/z-score these as well. This can ensure that they contribute equally to the analysis…lets try both and see if scaling makes a difference:</p>
 <p><strong>scaled:</strong>
 <img src="PLS_rendered_book_files/figure-html/unnamed-chunk-121-1.png" width="672" /></p>
-<pre><code>## Call: rda(formula = standardized_resp ~ aspect_mean + twi_mean
-## + ndvi_raster_mean + disttostreams_mean + percent_Beetle.kill +
-## percent_Old.Forest + percent_cut.regenerating + area_km +
-## Qm3_s, data = explanatory_standardized, na.action = na.exclude)
+<pre><code>## Call: rda(formula = standardized_resp ~ aspect_mean + twi_mean +
+## ndvi_raster_mean + disttostreams_mean + percent_Beetle.kill + percent_Old.Forest
+## + percent_cut.regenerating + area_km + Qm3_s, data = explanatory_standardized,
+## na.action = na.exclude)
 ## 
 ## -- Model Summary --
 ## 
@@ -464,10 +462,10 @@ Some constraints or conditions were aliased because they were redundant. This ca
 <p>-Similar to PCA, but it is a <u>constrained</u> method that requries two datasets, one for response variables (e.g., PARAFAC component fractions) and one for explanatory variables (watershed characteristics)</p>
 <p>RDA identifies the portion of the variation in the response dataset that can be explained by the explanatory variables. So this tells us how much of the variability in the response variables is explained by the predictors.</p>
 <p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-123-1.png" width="672" /></p>
-<pre><code>## Call: rda(formula = response_matrix ~ aspect_mean + twi_mean +
-## ndvi_raster_mean + disttostreams_mean + percent_Beetle.kill +
-## percent_Old.Forest + percent_cut.regenerating + area_km +
-## Qm3_s, data = explanatory_matrix, na.action = na.exclude)
+<pre><code>## Call: rda(formula = response_matrix ~ aspect_mean + twi_mean + ndvi_raster_mean
+## + disttostreams_mean + percent_Beetle.kill + percent_Old.Forest +
+## percent_cut.regenerating + area_km + Qm3_s, data = explanatory_matrix, na.action
+## = na.exclude)
 ## 
 ## -- Model Summary --
 ## 
@@ -504,14 +502,10 @@ Some constraints or conditions were aliased because they were redundant. This ca
 ## Eigenvalues, and their contribution to the variance 
 ## 
 ## Importance of components:
-##                          RDA1    RDA2      RDA3     PC1     PC2
-## Eigenvalue            3.87920 1.91526 0.0057837 45.5493 5.66969
-## Proportion Explained  0.06769 0.03342 0.0001009  0.7948 0.09893
-## Cumulative Proportion 0.06769 0.10111 0.1012131  0.8960 0.99497
-##                            PC3
-## Eigenvalue            0.288070
-## Proportion Explained  0.005027
-## Cumulative Proportion 1.000000
+##                          RDA1    RDA2      RDA3     PC1     PC2      PC3
+## Eigenvalue            3.87920 1.91526 0.0057837 45.5493 5.66969 0.288070
+## Proportion Explained  0.06769 0.03342 0.0001009  0.7948 0.09893 0.005027
+## Cumulative Proportion 0.06769 0.10111 0.1012131  0.8960 0.99497 1.000000
 ## 
 ## Accumulated constrained eigenvalues
 ## Importance of components:
