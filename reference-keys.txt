@@ -91,9 +91,9 @@ reporting-initial-results-and-evaluating-the-quality-of-reflective-measurement-m
 bootstrapping-for-significance
 reporting-results-of-bootstrapped-pls
 testing-iterations-of-the-pls-sem-fef-model
-model-1-flow-stage-classifier-as-a-latent-variable.-total-protein-like-component
+model-1-flow-state-classifier-as-a-latent-variable.-total-protein-like-component
 results-of-bootstrapped-pls
-model-2-include-a-flow-stage-classifier-as-a-latent-variable-where-response-is-protein-like-fraction-of-dom.
+model-2-include-a-flow-state-classifier-as-a-latent-variable-where-response-is-protein-like-fraction-of-dom.
 model-3-remove-flow-as-a-latent-variable-where-response-is-protein-like-fraction-of-dom.
 results-of-bootstrapped-pls-1
 model-4-remove-hydrology-altogether-as-a-latent-variable-where-response-is-protein-like-fraction-of-dom.
@@ -111,5 +111,7 @@ results-of-bootstrapped-pls-7
 grouping-response-variables
 reporting-initial-results-and-evaluating-the-quality-of-our-favorite-model
 testing-iterations-of-the-pls-sem-fef-model-1
-model-1
-model-2
+model-1---test-all-humic-indicators
+model-2---remove-non-significant-indicators
+model-3---loop-through-landcover
+model-4---flow-state-model

@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>9 Testing iterations of the PLS-SEM FEF model | PLS-SEM FEF model iterations - HUMIC response</title>
-  <meta name="description" content="9 Testing iterations of the PLS-SEM FEF model | PLS-SEM FEF model iterations - HUMIC response" />
+  <title>9.3 Model 3 - loop through landcover | PLS-SEM FEF model iterations - HUMIC response</title>
+  <meta name="description" content="9.3 Model 3 - loop through landcover | PLS-SEM FEF model iterations - HUMIC response" />
   <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="9 Testing iterations of the PLS-SEM FEF model | PLS-SEM FEF model iterations - HUMIC response" />
+  <meta property="og:title" content="9.3 Model 3 - loop through landcover | PLS-SEM FEF model iterations - HUMIC response" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="9 Testing iterations of the PLS-SEM FEF model | PLS-SEM FEF model iterations - HUMIC response" />
+  <meta name="twitter:title" content="9.3 Model 3 - loop through landcover | PLS-SEM FEF model iterations - HUMIC response" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="reporting-initial-results-and-evaluating-the-quality-of-our-favorite-model.html"/>
-<link rel="next" href="model-1---test-all-humic-indicators.html"/>
+<link rel="prev" href="model-2---remove-non-significant-indicators.html"/>
+<link rel="next" href="model-4---flow-state-model.html"/>
 <script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -249,44 +249,292 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="testing-iterations-of-the-pls-sem-fef-model-1" class="section level1 hasAnchor" number="9">
-<h1><span class="header-section-number">9</span> Testing iterations of the PLS-SEM FEF model<a href="testing-iterations-of-the-pls-sem-fef-model-1.html#testing-iterations-of-the-pls-sem-fef-model-1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html#cb73-1" tabindex="-1"></a><span class="co">#ADD BOD data</span></span>
-<span id="cb73-2"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html#cb73-2" tabindex="-1"></a>file <span class="ot">&lt;-</span> <span class="fu">normalizePath</span>(<span class="fu">file.path</span>(<span class="fu">getwd</span>(), <span class="st">&quot;/datafiles/BODrates_cleaned.csv&quot;</span>))</span>
-<span id="cb73-3"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html#cb73-3" tabindex="-1"></a></span>
-<span id="cb73-4"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html#cb73-4" tabindex="-1"></a><span class="co"># Read the CSV file</span></span>
-<span id="cb73-5"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html#cb73-5" tabindex="-1"></a>bod <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(file) <span class="sc">%&gt;%</span></span>
-<span id="cb73-6"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html#cb73-6" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>watershed)</span>
-<span id="cb73-7"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html#cb73-7" tabindex="-1"></a></span>
-<span id="cb73-8"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html#cb73-8" tabindex="-1"></a><span class="co"># Merge PARAFAC, vegetation, topography and fluoro data with BOD results. </span></span>
-<span id="cb73-9"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html#cb73-9" tabindex="-1"></a>merged_df <span class="ot">&lt;-</span> <span class="fu">merge</span>(partial_df, bod, <span class="at">by=</span><span class="st">&#39;ID&#39;</span>,, <span class="at">all.x =</span> <span class="cn">TRUE</span> )</span></code></pre></div>
-<p>For this model demonstration, our EEMs dataset has been filtered to ‘stream’ samples only (no wells) (n= 91)</p>
-<p>Building on part 06_PLS_SEM, building responses using ‘labile’ and ‘recalcitrant’ indicators.
-Potential responses are from:
-<strong>1. EEMS:</strong> “peak_A_250.450”, “peak_C_350.450”, “peak_T_275.340”, “Fluorescence_Index”, “SUVA254”, “peak_ratioAT”, “peak_ratioCA”, “peak_ratioCT” <br>
-<u>Where: peak_A_250.450 and peak_C_350.450</u> are typically intersections on the emission-excitation matrix where a peak is associated with the presence humic-like substances. It is an indicator of humic content, which generally represents more refractory/recalcitrant (less biodegradable) dissolved organic matter (DOM). PeaK C may be less degraded, more recently produced (younger or more microbially souced?). Peak A may be more degraded,older derived from terrestrail souces with longer residence time. <br>
-<u>peak_T_275_340</u> - indicator of protein-like substances (tryptophan) and can be an indicator of recently produced, labile DOM.<br>
-<u>Fluorescence_Index:</u> helps distinguish between terrestrial and microbial sources of dissolved organic matter (DOM). It is the ratio of fluorescence intensities at emission 475 with excitation at 370 nm. <br>
-FI around 1.2 or lower: Indicates a stronger terrestrial DOM source, often linked to plant and soil organic matter inputs. <br>
-FI around 1.4 or higher: Suggests a more microbial DOM source, often derived from algae, bacteria, or other microbial production.<br>
-Microbially derived DOM is generally more labile than terrestrial DOM.<br>
-<u>SUVA:</u> is specific Ultraviolet Absorbance at 254nm (absorbance at 254nm normalized by DOC concentration) and is an indicator of aromacity (&gt;4L/mg.m) is higher aromatic content, usually associated with terrestrial, humic-like DOM, where lower (&lt;2-3L/mg.m) is usually associated with microbial, more labile sources.<br>
-<u>Peak ratios:</u> are ratios of the peaks A, C and T to get an idea of the relative abundances of humic: protein-like substances
-<strong>PARAFAC:</strong> norm_loadings, norm_PARAF_c1, norm_PARAF_c2, norm_PARAF_c3, PARAF_comp_1, PARAF_comp_2, PARAF_comp_3, total_loadings, Sample, relative_load_comp_1, relative_load_comp_2, relative_load_comp_3 <br><br />
-<u>Where: total_loadings </u> refers to the total absorbance of the entire sample, <u>norm_loadings </u> are the loadings normalized by the sample DOC concentration, and ‘relative load’ refers to the fraction of the total loading represented by each component. Component 1, 2 and 3 matrices are shown in section 3. 1 and 2 represent humic components. Component 3 matches protein-like component matrices.
-<strong>BOD:</strong> daily_DOC_loss, daily_rate_of_change_Ox <br>
-Total DOC consumed during biological oxygen demand assays were measured and normalized by the number of days that the experiment was run. Similarly, dissolved oxygen (DO) was measured at 10minute intervals, then a DO loss per day was calculated for each sample (04_BOD_results_summary). Preliminary data exploration suggests that few correlations exist between BOD results and other responses, or landscape characteristics, except maybe DOC normalized PARAFAC component loadings.</p>
-<p>To generate a two model analysis, I will group measured responses (i.e.indicators) into ‘humic’ or ‘protein-like’ latent variables. Then we will evaluate the relatedness of each indicator within the two variables to determine how each latent variable should be defined. PLS-SEM iteratively assigns weights to each indicator to maximize the explained variance of the latent variable in the structural model (this process is conceptually similar to PCA). In the bootstrapped model, we will see the strength of the relationship between each indicator and composite represented by lambda. So lambda indicates how well each indicator “loads” on its assigned latent variable after optimization (like PCA factor loadings). Higher lambda values mean that the indicator is strongly associated with the composite.</p>
-<p>potential humic indicators: “norm_PARAF_c1”, “norm_PARAF_c2”, “PARAF_comp_1”, “PARAF_comp_2”, relative_load_comp_1”, “relative_load_comp_2”, “daily_rate_of_change_Ox”, “daily_DOC_loss”, “peak_A_250.450”, “peak_C_350.450”, “Fluorescence_Index”, “SUVA254”, “peak_ratioCA”</p>
-<p>potential microbial/labile indicators: “norm_PARAF_c3”, “PARAF_comp_3”, “relative_load_comp_3”, “daily_rate_of_change_Ox”, “daily_DOC_loss”, “peak_T_275.340”, “Fluorescence_Index”, “SUVA254”, “peak_ratioAT”, “peak_ratioCT”</p>
+<div id="model-3---loop-through-landcover" class="section level2 hasAnchor" number="9.3">
+<h2><span class="header-section-number">9.3</span> Model 3 - loop through landcover<a href="model-3---loop-through-landcover.html#model-3---loop-through-landcover" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<pre><code>## Generating the seminr model</code></pre>
+<pre><code>## All 91 observations are valid.</code></pre>
+<pre><code>## 
+## Results for landcover indicators: beetleVI 
+##            HYDRO LANDCOVER  HUMIC
+## R^2        0.215     0.580  0.450
+## AdjR^2     0.197     0.575  0.431
+## TOPO       0.155     0.761  0.479
+## LANDCOVER -0.571         .  0.179
+## HYDRO          .         . -0.107
+## NULL
+##           alpha  rhoC   AVE  rhoA
+## TOPO      0.907 0.940 0.839 0.962
+## LANDCOVER 0.865 0.936 0.880 0.883
+## HYDRO     1.000 1.000 1.000 1.000
+## HUMIC     0.739 0.824 0.534 0.883
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
+<pre><code>## Generating the seminr model
+## All 91 observations are valid.</code></pre>
+<pre><code>## 
+## Results for landcover indicators: cutVI 
+##            HYDRO LANDCOVER  HUMIC
+## R^2        0.188     0.610  0.443
+## AdjR^2     0.170     0.606  0.423
+## TOPO       0.139     0.781  0.458
+## LANDCOVER -0.533         .  0.194
+## HYDRO          .         . -0.107
+## NULL
+##           alpha  rhoC   AVE  rhoA
+## TOPO      0.907 0.940 0.840 0.951
+## LANDCOVER 0.742 0.886 0.795 0.749
+## HYDRO     1.000 1.000 1.000 1.000
+## HUMIC     0.739 0.828 0.539 0.882
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
+<pre><code>## Generating the seminr model
+## All 91 observations are valid.</code></pre>
+<pre><code>## 
+## Results for landcover indicators: oldforestVI 
+##            HYDRO LANDCOVER  HUMIC
+## R^2        0.074     0.624  0.427
+## AdjR^2     0.053     0.620  0.407
+## TOPO      -0.316     0.790  0.606
+## LANDCOVER  0.059         . -0.017
+## HYDRO          .         . -0.159
+## NULL
+##            alpha  rhoC   AVE  rhoA
+## TOPO       0.907 0.941 0.842 0.926
+## LANDCOVER -0.947 0.009 0.659 0.497
+## HYDRO      1.000 1.000 1.000 1.000
+## HUMIC      0.739 0.826 0.537 0.879
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
+<pre><code>## Generating the seminr model
+## All 91 observations are valid.</code></pre>
+<pre><code>## 
+## Results for landcover indicators: meadowsVI 
+##            HYDRO LANDCOVER HUMIC
+## R^2        0.553     0.238 0.467
+## AdjR^2     0.543     0.229 0.449
+## TOPO       0.089     0.487 0.541
+## LANDCOVER -0.783         . 0.247
+## HYDRO          .         . 0.025
+## NULL
+##            alpha  rhoC   AVE  rhoA
+## TOPO       0.907 0.937 0.832 1.044
+## LANDCOVER -0.569 0.023 0.608 0.379
+## HYDRO      1.000 1.000 1.000 1.000
+## HUMIC      0.739 0.828 0.539 0.881
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
+<pre><code>## Generating the seminr model
+## All 91 observations are valid.</code></pre>
+<pre><code>## 
+## Results for landcover indicators: tundraVI 
+##           HYDRO LANDCOVER  HUMIC
+## R^2       0.455     0.390  0.483
+## AdjR^2    0.443     0.383  0.466
+## TOPO      0.193    -0.624  0.465
+## LANDCOVER 0.778         . -0.314
+## HYDRO         .         .  0.021
+## NULL
+##            alpha  rhoC   AVE  rhoA
+## TOPO       0.907 0.937 0.832 1.047
+## LANDCOVER -7.678 0.002 0.896 0.909
+## HYDRO      1.000 1.000 1.000 1.000
+## HUMIC      0.739 0.825 0.536 0.888
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
+<pre><code>## Generating the seminr model
+## All 91 observations are valid.</code></pre>
+<pre><code>## 
+## Results for landcover indicators: beetleMI 
+##            HYDRO LANDCOVER  HUMIC
+## R^2        0.173     0.782  0.480
+## AdjR^2     0.154     0.779  0.462
+## TOPO       0.311     0.884  0.182
+## LANDCOVER -0.664         .  0.492
+## HYDRO          .         . -0.083
+## NULL
+##           alpha  rhoC   AVE  rhoA
+## TOPO      0.907 0.940 0.840 0.949
+## LANDCOVER 0.941 0.971 0.944 0.950
+## HYDRO     1.000 1.000 1.000 1.000
+## HUMIC     0.739 0.822 0.533 0.890
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
+<pre><code>## Generating the seminr model
+## All 91 observations are valid.</code></pre>
+<pre><code>## 
+## Results for landcover indicators: cutMI 
+##            HYDRO LANDCOVER  HUMIC
+## R^2        0.138     0.804  0.471
+## AdjR^2     0.118     0.802  0.452
+## TOPO       0.233     0.897  0.123
+## LANDCOVER -0.566         .  0.538
+## HYDRO          .         . -0.087
+## NULL
+##           alpha  rhoC   AVE  rhoA
+## TOPO      0.907 0.941 0.841 0.940
+## LANDCOVER 0.879 0.942 0.891 0.898
+## HYDRO     1.000 1.000 1.000 1.000
+## HUMIC     0.739 0.831 0.542 0.887
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
+<pre><code>## Generating the seminr model
+## All 91 observations are valid.</code></pre>
+<pre><code>## 
+## Results for landcover indicators: oldforestMI 
+##            HYDRO LANDCOVER  HUMIC
+## R^2        0.121     0.860  0.444
+## AdjR^2     0.101     0.858  0.425
+## TOPO      -0.818     0.927  0.228
+## LANDCOVER  0.593         .  0.379
+## HYDRO          .         . -0.198
+## NULL
+##            alpha  rhoC   AVE  rhoA
+## TOPO       0.907 0.941 0.842 0.924
+## LANDCOVER -2.536 0.032 0.770 0.847
+## HYDRO      1.000 1.000 1.000 1.000
+## HUMIC      0.739 0.824 0.535 0.885
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
+<pre><code>## Generating the seminr model
+## All 91 observations are valid.</code></pre>
+<pre><code>## 
+## Results for landcover indicators: meadowsMI 
+##            HYDRO LANDCOVER HUMIC
+## R^2        0.459     0.639 0.505
+## AdjR^2     0.447     0.635 0.488
+## TOPO       0.535     0.800 0.186
+## LANDCOVER -1.024         . 0.602
+## HYDRO          .         . 0.099
+## NULL
+##            alpha  rhoC   AVE  rhoA
+## TOPO       0.907 0.939 0.837 0.983
+## LANDCOVER -0.519 0.141 0.585 0.476
+## HYDRO      1.000 1.000 1.000 1.000
+## HUMIC      0.739 0.831 0.541 0.886
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
+<pre><code>## Generating the seminr model
+## All 91 observations are valid.</code></pre>
+<pre><code>## 
+## Results for landcover indicators: tundraMI 
+##            HYDRO LANDCOVER HUMIC
+## R^2        0.429     0.632 0.523
+## AdjR^2     0.416     0.628 0.507
+## TOPO       0.484     0.795 0.183
+## LANDCOVER -0.970         . 0.614
+## HYDRO          .         . 0.090
+## NULL
+##            alpha  rhoC   AVE  rhoA
+## TOPO       0.907 0.938 0.835 1.007
+## LANDCOVER -6.596 0.001 0.883 0.875
+## HYDRO      1.000 1.000 1.000 1.000
+## HUMIC      0.739 0.826 0.536 0.894
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
+<pre><code>## Generating the seminr model
+## All 91 observations are valid.</code></pre>
+<pre><code>## 
+## Results for landcover indicators: mixedMI 
+##            HYDRO LANDCOVER  HUMIC
+## R^2        0.201     0.696  0.453
+## AdjR^2     0.183     0.693  0.434
+## TOPO       0.259     0.834  0.365
+## LANDCOVER -0.642         .  0.298
+## HYDRO          .         . -0.092
+## NULL
+##           alpha  rhoC   AVE  rhoA
+## TOPO      0.907 0.940 0.840 0.947
+## LANDCOVER 0.854 0.912 0.775 0.861
+## HYDRO     1.000 1.000 1.000 1.000
+## HUMIC     0.739 0.827 0.537 0.885
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
+<pre><code>## Generating the seminr model
+## All 91 observations are valid.</code></pre>
+<pre><code>## 
+## Results for landcover indicators: VIMI 
+##            HYDRO LANDCOVER  HUMIC
+## R^2        0.245     0.690  0.459
+## AdjR^2     0.228     0.687  0.440
+## TOPO       0.328     0.831  0.385
+## LANDCOVER -0.733         .  0.285
+## HYDRO          .         . -0.083
+## NULL
+##           alpha  rhoC   AVE  rhoA
+## TOPO      0.907 0.939 0.838 0.967
+## LANDCOVER 0.870 0.938 0.883 0.923
+## HYDRO     1.000 1.000 1.000 1.000
+## HUMIC     0.739 0.824 0.535 0.885
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
+<pre><code>## Generating the seminr model
+## All 91 observations are valid.</code></pre>
+<pre><code>## 
+## Results for landcover indicators: lowcanopyMI 
+##            HYDRO LANDCOVER HUMIC
+## R^2        0.409     0.293 0.497
+## AdjR^2     0.396     0.285 0.479
+## TOPO       0.064     0.541 0.511
+## LANDCOVER -0.672         . 0.290
+## HYDRO          .         . 0.014
+## NULL
+##            alpha  rhoC   AVE  rhoA
+## TOPO       0.907 0.935 0.827 1.119
+## LANDCOVER -0.199 0.121 0.539 0.201
+## HYDRO      1.000 1.000 1.000 1.000
+## HUMIC      0.739 0.822 0.534 0.890
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
+<pre><code>## Generating the seminr model
+## All 91 observations are valid.</code></pre>
+<pre><code>## 
+## Results for landcover indicators: midlowcanopyMI 
+##            HYDRO LANDCOVER HUMIC
+## R^2        0.622     0.562 0.549
+## AdjR^2     0.614     0.557 0.533
+## TOPO       0.550     0.750 0.132
+## LANDCOVER -1.112         . 0.783
+## HYDRO          .         . 0.259
+## NULL
+##           alpha  rhoC   AVE  rhoA
+## TOPO      0.907 0.939 0.836 0.988
+## LANDCOVER 0.451 0.784 0.645 0.458
+## HYDRO     1.000 1.000 1.000 1.000
+## HUMIC     0.739 0.822 0.533 0.896
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
+<pre><code>## Generating the seminr model
+## All 91 observations are valid.</code></pre>
+<pre><code>## 
+## Results for landcover indicators: midcanopyMI 
+##            HYDRO LANDCOVER  HUMIC
+## R^2        0.147     0.610  0.427
+## AdjR^2     0.127     0.606  0.407
+## TOPO       0.082     0.781  0.683
+## LANDCOVER -0.444         . -0.133
+## HYDRO          .         . -0.188
+## NULL
+##            alpha  rhoC   AVE  rhoA
+## TOPO       0.907 0.942 0.843 0.915
+## LANDCOVER -0.265 0.075 0.554 0.236
+## HYDRO      1.000 1.000 1.000 1.000
+## HUMIC      0.739 0.826 0.537 0.879
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
+<p>What we see in this output is that other landcover types like tundra, meadows and old forest % coverage do not generate reliable and valid measurements of the ‘humic’ construct/latent variable, as indicated by low loadings, (AVE &lt; 0.5), and/or low reliability metrics (RhoC, alpha, and rhoA &lt; 0.7). If we evaluate the R^2 for each of our dependent variables, specifically HUMIC to determine the amount of variance in that construct explained by its predictor constructs…we see that old forest and beetle kill seem to have similar, weak effects on the ‘HUMIC’ construct, with similar prediction strength from the other latent variables.</p>
+<p>THis is just here to reproduce the bootstrapped figures</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="model-3---loop-through-landcover.html#cb108-1" tabindex="-1"></a><span class="fu">Sys.sleep</span>(<span class="dv">1</span>)</span></code></pre></div>
+<p>Inspect the bootstrapped indicator loadings</p>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-821a0725c10e3b685395" style="width:768px;height:384px;"></div>
+<script type="application/json" data-for="htmlwidget-821a0725c10e3b685395">{"x":{"diagram":"digraph G {\n\n// ----------------------\n// General graph settings\n// ----------------------\ngraph [\ncharset = \"UTF-8\",\nlayout = dot,\nlabel = \"Bootstrapped Model\",\nfontsize = 24,\nfontcolor = black,\nfontname = helvetica,\nrankdir = LR,\nlabelloc = t,\nsplines = TRUE\nbgcolor = transparent\n]\n\n// --------------------\n// The structural model\n// --------------------\nsubgraph sm {\nrankdir = LR;\nnode [\nshape = ellipse,\ncolor = black,\nfillcolor = white,\nstyle = filled,\nfontsize = 12,\nfontcolor = black,\nheight = 0.919303385416667,\nwidth = 0.918636067708333,\nfontname = helvetica,\nfixedsize = true\n]\n\"TOPO\" [label=<<B>TOPO <\/B>>, shape = hexagon]\n\"LANDCOVER\" [label=<<B>LANDCOVER <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.61<\/FONT>>, shape = hexagon]\n\"HYDRO\" [label=<<B>HYDRO <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.188<\/FONT>>, shape = hexagon]\n\"HUMIC\" [label=<<B>HUMIC <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.443<\/FONT>>, shape = hexagon]\nedge [\ncolor = black,\nfontsize = 9,\nfontcolor = black,\nfontname = helvetica,\ndir = both,\narrowhead = normal,\narrowtail = none\n]\n\"TOPO\" -> {\"HYDRO\"}[weight = 1, label = < 𝛽 = 0.139<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.164, 0.654]   <\/FONT> >, penwidth = 1.195, style = solid, color = black]\n\"TOPO\" -> {\"LANDCOVER\"}[weight = 1, label = < 𝛽 = 0.781***<BR /><FONT POINT-SIZE=\"7\">95% CI [0.617, 0.884]   <\/FONT> >, penwidth = 4.405, style = solid, color = black]\n\"TOPO\" -> {\"HUMIC\"}[weight = 1, label = < 𝛽 = 0.458***<BR /><FONT POINT-SIZE=\"7\">95% CI [0.15, 0.664]   <\/FONT> >, penwidth = 2.79, style = solid, color = black]\n\"LANDCOVER\" -> {\"HYDRO\"}[weight = 1, label = < 𝛽 = -0.533*<BR /><FONT POINT-SIZE=\"7\">95% CI [-1.117, -0.169]   <\/FONT> >, penwidth = 3.165, style = dashed, color = black]\n\"LANDCOVER\" -> {\"HUMIC\"}[weight = 1, label = < 𝛽 = 0.194<BR /><FONT POINT-SIZE=\"7\">95% CI [0.019, 0.527]   <\/FONT> >, penwidth = 1.47, style = solid, color = black]\n\"HYDRO\" -> {\"HUMIC\"}[weight = 1, label = < 𝛽 = -0.107<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.255, 0.07]   <\/FONT> >, penwidth = 1.035, style = dashed, color = black]\n}\n// ---------------------\n// The measurement model\n// ---------------------\n\nsubgraph construct_1 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"topo_1\" [label = \"topo_1\", shape = box]\n\"topo_2\" [label = \"topo_2\", shape = box]\n\"topo_3\" [label = \"topo_3\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"topo_1\" -> {\"TOPO\"}[weight = 1000, label = < 𝜆 = 0.896*** >, penwidth = 3.188, style = solid, color = dimgrey]\n\"topo_2\" -> {\"TOPO\"}[weight = 1000, label = < 𝜆 = 0.952*** >, penwidth = 3.356, style = solid, color = dimgrey]\n\"topo_3\" -> {\"TOPO\"}[weight = 1000, label = < 𝜆 = 0.9*** >, penwidth = 3.2, style = solid, color = dimgrey]\n\n}\nsubgraph construct_2 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"landcover_1\" [label = \"landcover_1\", shape = box]\n\"landcover_2\" [label = \"landcover_2\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"landcover_1\" -> {\"LANDCOVER\"}[weight = 1000, label = < 𝜆 = 0.904*** >, penwidth = 3.212, style = solid, color = dimgrey]\n\"landcover_2\" -> {\"LANDCOVER\"}[weight = 1000, label = < 𝜆 = 0.879*** >, penwidth = 3.137, style = solid, color = dimgrey]\n\n}\nsubgraph construct_3 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"hydro_1\" [label = \"hydro_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"hydro_1\" -> {\"HYDRO\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_4 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"humic_1\" [label = \"humic_1\", shape = box]\n\"humic_2\" [label = \"humic_2\", shape = box]\n\"humic_3\" [label = \"humic_3\", shape = box]\n\"humic_4\" [label = \"humic_4\", shape = box]\n\"humic_5\" [label = \"humic_5\", shape = box]\n\"humic_6\" [label = \"humic_6\", shape = box]\n\"humic_7\" [label = \"humic_7\", shape = box]\n\"humic_8\" [label = \"humic_8\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = normal\narrowtail = none\n]\n\"HUMIC\" -> {\"humic_1\"}[weight = 1000, label = < 𝜆 = 0.393*** >, penwidth = 1.679, style = solid, color = dimgrey]\n\"HUMIC\" -> {\"humic_2\"}[weight = 1000, label = < 𝜆 = 0.788*** >, penwidth = 2.864, style = solid, color = dimgrey]\n\"HUMIC\" -> {\"humic_3\"}[weight = 1000, label = < 𝜆 = 0.775*** >, penwidth = 2.825, style = solid, color = dimgrey]\n\"HUMIC\" -> {\"humic_4\"}[weight = 1000, label = < 𝜆 = 0.772*** >, penwidth = 2.816, style = solid, color = dimgrey]\n\"HUMIC\" -> {\"humic_5\"}[weight = 1000, label = < 𝜆 = 0.77*** >, penwidth = 2.81, style = solid, color = dimgrey]\n\"HUMIC\" -> {\"humic_6\"}[weight = 1000, label = < 𝜆 = 0.8*** >, penwidth = 2.9, style = solid, color = dimgrey]\n\"HUMIC\" -> {\"humic_7\"}[weight = 1000, label = < 𝜆 = -0.783*** >, penwidth = 2.849, style = dashed, color = dimgrey]\n\"HUMIC\" -> {\"humic_8\"}[weight = 1000, label = < 𝜆 = 0.699*** >, penwidth = 2.597, style = solid, color = dimgrey]\n\n}\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="reporting-initial-results-and-evaluating-the-quality-of-our-favorite-model.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="model-1---test-all-humic-indicators.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="model-2---remove-non-significant-indicators.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="model-4---flow-state-model.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>

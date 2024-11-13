@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>9 Testing iterations of the PLS-SEM FEF model | PLS-SEM FEF model iterations - HUMIC response</title>
-  <meta name="description" content="9 Testing iterations of the PLS-SEM FEF model | PLS-SEM FEF model iterations - HUMIC response" />
+  <title>9.4 Model 4 - Flow state model | PLS-SEM FEF model iterations - HUMIC response</title>
+  <meta name="description" content="9.4 Model 4 - Flow state model | PLS-SEM FEF model iterations - HUMIC response" />
   <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="9 Testing iterations of the PLS-SEM FEF model | PLS-SEM FEF model iterations - HUMIC response" />
+  <meta property="og:title" content="9.4 Model 4 - Flow state model | PLS-SEM FEF model iterations - HUMIC response" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="9 Testing iterations of the PLS-SEM FEF model | PLS-SEM FEF model iterations - HUMIC response" />
+  <meta name="twitter:title" content="9.4 Model 4 - Flow state model | PLS-SEM FEF model iterations - HUMIC response" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="reporting-initial-results-and-evaluating-the-quality-of-our-favorite-model.html"/>
-<link rel="next" href="model-1---test-all-humic-indicators.html"/>
+<link rel="prev" href="model-3---loop-through-landcover.html"/>
+
 <script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -249,44 +249,122 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="testing-iterations-of-the-pls-sem-fef-model-1" class="section level1 hasAnchor" number="9">
-<h1><span class="header-section-number">9</span> Testing iterations of the PLS-SEM FEF model<a href="testing-iterations-of-the-pls-sem-fef-model-1.html#testing-iterations-of-the-pls-sem-fef-model-1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html#cb73-1" tabindex="-1"></a><span class="co">#ADD BOD data</span></span>
-<span id="cb73-2"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html#cb73-2" tabindex="-1"></a>file <span class="ot">&lt;-</span> <span class="fu">normalizePath</span>(<span class="fu">file.path</span>(<span class="fu">getwd</span>(), <span class="st">&quot;/datafiles/BODrates_cleaned.csv&quot;</span>))</span>
-<span id="cb73-3"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html#cb73-3" tabindex="-1"></a></span>
-<span id="cb73-4"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html#cb73-4" tabindex="-1"></a><span class="co"># Read the CSV file</span></span>
-<span id="cb73-5"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html#cb73-5" tabindex="-1"></a>bod <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(file) <span class="sc">%&gt;%</span></span>
-<span id="cb73-6"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html#cb73-6" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>watershed)</span>
-<span id="cb73-7"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html#cb73-7" tabindex="-1"></a></span>
-<span id="cb73-8"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html#cb73-8" tabindex="-1"></a><span class="co"># Merge PARAFAC, vegetation, topography and fluoro data with BOD results. </span></span>
-<span id="cb73-9"><a href="testing-iterations-of-the-pls-sem-fef-model-1.html#cb73-9" tabindex="-1"></a>merged_df <span class="ot">&lt;-</span> <span class="fu">merge</span>(partial_df, bod, <span class="at">by=</span><span class="st">&#39;ID&#39;</span>,, <span class="at">all.x =</span> <span class="cn">TRUE</span> )</span></code></pre></div>
-<p>For this model demonstration, our EEMs dataset has been filtered to ‘stream’ samples only (no wells) (n= 91)</p>
-<p>Building on part 06_PLS_SEM, building responses using ‘labile’ and ‘recalcitrant’ indicators.
-Potential responses are from:
-<strong>1. EEMS:</strong> “peak_A_250.450”, “peak_C_350.450”, “peak_T_275.340”, “Fluorescence_Index”, “SUVA254”, “peak_ratioAT”, “peak_ratioCA”, “peak_ratioCT” <br>
-<u>Where: peak_A_250.450 and peak_C_350.450</u> are typically intersections on the emission-excitation matrix where a peak is associated with the presence humic-like substances. It is an indicator of humic content, which generally represents more refractory/recalcitrant (less biodegradable) dissolved organic matter (DOM). PeaK C may be less degraded, more recently produced (younger or more microbially souced?). Peak A may be more degraded,older derived from terrestrail souces with longer residence time. <br>
-<u>peak_T_275_340</u> - indicator of protein-like substances (tryptophan) and can be an indicator of recently produced, labile DOM.<br>
-<u>Fluorescence_Index:</u> helps distinguish between terrestrial and microbial sources of dissolved organic matter (DOM). It is the ratio of fluorescence intensities at emission 475 with excitation at 370 nm. <br>
-FI around 1.2 or lower: Indicates a stronger terrestrial DOM source, often linked to plant and soil organic matter inputs. <br>
-FI around 1.4 or higher: Suggests a more microbial DOM source, often derived from algae, bacteria, or other microbial production.<br>
-Microbially derived DOM is generally more labile than terrestrial DOM.<br>
-<u>SUVA:</u> is specific Ultraviolet Absorbance at 254nm (absorbance at 254nm normalized by DOC concentration) and is an indicator of aromacity (&gt;4L/mg.m) is higher aromatic content, usually associated with terrestrial, humic-like DOM, where lower (&lt;2-3L/mg.m) is usually associated with microbial, more labile sources.<br>
-<u>Peak ratios:</u> are ratios of the peaks A, C and T to get an idea of the relative abundances of humic: protein-like substances
-<strong>PARAFAC:</strong> norm_loadings, norm_PARAF_c1, norm_PARAF_c2, norm_PARAF_c3, PARAF_comp_1, PARAF_comp_2, PARAF_comp_3, total_loadings, Sample, relative_load_comp_1, relative_load_comp_2, relative_load_comp_3 <br><br />
-<u>Where: total_loadings </u> refers to the total absorbance of the entire sample, <u>norm_loadings </u> are the loadings normalized by the sample DOC concentration, and ‘relative load’ refers to the fraction of the total loading represented by each component. Component 1, 2 and 3 matrices are shown in section 3. 1 and 2 represent humic components. Component 3 matches protein-like component matrices.
-<strong>BOD:</strong> daily_DOC_loss, daily_rate_of_change_Ox <br>
-Total DOC consumed during biological oxygen demand assays were measured and normalized by the number of days that the experiment was run. Similarly, dissolved oxygen (DO) was measured at 10minute intervals, then a DO loss per day was calculated for each sample (04_BOD_results_summary). Preliminary data exploration suggests that few correlations exist between BOD results and other responses, or landscape characteristics, except maybe DOC normalized PARAFAC component loadings.</p>
-<p>To generate a two model analysis, I will group measured responses (i.e.indicators) into ‘humic’ or ‘protein-like’ latent variables. Then we will evaluate the relatedness of each indicator within the two variables to determine how each latent variable should be defined. PLS-SEM iteratively assigns weights to each indicator to maximize the explained variance of the latent variable in the structural model (this process is conceptually similar to PCA). In the bootstrapped model, we will see the strength of the relationship between each indicator and composite represented by lambda. So lambda indicates how well each indicator “loads” on its assigned latent variable after optimization (like PCA factor loadings). Higher lambda values mean that the indicator is strongly associated with the composite.</p>
-<p>potential humic indicators: “norm_PARAF_c1”, “norm_PARAF_c2”, “PARAF_comp_1”, “PARAF_comp_2”, relative_load_comp_1”, “relative_load_comp_2”, “daily_rate_of_change_Ox”, “daily_DOC_loss”, “peak_A_250.450”, “peak_C_350.450”, “Fluorescence_Index”, “SUVA254”, “peak_ratioCA”</p>
-<p>potential microbial/labile indicators: “norm_PARAF_c3”, “PARAF_comp_3”, “relative_load_comp_3”, “daily_rate_of_change_Ox”, “daily_DOC_loss”, “peak_T_275.340”, “Fluorescence_Index”, “SUVA254”, “peak_ratioAT”, “peak_ratioCT”</p>
+<div id="model-4---flow-state-model" class="section level2 hasAnchor" number="9.4">
+<h2><span class="header-section-number">9.4</span> Model 4 - Flow state model<a href="model-4---flow-state-model.html#model-4---flow-state-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Adds flow state as classifier as a latent variable. <br>
+To include classifications in a PLS model, we generate a column in the dataset for each classification, and a binomial indicators in each row. For example, of the flow state at the time of sampling is just after peak flow, that sample will have a ‘1’ in the upper descending limb column, and a ‘0’ in all others. Potential classifications are ‘rising limb’, ‘upper descending limb’, ‘lower descending limb’ and baseflow. In the path model, lower_decreasing = state_1, upper_decreasing = state_2, increasing = state_3. These classifications were developed by finding the date of peak flow for the respective year and stream, and the dates for the end and beginning of baseflow for each calendar year. Then the ‘midway’ point between peakflow and the first date of baseflow delineates upper and lower descending limbs. (find the name of this script, pretty sure its an .ipynb)
+Build the outer model or ‘constructs’ or latent variables</p>
+<p>This script cycles through multiple landcover indicators, saving the summary results for each run to a dataframe ‘results’. The first several model summaries are printed. We find that no models that include ‘flow state’ have sufficient reliability measures. I have tried a ‘flow state’ construct with all indicators (rising limb, upper descending limb, lower descending limb, baseflow) and with the two most common in our sample set (lower descending limb, baseflow). If reliability is low, it means the construct is not accurately or consistently representing the latent variable, which can have significant implications for the results and interpretations.</p>
+<pre><code>## Generating the seminr model</code></pre>
+<pre><code>## All 91 observations are valid.</code></pre>
+<pre><code>## Generating the seminr model</code></pre>
+<pre><code>## All 91 observations are valid.</code></pre>
+<pre><code>## Generating the seminr model</code></pre>
+<pre><code>## All 91 observations are valid.</code></pre>
+<pre><code>## Generating the seminr model</code></pre>
+<pre><code>## All 91 observations are valid.</code></pre>
+<pre><code>## Generating the seminr model</code></pre>
+<pre><code>## All 91 observations are valid.</code></pre>
+<pre><code>## Generating the seminr model</code></pre>
+<pre><code>## All 91 observations are valid.</code></pre>
+<pre><code>## Generating the seminr model</code></pre>
+<pre><code>## All 91 observations are valid.</code></pre>
+<pre><code>## Generating the seminr model</code></pre>
+<pre><code>## All 91 observations are valid.</code></pre>
+<pre><code>## Generating the seminr model</code></pre>
+<pre><code>## All 91 observations are valid.</code></pre>
+<pre><code>## Generating the seminr model</code></pre>
+<pre><code>## All 91 observations are valid.</code></pre>
+<pre><code>## Generating the seminr model</code></pre>
+<pre><code>## All 91 observations are valid.</code></pre>
+<pre><code>## Generating the seminr model</code></pre>
+<pre><code>## All 91 observations are valid.</code></pre>
+<pre><code>## Generating the seminr model</code></pre>
+<pre><code>## All 91 observations are valid.</code></pre>
+<pre><code>## Generating the seminr model</code></pre>
+<pre><code>## All 91 observations are valid.</code></pre>
+<pre><code>## Generating the seminr model</code></pre>
+<pre><code>## All 91 observations are valid.</code></pre>
+<pre><code>## $beetleVI
+## 
+## Results from  package seminr (2.3.4)
+## 
+## Path Coefficients:
+##            HYDRO LANDCOVER    DOM
+## R^2        0.282     0.577  0.656
+## AdjR^2     0.257     0.573  0.640
+## TOPO       0.153     0.760  0.537
+## LANDCOVER -0.577         .  0.001
+## HYDRO          .         . -0.252
+## STATE      0.258         .  0.526
+## 
+## Reliability:
+##            alpha  rhoC   AVE   rhoA
+## TOPO       0.907 0.940 0.839  0.954
+## LANDCOVER  0.865 0.936 0.880  0.884
+## HYDRO      1.000 1.000 1.000  1.000
+## STATE     -0.341 0.599 0.427 -0.341
+## DOM        0.690 0.838 0.544  0.898
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5
+## 
+## 
+## $cutVI
+## 
+## Results from  package seminr (2.3.4)
+## 
+## Path Coefficients:
+##            HYDRO LANDCOVER    DOM
+## R^2        0.282     0.577  0.656
+## AdjR^2     0.257     0.573  0.640
+## TOPO       0.153     0.760  0.537
+## LANDCOVER -0.577         .  0.001
+## HYDRO          .         . -0.252
+## STATE      0.258         .  0.526
+## 
+## Reliability:
+##            alpha  rhoC   AVE   rhoA
+## TOPO       0.907 0.940 0.839  0.954
+## LANDCOVER  0.865 0.936 0.880  0.884
+## HYDRO      1.000 1.000 1.000  1.000
+## STATE     -0.341 0.599 0.427 -0.341
+## DOM        0.690 0.838 0.544  0.898
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5
+## 
+## 
+## $oldforestVI
+## 
+## Results from  package seminr (2.3.4)
+## 
+## Path Coefficients:
+##            HYDRO LANDCOVER    DOM
+## R^2        0.282     0.577  0.656
+## AdjR^2     0.257     0.573  0.640
+## TOPO       0.153     0.760  0.537
+## LANDCOVER -0.577         .  0.001
+## HYDRO          .         . -0.252
+## STATE      0.258         .  0.526
+## 
+## Reliability:
+##            alpha  rhoC   AVE   rhoA
+## TOPO       0.907 0.940 0.839  0.954
+## LANDCOVER  0.865 0.936 0.880  0.884
+## HYDRO      1.000 1.000 1.000  1.000
+## STATE     -0.341 0.599 0.427 -0.341
+## DOM        0.690 0.838 0.544  0.898
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
+
 </div>
+<!-- </div> -->
             </section>
 
           </div>
         </div>
       </div>
-<a href="reporting-initial-results-and-evaluating-the-quality-of-our-favorite-model.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="model-1---test-all-humic-indicators.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="model-3---loop-through-landcover.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>
