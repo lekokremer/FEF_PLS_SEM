@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>9.4 Model 4 - Flow state model | PLS-SEM FEF model iterations - HUMIC response</title>
-  <meta name="description" content="9.4 Model 4 - Flow state model | PLS-SEM FEF model iterations - HUMIC response" />
+  <title>9.4 Model 4 - Flow state model | PLS-SEM FEF model iterations - LABILE response</title>
+  <meta name="description" content="9.4 Model 4 - Flow state model | PLS-SEM FEF model iterations - LABILE response" />
   <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="9.4 Model 4 - Flow state model | PLS-SEM FEF model iterations - HUMIC response" />
+  <meta property="og:title" content="9.4 Model 4 - Flow state model | PLS-SEM FEF model iterations - LABILE response" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="9.4 Model 4 - Flow state model | PLS-SEM FEF model iterations - HUMIC response" />
+  <meta name="twitter:title" content="9.4 Model 4 - Flow state model | PLS-SEM FEF model iterations - LABILE response" />
   
   
   
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="model-3---loop-through-landcover.html"/>
-
+<link rel="next" href="testing-iterations-of-the-pls-sem-fef-model-2.html"/>
 <script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -232,6 +232,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="9.3" data-path="model-3---loop-through-landcover.html"><a href="model-3---loop-through-landcover.html"><i class="fa fa-check"></i><b>9.3</b> Model 3 - loop through landcover</a></li>
 <li class="chapter" data-level="9.4" data-path="model-4---flow-state-model.html"><a href="model-4---flow-state-model.html"><i class="fa fa-check"></i><b>9.4</b> Model 4 - Flow state model</a></li>
 </ul></li>
+<li class="chapter" data-level="10" data-path="testing-iterations-of-the-pls-sem-fef-model-2.html"><a href="testing-iterations-of-the-pls-sem-fef-model-2.html"><i class="fa fa-check"></i><b>10</b> Testing iterations of the PLS-SEM FEF model</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="model-1---test-all-labile-indicators.html"><a href="model-1---test-all-labile-indicators.html"><i class="fa fa-check"></i><b>10.1</b> Model 1 - test all LABILE indicators</a></li>
+<li class="chapter" data-level="10.2" data-path="model-2---remove-non-significant-indicators-1.html"><a href="model-2---remove-non-significant-indicators-1.html"><i class="fa fa-check"></i><b>10.2</b> Model 2 - remove non-significant indicators</a></li>
+<li class="chapter" data-level="10.3" data-path="model-3---loop-through-landcover-1.html"><a href="model-3---loop-through-landcover-1.html"><i class="fa fa-check"></i><b>10.3</b> Model 3 - loop through landcover</a></li>
+<li class="chapter" data-level="10.4" data-path="model-4---flow-state-model-1.html"><a href="model-4---flow-state-model-1.html"><i class="fa fa-check"></i><b>10.4</b> Model 4 - Flow state model</a></li>
+</ul></li>
 </ul>
 
       </nav>
@@ -241,7 +248,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">PLS-SEM FEF model iterations - HUMIC response</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">PLS-SEM FEF model iterations - LABILE response</a>
           </h1>
         </div>
 
@@ -291,20 +298,20 @@ Build the outer model or ‘constructs’ or latent variables</p>
 ## 
 ## Path Coefficients:
 ##            HYDRO LANDCOVER    DOM
-## R^2        0.282     0.577  0.656
-## AdjR^2     0.257     0.573  0.640
-## TOPO       0.153     0.760  0.537
-## LANDCOVER -0.577         .  0.001
-## HYDRO          .         . -0.252
-## STATE      0.258         .  0.526
+## R^2        0.307     0.578  0.540
+## AdjR^2     0.283     0.573  0.519
+## TOPO       0.128     0.760  0.515
+## LANDCOVER -0.565         .  0.064
+## HYDRO          .         . -0.223
+## STATE     -0.304         . -0.327
 ## 
 ## Reliability:
 ##            alpha  rhoC   AVE   rhoA
-## TOPO       0.907 0.940 0.839  0.954
+## TOPO       0.907 0.940 0.839  0.955
 ## LANDCOVER  0.865 0.936 0.880  0.884
 ## HYDRO      1.000 1.000 1.000  1.000
-## STATE     -0.341 0.599 0.427 -0.341
-## DOM        0.690 0.838 0.544  0.898
+## STATE     -2.342 0.321 0.483 -2.701
+## DOM        0.690 0.833 0.542  0.881
 ## 
 ## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5
 ## 
@@ -315,20 +322,20 @@ Build the outer model or ‘constructs’ or latent variables</p>
 ## 
 ## Path Coefficients:
 ##            HYDRO LANDCOVER    DOM
-## R^2        0.282     0.577  0.656
-## AdjR^2     0.257     0.573  0.640
-## TOPO       0.153     0.760  0.537
-## LANDCOVER -0.577         .  0.001
-## HYDRO          .         . -0.252
-## STATE      0.258         .  0.526
+## R^2        0.307     0.578  0.540
+## AdjR^2     0.283     0.573  0.519
+## TOPO       0.128     0.760  0.515
+## LANDCOVER -0.565         .  0.064
+## HYDRO          .         . -0.223
+## STATE     -0.304         . -0.327
 ## 
 ## Reliability:
 ##            alpha  rhoC   AVE   rhoA
-## TOPO       0.907 0.940 0.839  0.954
+## TOPO       0.907 0.940 0.839  0.955
 ## LANDCOVER  0.865 0.936 0.880  0.884
 ## HYDRO      1.000 1.000 1.000  1.000
-## STATE     -0.341 0.599 0.427 -0.341
-## DOM        0.690 0.838 0.544  0.898
+## STATE     -2.342 0.321 0.483 -2.701
+## DOM        0.690 0.833 0.542  0.881
 ## 
 ## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5
 ## 
@@ -339,20 +346,20 @@ Build the outer model or ‘constructs’ or latent variables</p>
 ## 
 ## Path Coefficients:
 ##            HYDRO LANDCOVER    DOM
-## R^2        0.282     0.577  0.656
-## AdjR^2     0.257     0.573  0.640
-## TOPO       0.153     0.760  0.537
-## LANDCOVER -0.577         .  0.001
-## HYDRO          .         . -0.252
-## STATE      0.258         .  0.526
+## R^2        0.307     0.578  0.540
+## AdjR^2     0.283     0.573  0.519
+## TOPO       0.128     0.760  0.515
+## LANDCOVER -0.565         .  0.064
+## HYDRO          .         . -0.223
+## STATE     -0.304         . -0.327
 ## 
 ## Reliability:
 ##            alpha  rhoC   AVE   rhoA
-## TOPO       0.907 0.940 0.839  0.954
+## TOPO       0.907 0.940 0.839  0.955
 ## LANDCOVER  0.865 0.936 0.880  0.884
 ## HYDRO      1.000 1.000 1.000  1.000
-## STATE     -0.341 0.599 0.427 -0.341
-## DOM        0.690 0.838 0.544  0.898
+## STATE     -2.342 0.321 0.483 -2.701
+## DOM        0.690 0.833 0.542  0.881
 ## 
 ## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
 
@@ -363,8 +370,8 @@ Build the outer model or ‘constructs’ or latent variables</p>
           </div>
         </div>
       </div>
-<a href="model-3---loop-through-landcover.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="model-3---loop-through-landcover.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="testing-iterations-of-the-pls-sem-fef-model-2.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>

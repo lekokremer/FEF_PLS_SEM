@@ -115,3 +115,8 @@ model-1---test-all-humic-indicators
 model-2---remove-non-significant-indicators
 model-3---loop-through-landcover
 model-4---flow-state-model
+testing-iterations-of-the-pls-sem-fef-model-2
+model-1---test-all-labile-indicators
+model-2---remove-non-significant-indicators-1
+model-3---loop-through-landcover-1
+model-4---flow-state-model-1
