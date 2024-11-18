@@ -111,8 +111,12 @@ model-5-humic-early-season---streams
 results-of-bootstrapped-pls-5
 model-6-humic-late-season---streams
 results-of-bootstrapped-pls-6
-testing-iterations-of-the-pls-sem-fef-model
-model-1-early-season---streams
+best-performing-pls-sem-fef-models
+model-1-high-flows---humic
 results-of-bootstrapped-pls-7
 model-2-late-season---streams
 results-of-bootstrapped-pls-8
+model-3-labile-high-flows---streams
+results-of-bootstrapped-pls-9
+model-4-labile-late-season---streams
+results-of-bootstrapped-pls-10

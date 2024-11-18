@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4.3 Explore relationships. | 08_best_models_only</title>
-  <meta name="description" content="4.3 Explore relationships. | 08_best_models_only" />
+  <title>8.1 Model 1: High flows - HUMIC | 08_best_models_only</title>
+  <meta name="description" content="8.1 Model 1: High flows - HUMIC | 08_best_models_only" />
   <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4.3 Explore relationships. | 08_best_models_only" />
+  <meta property="og:title" content="8.1 Model 1: High flows - HUMIC | 08_best_models_only" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4.3 Explore relationships. | 08_best_models_only" />
+  <meta name="twitter:title" content="8.1 Model 1: High flows - HUMIC | 08_best_models_only" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="dissolved-oxygen-loss.html"/>
-<link rel="next" href="demo-partial-least-squares-structural-equation-modeling-pls-sem.html"/>
+<link rel="prev" href="best-performing-pls-sem-fef-models.html"/>
+<link rel="next" href="model-2-late-season---streams.html"/>
 <script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -264,24 +264,85 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="explore-relationships." class="section level2 hasAnchor" number="4.3">
-<h2><span class="header-section-number">4.3</span> Explore relationships.<a href="explore-relationships..html#explore-relationships." class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-137-1.png" width="672" /></p>
-<p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-138-1.png" width="672" /></p>
-<p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-139-1.png" width="672" /></p>
-<p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-140-1.png" width="672" /></p>
-<p>Filtered datasets can be played with here. If we filter dates to a single synoptic period so that we only have on one point for every landcover classification, the trends look very similar to that of the full dataset, where there is a weak but significant negative correlation between daily DOC change and areas with short canopy (percent_1.5). However, if we filter the entire dataset by sample position (i.e. streams vs wells) there is no correlation for any canopy class if looking at stream samples only. It appears that well samples are driving trends and significance in percent_1.5 and percent6.10.
-<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-141-1.png" width="672" /></p>
-
+<div id="model-1-high-flows---humic" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Model 1: High flows - HUMIC<a href="model-1-high-flows---humic.html#model-1-high-flows---humic" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For this model demonstration, our EEMs dataset has been filtered to ‘stream’ samples only (no wells) (total stream n= 91)</p>
+<p><strong>ABOUT THIS MODEL</strong>
+- stream samples during peak flows (May 1 - July 31) n=33
+- response is HUMIC.</p>
+<p>Our indicators for each latent variable are as follows:<br>
+<strong>Topo:</strong> <br>
+–mean distance that allochthonous water has to travel to the stream channel<br>
+–mean aspect in radians<br>
+–mean subcatchment TWI <br>
+<strong>Landcover:</strong> <br>
+– % of subcatchment pixels with beetle kill and harvested/regenerating vegetation
+<strong>Nutrient:</strong>
+– nitrate [NO3]mg/L in water sample
+Usually the dominant form of dissolved N exported from forests via streams(Ryan and Lawrence, 2024). stimulates microbial activity, potentially reducing the fraction on labile carbon in the water column. Microbes can polymerize or oxydize simpler carbon molecules producing humic-like substances that are more recalcitrant (T.C. Balser 2005).
+<strong>HUMIC:</strong> <br>
+– “PARAF_comp_1” = total loading of humic component 1. A ‘total loading’ is a number that tells us how much of a particular compoent is present in a particular sample.<br> – “PARAF_comp_2” = total loading of humic component 2. <br> – “relative_load_comp_1”, = the fraction of the total sample absorbance by component 1 <br>
+– “relative_load_comp_2”, = the fraction of the total sample absorbance by component 2 <br>
+– “Fluorescence_Index” = fluorescence index (FI) as the ratio of emission intensities at ex=370 em=470: ex370 em520 (cory et al. 2010)<br></p>
+<pre><code>## 
+## Results from  package seminr (2.3.4)
+## 
+## Path Coefficients:
+##            HYDRO LANDCOVER NUTRIENT  HUMIC
+## R^2        0.103     0.840    0.187  0.670
+## AdjR^2     0.043     0.835    0.133  0.636
+## TOPO       0.078     0.917   -0.138      .
+## LANDCOVER -0.391         .   -0.303  0.688
+## HYDRO          .         .        . -0.120
+## NUTRIENT       .         .        . -0.141
+## 
+## Reliability:
+##           alpha  rhoC   AVE  rhoA
+## TOPO      0.927 0.953 0.872 0.944
+## LANDCOVER 0.777 0.900 0.818 0.778
+## HYDRO     1.000 1.000 1.000 1.000
+## NUTRIENT  1.000 1.000 1.000 1.000
+## HUMIC     0.248 0.704 0.618 0.877
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
+<p>A plot of result reliability measures:
+<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-218-1.png" width="672" /></p>
+<div id="results-of-bootstrapped-pls-7" class="section level3 hasAnchor" number="8.1.1">
+<h3><span class="header-section-number">8.1.1</span> Results of bootstrapped PLS<a href="model-1-high-flows---humic.html#results-of-bootstrapped-pls-7" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>##                         Original Est. Bootstrap Mean Bootstrap SD T Stat.
+## TOPO  -&gt;  LANDCOVER             1.068          1.065        0.066  16.253
+## TOPO  -&gt;  HYDRO                 0.284          0.292        0.121   2.344
+## TOPO  -&gt;  NUTRIENT              0.417          0.403        0.121   3.455
+## TOPO  -&gt;  HUMIC                 0.781          0.808        0.081   9.592
+## LANDCOVER  -&gt;  HYDRO            0.363          0.367        0.143   2.533
+## LANDCOVER  -&gt;  NUTRIENT         0.486          0.463        0.157   3.089
+## LANDCOVER  -&gt;  HUMIC            0.952          0.973        0.071  13.485
+## HYDRO  -&gt;  NUTRIENT             0.774          0.735        0.165   4.696
+## HYDRO  -&gt;  HUMIC                0.465          0.445        0.155   3.003
+## NUTRIENT  -&gt;  HUMIC             0.540          0.490        0.188   2.872
+##                         5% CI 95% CI
+## TOPO  -&gt;  LANDCOVER     0.972  1.184
+## TOPO  -&gt;  HYDRO         0.103  0.499
+## TOPO  -&gt;  NUTRIENT      0.204  0.601
+## TOPO  -&gt;  HUMIC         0.670  0.934
+## LANDCOVER  -&gt;  HYDRO    0.143  0.604
+## LANDCOVER  -&gt;  NUTRIENT 0.180  0.707
+## LANDCOVER  -&gt;  HUMIC    0.860  1.092
+## HYDRO  -&gt;  NUTRIENT     0.371  0.897
+## HYDRO  -&gt;  HUMIC        0.173  0.686
+## NUTRIENT  -&gt;  HUMIC     0.155  0.757</code></pre>
+<p>This gives us the confidence intervals of the HTMT ratio.</p>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-12fd0aec33242723e8bc" style="width:768px;height:384px;"></div>
+<script type="application/json" data-for="htmlwidget-12fd0aec33242723e8bc">{"x":{"diagram":"digraph G {\n\n// ----------------------\n// General graph settings\n// ----------------------\ngraph [\ncharset = \"UTF-8\",\nlayout = dot,\nlabel = \"Bootstrapped Model\nHigh flow - Humic\",\nfontsize = 24,\nfontcolor = black,\nfontname = helvetica,\nrankdir = LR,\nlabelloc = t,\nsplines = TRUE\nbgcolor = transparent\n]\n\n// --------------------\n// The structural model\n// --------------------\nsubgraph sm {\nrankdir = LR;\nnode [\nshape = ellipse,\ncolor = black,\nfillcolor = white,\nstyle = filled,\nfontsize = 12,\nfontcolor = black,\nheight = 0.919303385416667,\nwidth = 0.918636067708333,\nfontname = helvetica,\nfixedsize = true\n]\n\"TOPO\" [label=<<B>TOPO <\/B>>, shape = hexagon]\n\"LANDCOVER\" [label=<<B>LANDCOVER <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.84<\/FONT>>, shape = hexagon]\n\"HYDRO\" [label=<<B>HYDRO <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.103<\/FONT>>, shape = hexagon]\n\"NUTRIENT\" [label=<<B>NUTRIENT <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.187<\/FONT>>, shape = hexagon]\n\"HUMIC\" [label=<<B>HUMIC <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.67<\/FONT>>, shape = hexagon]\nedge [\ncolor = black,\nfontsize = 9,\nfontcolor = black,\nfontname = helvetica,\ndir = both,\narrowhead = normal,\narrowtail = none\n]\n\"TOPO\" -> {\"HYDRO\"}[weight = 1, label = < 𝛽 = 0.078<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.612, 1.649]   <\/FONT> >, penwidth = 0.89, style = solid, color = black]\n\"TOPO\" -> {\"LANDCOVER\"}[weight = 1, label = < 𝛽 = 0.917***<BR /><FONT POINT-SIZE=\"7\">95% CI [0.87, 0.97]   <\/FONT> >, penwidth = 5.085, style = solid, color = black]\n\"TOPO\" -> {\"NUTRIENT\"}[weight = 1, label = < 𝛽 = -0.138<BR /><FONT POINT-SIZE=\"7\">95% CI [-1.078, 1.734]   <\/FONT> >, penwidth = 1.19, style = dashed, color = black]\n\"LANDCOVER\" -> {\"HYDRO\"}[weight = 1, label = < 𝛽 = -0.391<BR /><FONT POINT-SIZE=\"7\">95% CI [-2.057, 0.305]   <\/FONT> >, penwidth = 2.455, style = dashed, color = black]\n\"LANDCOVER\" -> {\"HUMIC\"}[weight = 1, label = < 𝛽 = 0.688***<BR /><FONT POINT-SIZE=\"7\">95% CI [0.498, 0.891]   <\/FONT> >, penwidth = 3.94, style = solid, color = black]\n\"LANDCOVER\" -> {\"NUTRIENT\"}[weight = 1, label = < 𝛽 = -0.303<BR /><FONT POINT-SIZE=\"7\">95% CI [-2.241, 0.655]   <\/FONT> >, penwidth = 2.015, style = dashed, color = black]\n\"HYDRO\" -> {\"HUMIC\"}[weight = 1, label = < 𝛽 = -0.12<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.45, 0.133]   <\/FONT> >, penwidth = 1.1, style = dashed, color = black]\n\"NUTRIENT\" -> {\"HUMIC\"}[weight = 1, label = < 𝛽 = -0.141<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.473, 0.394]   <\/FONT> >, penwidth = 1.205, style = dashed, color = black]\n}\n// ---------------------\n// The measurement model\n// ---------------------\n\nsubgraph construct_1 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.481852213541667,\nfontname = helvetica,\nfixedsize = true\n]\n\"topo_1\" [label = \"topo_1\", shape = box]\n\"topo_2\" [label = \"topo_2\", shape = box]\n\"topo_3\" [label = \"topo_3\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"topo_1\" -> {\"TOPO\"}[weight = 1000, label = < 𝜆 = 0.916*** >, penwidth = 3.248, style = solid, color = dimgrey]\n\"topo_2\" -> {\"TOPO\"}[weight = 1000, label = < 𝜆 = 0.973*** >, penwidth = 3.419, style = solid, color = dimgrey]\n\"topo_3\" -> {\"TOPO\"}[weight = 1000, label = < 𝜆 = 0.911*** >, penwidth = 3.233, style = solid, color = dimgrey]\n\n}\nsubgraph construct_2 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.481852213541667,\nfontname = helvetica,\nfixedsize = true\n]\n\"landcover_1\" [label = \"landcover_1\", shape = box]\n\"landcover_2\" [label = \"landcover_2\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"landcover_1\" -> {\"LANDCOVER\"}[weight = 1000, label = < 𝜆 = 0.908*** >, penwidth = 3.224, style = solid, color = dimgrey]\n\"landcover_2\" -> {\"LANDCOVER\"}[weight = 1000, label = < 𝜆 = 0.901*** >, penwidth = 3.203, style = solid, color = dimgrey]\n\n}\nsubgraph construct_3 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.481852213541667,\nfontname = helvetica,\nfixedsize = true\n]\n\"hydro_1\" [label = \"hydro_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"hydro_1\" -> {\"HYDRO\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_4 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.481852213541667,\nfontname = helvetica,\nfixedsize = true\n]\n\"Cgen_nutr_1\" [label = \"Cgen_nutr_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"Cgen_nutr_1\" -> {\"NUTRIENT\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_5 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.481852213541667,\nfontname = helvetica,\nfixedsize = true\n]\n\"humic_1\" [label = \"humic_1\", shape = box]\n\"humic_2\" [label = \"humic_2\", shape = box]\n\"humic_3\" [label = \"humic_3\", shape = box]\n\"humic_4\" [label = \"humic_4\", shape = box]\n\"humic_5\" [label = \"humic_5\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = normal\narrowtail = none\n]\n\"HUMIC\" -> {\"humic_1\"}[weight = 1000, label = < 𝜆 = 0.716*** >, penwidth = 2.648, style = solid, color = dimgrey]\n\"HUMIC\" -> {\"humic_2\"}[weight = 1000, label = < 𝜆 = 0.686*** >, penwidth = 2.558, style = solid, color = dimgrey]\n\"HUMIC\" -> {\"humic_3\"}[weight = 1000, label = < 𝜆 = 0.865*** >, penwidth = 3.095, style = solid, color = dimgrey]\n\"HUMIC\" -> {\"humic_4\"}[weight = 1000, label = < 𝜆 = 0.753*** >, penwidth = 2.759, style = solid, color = dimgrey]\n\"HUMIC\" -> {\"humic_5\"}[weight = 1000, label = < 𝜆 = -0.89*** >, penwidth = 3.17, style = dashed, color = dimgrey]\n\n}\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
-<!-- </div> -->
+</div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="dissolved-oxygen-loss.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="demo-partial-least-squares-structural-equation-modeling-pls-sem.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="best-performing-pls-sem-fef-models.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="model-2-late-season---streams.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>
