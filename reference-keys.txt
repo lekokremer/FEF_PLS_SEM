@@ -114,9 +114,11 @@ results-of-bootstrapped-pls-6
 best-performing-pls-sem-fef-models
 model-1-high-flows---humic
 results-of-bootstrapped-pls-7
-model-2-late-season---streams
+model-2-low-flows---streams
 results-of-bootstrapped-pls-8
 model-3-labile-high-flows---streams
 results-of-bootstrapped-pls-9
-model-4-labile-late-season---streams
+model-4-labile-low-flows---streams
 results-of-bootstrapped-pls-10
+viewing-reconstructed-best-fitting-models
+model-1

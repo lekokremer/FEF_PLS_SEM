@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4 Biological Oxygen Demand assays - data exploration | 09_final_model_pngs</title>
-  <meta name="description" content="4 Biological Oxygen Demand assays - data exploration | 09_final_model_pngs" />
+  <title>9 Viewing reconstructed ‘best fitting’ models | 09_final_model_pngs</title>
+  <meta name="description" content="9 Viewing reconstructed ‘best fitting’ models | 09_final_model_pngs" />
   <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4 Biological Oxygen Demand assays - data exploration | 09_final_model_pngs" />
+  <meta property="og:title" content="9 Viewing reconstructed ‘best fitting’ models | 09_final_model_pngs" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4 Biological Oxygen Demand assays - data exploration | 09_final_model_pngs" />
+  <meta name="twitter:title" content="9 Viewing reconstructed ‘best fitting’ models | 09_final_model_pngs" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="normalized-doc.html"/>
-<link rel="next" href="daily-doc-loss-carbon.html"/>
+<link rel="prev" href="model-4-labile-low-flows---streams.html"/>
+<link rel="next" href="model-1.html"/>
 <script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -268,55 +268,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="biological-oxygen-demand-assays---data-exploration" class="section level1 hasAnchor" number="4">
-<h1><span class="header-section-number">4</span> Biological Oxygen Demand assays - data exploration<a href="biological-oxygen-demand-assays---data-exploration.html#biological-oxygen-demand-assays---data-exploration" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p><strong>Objectives</strong>:<br>
-1. Format and summarize data from Biological Oxygen Demand (BOD) assays conducted on stream and well samples from the Fraser Experimental Forest. The samples were collected from 2021 to 2022, and the experiments were conducted in the summer of 2024.<br>
-2. Visualize the distributions and identify outliers in the BOD data.<br>
-3. Explore relationships between BOD data and Excitation-Emission Matrices (EEMs), as well as BOD and topographical/landcover characteristics of the subwatershed for each sample.</p>
-<!-- Load Data:
-One of the purposes in this chunk is to figure out the adjustment period of each sample before DO depletion can be estimated. Depending on the temp of the individual samples and incubator, this can vary among samples but usually DO is stabilized after 24 hours. This finds the peak value within the first 24 hours and uses that as the start point for each sample.-->
-<!-- Let's add DOC information from the 4 stages:
-Stream DOC
-resuspended DOC
-microcosm start DOC
-microcosm end DOC -->
-<!--Format merged data: So experiments over different day can be plotted together, we will make a column that indicates the time elapsed during the experiment: -->
-<!--Calculate daily rate of change-->
-<!--Format daily rate of change-->
-<!--These structures are used for plotting later-->
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="biological-oxygen-demand-assays---data-exploration.html#cb24-1" tabindex="-1"></a>stat_subset <span class="ot">&lt;-</span> rates_of_change <span class="sc">%&gt;%</span></span>
-<span id="cb24-2"><a href="biological-oxygen-demand-assays---data-exploration.html#cb24-2" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">&#39;sample&#39;</span>, watershed <span class="sc">!=</span> <span class="st">&#39;SSFP&#39;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb24-3"><a href="biological-oxygen-demand-assays---data-exploration.html#cb24-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>watershed) <span class="sc">%&gt;%</span></span>
-<span id="cb24-4"><a href="biological-oxygen-demand-assays---data-exploration.html#cb24-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ID =</span> <span class="fu">as.integer</span>(<span class="fu">substr</span>(<span class="fu">as.character</span>(sample_no), <span class="dv">1</span>, <span class="dv">3</span>)))</span></code></pre></div>
-<p><strong>Workflow:</strong><br>
-In the script, three datasets were imported:<br>
-1. the DO depletion at 10min intervals as recorded by PreSens instrument as experimental microcosms <br>
-2. the pre- and post-experiment DOC measurements for each sample as measured by the Shimadzu<br>
-3. EEMs results for the corresponding sample (if EEMs were collected for that sample) as well as topography, landcover data for the respective subwatershed. <br></p>
-<p>Formatting steps for the BOD data include:<br>
-1. DO depletion:<br>
-- All tests/samples required an incubator adjustment period after the initiation of the test. [DO] would start low and climb as microcosms cooled and settled. Therefore, the peak DO between the 12th and 36th hour for each sample was used as the test ‘start’. <br>
-- All 10min intervals were converted to a 2 hr rolling average to smooth short-term variation.
--[DO] measurements were then transformed to a change in [DO] for each day by finding the slope of [DO]/time.<br>
-2. Change in DOC (Non-purgeable organic carbon or NPOC)<br>
-- Experimental difference was determined by subtracting post-experimental reading from pre-experiment, and</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-131"></span>
-<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-131-1.png" alt="Figure. What is the relationship between measured change in sample DOC and daily DO loss? The relationship appears to be linear, but with a lot of variability." width="672" />
-<p class="caption">
-Figure 4.1: Figure. What is the relationship between measured change in sample DOC and daily DO loss? The relationship appears to be linear, but with a lot of variability.
-</p>
-</div>
-<p>Let’s look at the distribution of each of these datasets and identify variability and outliers.<br>
-We have two measurements from these experiments: the O2 within the microcosm measured at 10min intervals, and the change in DOC from the beginning of the experiment to the end. <br></p>
+<div id="viewing-reconstructed-best-fitting-models" class="section level1 hasAnchor" number="9">
+<h1><span class="header-section-number">9</span> Viewing reconstructed ‘best fitting’ models<a href="viewing-reconstructed-best-fitting-models.html#viewing-reconstructed-best-fitting-models" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>This script contains recreations of models that explain the most variability in labile and humic DOM. The intent is to generate images that are quickly interpretable for posters, presentations or papers.</p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="normalized-doc.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="daily-doc-loss-carbon.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="model-4-labile-low-flows---streams.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="model-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>

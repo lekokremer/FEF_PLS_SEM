@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4 Biological Oxygen Demand assays - data exploration | 09_final_model_pngs</title>
-  <meta name="description" content="4 Biological Oxygen Demand assays - data exploration | 09_final_model_pngs" />
+  <title>8.2 Model 2: LOW FLOWS - streams | 09_final_model_pngs</title>
+  <meta name="description" content="8.2 Model 2: LOW FLOWS - streams | 09_final_model_pngs" />
   <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4 Biological Oxygen Demand assays - data exploration | 09_final_model_pngs" />
+  <meta property="og:title" content="8.2 Model 2: LOW FLOWS - streams | 09_final_model_pngs" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4 Biological Oxygen Demand assays - data exploration | 09_final_model_pngs" />
+  <meta name="twitter:title" content="8.2 Model 2: LOW FLOWS - streams | 09_final_model_pngs" />
   
   
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="normalized-doc.html"/>
-<link rel="next" href="daily-doc-loss-carbon.html"/>
+<link rel="prev" href="model-1-high-flows---humic.html"/>
+<link rel="next" href="model-3-labile-high-flows---streams.html"/>
 <script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -268,55 +268,88 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="biological-oxygen-demand-assays---data-exploration" class="section level1 hasAnchor" number="4">
-<h1><span class="header-section-number">4</span> Biological Oxygen Demand assays - data exploration<a href="biological-oxygen-demand-assays---data-exploration.html#biological-oxygen-demand-assays---data-exploration" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p><strong>Objectives</strong>:<br>
-1. Format and summarize data from Biological Oxygen Demand (BOD) assays conducted on stream and well samples from the Fraser Experimental Forest. The samples were collected from 2021 to 2022, and the experiments were conducted in the summer of 2024.<br>
-2. Visualize the distributions and identify outliers in the BOD data.<br>
-3. Explore relationships between BOD data and Excitation-Emission Matrices (EEMs), as well as BOD and topographical/landcover characteristics of the subwatershed for each sample.</p>
-<!-- Load Data:
-One of the purposes in this chunk is to figure out the adjustment period of each sample before DO depletion can be estimated. Depending on the temp of the individual samples and incubator, this can vary among samples but usually DO is stabilized after 24 hours. This finds the peak value within the first 24 hours and uses that as the start point for each sample.-->
-<!-- Let's add DOC information from the 4 stages:
-Stream DOC
-resuspended DOC
-microcosm start DOC
-microcosm end DOC -->
-<!--Format merged data: So experiments over different day can be plotted together, we will make a column that indicates the time elapsed during the experiment: -->
-<!--Calculate daily rate of change-->
-<!--Format daily rate of change-->
-<!--These structures are used for plotting later-->
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="biological-oxygen-demand-assays---data-exploration.html#cb24-1" tabindex="-1"></a>stat_subset <span class="ot">&lt;-</span> rates_of_change <span class="sc">%&gt;%</span></span>
-<span id="cb24-2"><a href="biological-oxygen-demand-assays---data-exploration.html#cb24-2" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">&#39;sample&#39;</span>, watershed <span class="sc">!=</span> <span class="st">&#39;SSFP&#39;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb24-3"><a href="biological-oxygen-demand-assays---data-exploration.html#cb24-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>watershed) <span class="sc">%&gt;%</span></span>
-<span id="cb24-4"><a href="biological-oxygen-demand-assays---data-exploration.html#cb24-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ID =</span> <span class="fu">as.integer</span>(<span class="fu">substr</span>(<span class="fu">as.character</span>(sample_no), <span class="dv">1</span>, <span class="dv">3</span>)))</span></code></pre></div>
-<p><strong>Workflow:</strong><br>
-In the script, three datasets were imported:<br>
-1. the DO depletion at 10min intervals as recorded by PreSens instrument as experimental microcosms <br>
-2. the pre- and post-experiment DOC measurements for each sample as measured by the Shimadzu<br>
-3. EEMs results for the corresponding sample (if EEMs were collected for that sample) as well as topography, landcover data for the respective subwatershed. <br></p>
-<p>Formatting steps for the BOD data include:<br>
-1. DO depletion:<br>
-- All tests/samples required an incubator adjustment period after the initiation of the test. [DO] would start low and climb as microcosms cooled and settled. Therefore, the peak DO between the 12th and 36th hour for each sample was used as the test ‘start’. <br>
-- All 10min intervals were converted to a 2 hr rolling average to smooth short-term variation.
--[DO] measurements were then transformed to a change in [DO] for each day by finding the slope of [DO]/time.<br>
-2. Change in DOC (Non-purgeable organic carbon or NPOC)<br>
-- Experimental difference was determined by subtracting post-experimental reading from pre-experiment, and</p>
-<div class="figure"><span style="display:block;" id="fig:unnamed-chunk-131"></span>
-<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-131-1.png" alt="Figure. What is the relationship between measured change in sample DOC and daily DO loss? The relationship appears to be linear, but with a lot of variability." width="672" />
-<p class="caption">
-Figure 4.1: Figure. What is the relationship between measured change in sample DOC and daily DO loss? The relationship appears to be linear, but with a lot of variability.
-</p>
+<div id="model-2-low-flows---streams" class="section level2 hasAnchor" number="8.2">
+<h2><span class="header-section-number">8.2</span> Model 2: LOW FLOWS - streams<a href="model-2-low-flows---streams.html#model-2-low-flows---streams" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For this model demonstration, our EEMs dataset has been filtered to ‘stream’ samples only (no wells) (n= 91)</p>
+<p><strong>ABOUT THIS MODEL</strong>
+- stream samples during low flows (August 1 - April 30) n=58
+- response is HUMIC.</p>
+<p>Our indicators for each latent variable are as follows:<br>
+<strong>Topo:</strong> <br>
+–mean distance that allochthonous water has to travel to the stream channel<br>
+–mean aspect in radians<br>
+–mean subcatchment TWI <br>
+<strong>Runoff</strong> <br>
+– log_discharge_m2 <br>
+<strong>Landcover:</strong> <br>
+– % of subcatchment pixels with beetle kill and harvested/regenerating vegetation
+<strong>Nutrient:</strong>
+– nitrate [NO3]mg/L in water sample
+Usually the dominant form of dissolved N exported from forests via streams(Ryan and Lawrence, 2024). stimulates microbial activity, potentially reducing the fraction on labile carbon in the water column. Microbes can polymerize or oxydize simpler carbon molecules producing humic-like substances that are more recalcitrant (T.C. Balser 2005).
+<strong>HUMIC:</strong> <br>
+– “PARAF_comp_1” = total loading of humic component 1. A ‘total loading’ is a number that tells us how much of a particular compoent is present in a particular sample.<br> – “PARAF_comp_2” = total loading of humic component 2. <br> – “relative_load_comp_1”, = the fraction of the total sample absorbance by component 1 <br>
+– “relative_load_comp_2”, = the fraction of the total sample absorbance by component 2 <br>
+– “Fluorescence_Index” = fluorescence index (FI) as the ratio of emission intensities at ex=370 em=470: ex370 em520 (cory et al. 2010)<br>
+– “SUVA254” = UV absorbance at 254 nm (SUVA254) normalized by DOC concentration: reflects the aromaticity level of DOM</p>
+<pre><code>## 
+## Results from  package seminr (2.3.4)
+## 
+## Path Coefficients:
+##           RUNOFF LANDCOVER NUTRIENT  HUMIC
+## R^2        0.197     0.727    0.322  0.588
+## AdjR^2     0.168     0.722    0.297  0.565
+## TOPO       0.160     0.853   -0.308      .
+## LANDCOVER -0.573         .   -0.282  0.345
+## RUNOFF         .         .        .  0.054
+## NUTRIENT       .         .        . -0.556
+## 
+## Reliability:
+##           alpha  rhoC   AVE  rhoA
+## TOPO      0.896 0.932 0.821 0.959
+## LANDCOVER 0.770 0.896 0.812 0.785
+## RUNOFF    1.000 1.000 1.000 1.000
+## NUTRIENT  1.000 1.000 1.000 1.000
+## HUMIC     0.502 0.800 0.667 0.888
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
+<p>A plot of result reliability measures:
+<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-225-1.png" width="672" /></p>
+<div id="results-of-bootstrapped-pls-8" class="section level3 hasAnchor" number="8.2.1">
+<h3><span class="header-section-number">8.2.1</span> Results of bootstrapped PLS<a href="model-2-low-flows---streams.html#results-of-bootstrapped-pls-8" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>##                         Original Est. Bootstrap Mean Bootstrap SD T Stat.
+## TOPO  -&gt;  LANDCOVER             0.997          0.998        0.071  13.994
+## TOPO  -&gt;  RUNOFF                0.302          0.306        0.089   3.389
+## TOPO  -&gt;  NUTRIENT              0.529          0.530        0.074   7.125
+## TOPO  -&gt;  HUMIC                 0.652          0.664        0.059  11.103
+## LANDCOVER  -&gt;  RUNOFF           0.490          0.482        0.099   4.931
+## LANDCOVER  -&gt;  NUTRIENT         0.613          0.616        0.116   5.269
+## LANDCOVER  -&gt;  HUMIC            0.747          0.755        0.072  10.318
+## RUNOFF  -&gt;  NUTRIENT            0.598          0.586        0.113   5.285
+## RUNOFF  -&gt;  HUMIC               0.451          0.442        0.113   4.000
+## NUTRIENT  -&gt;  HUMIC             0.758          0.747        0.071  10.629
+##                         5% CI 95% CI
+## TOPO  -&gt;  LANDCOVER     0.876  1.100
+## TOPO  -&gt;  RUNOFF        0.174  0.458
+## TOPO  -&gt;  NUTRIENT      0.400  0.649
+## TOPO  -&gt;  HUMIC         0.567  0.760
+## LANDCOVER  -&gt;  RUNOFF   0.311  0.631
+## LANDCOVER  -&gt;  NUTRIENT 0.397  0.782
+## LANDCOVER  -&gt;  HUMIC    0.629  0.860
+## RUNOFF  -&gt;  NUTRIENT    0.390  0.758
+## RUNOFF  -&gt;  HUMIC       0.244  0.622
+## NUTRIENT  -&gt;  HUMIC     0.601  0.850</code></pre>
+<p>This gives us the confidence intervals of the HTMT ratio.</p>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-cb5e72cf0625056a90c4" style="width:768px;height:384px;"></div>
+<script type="application/json" data-for="htmlwidget-cb5e72cf0625056a90c4">{"x":{"diagram":"digraph G {\n\n// ----------------------\n// General graph settings\n// ----------------------\ngraph [\ncharset = \"UTF-8\",\nlayout = dot,\nlabel = \"Bootstrapped Model\nLow flow - Humic\",\nfontsize = 24,\nfontcolor = black,\nfontname = helvetica,\nrankdir = LR,\nlabelloc = t,\nsplines = TRUE\nbgcolor = transparent\n]\n\n// --------------------\n// The structural model\n// --------------------\nsubgraph sm {\nrankdir = LR;\nnode [\nshape = ellipse,\ncolor = black,\nfillcolor = white,\nstyle = filled,\nfontsize = 12,\nfontcolor = black,\nheight = 0.919303385416667,\nwidth = 0.918636067708333,\nfontname = helvetica,\nfixedsize = true\n]\n\"TOPO\" [label=<<B>TOPO <\/B>>, shape = hexagon]\n\"LANDCOVER\" [label=<<B>LANDCOVER <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.727<\/FONT>>, shape = hexagon]\n\"RUNOFF\" [label=<<B>RUNOFF <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.197<\/FONT>>, shape = hexagon]\n\"NUTRIENT\" [label=<<B>NUTRIENT <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.322<\/FONT>>, shape = hexagon]\n\"HUMIC\" [label=<<B>HUMIC <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.588<\/FONT>>, shape = hexagon]\nedge [\ncolor = black,\nfontsize = 9,\nfontcolor = black,\nfontname = helvetica,\ndir = both,\narrowhead = normal,\narrowtail = none\n]\n\"TOPO\" -> {\"RUNOFF\"}[weight = 1, label = < 𝛽 = 0.16<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.187, 1.227]   <\/FONT> >, penwidth = 1.3, style = solid, color = black]\n\"TOPO\" -> {\"LANDCOVER\"}[weight = 1, label = < 𝛽 = 0.853***<BR /><FONT POINT-SIZE=\"7\">95% CI [0.729, 0.939]   <\/FONT> >, penwidth = 4.765, style = solid, color = black]\n\"TOPO\" -> {\"NUTRIENT\"}[weight = 1, label = < 𝛽 = -0.308<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.741, 0.658]   <\/FONT> >, penwidth = 2.04, style = dashed, color = black]\n\"LANDCOVER\" -> {\"RUNOFF\"}[weight = 1, label = < 𝛽 = -0.573<BR /><FONT POINT-SIZE=\"7\">95% CI [-1.617, -0.224]   <\/FONT> >, penwidth = 3.365, style = dashed, color = black]\n\"LANDCOVER\" -> {\"HUMIC\"}[weight = 1, label = < 𝛽 = 0.345***<BR /><FONT POINT-SIZE=\"7\">95% CI [0.198, 0.534]   <\/FONT> >, penwidth = 2.225, style = solid, color = black]\n\"LANDCOVER\" -> {\"NUTRIENT\"}[weight = 1, label = < 𝛽 = -0.282<BR /><FONT POINT-SIZE=\"7\">95% CI [-1.257, 0.166]   <\/FONT> >, penwidth = 1.91, style = dashed, color = black]\n\"RUNOFF\" -> {\"HUMIC\"}[weight = 1, label = < 𝛽 = 0.054<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.148, 0.315]   <\/FONT> >, penwidth = 0.77, style = solid, color = black]\n\"NUTRIENT\" -> {\"HUMIC\"}[weight = 1, label = < 𝛽 = -0.556***<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.735, -0.363]   <\/FONT> >, penwidth = 3.28, style = dashed, color = black]\n}\n// ---------------------\n// The measurement model\n// ---------------------\n\nsubgraph construct_1 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.481852213541667,\nfontname = helvetica,\nfixedsize = true\n]\n\"topo_1\" [label = \"topo_1\", shape = box]\n\"topo_2\" [label = \"topo_2\", shape = box]\n\"topo_3\" [label = \"topo_3\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"topo_1\" -> {\"TOPO\"}[weight = 1000, label = < 𝜆 = 0.88*** >, penwidth = 3.14, style = solid, color = dimgrey]\n\"topo_2\" -> {\"TOPO\"}[weight = 1000, label = < 𝜆 = 0.941*** >, penwidth = 3.323, style = solid, color = dimgrey]\n\"topo_3\" -> {\"TOPO\"}[weight = 1000, label = < 𝜆 = 0.896*** >, penwidth = 3.188, style = solid, color = dimgrey]\n\n}\nsubgraph construct_2 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.481852213541667,\nfontname = helvetica,\nfixedsize = true\n]\n\"landcover_1\" [label = \"landcover_1\", shape = box]\n\"landcover_2\" [label = \"landcover_2\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"landcover_1\" -> {\"LANDCOVER\"}[weight = 1000, label = < 𝜆 = 0.918*** >, penwidth = 3.254, style = solid, color = dimgrey]\n\"landcover_2\" -> {\"LANDCOVER\"}[weight = 1000, label = < 𝜆 = 0.884*** >, penwidth = 3.152, style = solid, color = dimgrey]\n\n}\nsubgraph construct_3 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.481852213541667,\nfontname = helvetica,\nfixedsize = true\n]\n\"runoff_1\" [label = \"runoff_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"runoff_1\" -> {\"RUNOFF\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_4 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.481852213541667,\nfontname = helvetica,\nfixedsize = true\n]\n\"Cgen_nutr_1\" [label = \"Cgen_nutr_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"Cgen_nutr_1\" -> {\"NUTRIENT\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_5 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.481852213541667,\nfontname = helvetica,\nfixedsize = true\n]\n\"humic_1\" [label = \"humic_1\", shape = box]\n\"humic_2\" [label = \"humic_2\", shape = box]\n\"humic_3\" [label = \"humic_3\", shape = box]\n\"humic_4\" [label = \"humic_4\", shape = box]\n\"humic_5\" [label = \"humic_5\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = normal\narrowtail = none\n]\n\"HUMIC\" -> {\"humic_1\"}[weight = 1000, label = < 𝜆 = 0.837*** >, penwidth = 3.011, style = solid, color = dimgrey]\n\"HUMIC\" -> {\"humic_2\"}[weight = 1000, label = < 𝜆 = 0.808*** >, penwidth = 2.924, style = solid, color = dimgrey]\n\"HUMIC\" -> {\"humic_3\"}[weight = 1000, label = < 𝜆 = 0.769*** >, penwidth = 2.807, style = solid, color = dimgrey]\n\"HUMIC\" -> {\"humic_4\"}[weight = 1000, label = < 𝜆 = 0.911*** >, penwidth = 3.233, style = solid, color = dimgrey]\n\"HUMIC\" -> {\"humic_5\"}[weight = 1000, label = < 𝜆 = -0.749*** >, penwidth = 2.747, style = dashed, color = dimgrey]\n\n}\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
-<p>Let’s look at the distribution of each of these datasets and identify variability and outliers.<br>
-We have two measurements from these experiments: the O2 within the microcosm measured at 10min intervals, and the change in DOC from the beginning of the experiment to the end. <br></p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="normalized-doc.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="daily-doc-loss-carbon.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="model-1-high-flows---humic.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="model-3-labile-high-flows---streams.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="assets/gitbook-2.6.7/js/app.min.js"></script>

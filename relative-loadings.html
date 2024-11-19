@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3.3 1. Relative loadings | 08_best_models_only</title>
-  <meta name="description" content="3.3 1. Relative loadings | 08_best_models_only" />
+  <title>3.3 1. Relative loadings | 09_final_model_pngs</title>
+  <meta name="description" content="3.3 1. Relative loadings | 09_final_model_pngs" />
   <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3.3 1. Relative loadings | 08_best_models_only" />
+  <meta property="og:title" content="3.3 1. Relative loadings | 09_final_model_pngs" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3.3 1. Relative loadings | 08_best_models_only" />
+  <meta name="twitter:title" content="3.3 1. Relative loadings | 09_final_model_pngs" />
   
   
   
@@ -23,7 +23,7 @@
 <meta name="author" content="Lauren Kremer" />
 
 
-<meta name="date" content="2024-11-14" />
+<meta name="date" content="2024-11-19" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -234,18 +234,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="8.1.1" data-path="model-1-high-flows---humic.html"><a href="model-1-high-flows---humic.html#results-of-bootstrapped-pls-7"><i class="fa fa-check"></i><b>8.1.1</b> Results of bootstrapped PLS</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="model-2-late-season---streams.html"><a href="model-2-late-season---streams.html"><i class="fa fa-check"></i><b>8.2</b> Model 2: Late season - streams</a>
+<li class="chapter" data-level="8.2" data-path="model-2-low-flows---streams.html"><a href="model-2-low-flows---streams.html"><i class="fa fa-check"></i><b>8.2</b> Model 2: LOW FLOWS - streams</a>
 <ul>
-<li class="chapter" data-level="8.2.1" data-path="model-2-late-season---streams.html"><a href="model-2-late-season---streams.html#results-of-bootstrapped-pls-8"><i class="fa fa-check"></i><b>8.2.1</b> Results of bootstrapped PLS</a></li>
+<li class="chapter" data-level="8.2.1" data-path="model-2-low-flows---streams.html"><a href="model-2-low-flows---streams.html#results-of-bootstrapped-pls-8"><i class="fa fa-check"></i><b>8.2.1</b> Results of bootstrapped PLS</a></li>
 </ul></li>
 <li class="chapter" data-level="8.3" data-path="model-3-labile-high-flows---streams.html"><a href="model-3-labile-high-flows---streams.html"><i class="fa fa-check"></i><b>8.3</b> Model 3: LABILE high flows - streams</a>
 <ul>
 <li class="chapter" data-level="8.3.1" data-path="model-3-labile-high-flows---streams.html"><a href="model-3-labile-high-flows---streams.html#results-of-bootstrapped-pls-9"><i class="fa fa-check"></i><b>8.3.1</b> Results of bootstrapped PLS</a></li>
 </ul></li>
-<li class="chapter" data-level="8.4" data-path="model-4-labile-late-season---streams.html"><a href="model-4-labile-late-season---streams.html"><i class="fa fa-check"></i><b>8.4</b> Model 4: LABILE late season - streams</a>
+<li class="chapter" data-level="8.4" data-path="model-4-labile-low-flows---streams.html"><a href="model-4-labile-low-flows---streams.html"><i class="fa fa-check"></i><b>8.4</b> Model 4: LABILE LOW FLOWS - streams</a>
 <ul>
-<li class="chapter" data-level="8.4.1" data-path="model-4-labile-late-season---streams.html"><a href="model-4-labile-late-season---streams.html#results-of-bootstrapped-pls-10"><i class="fa fa-check"></i><b>8.4.1</b> Results of bootstrapped PLS</a></li>
+<li class="chapter" data-level="8.4.1" data-path="model-4-labile-low-flows---streams.html"><a href="model-4-labile-low-flows---streams.html#results-of-bootstrapped-pls-10"><i class="fa fa-check"></i><b>8.4.1</b> Results of bootstrapped PLS</a></li>
 </ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="viewing-reconstructed-best-fitting-models.html"><a href="viewing-reconstructed-best-fitting-models.html"><i class="fa fa-check"></i><b>9</b> Viewing reconstructed ‘best fitting’ models</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="model-1.html"><a href="model-1.html"><i class="fa fa-check"></i><b>9.1</b> Model 1:</a></li>
 </ul></li>
 </ul>
 
@@ -256,7 +260,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">08_best_models_only</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">09_final_model_pngs</a>
           </h1>
         </div>
 
@@ -630,7 +634,7 @@ Similar to PCA, but RDA is a <u>constrained</u> method that requries two dataset
 ## Model: rda(formula = standardized_resp ~ aspect_mean + twi_mean + ndvi_raster_mean + disttostreams_mean + percent_Beetle.kill + percent_Old.Forest + percent_cut.regenerating + area_km + Qm3_s, data = explanatory_standardized, na.action = na.exclude)
 ##          Df Variance       F Pr(&gt;F)    
 ## RDA1      1  2.01775 89.9920  0.001 ***
-## RDA2      1  0.15266  6.8087  0.784    
+## RDA2      1  0.15266  6.8087  0.781    
 ## Residual 37  0.82959                   
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
@@ -642,15 +646,15 @@ Similar to PCA, but RDA is a <u>constrained</u> method that requries two dataset
 ## 
 ## Model: rda(formula = standardized_resp ~ aspect_mean + twi_mean + ndvi_raster_mean + disttostreams_mean + percent_Beetle.kill + percent_Old.Forest + percent_cut.regenerating + area_km + Qm3_s, data = explanatory_standardized, na.action = na.exclude)
 ##                          Df Variance       F Pr(&gt;F)    
-## aspect_mean               1  0.09478  3.4274  0.054 .  
+## aspect_mean               1  0.09478  3.4274  0.075 .  
 ## twi_mean                  1  1.06887 38.6529  0.001 ***
-## ndvi_raster_mean          1  0.20600  7.4496  0.013 *  
+## ndvi_raster_mean          1  0.20600  7.4496  0.009 ** 
 ## disttostreams_mean        1  0.43123 15.5942  0.001 ***
-## percent_Beetle.kill       1  0.01110  0.4013  0.614    
-## percent_Old.Forest        1  0.21447  7.7558  0.010 ** 
-## percent_cut.regenerating  1  0.00007  0.0025  0.997    
-## area_km                   1  0.10385  3.7556  0.056 .  
-## Qm3_s                     1  0.04004  1.4478  0.245    
+## percent_Beetle.kill       1  0.01110  0.4013  0.634    
+## percent_Old.Forest        1  0.21447  7.7558  0.008 ** 
+## percent_cut.regenerating  1  0.00007  0.0025  0.998    
+## area_km                   1  0.10385  3.7556  0.053 .  
+## Qm3_s                     1  0.04004  1.4478  0.229    
 ## Residual                 30  0.82959                   
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
