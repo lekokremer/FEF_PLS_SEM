@@ -13,8 +13,6 @@ and a similar path for the Fool Creek WECOH workflow.
 
 Runoff and snowmelt are modeled for both, one model for each side of the East S. Louis catchament. Therefore Deadhorse estimations are also applied to Lexen in the PLS analysis.
 ```{r, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-
 # pkgTest is a helper function to load packages and install packages only when they are not installed yet.
 pkgTest <- function(x)
 {
@@ -36,7 +34,7 @@ file <- normalizePath(file.path(getwd(), "/datafiles/fluoro_vege_manually_correc
 
 # Read the CSV file
 sample_vege_fluro_topo <- read.csv(file) %>%
-  dplyr::select(- c(shapefile_x, shapefile_y, shapefile, datetime))%>%
+  dplyr::select(- c(shapefile_x, shapefile_y, shapefile))%>%
   mutate(date = mdy(date))  # Create a new date column
 
 
@@ -116,7 +114,7 @@ sample_combined <- bind_rows(sample_fc, sample_dh)
 #head(sample_combined)
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
 # Assuming sample_combined is your dataframe
 # First, we will reshape the data for plotting
 sample_long <- sample_combined %>%

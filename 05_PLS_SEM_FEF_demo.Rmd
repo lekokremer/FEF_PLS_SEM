@@ -5,7 +5,7 @@ date: "2024-10-27"
 output: html_document
 ---
 
-# Partial least squares – Structural Equation Modeling (PLS-SEM)
+# Demo: Partial least squares – Structural Equation Modeling (PLS-SEM)
 
 *‘PLS-SEM is capable of estimating very complex models. For example, if theoretical or conceptual assumptions support large models and sufficient data are available (i.e., meeting minimum sample size requirements), PLS-SEM can handle models of almost any size, including those with dozens of constructs and hundreds of indicator variables. As noted by Wold (1985), PLS-SEM is virtually without competition when path models with latent variables are complex in their structural relationships.’* – From Hair et al. 2021, An Introduction to SEM, pg 21<br>
 
@@ -146,7 +146,7 @@ filtered_df$log_discharge_m2 <- log10(filtered_df$discharge_m2)  # Adjust consta
 
 ## Data managment / transformation
 
-For this model demonstration, our EEMs dataset has been filtered to 'stream' samples only (no wells) (n= 91)
+For this model demonstration, our EEMs dataset has been filtered to 'stream' samples only (no wells) (n= 91). Our full sample, including wells, and a filtered sample evaluating only wells returns reduced DOM r^2 values (between 0.15 and .3) relative to streams alone, which tend to yield better results.  
 The selection process for these variables includes review of the specific response variable, and the correlations of that variable with the explanatory variables found in combine_PARAFAC_w_ws, part 1.B.ii. 
 
 **1. More on size:** <br>
@@ -267,6 +267,7 @@ missing_value = "NA")
 ```
 
 summarize output
+
 ```{r, include = FALSE}
 # Summarize the model results
 summary_simple_fef <- summary(fef_simple_model)
@@ -282,7 +283,6 @@ A plot of result reliability measures:
 ```{r}
 plot(summary_simple_fef$reliability)
 ```
-
 
 1. Indicator reliability:
 First we want to know how much of each indicator's variance is explained by the latent variable it is assigned to. 
@@ -320,7 +320,6 @@ Now we want to make sure that different latent variables in the model are distin
 
 If the HTMT values are low (typically below 0.9), it indicates that the constructs are distinct and measure different concepts.
 
-
 ```{r, echo=FALSE}
 print(summary_simple_fef$validity$htmt)
 ```
@@ -350,9 +349,9 @@ sum_boot_simple_fef <- summary(boot_simple_fef)
 #file = "boot_loadings.csv")
 ```
 
-## Reporting results of bootstrapped PLS
+### Reporting results of bootstrapped PLS
 
-```{r}
+```{r, echo=FALSE}
 # Extract the bootstrapped HTMT
 sum_boot_fef <- summary(boot_simple_fef, alpha= 0.10)
 
@@ -394,9 +393,6 @@ As an example between Landcover and DOC B = -0.068: This is the standardized pat
 95% CI [-0.332, 0.261]: This is the 95% confidence interval for the beta value, giving a range within which the true beta value is likely to fall, with 95% confidence. Since this interval includes zero (spanning from -0.332 to 0.261), the effect of landcover on DOC here could be statistically insignificant. 
 So, in this current configuration, the standardized path coefficients between TOPO and LANDCOVER are significant and TOPO and DOC are significant (as our TOPO indicator variables increase, the fragment of DOC that is protein-like increases), but as the model is organized now, the effect of Landcover and hydrology are minimal and not significant. 
 
-```{r}
-
-```
 
 
 

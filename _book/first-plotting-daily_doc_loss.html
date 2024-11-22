@@ -149,8 +149,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2" data-path="addition-of-precipitation-and-runoff-data.html"><a href="addition-of-precipitation-and-runoff-data.html"><i class="fa fa-check"></i><b>2</b> Addition of precipitation and runoff data</a></li>
 <li class="chapter" data-level="3" data-path="explore-data-from-biological-oxygen-demand-assays.html"><a href="explore-data-from-biological-oxygen-demand-assays.html"><i class="fa fa-check"></i><b>3</b> Explore data from Biological Oxygen Demand assays</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="first-plotting-daily_doc_loss.html"><a href="first-plotting-daily_doc_loss.html"><i class="fa fa-check"></i><b>3.1</b> First, plotting daily_DOC_loss</a></li>
-<li class="chapter" data-level="3.2" data-path="dissolved-oxygen-loss.html"><a href="dissolved-oxygen-loss.html"><i class="fa fa-check"></i><b>3.2</b> Dissolved oxygen loss:</a></li>
+<li class="chapter" data-level="3.1" data-path="first-plotting-daily_doc_loss.html"><a href="first-plotting-daily_doc_loss.html"><i class="fa fa-check"></i><b>3.1</b> First, plotting daily_DOC_loss</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="first-plotting-daily_doc_loss.html"><a href="first-plotting-daily_doc_loss.html#explore-relationships-using-that-doc-change-dataset."><i class="fa fa-check"></i><b>3.1.1</b> Explore relationships using that DOC change dataset.</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="dissolved-oxygen-loss.html"><a href="dissolved-oxygen-loss.html"><i class="fa fa-check"></i><b>3.2</b> Dissolved oxygen loss:</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="dissolved-oxygen-loss.html"><a href="dissolved-oxygen-loss.html#explore-relationships-using-that-dataset."><i class="fa fa-check"></i><b>3.2.1</b> Explore relationships using that dataset.</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="how-does-bod-relate-to-eems-data-and-parafac-component-fractions.html"><a href="how-does-bod-relate-to-eems-data-and-parafac-component-fractions.html"><i class="fa fa-check"></i><b>3.3</b> How does BOD relate to EEMs data and PARAFAC component fractions</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="correlations-plots.html"><a href="correlations-plots.html"><i class="fa fa-check"></i><b>4</b> Correlations plots:</a>
 <ul>
@@ -247,13 +254,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Let’s check the distribution and outliers of the change in DOC dataset.
 Visualize the distribution with a boxplot:<br>
 <img src="PLS_rendered_book_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
-<pre><code>## [1] -0.06323732  0.10956244  0.10016129  0.09702128</code></pre>
+<pre><code>## [1] -0.06323732  0.09201493  0.10016129  0.09702128</code></pre>
 <p>It looks like we have 2 outliers that do note make sense (daily_DOC_loss), where the ‘loss’ is negative (&lt;0.1), implying that DOC increased post-experiment. Let’s remove those outliers and look at the distribution of DOC loss among watersheds.</p>
 <div class="figure"><span style="display:block;" id="fig:boxplotDOC"></span>
 <img src="PLS_rendered_book_files/figure-html/boxplotDOC-1.png" alt="Figure. A boxplot of the measured DOC change in a sample/by # of experiment days across watersheds." width="672" />
 <p class="caption">
 Figure 3.2: Figure. A boxplot of the measured DOC change in a sample/by # of experiment days across watersheds.
 </p>
+</div>
+<div id="explore-relationships-using-that-doc-change-dataset." class="section level3 hasAnchor" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Explore relationships using that DOC change dataset.<a href="first-plotting-daily_doc_loss.html#explore-relationships-using-that-doc-change-dataset." class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 </div>
 </div>
             </section>
