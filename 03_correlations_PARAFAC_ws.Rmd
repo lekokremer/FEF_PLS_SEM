@@ -450,7 +450,7 @@ Correlations among ions and topographical or landcover features suggest co-corre
 
 ```{r}
 correlation_df <- merged_df %>%
-  dplyr::select(relative_load_comp_1, relative_load_comp_2, relative_load_comp_3, peak_A_250.450, peak_C_350.450, peak_T_275.340, Fluorescence_Index, SUVA254,           peak_ratioAT, peak_ratioCA, peak_ratioCT, ndvi_raster_mean, percent_Beetle.kill, percent_cut.regenerating, percent_Tundra, Qm3_s, twi_mean, slope_mean, distance.to.outlet, doc_mg.l, NO3_mg.l)
+  dplyr::select(relative_load_comp_1, relative_load_comp_2, relative_load_comp_3, peak_A_250.450, peak_C_350.450, peak_T_275.340, Fluorescence_Index, SUVA254,  peak_ratioAT, peak_ratioCA, peak_ratioCT, ndvi_raster_mean, percent_Beetle.kill, percent_cut.regenerating, percent_Tundra, Qm3_s, twi_mean, slope_mean, distance.to.outlet, doc_mg.l, NO3_mg.l)
 
 # Assuming you have a data frame called 'data' with the relevant variables
 variables <- colnames(correlation_df)[12:21]  # Adjust indices as needed for your data
