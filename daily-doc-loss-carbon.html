@@ -291,11 +291,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>which represents the change in DOC standardized by the length of the experiment, calculated from the DOC measurement at the beginning of the experiment minus the DOC measurement after the experiment, divided by the number of days in the experiment.<br></p>
 <p>Let’s check the distribution and outliers of the change in DOC dataset.
 Visualize the distribution with a boxplot:<br>
-<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-148-1.png" width="672" /></p>
+<img src="PLS-Data-Exploration-Book_files/figure-html/unnamed-chunk-148-1.png" width="672" /></p>
 <pre><code>## [1] 0.1001613</code></pre>
 <p>It looks like we have 2 outliers that do note make sense (daily_DOC_loss), where the ‘loss’ is negative (&lt;0.1), implying that DOC increased post-experiment. Let’s remove those outliers and look at the distribution of DOC loss among watersheds.</p>
 <div class="figure"><span style="display:block;" id="fig:boxplotDOC"></span>
-<img src="PLS_rendered_book_files/figure-html/boxplotDOC-1.png" alt="Figure. A boxplot of the measured DOC change in a sample/by # of experiment days across watersheds." width="672" />
+<img src="PLS-Data-Exploration-Book_files/figure-html/boxplotDOC-1.png" alt="Figure. A boxplot of the measured DOC change in a sample/by # of experiment days across watersheds." width="672" />
 <p class="caption">
 Figure 6.2: Figure. A boxplot of the measured DOC change in a sample/by # of experiment days across watersheds.
 </p>

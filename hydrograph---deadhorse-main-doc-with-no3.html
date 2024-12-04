@@ -355,10 +355,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## data&#39;s shape values.</code></pre>
 <pre><code>## `geom_line()`: Each group consists of only one observation.
 ## ℹ Do you need to adjust the group aesthetic?</code></pre>
-<p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
+<p><img src="PLS-Data-Exploration-Book_files/figure-html/unnamed-chunk-40-1.png" width="672" /></p>
 <p>hydrograph</p>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-42"></span>
-<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-42-1.png" alt="Figure. relative loadings over time from Deadhorse outlet stream site only. Component 1 (humic) appears to increase with discharge while the fraction of Component 2 (humic) and Component 3 (protein-like) decrease during peak flow" width="960" />
+<img src="PLS-Data-Exploration-Book_files/figure-html/unnamed-chunk-42-1.png" alt="Figure. relative loadings over time from Deadhorse outlet stream site only. Component 1 (humic) appears to increase with discharge while the fraction of Component 2 (humic) and Component 3 (protein-like) decrease during peak flow" width="960" />
 <p class="caption">
 Figure 5.8: Figure. relative loadings over time from Deadhorse outlet stream site only. Component 1 (humic) appears to increase with discharge while the fraction of Component 2 (humic) and Component 3 (protein-like) decrease during peak flow
 </p>
@@ -366,7 +366,7 @@ Figure 5.8: Figure. relative loadings over time from Deadhorse outlet stream sit
 <div id="hydrograph---deadhorse-north-fractions-with-hydrograph" class="section level3 hasAnchor" number="5.3.1">
 <h3><span class="header-section-number">5.3.1</span> Hydrograph - Deadhorse NORTH fractions with hydrograph<a href="hydrograph---deadhorse-main-doc-with-no3.html#hydrograph---deadhorse-north-fractions-with-hydrograph" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-44"></span>
-<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-44-1.png" alt="Figure. relative loadings over time from Deadhorse NORTH outlet stream site only. Component 1 (humic) appears to increase with discharge while the fraction of Component 2 (humic) and Component 3 (protein-like) decrease during peak flow" width="960" />
+<img src="PLS-Data-Exploration-Book_files/figure-html/unnamed-chunk-44-1.png" alt="Figure. relative loadings over time from Deadhorse NORTH outlet stream site only. Component 1 (humic) appears to increase with discharge while the fraction of Component 2 (humic) and Component 3 (protein-like) decrease during peak flow" width="960" />
 <p class="caption">
 Figure 5.9: Figure. relative loadings over time from Deadhorse NORTH outlet stream site only. Component 1 (humic) appears to increase with discharge while the fraction of Component 2 (humic) and Component 3 (protein-like) decrease during peak flow
 </p>
@@ -443,7 +443,7 @@ Figure 5.9: Figure. relative loadings over time from Deadhorse NORTH outlet stre
 <span id="cb14-67"><a href="hydrograph---deadhorse-main-doc-with-no3.html#cb14-67" tabindex="-1"></a><span class="fu">print</span>(gg)</span></code></pre></div>
 <pre><code>## Warning: No shared levels found between `names(values)` of the manual scale and the
 ## data&#39;s shape values.</code></pre>
-<p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+<p><img src="PLS-Data-Exploration-Book_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
 </div>
 <div id="data-preparation-for-multivariate-statistical-analysis---dimension-reduction-techniques" class="section level3 hasAnchor" number="5.3.3">
 <h3><span class="header-section-number">5.3.3</span> Data preparation for multivariate statistical analysis - dimension reduction techniques<a href="hydrograph---deadhorse-main-doc-with-no3.html#data-preparation-for-multivariate-statistical-analysis---dimension-reduction-techniques" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -488,26 +488,26 @@ If VIF is greater than 10, multicollinearity is likely a serious issue, and you 
 <p>So these are all quantitative variables with different units and numerical ranges. Standardization transforms the variables so they have a mean of zero and a standard deviation of one.</p>
 Let’s view the scaled distributions of standardized explanatory variables:
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-53"></span>
-<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-53-1.png" alt="Figure. Checking out the distribution of explanatory variables " width="672" />
+<img src="PLS-Data-Exploration-Book_files/figure-html/unnamed-chunk-53-1.png" alt="Figure. Checking out the distribution of explanatory variables " width="672" />
 <p class="caption">
 Figure 5.10: Figure. Checking out the distribution of explanatory variables
 </p>
 </div>
 Now we will check the distributions of our response variables
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-54"></span>
-<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-54-1.png" alt="Figure. Checking out the distribution of response variables " width="672" />
+<img src="PLS-Data-Exploration-Book_files/figure-html/unnamed-chunk-54-1.png" alt="Figure. Checking out the distribution of response variables " width="672" />
 <p class="caption">
 Figure 5.11: Figure. Checking out the distribution of response variables
 </p>
 </div>
 <p>Our response variables are both right and left-skewed unimodal. We may need to make the data more symmetrical or approximately normal, This can ensure that they contribute equally to the analysis and RDA assumes linear relationships between variables. But these may be be close enough to approximately normal once they are standardized/z-scored (subtracts the mean and divides by the standard deviation for each variable):</p>
-<p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
+<p><img src="PLS-Data-Exploration-Book_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
 <p>The scales are similar, the units are the same. Let’s move forward for now.</p>
 <p>Initial exploration with PCA
 Q² evaluates how well the model can predict unseen data based on the selected number of components.
 A higher Q² value indicates better predictive performance.
 Commonly, a Q² value greater than 0.095 is considered an acceptable threshold for a good predictive model.</p>
-<p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
+<p><img src="PLS-Data-Exploration-Book_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
 <p>None of our components have Q² total greater than 0.095. This suggests that the PLS model may not have enough predictive power to explain the relationship between the response variables and explanatory variables, based on cross-validation.</p>
 <p>We know the relationships between individual response variables and explanatory variables are strong. PLS does not assume normality of the data, though scaling does seem to help the Q2.</p>
 <p>From the tutorial: “We now set a grid of values - thin at the start, but also restricted to a small number of genes for a parsimonious model, which we will test for each of the two components in the tune.spls() function, using the MAE criterion.”
@@ -519,7 +519,7 @@ I want to include all response variables at this point, so this is adapted from 
 ## Warning: &lt;anonymous&gt;: ... may be used in an incorrect context: 
 ##      spls(X = X, Y = Y, keepX = c(choice.keepX, keepX), keepY = c(choice.keepY, 
 ##          keepY), ncomp = comp, mode = mode, ...)</code></pre>
-<p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-58-1.png" width="672" /></p>
+<p><img src="PLS-Data-Exploration-Book_files/figure-html/unnamed-chunk-58-1.png" width="672" /></p>
 <pre><code>## Importance of components:
 ##                           PC1    PC2    PC3    PC4     PC5     PC6    PC7
 ## Standard deviation     2.1860 1.4916 1.3046 1.1224 0.91363 0.68046 0.6681
@@ -530,7 +530,7 @@ I want to include all response variables at this point, so this is adapted from 
 ## Proportion of Variance 0.01138 0.0091 0.00288 0.00089 0.000e+00
 ## Cumulative Proportion  0.98714 0.9962 0.99911 1.00000 1.000e+00</code></pre>
 <pre><code>## Warning: The SGCCA algorithm did not converge</code></pre>
-<p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-59-1.png" width="672" /></p>
+<p><img src="PLS-Data-Exploration-Book_files/figure-html/unnamed-chunk-59-1.png" width="672" /></p>
 </div>
 </div>
 <div id="rda-redundancy-analysis" class="section level3 hasAnchor" number="5.3.4">
@@ -646,7 +646,7 @@ Similar to PCA, but RDA is a <u>constrained</u> method that requries two dataset
 ## Model: rda(formula = standardized_resp ~ aspect_mean + twi_mean + ndvi_raster_mean + disttostreams_mean + percent_Beetle.kill + percent_Old.Forest + percent_cut.regenerating + area_km + Qm3_s, data = explanatory_standardized, na.action = na.exclude)
 ##          Df Variance       F Pr(&gt;F)    
 ## RDA1      1  2.01775 89.9920  0.001 ***
-## RDA2      1  0.15266  6.8087  0.773    
+## RDA2      1  0.15266  6.8087  0.771    
 ## Residual 37  0.82959                   
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
@@ -658,14 +658,14 @@ Similar to PCA, but RDA is a <u>constrained</u> method that requries two dataset
 ## 
 ## Model: rda(formula = standardized_resp ~ aspect_mean + twi_mean + ndvi_raster_mean + disttostreams_mean + percent_Beetle.kill + percent_Old.Forest + percent_cut.regenerating + area_km + Qm3_s, data = explanatory_standardized, na.action = na.exclude)
 ##                          Df Variance       F Pr(&gt;F)    
-## aspect_mean               1  0.09478  3.4274  0.045 *  
+## aspect_mean               1  0.09478  3.4274  0.068 .  
 ## twi_mean                  1  1.06887 38.6529  0.001 ***
 ## ndvi_raster_mean          1  0.20600  7.4496  0.006 ** 
-## disttostreams_mean        1  0.43123 15.5942  0.003 ** 
-## percent_Beetle.kill       1  0.01110  0.4013  0.591    
-## percent_Old.Forest        1  0.21447  7.7558  0.009 ** 
+## disttostreams_mean        1  0.43123 15.5942  0.002 ** 
+## percent_Beetle.kill       1  0.01110  0.4013  0.610    
+## percent_Old.Forest        1  0.21447  7.7558  0.007 ** 
 ## percent_cut.regenerating  1  0.00007  0.0025  0.998    
-## area_km                   1  0.10385  3.7556  0.056 .  
+## area_km                   1  0.10385  3.7556  0.047 *  
 ## Qm3_s                     1  0.04004  1.4478  0.230    
 ## Residual                 30  0.82959                   
 ## ---
@@ -674,16 +674,16 @@ Similar to PCA, but RDA is a <u>constrained</u> method that requries two dataset
 Variables like this might capture major trends in the data but don’t significantly improve the fit of the model when tested. This could mean that they are redundant or that the sample size is too small to detect their significance.</p>
 <p>Less influential but statistically significant means they account for a relatively small but non-random portion of the total variation. Might not be the primary drivers of variation, but they can be still be important to our understanding of secondary influences/trends.</p>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-100"></span>
-<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-100-1.png" alt="Figure. RDA1 loadings tell us the direction and strength between each explantory variable and the RDA1 component." width="672" />
+<img src="PLS-Data-Exploration-Book_files/figure-html/unnamed-chunk-100-1.png" alt="Figure. RDA1 loadings tell us the direction and strength between each explantory variable and the RDA1 component." width="672" />
 <p class="caption">
 Figure 5.12: Figure. RDA1 loadings tell us the direction and strength between each explantory variable and the RDA1 component.
 </p>
 </div>
-<p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-101-1.png" width="672" /></p>
+<p><img src="PLS-Data-Exploration-Book_files/figure-html/unnamed-chunk-101-1.png" width="672" /></p>
 <p>Interpreting loadings for RDA1: <br>
 Recall that there are three response variables here, each will have a loading that indicates its correlation with RDA1. Humic components 1 and 2 will have similar loadings (positive and negative) on RDA1, where the protein-like component will have the opposite loading. In the biplot, this should be visible as response variable vectors pointing in opposite directions.</p>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-102"></span>
-<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-102-1.png" alt="Figure. RDA biplot" width="672" />
+<img src="PLS-Data-Exploration-Book_files/figure-html/unnamed-chunk-102-1.png" alt="Figure. RDA biplot" width="672" />
 <p class="caption">
 Figure 5.13: Figure. RDA biplot
 </p>
@@ -693,7 +693,7 @@ Figure 5.13: Figure. RDA biplot
 <div id="pca---all-data" class="section level3 hasAnchor" number="5.3.5">
 <h3><span class="header-section-number">5.3.5</span> PCA - All data<a href="hydrograph---deadhorse-main-doc-with-no3.html#pca---all-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-103"></span>
-<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-103-1.png" alt="Figure. " width="960" />
+<img src="PLS-Data-Exploration-Book_files/figure-html/unnamed-chunk-103-1.png" alt="Figure. " width="960" />
 <p class="caption">
 Figure 5.14: Figure.
 </p>
@@ -712,11 +712,11 @@ Figure 5.14: Figure.
 ## comp 11 0.004217272         0.03833884           100.00000</code></pre>
 <p>Although PC1 and PC2 explain a lot of the variance and most pubs focus on these, PC3 contributes a non-trivial amount of variance (14%). Together, the first three components explain the majority of the total variance, which (I think) is a better threshold for interpretation than &lt;50%. Let’s see.</p>
 <p>Visualize the PC1 loadings to see what our important drivers are:</p>
-<p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-105-1.png" width="672" /></p>
+<p><img src="PLS-Data-Exploration-Book_files/figure-html/unnamed-chunk-105-1.png" width="672" /></p>
 <p>In this case, PC1 might represent a gradient related to DOC lability or stability across the landscape (e.g., a transition from microbial activity-driven DOC production in low slopes, southern aspects, more moist sub-watersheds, to more labile DOC driven by hydrological transport in older forests due to higher slopes, northern aspects and drier sub-watersheds. Subwatersheds with older forests tend to be on higher slopes, northern aspects, which receive less solar radiation (cooler, less microbial activity). These also retain snow for longer, sustaining humic inputs through the falling limb (we might see this in Lexen)? A lot more detail is applied to this below.</p>
 <p>…BUT, PCA is unsupervised and doesn’t directly consider the response variable. So how well does PC1 explain the variability of the first PARAFAC component (humic)?.</p>
 <p>Let’s look at PC1 in 2-D space by plotting it against our response variable to see how PC1 correlates with the sample fraction of Humic Component1. We can get a sense of the strength and direction of the relationship:</p>
-<p><img src="PLS_rendered_book_files/figure-html/unnamed-chunk-106-1.png" width="672" />
+<p><img src="PLS-Data-Exploration-Book_files/figure-html/unnamed-chunk-106-1.png" width="672" />
 Meh.</p>
 <p>Explore correlations between the first 3 PCs and the response variable:</p>
 <pre><code>##             [,1]
@@ -747,7 +747,7 @@ Meh.</p>
 <p>Conclusions Component1: The small coefficients, combined with the relatively low R-squared value, suggest that even though the relationships are significant, they might not be strong enough to drive substantial changes in relative_load_comp_1. I can increase the amount of variability by remove more variables from the PCA, but this still does not drastically improve the relationship between PC1 and PARAFAC component 1.</p>
 <p>Let’s look at Components 2 and 3 in the same fashion. It could be that Component 1 is driven by the fractions of 2 and 3…?</p>
 <p>COMPONENT 2
-<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-109-1.png" width="672" /></p>
+<img src="PLS-Data-Exploration-Book_files/figure-html/unnamed-chunk-109-1.png" width="672" /></p>
 <p>Explore correlations between the first 3 PCs and the response variable:</p>
 <pre><code>##              [,1]
 ## Dim.1  0.46306607
@@ -775,7 +775,7 @@ Meh.</p>
 ## Multiple R-squared:  0.3179, Adjusted R-squared:  0.3091 
 ## F-statistic:  36.5 on 3 and 235 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p>COMPONENT 3
-<img src="PLS_rendered_book_files/figure-html/unnamed-chunk-112-1.png" width="672" /></p>
+<img src="PLS-Data-Exploration-Book_files/figure-html/unnamed-chunk-112-1.png" width="672" /></p>
 <p>Explore correlations between the first 3 PCs and the response variable:</p>
 <pre><code>##             [,1]
 ## Dim.1 -0.4976319
