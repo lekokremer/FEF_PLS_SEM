@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>7.6 Model 6: HUMIC late season - streams | 09_final_model_pngs</title>
+  <meta name="description" content="7.6 Model 6: HUMIC late season - streams | 09_final_model_pngs" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="7.6 Model 6: HUMIC late season - streams | 09_final_model_pngs" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="7.6 Model 6: HUMIC late season - streams | 09_final_model_pngs" />
+  
+  
+  
+
+<meta name="author" content="Lauren Kremer" />
+
+
+<meta name="date" content="2024-11-19" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="model-5-humic-early-season---streams.html"/>
+<link rel="next" href="best-performing-pls-sem-fef-models.html"/>
+<script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="assets/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="assets/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="assets/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="assets/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="assets/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="assets/viz-1.8.2/viz.js"></script>
+<link href="assets/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="assets/grViz-binding-1.0.11/grViz.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="about.html"><a href="about.html"><i class="fa fa-check"></i><b>1.1</b> About</a></li>
+<li class="chapter" data-level="1.2" data-path="usage.html"><a href="usage.html"><i class="fa fa-check"></i><b>1.2</b> Usage</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="addition-of-precipitation-and-runoff-data.html"><a href="addition-of-precipitation-and-runoff-data.html"><i class="fa fa-check"></i><b>2</b> Addition of precipitation and runoff data</a></li>
+<li class="chapter" data-level="3" data-path="correlations-plots.html"><a href="correlations-plots.html"><i class="fa fa-check"></i><b>3</b> Correlations plots:</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="parafac-results-summary-figures.html"><a href="parafac-results-summary-figures.html"><i class="fa fa-check"></i><b>3.1</b> PARAFAC results summary figures:</a></li>
+<li class="chapter" data-level="3.2" data-path="structure.html"><a href="structure.html"><i class="fa fa-check"></i><b>3.2</b> Structure:</a></li>
+<li class="chapter" data-level="3.3" data-path="relative-loadings.html"><a href="relative-loadings.html"><i class="fa fa-check"></i><b>3.3</b> 1. Relative loadings</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="relative-loadings.html"><a href="relative-loadings.html#box-plots---relative-loadings"><i class="fa fa-check"></i><b>3.3.1</b> Box plots - Relative loadings</a></li>
+<li class="chapter" data-level="3.3.2" data-path="relative-loadings.html"><a href="relative-loadings.html#spearmans"><i class="fa fa-check"></i><b>3.3.2</b> Spearman’s</a></li>
+<li class="chapter" data-level="3.3.3" data-path="relative-loadings.html"><a href="relative-loadings.html#pearson-correlation-matrices-scaled-data---relative-loadings"><i class="fa fa-check"></i><b>3.3.3</b> Pearson correlation matrices (scaled data) - Relative loadings</a></li>
+<li class="chapter" data-level="3.3.4" data-path="relative-loadings.html"><a href="relative-loadings.html#spearmans-correlation-figure-for-agu-poster-2024"><i class="fa fa-check"></i><b>3.3.4</b> Spearman’s correlation figure for AGU poster 2024</a></li>
+<li class="chapter" data-level="3.3.5" data-path="relative-loadings.html"><a href="relative-loadings.html#spearmans-correlation-figure-for-poster2"><i class="fa fa-check"></i><b>3.3.5</b> Spearman’s correlation figure for POSTER2</a></li>
+<li class="chapter" data-level="3.3.6" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---fool-creek-fractions-with-hydrograph"><i class="fa fa-check"></i><b>3.3.6</b> Hydrograph - Fool Creek fractions with hydrograph</a></li>
+<li class="chapter" data-level="3.3.7" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---fool-creek-with-no3"><i class="fa fa-check"></i><b>3.3.7</b> Hydrograph - Fool Creek with NO3</a></li>
+<li class="chapter" data-level="3.3.8" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---lexen-creek-fractions-with-hydrograph"><i class="fa fa-check"></i><b>3.3.8</b> Hydrograph - Lexen Creek fractions with hydrograph</a></li>
+<li class="chapter" data-level="3.3.9" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---lexen-creek-doc-with-no3"><i class="fa fa-check"></i><b>3.3.9</b> Hydrograph - Lexen Creek DOC with NO3</a></li>
+<li class="chapter" data-level="3.3.10" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---deadhorse-main-fractions-with-hydrograph"><i class="fa fa-check"></i><b>3.3.10</b> Hydrograph - Deadhorse Main fractions with hydrograph</a></li>
+<li class="chapter" data-level="3.3.11" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---deadhorse-main-doc-with-no3"><i class="fa fa-check"></i><b>3.3.11</b> Hydrograph - Deadhorse Main DOC with NO3</a></li>
+<li class="chapter" data-level="3.3.12" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---deadhorse-north-fractions-with-hydrograph"><i class="fa fa-check"></i><b>3.3.12</b> Hydrograph - Deadhorse NORTH fractions with hydrograph</a></li>
+<li class="chapter" data-level="3.3.13" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---deadhorse-south-doc-with-no3"><i class="fa fa-check"></i><b>3.3.13</b> Hydrograph - Deadhorse SOUTH DOC with NO3</a></li>
+<li class="chapter" data-level="3.3.14" data-path="relative-loadings.html"><a href="relative-loadings.html#data-preparation-for-multivariate-statistical-analysis---dimension-reduction-techniques"><i class="fa fa-check"></i><b>3.3.14</b> Data preparation for multivariate statistical analysis - dimension reduction techniques</a></li>
+<li class="chapter" data-level="3.3.15" data-path="relative-loadings.html"><a href="relative-loadings.html#rda-redundancy-analysis"><i class="fa fa-check"></i><b>3.3.15</b> RDA (Redundancy Analysis)</a></li>
+<li class="chapter" data-level="3.3.16" data-path="relative-loadings.html"><a href="relative-loadings.html#pca---all-data"><i class="fa fa-check"></i><b>3.3.16</b> PCA - All data</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="normalized-doc.html"><a href="normalized-doc.html"><i class="fa fa-check"></i><b>3.4</b> 2. Normalized DOC</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="normalized-doc.html"><a href="normalized-doc.html#box-plots---doc-normalized-loadings"><i class="fa fa-check"></i><b>3.4.1</b> Box plots - DOC normalized loadings</a></li>
+<li class="chapter" data-level="3.4.2" data-path="normalized-doc.html"><a href="normalized-doc.html#correlation-matrices---normalized-loadings"><i class="fa fa-check"></i><b>3.4.2</b> Correlation matrices - Normalized loadings</a></li>
+<li class="chapter" data-level="3.4.3" data-path="normalized-doc.html"><a href="normalized-doc.html#hydrograph---fluorescence-intensities-in-fool-creek-with-2022-hydrograph"><i class="fa fa-check"></i><b>3.4.3</b> Hydrograph - Fluorescence intensities in Fool creek with 2022 hydrograph</a></li>
+<li class="chapter" data-level="3.4.4" data-path="normalized-doc.html"><a href="normalized-doc.html#pca"><i class="fa fa-check"></i><b>3.4.4</b> PCA</a></li>
+<li class="chapter" data-level="3.4.5" data-path="normalized-doc.html"><a href="normalized-doc.html#rda-redundancy-analysis-1"><i class="fa fa-check"></i><b>3.4.5</b> RDA (Redundancy Analysis)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="biological-oxygen-demand-assays---data-exploration.html"><a href="biological-oxygen-demand-assays---data-exploration.html"><i class="fa fa-check"></i><b>4</b> Biological Oxygen Demand assays - data exploration</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="daily-doc-loss-carbon.html"><a href="daily-doc-loss-carbon.html"><i class="fa fa-check"></i><b>4.1</b> Daily DOC loss (carbon)</a></li>
+<li class="chapter" data-level="4.2" data-path="dissolved-oxygen-loss.html"><a href="dissolved-oxygen-loss.html"><i class="fa fa-check"></i><b>4.2</b> Dissolved oxygen loss</a></li>
+<li class="chapter" data-level="4.3" data-path="explore-relationships..html"><a href="explore-relationships..html"><i class="fa fa-check"></i><b>4.3</b> Explore relationships.</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="demo-partial-least-squares-structural-equation-modeling-pls-sem.html"><a href="demo-partial-least-squares-structural-equation-modeling-pls-sem.html"><i class="fa fa-check"></i><b>5</b> Demo: Partial least squares – Structural Equation Modeling (PLS-SEM)</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="building-the-path-model.html"><a href="building-the-path-model.html"><i class="fa fa-check"></i><b>5.1</b> Building the path model</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="building-the-path-model.html"><a href="building-the-path-model.html#path-diagram-of-our-model-with-tested-indicators"><i class="fa fa-check"></i><b>5.1.1</b> Path diagram of our model with tested indicators</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="data-managment-transformation.html"><a href="data-managment-transformation.html"><i class="fa fa-check"></i><b>5.2</b> Data managment / transformation</a></li>
+<li class="chapter" data-level="5.3" data-path="reporting-initial-results-and-evaluating-the-quality-of-reflective-measurement-models.html"><a href="reporting-initial-results-and-evaluating-the-quality-of-reflective-measurement-models.html"><i class="fa fa-check"></i><b>5.3</b> Reporting initial results and evaluating the quality of reflective measurement models</a></li>
+<li class="chapter" data-level="5.4" data-path="bootstrapping-for-significance.html"><a href="bootstrapping-for-significance.html"><i class="fa fa-check"></i><b>5.4</b> Bootstrapping for significance</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="bootstrapping-for-significance.html"><a href="bootstrapping-for-significance.html#reporting-results-of-bootstrapped-pls"><i class="fa fa-check"></i><b>5.4.1</b> Reporting results of bootstrapped PLS</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="pls-sem-fef-labile-model-iterations.html"><a href="pls-sem-fef-labile-model-iterations.html"><i class="fa fa-check"></i><b>6</b> PLS-SEM FEF LABILE model iterations</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="model-1---test-all-labile-indicators.html"><a href="model-1---test-all-labile-indicators.html"><i class="fa fa-check"></i><b>6.1</b> Model 1 - test all LABILE indicators</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="model-1---test-all-labile-indicators.html"><a href="model-1---test-all-labile-indicators.html#results-of-bootstrapped-pls"><i class="fa fa-check"></i><b>6.1.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="model-2---remove-non-significant-indicators.html"><a href="model-2---remove-non-significant-indicators.html"><i class="fa fa-check"></i><b>6.2</b> Model 2 - remove non-significant indicators</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="model-2---remove-non-significant-indicators.html"><a href="model-2---remove-non-significant-indicators.html#results-of-bootstrapped-pls-1"><i class="fa fa-check"></i><b>6.2.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="model-3---loop-through-landcover.html"><a href="model-3---loop-through-landcover.html"><i class="fa fa-check"></i><b>6.3</b> Model 3 - loop through landcover</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="model-3---loop-through-landcover.html"><a href="model-3---loop-through-landcover.html#results-of-bootstrapped-pls-2"><i class="fa fa-check"></i><b>6.3.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="model-4---flow-state-model.html"><a href="model-4---flow-state-model.html"><i class="fa fa-check"></i><b>6.4</b> Model 4 - Flow state model</a></li>
+<li class="chapter" data-level="6.5" data-path="model-5-labile-early-season---streams.html"><a href="model-5-labile-early-season---streams.html"><i class="fa fa-check"></i><b>6.5</b> Model 5: LABILE early season - streams</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="model-5-labile-early-season---streams.html"><a href="model-5-labile-early-season---streams.html#results-of-bootstrapped-pls-3"><i class="fa fa-check"></i><b>6.5.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="model-6-labile-late-season---streams.html"><a href="model-6-labile-late-season---streams.html"><i class="fa fa-check"></i><b>6.6</b> Model 6: LABILE late season - streams</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="model-6-labile-late-season---streams.html"><a href="model-6-labile-late-season---streams.html#results-of-bootstrapped-pls-4"><i class="fa fa-check"></i><b>6.6.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="pls-sem-fef-humic-model-iterations.html"><a href="pls-sem-fef-humic-model-iterations.html"><i class="fa fa-check"></i><b>7</b> PLS-SEM FEF HUMIC model iterations</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="model-1---test-all-humic-indicators.html"><a href="model-1---test-all-humic-indicators.html"><i class="fa fa-check"></i><b>7.1</b> Model 1 - test all HUMIC indicators</a></li>
+<li class="chapter" data-level="7.2" data-path="model-2---remove-non-significant-indicators-1.html"><a href="model-2---remove-non-significant-indicators-1.html"><i class="fa fa-check"></i><b>7.2</b> Model 2 - remove non-significant indicators</a></li>
+<li class="chapter" data-level="7.3" data-path="model-3---loop-through-landcover-1.html"><a href="model-3---loop-through-landcover-1.html"><i class="fa fa-check"></i><b>7.3</b> Model 3 - loop through landcover</a></li>
+<li class="chapter" data-level="7.4" data-path="model-4---flow-state-model-1.html"><a href="model-4---flow-state-model-1.html"><i class="fa fa-check"></i><b>7.4</b> Model 4 - Flow state model</a></li>
+<li class="chapter" data-level="7.5" data-path="model-5-humic-early-season---streams.html"><a href="model-5-humic-early-season---streams.html"><i class="fa fa-check"></i><b>7.5</b> Model 5: HUMIC early season - streams</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="model-5-humic-early-season---streams.html"><a href="model-5-humic-early-season---streams.html#results-of-bootstrapped-pls-5"><i class="fa fa-check"></i><b>7.5.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="model-6-humic-late-season---streams.html"><a href="model-6-humic-late-season---streams.html"><i class="fa fa-check"></i><b>7.6</b> Model 6: HUMIC late season - streams</a>
+<ul>
+<li class="chapter" data-level="7.6.1" data-path="model-6-humic-late-season---streams.html"><a href="model-6-humic-late-season---streams.html#results-of-bootstrapped-pls-6"><i class="fa fa-check"></i><b>7.6.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="best-performing-pls-sem-fef-models.html"><a href="best-performing-pls-sem-fef-models.html"><i class="fa fa-check"></i><b>8</b> Best performing PLS-SEM FEF models</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="model-1-high-flows---humic.html"><a href="model-1-high-flows---humic.html"><i class="fa fa-check"></i><b>8.1</b> Model 1: High flows - HUMIC</a>
+<ul>
+<li class="chapter" data-level="8.1.1" data-path="model-1-high-flows---humic.html"><a href="model-1-high-flows---humic.html#results-of-bootstrapped-pls-7"><i class="fa fa-check"></i><b>8.1.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+<li class="chapter" data-level="8.2" data-path="model-2-low-flows---streams.html"><a href="model-2-low-flows---streams.html"><i class="fa fa-check"></i><b>8.2</b> Model 2: LOW FLOWS - streams</a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="model-2-low-flows---streams.html"><a href="model-2-low-flows---streams.html#results-of-bootstrapped-pls-8"><i class="fa fa-check"></i><b>8.2.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="model-3-labile-high-flows---streams.html"><a href="model-3-labile-high-flows---streams.html"><i class="fa fa-check"></i><b>8.3</b> Model 3: LABILE high flows - streams</a>
+<ul>
+<li class="chapter" data-level="8.3.1" data-path="model-3-labile-high-flows---streams.html"><a href="model-3-labile-high-flows---streams.html#results-of-bootstrapped-pls-9"><i class="fa fa-check"></i><b>8.3.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+<li class="chapter" data-level="8.4" data-path="model-4-labile-low-flows---streams.html"><a href="model-4-labile-low-flows---streams.html"><i class="fa fa-check"></i><b>8.4</b> Model 4: LABILE LOW FLOWS - streams</a>
+<ul>
+<li class="chapter" data-level="8.4.1" data-path="model-4-labile-low-flows---streams.html"><a href="model-4-labile-low-flows---streams.html#results-of-bootstrapped-pls-10"><i class="fa fa-check"></i><b>8.4.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="viewing-reconstructed-best-fitting-models.html"><a href="viewing-reconstructed-best-fitting-models.html"><i class="fa fa-check"></i><b>9</b> Viewing reconstructed ‘best fitting’ models</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="model-1.html"><a href="model-1.html"><i class="fa fa-check"></i><b>9.1</b> Model 1:</a></li>
+<li class="chapter" data-level="9.2" data-path="model-2.html"><a href="model-2.html"><i class="fa fa-check"></i><b>9.2</b> Model 2:</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">09_final_model_pngs</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="model-6-humic-late-season---streams" class="section level2 hasAnchor" number="7.6">
+<h2><span class="header-section-number">7.6</span> Model 6: HUMIC late season - streams<a href="model-6-humic-late-season---streams.html#model-6-humic-late-season---streams" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>ABOUT THIS MODEL</strong>
+- stream samples during peak lower descending to baseflow (August - April 30) n=30
+- response is HUMIC.</p>
+<p>Our indicators for each latent variable are as follows:<br>
+<strong>Topo:</strong> <br>
+–mean distance that allochthonous water has to travel to the stream channel<br>
+–mean aspect in radians<br>
+–mean subcatchment TWI <br>
+<strong>Landcover:</strong> <br>
+– % of subcatchment pixels with harvested/regenerating vegetation
+– mean NDVI <br>
+<strong>LABILE:</strong> <br></p>
+<pre><code>## 
+## Results from  package seminr (2.3.4)
+## 
+## Path Coefficients:
+##            HYDRO LANDCOVER F_IONS NUTRIENT  HUMIC
+## R^2        0.175     0.703  0.559    0.311  0.594
+## AdjR^2     0.145     0.698  0.543    0.286  0.563
+## TOPO       0.190     0.839 -1.372   -0.223      .
+## LANDCOVER -0.564         .  1.136   -0.357  0.319
+## HYDRO          .         .      .        . -0.120
+## F_IONS         .         .      .        . -0.182
+## NUTRIENT       .         .      .        . -0.455
+## 
+## Reliability:
+##           alpha  rhoC   AVE  rhoA
+## TOPO      0.896 0.935 0.827 0.905
+## LANDCOVER 0.770 0.896 0.812 0.785
+## HYDRO     0.906 0.955 0.914 0.907
+## F_IONS    0.823 0.889 0.729 0.909
+## NUTRIENT  1.000 1.000 1.000 1.000
+## HUMIC     0.705 0.869 0.687 0.913
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
+<p>A plot of result reliability measures:
+<img src="PLSbookdownproj_files/figure-html/unnamed-chunk-228-1.png" width="672" /></p>
+<div id="results-of-bootstrapped-pls-6" class="section level3 hasAnchor" number="7.6.1">
+<h3><span class="header-section-number">7.6.1</span> Results of bootstrapped PLS<a href="model-6-humic-late-season---streams.html#results-of-bootstrapped-pls-6" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>##                         Original Est. Bootstrap Mean Bootstrap SD T Stat. 5% CI
+## TOPO  -&gt;  LANDCOVER             0.997          0.998        0.071  13.994 0.876
+## TOPO  -&gt;  HYDRO                 0.296          0.312        0.094   3.138 0.169
+## TOPO  -&gt;  F_IONS                0.543          0.566        0.065   8.345 0.466
+## TOPO  -&gt;  NUTRIENT              0.529          0.530        0.074   7.125 0.400
+## TOPO  -&gt;  HUMIC                 0.650          0.666        0.057  11.498 0.571
+## LANDCOVER  -&gt;  HYDRO            0.474          0.470        0.110   4.324 0.283
+## LANDCOVER  -&gt;  F_IONS           0.318          0.364        0.080   3.988 0.257
+## LANDCOVER  -&gt;  NUTRIENT         0.613          0.616        0.116   5.269 0.397
+## LANDCOVER  -&gt;  HUMIC            0.730          0.742        0.070  10.401 0.620
+## HYDRO  -&gt;  F_IONS               0.455          0.502        0.070   6.504 0.408
+## HYDRO  -&gt;  NUTRIENT             0.616          0.603        0.112   5.500 0.418
+## HYDRO  -&gt;  HUMIC                0.509          0.503        0.096   5.288 0.335
+## F_IONS  -&gt;  NUTRIENT            0.322          0.340        0.061   5.284 0.253
+## F_IONS  -&gt;  HUMIC               0.276          0.316        0.071   3.891 0.224
+## NUTRIENT  -&gt;  HUMIC             0.725          0.718        0.068  10.720 0.589
+##                         95% CI
+## TOPO  -&gt;  LANDCOVER      1.100
+## TOPO  -&gt;  HYDRO          0.474
+## TOPO  -&gt;  F_IONS         0.677
+## TOPO  -&gt;  NUTRIENT       0.649
+## TOPO  -&gt;  HUMIC          0.757
+## LANDCOVER  -&gt;  HYDRO     0.644
+## LANDCOVER  -&gt;  F_IONS    0.509
+## LANDCOVER  -&gt;  NUTRIENT  0.782
+## LANDCOVER  -&gt;  HUMIC     0.851
+## HYDRO  -&gt;  F_IONS        0.647
+## HYDRO  -&gt;  NUTRIENT      0.767
+## HYDRO  -&gt;  HUMIC         0.659
+## F_IONS  -&gt;  NUTRIENT     0.447
+## F_IONS  -&gt;  HUMIC        0.443
+## NUTRIENT  -&gt;  HUMIC      0.817</code></pre>
+<p>This gives us the confidence intervals of the HTMT ratio.</p>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-125c6b87c3eee05d54f9" style="width:768px;height:384px;"></div>
+<script type="application/json" data-for="htmlwidget-125c6b87c3eee05d54f9">{"x":{"diagram":"digraph G {\n\n// ----------------------\n// General graph settings\n// ----------------------\ngraph [\ncharset = \"UTF-8\",\nlayout = dot,\nlabel = \"Bootstrapped Model\nLow flow - Humic\",\nfontsize = 24,\nfontcolor = black,\nfontname = helvetica,\nrankdir = LR,\nlabelloc = t,\nsplines = TRUE\nbgcolor = transparent\n]\n\n// --------------------\n// The structural model\n// --------------------\nsubgraph sm {\nrankdir = LR;\nnode [\nshape = ellipse,\ncolor = black,\nfillcolor = white,\nstyle = filled,\nfontsize = 12,\nfontcolor = black,\nheight = 0.919303385416667,\nwidth = 0.918636067708333,\nfontname = helvetica,\nfixedsize = true\n]\n\"TOPO\" [label=<<B>TOPO <\/B>>, shape = hexagon]\n\"LANDCOVER\" [label=<<B>LANDCOVER <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.703<\/FONT>>, shape = hexagon]\n\"HYDRO\" [label=<<B>HYDRO <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.175<\/FONT>>, shape = hexagon]\n\"F_IONS\" [label=<<B>F_IONS <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.559<\/FONT>>, shape = hexagon]\n\"NUTRIENT\" [label=<<B>NUTRIENT <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.311<\/FONT>>, shape = hexagon]\n\"HUMIC\" [label=<<B>HUMIC <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.594<\/FONT>>, shape = hexagon]\nedge [\ncolor = black,\nfontsize = 9,\nfontcolor = black,\nfontname = helvetica,\ndir = both,\narrowhead = normal,\narrowtail = none\n]\n\"TOPO\" -> {\"HYDRO\"}[weight = 1, label = < 𝛽 = 0.19<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.236, 1.248]   <\/FONT> >, penwidth = 1.45, style = solid, color = black]\n\"TOPO\" -> {\"LANDCOVER\"}[weight = 1, label = < 𝛽 = 0.839***<BR /><FONT POINT-SIZE=\"7\">95% CI [0.715, 0.929]   <\/FONT> >, penwidth = 4.695, style = solid, color = black]\n\"TOPO\" -> {\"F_IONS\"}[weight = 1, label = < 𝛽 = -1.372***<BR /><FONT POINT-SIZE=\"7\">95% CI [-2.202, -1.008]   <\/FONT> >, penwidth = 7.36, style = dashed, color = black]\n\"TOPO\" -> {\"NUTRIENT\"}[weight = 1, label = < 𝛽 = -0.223<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.708, 0.706]   <\/FONT> >, penwidth = 1.615, style = dashed, color = black]\n\"LANDCOVER\" -> {\"HYDRO\"}[weight = 1, label = < 𝛽 = -0.564<BR /><FONT POINT-SIZE=\"7\">95% CI [-1.607, -0.15]   <\/FONT> >, penwidth = 3.32, style = dashed, color = black]\n\"LANDCOVER\" -> {\"F_IONS\"}[weight = 1, label = < 𝛽 = 1.136**<BR /><FONT POINT-SIZE=\"7\">95% CI [0.753, 2.056]   <\/FONT> >, penwidth = 6.18, style = solid, color = black]\n\"LANDCOVER\" -> {\"HUMIC\"}[weight = 1, label = < 𝛽 = 0.319***<BR /><FONT POINT-SIZE=\"7\">95% CI [0.136, 0.498]   <\/FONT> >, penwidth = 2.095, style = solid, color = black]\n\"LANDCOVER\" -> {\"NUTRIENT\"}[weight = 1, label = < 𝛽 = -0.357<BR /><FONT POINT-SIZE=\"7\">95% CI [-1.283, 0.126]   <\/FONT> >, penwidth = 2.285, style = dashed, color = black]\n\"HYDRO\" -> {\"HUMIC\"}[weight = 1, label = < 𝛽 = -0.12<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.425, 0.125]   <\/FONT> >, penwidth = 1.1, style = dashed, color = black]\n\"F_IONS\" -> {\"HUMIC\"}[weight = 1, label = < 𝛽 = -0.182*<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.43, -0.034]   <\/FONT> >, penwidth = 1.41, style = dashed, color = black]\n\"NUTRIENT\" -> {\"HUMIC\"}[weight = 1, label = < 𝛽 = -0.455***<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.638, -0.246]   <\/FONT> >, penwidth = 2.775, style = dashed, color = black]\n}\n// ---------------------\n// The measurement model\n// ---------------------\n\nsubgraph construct_1 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.481852213541667,\nfontname = helvetica,\nfixedsize = true\n]\n\"topo_1\" [label = \"topo_1\", shape = box]\n\"topo_2\" [label = \"topo_2\", shape = box]\n\"topo_3\" [label = \"topo_3\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"topo_1\" -> {\"TOPO\"}[weight = 1000, label = < 𝜆 = 0.901*** >, penwidth = 3.203, style = solid, color = dimgrey]\n\"topo_2\" -> {\"TOPO\"}[weight = 1000, label = < 𝜆 = 0.955*** >, penwidth = 3.365, style = solid, color = dimgrey]\n\"topo_3\" -> {\"TOPO\"}[weight = 1000, label = < 𝜆 = 0.871*** >, penwidth = 3.113, style = solid, color = dimgrey]\n\n}\nsubgraph construct_2 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.481852213541667,\nfontname = helvetica,\nfixedsize = true\n]\n\"landcover_1\" [label = \"landcover_1\", shape = box]\n\"landcover_2\" [label = \"landcover_2\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"landcover_1\" -> {\"LANDCOVER\"}[weight = 1000, label = < 𝜆 = 0.918*** >, penwidth = 3.254, style = solid, color = dimgrey]\n\"landcover_2\" -> {\"LANDCOVER\"}[weight = 1000, label = < 𝜆 = 0.884*** >, penwidth = 3.152, style = solid, color = dimgrey]\n\n}\nsubgraph construct_3 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.481852213541667,\nfontname = helvetica,\nfixedsize = true\n]\n\"hydro_1\" [label = \"hydro_1\", shape = box]\n\"hydro_2\" [label = \"hydro_2\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"hydro_1\" -> {\"HYDRO\"}[weight = 1000, label = < 𝜆 = 0.957*** >, penwidth = 3.371, style = solid, color = dimgrey]\n\"hydro_2\" -> {\"HYDRO\"}[weight = 1000, label = < 𝜆 = 0.955*** >, penwidth = 3.365, style = solid, color = dimgrey]\n\n}\nsubgraph construct_4 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.481852213541667,\nfontname = helvetica,\nfixedsize = true\n]\n\"Cfix_ions_1\" [label = \"Cfix_ions_1\", shape = box]\n\"Cfix_ions_2\" [label = \"Cfix_ions_2\", shape = box]\n\"Cfix_ions_3\" [label = \"Cfix_ions_3\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"Cfix_ions_1\" -> {\"F_IONS\"}[weight = 1000, label = < 𝜆 = 0.926*** >, penwidth = 3.278, style = solid, color = dimgrey]\n\"Cfix_ions_2\" -> {\"F_IONS\"}[weight = 1000, label = < 𝜆 = 0.892*** >, penwidth = 3.176, style = solid, color = dimgrey]\n\"Cfix_ions_3\" -> {\"F_IONS\"}[weight = 1000, label = < 𝜆 = 0.732*** >, penwidth = 2.696, style = solid, color = dimgrey]\n\n}\nsubgraph construct_5 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.481852213541667,\nfontname = helvetica,\nfixedsize = true\n]\n\"Cgen_nutr_1\" [label = \"Cgen_nutr_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"Cgen_nutr_1\" -> {\"NUTRIENT\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_6 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.481852213541667,\nfontname = helvetica,\nfixedsize = true\n]\n\"humic_1\" [label = \"humic_1\", shape = box]\n\"humic_2\" [label = \"humic_2\", shape = box]\n\"humic_3\" [label = \"humic_3\", shape = box]\n\"humic_4\" [label = \"humic_4\", shape = box]\n\"humic_5\" [label = \"humic_5\", shape = box]\n\"humic_6\" [label = \"humic_6\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = normal\narrowtail = none\n]\n\"HUMIC\" -> {\"humic_1\"}[weight = 1000, label = < 𝜆 = 0.892*** >, penwidth = 3.176, style = solid, color = dimgrey]\n\"HUMIC\" -> {\"humic_2\"}[weight = 1000, label = < 𝜆 = 0.867*** >, penwidth = 3.101, style = solid, color = dimgrey]\n\"HUMIC\" -> {\"humic_3\"}[weight = 1000, label = < 𝜆 = 0.894*** >, penwidth = 3.182, style = solid, color = dimgrey]\n\"HUMIC\" -> {\"humic_4\"}[weight = 1000, label = < 𝜆 = 0.714*** >, penwidth = 2.642, style = solid, color = dimgrey]\n\"HUMIC\" -> {\"humic_5\"}[weight = 1000, label = < 𝜆 = 0.875*** >, penwidth = 3.125, style = solid, color = dimgrey]\n\"HUMIC\" -> {\"humic_6\"}[weight = 1000, label = < 𝜆 = -0.709*** >, penwidth = 2.627, style = dashed, color = dimgrey]\n\n}\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+
+</div>
+</div>
+<!-- </div> -->
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="model-5-humic-early-season---streams.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="best-performing-pls-sem-fef-models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/lekokremer/FEF_PLS_SEM/edit/main/07_PLS_SEM_iterations_humic.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/lekokremer/FEF_PLS_SEM/blob/main/07_PLS_SEM_iterations_humic.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection",
+"depth": 1
+},
+"toolbar": {
+"position": "static"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
