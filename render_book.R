@@ -8,7 +8,7 @@ library(bookdown)
 render_book("index.Rmd")
 
 # To update bookdown link, go to terminal and navigate to 
-#.../models_analysis/PLS_SEM/PLS_SEM_bookdown/_book
+#.../models_analysis/PLS_SEM/PLS_SEM_bookdown
 # git add .
 # git commit -m 'dateAMPM'
 # git push origin main

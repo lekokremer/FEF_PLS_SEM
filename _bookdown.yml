@@ -1,8 +1,11 @@
-book_filename: "PLS Data Exploration Book"  # Optional: name of the output file
-delete_merged_file: TRUE
+book_filename: "PLSbookdownproj"
+output_dir: docs
+delete_merged_file: true
+edit: https://github.com/lekokremer/FEF_PLS_SEM/edit/main/%s
+view: https://github.com/lekokremer/FEF_PLS_SEM/blob/main/%s
 language:
+  ui:
+    chapter_name: "Chapter "
   label:
     fig: "Figure "
     tab: "Table "
-rmd_files: ["index.Rmd", "02_add_precip_runoff.Rmd","03_correlations_PARAFAC_ws.Rmd", "04_BOD_results_summary.Rmd",  "05_PLS_SEM_FEF_demo.Rmd", "06_PLS_SEM_iterations_labile.Rmd", "07_PLS_SEM_iterations_humic.Rmd", "08_best_models_only.Rmd", "09_final_model_pngs.Rmd"]
-
