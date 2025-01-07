@@ -1,4 +1,4 @@
-book_filename: "PLS_rendered_book"  # Optional: name of the output file
+book_filename: "PLS Data Exploration Book"  # Optional: name of the output file
 delete_merged_file: TRUE
 language:
   label:

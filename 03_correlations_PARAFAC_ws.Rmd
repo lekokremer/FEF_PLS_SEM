@@ -96,6 +96,20 @@ merged_df <- merged_df %>%
   )
 
 ```
+<!-- Add discharge and input transormations-->
+```{r}
+# Generate a discharge column that is normalized by the area of the respective watershed.
+merged_df<- merged_df%>%
+  mutate(Qm3_s = replace_na(Qm3_s, 0.005))
+
+merged_df$discharge_m2 <- merged_df$Qm3_s/merged_df$area_m
+merged_df$Input.mm_m2 <- merged_df$Input.mm/merged_df$area_m
+merged_df$snowpack_m2 <- merged_df$snowpack_3day_avg/merged_df$area_m
+
+# Transform aspect from degrees to radians
+merged_df$aspect_mean_rad <- merged_df$aspect_mean*pi/180
+
+```
 
 <!-- Save function definitions -->
 ```{r define functions, include = FALSE}
@@ -259,7 +273,7 @@ response_vars <- merged_df %>%
   dplyr::select(relative_load_comp_1, relative_load_comp_2, relative_load_comp_3)
 
 explanatory_vars <- merged_df %>%
-  dplyr::select(doc_mg.l, na_mg.l, nh4_mg.l, K_mg.l, Mg_mg.l, Ca_mg.l,   F_mg.l, Cl_mg.l, NO3_mg.l, PO4_mg.l, SO4_mg.l, area_km, Qm3_s)
+  dplyr::select(doc_mg.l, na_mg.l, nh4_mg.l, K_mg.l, Mg_mg.l, Ca_mg.l,F_mg.l, Cl_mg.l, NO3_mg.l, PO4_mg.l, SO4_mg.l, area_km, Qm3_s)
 
 ```
 
@@ -446,14 +460,15 @@ These correlations suggest that seasonal hydrological fluxes, rather than direct
 
 Correlations among ions and topographical or landcover features suggest co-correlation rather than causation....
 
-# Spearman's correlation figure for POSTER
+### Spearman's correlation figure for AGU poster 2024
 
-```{r}
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=10, fig.height=6, fig.cap = "Figure. Correlations of the relationships between potential response variables (e.g., DOM characteristics from EEMs and PARAFAC analysis) and predictor variables (hydrological, topographical, landcover or chemical characteristics of each watersample subcatchment) for all samples with EEMs data (July 2021- Oct 1, 2022). Color indicates direction and correlation value (Pearson's). Asterisks indicate level of significance."}
+
 correlation_df <- merged_df %>%
-  dplyr::select(relative_load_comp_1, relative_load_comp_2, relative_load_comp_3, peak_A_250.450, peak_C_350.450, peak_T_275.340, Fluorescence_Index, SUVA254,  peak_ratioAT, peak_ratioCA, peak_ratioCT, ndvi_raster_mean, percent_Beetle.kill, percent_cut.regenerating, percent_Tundra, Qm3_s, twi_mean, slope_mean, distance.to.outlet, doc_mg.l, NO3_mg.l)
+  dplyr::select(relative_load_comp_1, relative_load_comp_2, relative_load_comp_3, peak_A_250.450, peak_C_350.450, peak_T_275.340, Fluorescence_Index, SUVA254,  peak_ratioAT, peak_ratioCA, peak_ratioCT, ndvi_raster_mean, percent_Beetle.kill, percent_cut.regenerating, percent_Tundra, percent_Old.Forest, Qm3_s, twi_mean, slope_mean, distance.to.outlet, doc_mg.l, NO3_mg.l)
 
 # Assuming you have a data frame called 'data' with the relevant variables
-variables <- colnames(correlation_df)[12:21]  # Adjust indices as needed for your data
+variables <- colnames(correlation_df)[12:22]  # Adjust indices as needed for your data
 responses <- colnames(correlation_df)[1:11]
 
 # Initialize empty matrices for correlation coefficients and p-values
@@ -497,7 +512,7 @@ plot_data <- cor_data %>%
   )
 
 # Filter out redundant correlations (keep upper triangle)
-plot_data <- plot_data %>% filter(as.numeric(Var1) < as.numeric(Var2))
+#plot_data <- plot_data %>% filter(as.numeric(Var1) < as.numeric(Var2))
 
 # Plot
 p <- ggplot(plot_data, aes(x = Var1, y = Var2)) +
@@ -518,6 +533,83 @@ p <- ggplot(plot_data, aes(x = Var1, y = Var2)) +
 
 # Export to PNG
 ggsave("correlationplot_PLSvariables_spearman.png", plot = p, width = 8, height = 6, dpi = 300)
+
+print(p)
+```
+
+
+### Spearman's correlation figure for POSTER2
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=10, fig.height=6}
+correlation_df <- merged_df %>%
+  dplyr::select(relative_load_comp_1, relative_load_comp_2, relative_load_comp_3,  Fluorescence_Index, SUVA254, percent_Beetle.kill, percent_cut.regenerating, percent_Tundra, percent_Old.Forest, discharge_m2, twi_mean, aspect_mean_rad, disttostreams_mean, NO3_mg.l)
+
+# Assuming you have a data frame called 'data' with the relevant variables
+variables <- colnames(correlation_df)[6:14]  # Adjust indices as needed for your data
+responses <- colnames(correlation_df)[1:5]
+
+# Initialize empty matrices for correlation coefficients and p-values
+cor_matrix <- matrix(NA, nrow = length(responses), ncol = length(variables))
+p_matrix <- matrix(NA, nrow = length(responses), ncol = length(variables))
+
+# Loop through combinations to calculate Spearman correlations
+for (i in seq_along(responses)) {
+  for (j in seq_along(variables)) {
+    test <- cor.test(
+      correlation_df[[responses[i]]], correlation_df[[variables[j]]],
+      method = "spearman"
+    )
+    cor_matrix[i, j] <- test$estimate
+    p_matrix[i, j] <- test$p.value
+  }
+}
+
+# Add row and column names
+rownames(cor_matrix) <- responses
+colnames(cor_matrix) <- variables
+rownames(p_matrix) <- responses
+colnames(p_matrix) <- variables
+
+# Convert matrices to long format
+cor_data <- as.data.frame(as.table(cor_matrix))
+p_data <- as.data.frame(as.table(p_matrix))
+
+# Merge correlation coefficients with p-values
+plot_data <- cor_data %>%
+  rename(Correlation = Freq) %>%
+  left_join(p_data, by = c("Var1", "Var2")) %>%
+  rename(P_value = Freq) %>%
+  mutate(
+    Significance = case_when(
+      P_value <= 0.001 ~ "***",
+      P_value <= 0.01 ~ "**",
+      P_value <= 0.05 ~ "*",
+      TRUE ~ ""
+    )
+  )
+
+# Filter out redundant correlations (keep upper triangle)
+#plot_data <- plot_data %>% filter(as.numeric(Var1) < as.numeric(Var2))
+
+# Plot
+p <- ggplot(plot_data, aes(x = Var1, y = Var2)) +
+  geom_point(aes(size = abs(Correlation), color = Correlation)) +
+  geom_text(aes(label = Significance), vjust = 0.7, size = 5) +
+  scale_color_gradient2(
+    low = "navyblue", mid = "white", high = "darkred", midpoint = 0,
+    limits = c(-1, 1)
+  ) +
+  scale_size(range = c(5, 20)) +
+  theme_minimal() +
+  labs(
+    x = NULL, y = NULL,
+    size = "Correlation\n(abs)",
+    color = "Correlation"
+  ) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+# Export to PNG
+ggsave("correlationplot_PLSvariablesonly_spearman.png", plot = p, width = 8, height = 6, dpi = 300)
 
 print(p)
 ```
@@ -668,10 +760,14 @@ fchydrograph <- read.csv(file_path) %>%
 
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=10, fig.height=8, fig.cap = "Figure. relative loadings over time from Fool Creek outlet stream site only. Component 1 (humic) appears to increase with discharge while the fraction of Component 2 (humic) and Component 3 (protein-like) decrease during peak flow"}
+
 # Filter and dplyr::select the columns of interest, including date and reachposition
 plot_df <- merged_df %>%
   filter(position == 'stream' & reach == 'fc1') %>%
-  dplyr::select(datetime, relative_load_comp_1, relative_load_comp_2, relative_load_comp_3)
+  dplyr::select(datetime, relative_load_comp_1, relative_load_comp_2, relative_load_comp_3, NO3_mg.l)
+
+plot_df <-plot_df %>%
+  drop_na(relative_load_comp_1, relative_load_comp_2, relative_load_comp_3, NO3_mg.l)
 
 # Reshape data into long format for ggplot
 plot_data_long <- plot_df %>%
@@ -705,6 +801,541 @@ gg <- ggplot() +
 print(gg)
 
 ```
+
+### Hydrograph - Fool Creek with NO3
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+# Filter and dplyr::select the columns of interest, including date and reachposition
+plot_df <- merged_df %>%
+  filter(position == 'stream' & reach == 'fc1') %>%
+  dplyr::select(datetime, NO3_mg.l)
+
+plot_df <-plot_df %>%
+  drop_na( NO3_mg.l)
+
+# Reshape data into long format for ggplot
+plot_data_long <- plot_df %>%
+  pivot_longer(cols = -c(datetime), names_to = "variable", values_to = "value")
+
+gg <- ggplot() +
+  # Add points for the components, with specific styling for NO3_mg.l
+  geom_point(
+    data = plot_data_long,
+    aes(
+      x = datetime, 
+      y = value, 
+      color = variable,
+      
+      size = ifelse(variable == "NO3_mg.l", 2.5, 1.5) # Larger size for NO3
+    )
+  ) +
+  # Add lines for the components
+  geom_line(data = plot_data_long, aes(x = datetime, y = value, color = variable)) +
+  
+  # Add the hydrograph as a line in the background
+  geom_line(
+    data = fchydrograph, 
+    aes(
+      x = TMSTAMP, 
+      y = Q..cfs. / max(Q..cfs.) * max(plot_data_long$value)
+    ), 
+    color = "blue", 
+    linetype = "solid", 
+    alpha = 0.5
+  ) +
+  
+  # Add secondary y-axis for the hydrograph
+  scale_y_continuous(
+    name = "Concentration",
+    sec.axis = sec_axis(~ . * max(fchydrograph$Q..cfs.) / max(plot_data_long$value), name = "Discharge (cfs)")
+  ) +
+  
+  # Customize shape scale (optional, but makes the legend more descriptive)
+  scale_shape_manual(values = c("NO3" = 17, "Other" = 16)) + # Change shapes for NO3 and others
+  scale_size_identity() + # Directly map sizes without scaling
+  
+  # Styling
+  theme_minimal() +
+  labs(
+    x = "Date", 
+    y = "Concentration/Load", 
+    title = "Time Series of DOC and NH3 in FC1 with Fool Creek Outlet Hydrograph"
+  ) +
+  theme(
+    #legend.position = "none",  # Remove the legend
+    strip.text = element_text(size = 10)  # Adjust labels size
+  )
+
+# Display the plot
+print(gg)
+
+```
+
+### Hydrograph - Lexen Creek fractions with hydrograph
+```{r, echo=FALSE}
+file_path <- "datafiles/LEXw_2022.csv"
+lxhydrograph <- read.csv(file_path) %>%
+  mutate(TMSTAMP = mdy_hm(TIMESTAMP))
+```
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=10, fig.height=8, fig.cap = "Figure. relative loadings over time from Lexen Creek outlet stream site only. Component 1 (humic) appears to increase with discharge while the fraction of Component 2 (humic) and Component 3 (protein-like) decrease during peak flow"}
+
+# Filter and dplyr::select the columns of interest, including date and reachposition
+plot_df <- merged_df %>%
+  filter(position == 'stream' & reach == 'lexen1') %>%
+  dplyr::select(datetime, relative_load_comp_1, relative_load_comp_2, relative_load_comp_3, NO3_mg.l)
+
+plot_df <-plot_df %>%
+  drop_na(relative_load_comp_1, relative_load_comp_2, relative_load_comp_3, NO3_mg.l)
+
+# Reshape data into long format for ggplot
+plot_data_long <- plot_df %>%
+  pivot_longer(cols = -c(datetime), names_to = "variable", values_to = "value")
+
+# Generate the combined time series plot with points for the components and a hydrograph line
+gg <- ggplot() +
+  # Add points for the components, with different colors
+  geom_point(data = plot_data_long, aes(x = datetime, y = value, color = variable), size = 1.5) +
+  geom_line(data = plot_data_long, aes(x = datetime, y = value, color = variable))+
+  
+  # Add the hydrograph as a line in the background
+  geom_line(data = lxhydrograph, aes(x = TMSTAMP, y = Q..cfs. / max(Q..cfs.) * max(plot_data_long$value)), 
+            color = "blue", linetype = "solid", alpha = 0.5) +
+  
+  # Add secondary y-axis for the hydrograph
+  scale_y_continuous(
+    name = "Concentration/Load",
+    sec.axis = sec_axis(~ . * max(fchydrograph$Q..cfs.) / max(plot_data_long$value), name = "Discharge (cfs)")
+  ) +
+  
+  # Styling
+  theme_minimal() +
+  labs(x = "Date", y = "Concentration/Fraction", title = "Time Series of Components in Lexen1 with Lexen outlet Hydrograph") +
+  theme(
+    legend.position = "right",  # Keep the legend for identifying the components
+    strip.text = element_text(size = 10)  # Adjust labels size
+  )
+
+# Display the plot
+print(gg)
+
+```
+
+### Hydrograph - Lexen Creek DOC with NO3
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+# Filter and dplyr::select the columns of interest, including date and reachposition
+plot_df <- merged_df %>%
+  filter(position == 'stream' & reach == 'lexen1') %>%
+  dplyr::select(datetime, doc_mg.l, NO3_mg.l)
+
+plot_df <-plot_df %>%
+  drop_na(doc_mg.l, NO3_mg.l)
+
+# Reshape data into long format for ggplot
+plot_data_long <- plot_df %>%
+  pivot_longer(cols = -c(datetime), names_to = "variable", values_to = "value")
+
+gg <- ggplot() +
+  # Add points for the components, with specific styling for NO3_mg.l
+  geom_point(
+    data = plot_data_long,
+    aes(
+      x = datetime, 
+      y = value, 
+      color = variable,
+      
+      size = ifelse(variable == "NO3_mg.l", 2.5, 1.5) # Larger size for NO3
+    )
+  ) +
+  # Add lines for the components
+  geom_line(data = plot_data_long, aes(x = datetime, y = value, color = variable)) +
+  
+  # Add the hydrograph as a line in the background
+  geom_line(
+    data = lxhydrograph, 
+    aes(
+      x = TMSTAMP, 
+      y = Q..cfs. / max(Q..cfs.) * max(plot_data_long$value)
+    ), 
+    color = "blue", 
+    linetype = "solid", 
+    alpha = 0.5
+  ) +
+  
+  # Add secondary y-axis for the hydrograph
+  scale_y_continuous(
+    name = "Concentration",
+    sec.axis = sec_axis(~ . * max(lxhydrograph$Q..cfs.) / max(plot_data_long$value), name = "Discharge (cfs)")
+  ) +
+  
+  # Customize shape scale (optional, but makes the legend more descriptive)
+  scale_shape_manual(values = c("NO3" = 17, "Other" = 16)) + # Change shapes for NO3 and others
+  scale_size_identity() + # Directly map sizes without scaling
+  
+  # Styling
+  theme_minimal() +
+  labs(
+    x = "Date", 
+    y = "Concentration/Load", 
+    title = "Time Series of DOC and NH3 in Lexen1 with Lexen Outlet Hydrograph"
+  ) +
+  theme(
+    #legend.position = "none",  # Remove the legend
+    strip.text = element_text(size = 10)  # Adjust labels size
+  )
+
+# Display the plot
+print(gg)
+
+```
+
+### Hydrograph - Deadhorse Main fractions with hydrograph
+```{r, echo=FALSE}
+file_path <- "datafiles/DHMw_2022.csv"
+dhhydrograph <- read.csv(file_path) %>%
+  mutate(TMSTAMP = mdy_hm(TIMESTAMP))
+```
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=10, fig.height=8, fig.cap = "Figure. relative loadings over time from Deadhorse outlet stream site only. Component 1 (humic) appears to increase with discharge while the fraction of Component 2 (humic) and Component 3 (protein-like) decrease during peak flow"}
+
+# Filter and dplyr::select the columns of interest, including date and reachposition
+plot_df <- merged_df %>%
+  filter(position == 'stream' & reach == 'dh1') %>%
+  dplyr::select(datetime, relative_load_comp_1, relative_load_comp_2, relative_load_comp_3, NO3_mg.l)
+
+plot_df <-plot_df %>%
+  drop_na(relative_load_comp_1, relative_load_comp_2, relative_load_comp_3, NO3_mg.l)
+
+# Reshape data into long format for ggplot
+plot_data_long <- plot_df %>%
+  pivot_longer(cols = -c(datetime), names_to = "variable", values_to = "value")
+
+# Generate the combined time series plot with points for the components and a hydrograph line
+gg <- ggplot() +
+  # Add points for the components, with different colors
+  geom_point(data = plot_data_long, aes(x = datetime, y = value, color = variable), size = 1.5) +
+  geom_line(data = plot_data_long, aes(x = datetime, y = value, color = variable))+
+  
+  # Add the hydrograph as a line in the background
+  geom_line(data = dhhydrograph, aes(x = TMSTAMP, y = Q..cfs. / max(Q..cfs.) * max(plot_data_long$value)), 
+            color = "blue", linetype = "solid", alpha = 0.5) +
+  
+  # Add secondary y-axis for the hydrograph
+  scale_y_continuous(
+    name = "Concentration/Load",
+    sec.axis = sec_axis(~ . * max(dhhydrograph$Q..cfs.) / max(plot_data_long$value), name = "Discharge (cfs)")
+  ) +
+  
+  # Styling
+  theme_minimal() +
+  labs(x = "Date", y = "Concentration/Fraction", title = "Time Series of Components in Deadhorse1 with Deadhorse outlet Hydrograph") +
+  theme(
+    legend.position = "right",  # Keep the legend for identifying the components
+    strip.text = element_text(size = 10)  # Adjust labels size
+  )
+
+# Display the plot
+print(gg)
+
+```
+
+### Hydrograph - Deadhorse Main DOC with NO3
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+# Filter and dplyr::select the columns of interest, including date and reachposition
+plot_df <- merged_df %>%
+  filter(position == 'stream' & reach == 'dhn1') %>%
+  dplyr::select(datetime, doc_mg.l, NO3_mg.l)
+
+plot_df <-plot_df %>%
+  drop_na(doc_mg.l, NO3_mg.l)
+
+# Reshape data into long format for ggplot
+plot_data_long <- plot_df %>%
+  pivot_longer(cols = -c(datetime), names_to = "variable", values_to = "value")
+
+gg <- ggplot() +
+  # Add points for the components, with specific styling for NO3_mg.l
+  geom_point(
+    data = plot_data_long,
+    aes(
+      x = datetime, 
+      y = value, 
+      color = variable,
+      
+      size = ifelse(variable == "NO3_mg.l", 2.5, 1.5) # Larger size for NO3
+    )
+  ) +
+  # Add lines for the components
+  geom_line(data = plot_data_long, aes(x = datetime, y = value, color = variable)) +
+  
+  # Add the hydrograph as a line in the background
+  geom_line(
+    data = dhhydrograph, 
+    aes(
+      x = TMSTAMP, 
+      y = Q..cfs. / max(Q..cfs.) * max(plot_data_long$value)
+    ), 
+    color = "blue", 
+    linetype = "solid", 
+    alpha = 0.5
+  ) +
+  
+  # Add secondary y-axis for the hydrograph
+  scale_y_continuous(
+    name = "Concentration",
+    sec.axis = sec_axis(~ . * max(dhhydrograph$Q..cfs.) / max(plot_data_long$value), name = "Discharge (cfs)")
+  ) +
+  
+  # Customize shape scale (optional, but makes the legend more descriptive)
+  scale_shape_manual(values = c("NO3" = 17, "Other" = 16)) + # Change shapes for NO3 and others
+  scale_size_identity() + # Directly map sizes without scaling
+  
+  # Styling
+  theme_minimal() +
+  labs(
+    x = "Date", 
+    y = "Concentration/Load", 
+    title = "Time Series of DOC and NH3 in Deadhorse1 with Deadhorse Outlet Hydrograph"
+  ) +
+  theme(
+    #legend.position = "none",  # Remove the legend
+    strip.text = element_text(size = 10)  # Adjust labels size
+  )
+
+# Display the plot
+print(gg)
+
+```
+
+hydrograph
+```{r, echo=FALSE}
+file_path <- "datafiles/DHMw_2022.csv"
+dhhydrograph <- read.csv(file_path) %>%
+  mutate(TMSTAMP = mdy_hm(TIMESTAMP))
+```
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=10, fig.height=8, fig.cap = "Figure. relative loadings over time from Deadhorse outlet stream site only. Component 1 (humic) appears to increase with discharge while the fraction of Component 2 (humic) and Component 3 (protein-like) decrease during peak flow"}
+
+# Filter and dplyr::select the columns of interest, including date and reachposition
+plot_df <- merged_df %>%
+  filter(position == 'stream' & reach == 'dh1') %>%
+  dplyr::select(datetime, relative_load_comp_1, relative_load_comp_2, relative_load_comp_3, NO3_mg.l)
+
+plot_df <-plot_df %>%
+  drop_na(relative_load_comp_1, relative_load_comp_2, relative_load_comp_3, NO3_mg.l)
+
+# Reshape data into long format for ggplot
+plot_data_long <- plot_df %>%
+  pivot_longer(cols = -c(datetime), names_to = "variable", values_to = "value")
+
+# Generate the combined time series plot with points for the components and a hydrograph line
+gg <- ggplot() +
+  # Add points for the components, with different colors
+  geom_point(data = plot_data_long, aes(x = datetime, y = value, color = variable), size = 1.5) +
+  geom_line(data = plot_data_long, aes(x = datetime, y = value, color = variable))+
+  
+  # Add the hydrograph as a line in the background
+  geom_line(data = dhhydrograph, aes(x = TMSTAMP, y = Q..cfs. / max(Q..cfs.) * max(plot_data_long$value)), 
+            color = "blue", linetype = "solid", alpha = 0.5) +
+  
+  # Add secondary y-axis for the hydrograph
+  scale_y_continuous(
+    name = "Concentration/Load",
+    sec.axis = sec_axis(~ . * max(dhhydrograph$Q..cfs.) / max(plot_data_long$value), name = "Discharge (cfs)")
+  ) +
+  
+  # Styling
+  theme_minimal() +
+  labs(x = "Date", y = "Concentration/Fraction", title = "Time Series of Components in Deadhorse1 with Deadhorse outlet Hydrograph") +
+  theme(
+    legend.position = "right",  # Keep the legend for identifying the components
+    strip.text = element_text(size = 10)  # Adjust labels size
+  )
+
+# Display the plot
+print(gg)
+
+```
+
+### Hydrograph - Deadhorse NORTH fractions with hydrograph
+```{r, echo=FALSE}
+file_path <- "datafiles/DHNw_2022.csv"
+dhhydrograph <- read.csv(file_path) %>%
+  mutate(TMSTAMP = mdy_hm(TIMESTAMP))
+```
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=10, fig.height=8, fig.cap = "Figure. relative loadings over time from Deadhorse NORTH outlet stream site only. Component 1 (humic) appears to increase with discharge while the fraction of Component 2 (humic) and Component 3 (protein-like) decrease during peak flow"}
+
+# Filter and dplyr::select the columns of interest, including date and reachposition
+plot_df <- merged_df %>%
+  filter(position == 'stream' & reach == 'dhn1') %>%
+  dplyr::select(datetime, relative_load_comp_1, relative_load_comp_2, relative_load_comp_3, NO3_mg.l)
+
+plot_df <-plot_df %>%
+  drop_na(relative_load_comp_1, relative_load_comp_2, relative_load_comp_3, NO3_mg.l)
+
+# Reshape data into long format for ggplot
+plot_data_long <- plot_df %>%
+  pivot_longer(cols = -c(datetime), names_to = "variable", values_to = "value")
+
+# Generate the combined time series plot with points for the components and a hydrograph line
+gg <- ggplot() +
+  # Add points for the components, with different colors
+  geom_point(data = plot_data_long, aes(x = datetime, y = value, color = variable), size = 1.5) +
+  geom_line(data = plot_data_long, aes(x = datetime, y = value, color = variable))+
+  
+  # Add the hydrograph as a line in the background
+  geom_line(data = dhhydrograph, aes(x = TMSTAMP, y = Q..cfs. / max(Q..cfs.) * max(plot_data_long$value)), 
+            color = "blue", linetype = "solid", alpha = 0.5) +
+  
+  # Add secondary y-axis for the hydrograph
+  scale_y_continuous(
+    name = "Concentration/Load",
+    sec.axis = sec_axis(~ . * max(dhhydrograph$Q..cfs.) / max(plot_data_long$value), name = "Discharge (cfs)")
+  ) +
+  
+  # Styling
+  theme_minimal() +
+  labs(x = "Date", y = "Concentration/Fraction", title = "Time Series of Components in Deadhorse1 with Deadhorse outlet Hydrograph") +
+  theme(
+    legend.position = "right",  # Keep the legend for identifying the components
+    strip.text = element_text(size = 10)  # Adjust labels size
+  )
+
+# Display the plot
+print(gg)
+
+```
+
+### Hydrograph - Deadhorse SOUTH DOC with NO3
+```{r, echo=FALSE}
+file_path <- "datafiles/DHSw_2022.csv"
+dhhydrograph22 <- read.csv(file_path) %>%
+  mutate(TMSTAMP = mdy_hm(TIMESTAMP))
+file_path <- "datafiles/DHSw_2021.csv"
+dhhydrograph21 <- read.csv(file_path) %>%
+  mutate(TMSTAMP = mdy_hm(TIMESTAMP))
+
+dhhydrograph<- rbind(dhhydrograph21,dhhydrograph22)
+```
+
+```{r}
+# Combine specific watersheds into one category
+plot_df <- sample_vege_fluro_topo %>%
+  mutate(
+    datetime = mdy_hm(datetime),
+    combined_watershed = case_when(
+      watershed %in% c('dh', 'dhn', 'dhs') ~ 'dh_combined',  # Combine 'dh', 'dhn', 'dhs'
+      TRUE ~ as.character(watershed)  # Keep other watersheds as they are
+    )
+  ) %>%
+  filter(position == 'stream') %>%
+  dplyr::select(datetime, NO3_mg.l, combined_watershed) %>%
+  drop_na(NO3_mg.l)
+
+# Plot NO3_mg.l by combined watershed
+gg <- ggplot(plot_df, aes(x = datetime, y = NO3_mg.l, color = combined_watershed)) +
+  # Add points for NO3_mg.l
+  geom_point(size = 2.5) +
+  # Add lines for NO3_mg.l
+  geom_line() +
+  # Add the hydrograph as a line in the background
+  geom_line(
+    data = dhhydrograph, 
+    aes(
+      x = TMSTAMP, 
+      y = Q..cfs. / max(Q..cfs., na.rm = TRUE) * max(plot_df$NO3_mg.l, na.rm = TRUE)
+    ), 
+    color = "blue", 
+    linetype = "solid", 
+    alpha = 0.5
+  ) +
+  # Add secondary y-axis for the hydrograph
+  scale_y_continuous(
+    name = "Concentration (mg/L)",
+    sec.axis = sec_axis(
+      trans = ~ . * (max(dhhydrograph$Q..cfs., na.rm = TRUE) / max(plot_df$NO3_mg.l, na.rm = TRUE)),
+      name = "Discharge (cfs)"
+    )
+  ) +
+  # Styling
+  theme_minimal() +
+  labs(
+    x = "Date", 
+    y = "NO3 Concentration (mg/L)", 
+    color = "Watershed", 
+    title = "Time Series of NO3 Concentration with Hydrograph (Combined dh, dhn, dhs)"
+  ) +
+  theme(
+    legend.position = "bottom",
+    strip.text = element_text(size = 10)
+  )
+
+# Display the plot
+print(gg)
+
+```
+
+```{r}
+# Combine specific watersheds into one category
+plot_df <- sample_vege_fluro_topo %>%
+  mutate(
+    datetime = mdy_hm(datetime),
+    combined_watershed = case_when(
+      watershed %in% c('dh', 'dhn', 'dhs') ~ 'dh_combined',  # Combine 'dh', 'dhn', 'dhs'
+      TRUE ~ as.character(watershed)  # Keep other watersheds as they are
+    )
+  ) %>%
+  filter(position == 'stream') %>%
+  dplyr::select(datetime, NO3_mg.l, combined_watershed) %>%
+  drop_na(NO3_mg.l)
+
+# Plot NO3_mg.l by combined watershed
+gg <- ggplot(plot_df, aes(x = datetime, y = NO3_mg.l, color = combined_watershed)) +
+  # Add points for NO3_mg.l
+  geom_point(size = 2.5) +
+  # Add lines for NO3_mg.l
+  geom_line() +
+  # Add the hydrograph as a line in the background
+  geom_line(
+    data = dhhydrograph, 
+    aes(
+      x = TMSTAMP, 
+      y = Q..cfs. / max(Q..cfs., na.rm = TRUE) * max(plot_df$NO3_mg.l, na.rm = TRUE)
+    ), 
+    color = "blue", 
+    linetype = "solid", 
+    alpha = 0.5
+  ) +
+  # Add secondary y-axis for the hydrograph
+  scale_y_continuous(
+    name = "Concentration (mg/L)",
+    sec.axis = sec_axis(
+      trans = ~ . * (max(dhhydrograph$Q..cfs., na.rm = TRUE) / max(plot_df$NO3_mg.l, na.rm = TRUE)),
+      name = "Discharge (cfs)"
+    )
+  ) +
+  # Styling
+  theme_minimal() +
+  labs(
+    x = "Date", 
+    y = "NO3 Concentration (mg/L)", 
+    color = "Watershed", 
+    title = "Time Series of NO3 Concentration with Hydrograph (Combined dh, dhn, dhs)"
+  ) +
+  theme(
+    legend.position = "bottom",
+    strip.text = element_text(size = 10)
+  )
+
+# Display the plot
+print(gg)
+
+```
+
 ### Data preparation for multivariate statistical analysis - dimension reduction techniques 
 So we have a lot of variables, both response and explanatory, so we'll want to reduce the dimensionality and complexity of the data by using ordination methods that find best fitting components in multi-dimensional space. To decide on a method, we need to understand the relationships among our variables to decide if and how we want to deal with collinearity. 
 
