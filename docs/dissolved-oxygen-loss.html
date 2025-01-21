@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4.2 Dissolved oxygen loss | 09_final_model_pngs</title>
-  <meta name="description" content="4.2 Dissolved oxygen loss | 09_final_model_pngs" />
+  <title>4.2 Dissolved oxygen loss | PLS Data Exploration Book</title>
+  <meta name="description" content="4.2 Dissolved oxygen loss | PLS Data Exploration Book" />
   <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="4.2 Dissolved oxygen loss | 09_final_model_pngs" />
+  <meta property="og:title" content="4.2 Dissolved oxygen loss | PLS Data Exploration Book" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4.2 Dissolved oxygen loss | 09_final_model_pngs" />
+  <meta name="twitter:title" content="4.2 Dissolved oxygen loss | PLS Data Exploration Book" />
   
   
   
@@ -23,7 +23,7 @@
 <meta name="author" content="Lauren Kremer" />
 
 
-<meta name="date" content="2024-11-19" />
+<meta name="date" content="2025-01-21" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -147,7 +147,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="1.2" data-path="usage.html"><a href="usage.html"><i class="fa fa-check"></i><b>1.2</b> Usage</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="addition-of-precipitation-and-runoff-data.html"><a href="addition-of-precipitation-and-runoff-data.html"><i class="fa fa-check"></i><b>2</b> Addition of precipitation and runoff data</a></li>
-<li class="chapter" data-level="3" data-path="correlations-plots.html"><a href="correlations-plots.html"><i class="fa fa-check"></i><b>3</b> Correlations plots:</a>
+<li class="chapter" data-level="3" data-path="relating-parafac-components-to-fef-watersheds-correlations-plots.html"><a href="relating-parafac-components-to-fef-watersheds-correlations-plots.html"><i class="fa fa-check"></i><b>3</b> Relating PARAFAC components to FEF watersheds: Correlations plots</a>
 <ul>
 <li class="chapter" data-level="3.1" data-path="parafac-results-summary-figures.html"><a href="parafac-results-summary-figures.html"><i class="fa fa-check"></i><b>3.1</b> PARAFAC results summary figures:</a></li>
 <li class="chapter" data-level="3.2" data-path="structure.html"><a href="structure.html"><i class="fa fa-check"></i><b>3.2</b> Structure:</a></li>
@@ -239,27 +239,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="8" data-path="best-performing-pls-sem-fef-models.html"><a href="best-performing-pls-sem-fef-models.html"><i class="fa fa-check"></i><b>8</b> Best performing PLS-SEM FEF models</a>
 <ul>
-<li class="chapter" data-level="8.1" data-path="model-1-high-flows---humic.html"><a href="model-1-high-flows---humic.html"><i class="fa fa-check"></i><b>8.1</b> Model 1: High flows - HUMIC</a>
+<li class="chapter" data-level="8.1" data-path="model-1-automated-high-flows---humic.html"><a href="model-1-automated-high-flows---humic.html"><i class="fa fa-check"></i><b>8.1</b> Model 1 (AUTOMATED): High flows - HUMIC</a>
 <ul>
-<li class="chapter" data-level="8.1.1" data-path="model-1-high-flows---humic.html"><a href="model-1-high-flows---humic.html#results-of-bootstrapped-pls-7"><i class="fa fa-check"></i><b>8.1.1</b> Results of bootstrapped PLS</a></li>
+<li class="chapter" data-level="8.1.1" data-path="model-1-automated-high-flows---humic.html"><a href="model-1-automated-high-flows---humic.html#initialize-model_df-with-the-same-number-of-rows-as-filtered_df"><i class="fa fa-check"></i><b>8.1.1</b> Initialize model_df with the same number of rows as filtered_df</a></li>
+<li class="chapter" data-level="8.1.2" data-path="model-1-automated-high-flows---humic.html"><a href="model-1-automated-high-flows---humic.html#run-the-function-written-in-.r-script"><i class="fa fa-check"></i><b>8.1.2</b> Run the function written in .R script</a></li>
+<li class="chapter" data-level="8.1.3" data-path="model-1-automated-high-flows---humic.html"><a href="model-1-automated-high-flows---humic.html#visualizing-all-selected-results-r2-of-doc-0.4"><i class="fa fa-check"></i><b>8.1.3</b> Visualizing all selected results (r2 of DOC &gt;0.4)</a></li>
+<li class="chapter" data-level="8.1.4" data-path="model-1-automated-high-flows---humic.html"><a href="model-1-automated-high-flows---humic.html#visualizing-specific-doc-results-r2-of-doc-0.4"><i class="fa fa-check"></i><b>8.1.4</b> Visualizing specific DOC results (r2 of DOC &gt;0.4)</a></li>
 </ul></li>
-<li class="chapter" data-level="8.2" data-path="model-2-low-flows---streams.html"><a href="model-2-low-flows---streams.html"><i class="fa fa-check"></i><b>8.2</b> Model 2: LOW FLOWS - streams</a>
+<li class="chapter" data-level="8.2" data-path="model-1-not---automated-high-flows---humic.html"><a href="model-1-not---automated-high-flows---humic.html"><i class="fa fa-check"></i><b>8.2</b> Model 1 (NOT - AUTOMATED): High flows - HUMIC</a>
 <ul>
-<li class="chapter" data-level="8.2.1" data-path="model-2-low-flows---streams.html"><a href="model-2-low-flows---streams.html#results-of-bootstrapped-pls-8"><i class="fa fa-check"></i><b>8.2.1</b> Results of bootstrapped PLS</a></li>
+<li class="chapter" data-level="8.2.1" data-path="model-1-not---automated-high-flows---humic.html"><a href="model-1-not---automated-high-flows---humic.html#results-of-bootstrapped-pls-7"><i class="fa fa-check"></i><b>8.2.1</b> Results of bootstrapped PLS</a></li>
 </ul></li>
-<li class="chapter" data-level="8.3" data-path="model-3-labile-high-flows---streams.html"><a href="model-3-labile-high-flows---streams.html"><i class="fa fa-check"></i><b>8.3</b> Model 3: LABILE high flows - streams</a>
+<li class="chapter" data-level="8.3" data-path="model-2-low-flows---streams.html"><a href="model-2-low-flows---streams.html"><i class="fa fa-check"></i><b>8.3</b> Model 2: LOW FLOWS - streams</a>
 <ul>
-<li class="chapter" data-level="8.3.1" data-path="model-3-labile-high-flows---streams.html"><a href="model-3-labile-high-flows---streams.html#results-of-bootstrapped-pls-9"><i class="fa fa-check"></i><b>8.3.1</b> Results of bootstrapped PLS</a></li>
+<li class="chapter" data-level="8.3.1" data-path="model-2-low-flows---streams.html"><a href="model-2-low-flows---streams.html#results-of-bootstrapped-pls-8"><i class="fa fa-check"></i><b>8.3.1</b> Results of bootstrapped PLS</a></li>
 </ul></li>
-<li class="chapter" data-level="8.4" data-path="model-4-labile-low-flows---streams.html"><a href="model-4-labile-low-flows---streams.html"><i class="fa fa-check"></i><b>8.4</b> Model 4: LABILE LOW FLOWS - streams</a>
+<li class="chapter" data-level="8.4" data-path="model-3-labile-high-flows---streams.html"><a href="model-3-labile-high-flows---streams.html"><i class="fa fa-check"></i><b>8.4</b> Model 3: LABILE high flows - streams</a>
 <ul>
-<li class="chapter" data-level="8.4.1" data-path="model-4-labile-low-flows---streams.html"><a href="model-4-labile-low-flows---streams.html#results-of-bootstrapped-pls-10"><i class="fa fa-check"></i><b>8.4.1</b> Results of bootstrapped PLS</a></li>
+<li class="chapter" data-level="8.4.1" data-path="model-3-labile-high-flows---streams.html"><a href="model-3-labile-high-flows---streams.html#results-of-bootstrapped-pls-9"><i class="fa fa-check"></i><b>8.4.1</b> Results of bootstrapped PLS</a></li>
 </ul></li>
-</ul></li>
-<li class="chapter" data-level="9" data-path="viewing-reconstructed-best-fitting-models.html"><a href="viewing-reconstructed-best-fitting-models.html"><i class="fa fa-check"></i><b>9</b> Viewing reconstructed ‘best fitting’ models</a>
+<li class="chapter" data-level="8.5" data-path="model-4-labile-low-flows---streams.html"><a href="model-4-labile-low-flows---streams.html"><i class="fa fa-check"></i><b>8.5</b> Model 4: LABILE LOW FLOWS - streams</a>
 <ul>
-<li class="chapter" data-level="9.1" data-path="model-1.html"><a href="model-1.html"><i class="fa fa-check"></i><b>9.1</b> Model 1:</a></li>
-<li class="chapter" data-level="9.2" data-path="model-2.html"><a href="model-2.html"><i class="fa fa-check"></i><b>9.2</b> Model 2:</a></li>
+<li class="chapter" data-level="8.5.1" data-path="model-4-labile-low-flows---streams.html"><a href="model-4-labile-low-flows---streams.html#results-of-bootstrapped-pls-10"><i class="fa fa-check"></i><b>8.5.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="final-model-pngs.html"><a href="final-model-pngs.html"><i class="fa fa-check"></i><b>9</b> Final model pngs</a></li>
+<li class="chapter" data-level="10" data-path="viewing-reconstructed-best-fitting-models.html"><a href="viewing-reconstructed-best-fitting-models.html"><i class="fa fa-check"></i><b>10</b> Viewing reconstructed ‘best fitting’ models</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="model-1.html"><a href="model-1.html"><i class="fa fa-check"></i><b>10.1</b> Model 1:</a></li>
+<li class="chapter" data-level="10.2" data-path="model-2.html"><a href="model-2.html"><i class="fa fa-check"></i><b>10.2</b> Model 2:</a></li>
 </ul></li>
 </ul>
 
@@ -270,7 +278,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">09_final_model_pngs</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">PLS Data Exploration Book</a>
           </h1>
         </div>
 

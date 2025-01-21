@@ -1,15 +1,4 @@
----
-title: "Relating PARAFAC components to FEF watershed characteristics"
-author: "Lauren Kremer"
-date: "2024-09-25"
-output: 
-  html_document:
-    toc: true
-    toc_float: true
-    toc_depth: 1  # optional: controls depth of headings to include in TOC
----
-
-# Correlations plots:
+# Relating PARAFAC components to FEF watersheds: Correlations plots
 This script is an exploratory data visualization and testing multivariate procedures using the results of the 3-component PARAFAC model as response variables. 
 
 <u>PARAFAC methods:</u> The corrected Excitation-emission matrix (EEM) were merged into a three-dimensional matrix and analyzed via the multivariate data analysis technique parallel factor analysis (PARAFAC) (Murphy et al. 2013). PARAFAC is a statistical tool used to decompose trilinear data arrays to identify and quantify independent underlying signals or ’components’ (Bro, 1997). 
@@ -238,8 +227,6 @@ print(plot)
 ### Spearman's
 While Pearson's correlation assumes linear relationships and normal distributions among variables, and Spearman assumptions are that data is monotonic (distribution consistently increases or decreases), most of our data for both response and explanatory variables are skewed or bimodal but uni-directional. 
 
-
-
 ```{r, echo = FALSE}
 # We can only use numeric columns for this correlation matrix, so let's first split response and predictor variables into separate matrices, and then make sure all columns are numeric:
 
@@ -380,7 +367,7 @@ corrplot(Mp$r[1:3, 4:14],
 This figure indicates that: <br>
 - The **humic** fraction of the fluorescing DOM **decreases** with high percentages of tundra, and short canopy. <br>
 - The humic fraction **increases** with increasing watershed coverage with forest canopy between 6 and 10m, and increasing landcover classified as cut or regenerating. <br>
-- There are low but significant correlations between humic fractions and % catchment coverage by beetle-kill, meadows and old forest. Humic fractions increase slightly with % Beetle Kill and decrease with increased with increased meadow or old forest coverage.  <br>
+- There are low but significant correlations between humic fractions and % catchment coverage by beetle-kill, meadows and old forest. Humic fractions increase slightly with % Beetle Kill and decrease with increased meadow or old forest coverage.  <br>
 - **Protein-like** fractions of the fluorescing DOM **decrease** with high percentages of cut or regenerating forest, and canopy between 6 and 10m, <br>
 - but **increase** with increased coverage by short canopy (<5m) and Tundra.<br>
 - Significant but weaker correlations indicate that protein-like fractions increase with increasing meadow and old forest coverage. 

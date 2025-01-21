@@ -3,6 +3,7 @@ title: "PLS Data Exploration Book"
 author: "Lauren Kremer"
 date: "`r Sys.Date()`"
 output: bookdown::html_book
+site: bookdown::bookdown_site
 ---
 
 # Introduction

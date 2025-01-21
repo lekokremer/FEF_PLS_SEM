@@ -1,10 +1,3 @@
----
-title: "PLS_SEM_FEF_alongside_demo"
-author: "Lauren Kremer"
-date: "2024-10-27"
-output: html_document
----
-
 # Demo: Partial least squares – Structural Equation Modeling (PLS-SEM)
 
 *‘PLS-SEM is capable of estimating very complex models. For example, if theoretical or conceptual assumptions support large models and sufficient data are available (i.e., meeting minimum sample size requirements), PLS-SEM can handle models of almost any size, including those with dozens of constructs and hundreds of indicator variables. As noted by Wold (1985), PLS-SEM is virtually without competition when path models with latent variables are complex in their structural relationships.’* – From Hair et al. 2021, An Introduction to SEM, pg 21<br>
@@ -82,7 +75,6 @@ pkgTest <- function(x)
 neededPackages <- c('seminr', 'tidyr', 'dplyr', 'lubridate', 'ggplot2')
 
 for (package in neededPackages){pkgTest(package)}
-
 ```
 
 
@@ -107,7 +99,6 @@ file <- normalizePath(file.path(getwd(), "/datafiles/fluoro_vege_manually_correc
 # Read the CSV file
 sample_vege_fluro_topo <- read.csv(file) %>%
   dplyr::select(- c(shapefile_x, shapefile_y, shapefile, date))
-
 ```
 
 ```{r merge_dataframes, include=FALSE}
@@ -141,7 +132,6 @@ filtered_df <- merged_df %>%
   #filter(datetime >= as.POSIXct('2022-06-10 00:10') & datetime <= as.POSIXct('2022-09-15 23:00'))
 
 filtered_df$log_discharge_m2 <- log10(filtered_df$discharge_m2)  # Adjust constant as needed
-
 ```
 
 ## Data managment / transformation
@@ -166,7 +156,6 @@ measurements should be on a metric scale, ratio or interval scale. Could also be
 **3. Missing data:**
 All missing values need to be treated or removed. 
 if less than 5% of values are missing per indicator, mean replacement or nearest neighbor will likely be used, depending on the nature of the missing data. We don’t have many of these. 
-
 
 ```{r create_model_df_demo, include=FALSE}
 # Initialize model_df with the same number of rows as filtered_df
@@ -395,5 +384,8 @@ So, in this current configuration, the standardized path coefficients between TO
 
 
 
+```{r}
+
+```
 
 

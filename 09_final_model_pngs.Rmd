@@ -1,9 +1,4 @@
----
-title: "09_final_model_pngs"
-author: "Lauren Kremer"
-date: "2024-11-19"
-output: html_document
----
+# Final model pngs
 
 ```{r, include=FALSE}
 # pkgTest is a helper function to load packages and install packages only when they are not installed yet.
