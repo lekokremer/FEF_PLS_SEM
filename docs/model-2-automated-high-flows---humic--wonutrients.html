@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 10 Model 2 (AUTOMATED): High flows - HUMIC -WO/NUTRIENTS | PLS Data Exploration Book</title>
+  <meta name="description" content="Chapter 10 Model 2 (AUTOMATED): High flows - HUMIC -WO/NUTRIENTS | PLS Data Exploration Book" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 10 Model 2 (AUTOMATED): High flows - HUMIC -WO/NUTRIENTS | PLS Data Exploration Book" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 10 Model 2 (AUTOMATED): High flows - HUMIC -WO/NUTRIENTS | PLS Data Exploration Book" />
+  
+  
+  
+
+<meta name="author" content="Lauren Kremer" />
+
+
+<meta name="date" content="2025-01-21" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="model-1-automated-high-flows---humic--wnutrients.html"/>
+<link rel="next" href="model-1-not---automated-high-flows---humic.html"/>
+<script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="assets/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="assets/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="assets/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="assets/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="assets/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="assets/viz-1.8.2/viz.js"></script>
+<link href="assets/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="assets/grViz-binding-1.0.11/grViz.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="about.html"><a href="about.html"><i class="fa fa-check"></i><b>1.1</b> About</a></li>
+<li class="chapter" data-level="1.2" data-path="usage.html"><a href="usage.html"><i class="fa fa-check"></i><b>1.2</b> Usage</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="addition-of-precipitation-and-runoff-data.html"><a href="addition-of-precipitation-and-runoff-data.html"><i class="fa fa-check"></i><b>2</b> Addition of precipitation and runoff data</a></li>
+<li class="chapter" data-level="3" data-path="relating-parafac-components-to-fef-watersheds-correlations-plots.html"><a href="relating-parafac-components-to-fef-watersheds-correlations-plots.html"><i class="fa fa-check"></i><b>3</b> Relating PARAFAC components to FEF watersheds: Correlations plots</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="parafac-results-summary-figures.html"><a href="parafac-results-summary-figures.html"><i class="fa fa-check"></i><b>3.1</b> PARAFAC results summary figures:</a></li>
+<li class="chapter" data-level="3.2" data-path="structure.html"><a href="structure.html"><i class="fa fa-check"></i><b>3.2</b> Structure:</a></li>
+<li class="chapter" data-level="3.3" data-path="relative-loadings.html"><a href="relative-loadings.html"><i class="fa fa-check"></i><b>3.3</b> 1. Relative loadings</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="relative-loadings.html"><a href="relative-loadings.html#box-plots---relative-loadings"><i class="fa fa-check"></i><b>3.3.1</b> Box plots - Relative loadings</a></li>
+<li class="chapter" data-level="3.3.2" data-path="relative-loadings.html"><a href="relative-loadings.html#spearmans"><i class="fa fa-check"></i><b>3.3.2</b> Spearman’s</a></li>
+<li class="chapter" data-level="3.3.3" data-path="relative-loadings.html"><a href="relative-loadings.html#pearson-correlation-matrices-scaled-data---relative-loadings"><i class="fa fa-check"></i><b>3.3.3</b> Pearson correlation matrices (scaled data) - Relative loadings</a></li>
+<li class="chapter" data-level="3.3.4" data-path="relative-loadings.html"><a href="relative-loadings.html#spearmans-correlation-figure-for-agu-poster-2024"><i class="fa fa-check"></i><b>3.3.4</b> Spearman’s correlation figure for AGU poster 2024</a></li>
+<li class="chapter" data-level="3.3.5" data-path="relative-loadings.html"><a href="relative-loadings.html#spearmans-correlation-figure-for-poster2"><i class="fa fa-check"></i><b>3.3.5</b> Spearman’s correlation figure for POSTER2</a></li>
+<li class="chapter" data-level="3.3.6" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---fool-creek-fractions-with-hydrograph"><i class="fa fa-check"></i><b>3.3.6</b> Hydrograph - Fool Creek fractions with hydrograph</a></li>
+<li class="chapter" data-level="3.3.7" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---fool-creek-with-no3"><i class="fa fa-check"></i><b>3.3.7</b> Hydrograph - Fool Creek with NO3</a></li>
+<li class="chapter" data-level="3.3.8" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---lexen-creek-fractions-with-hydrograph"><i class="fa fa-check"></i><b>3.3.8</b> Hydrograph - Lexen Creek fractions with hydrograph</a></li>
+<li class="chapter" data-level="3.3.9" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---lexen-creek-doc-with-no3"><i class="fa fa-check"></i><b>3.3.9</b> Hydrograph - Lexen Creek DOC with NO3</a></li>
+<li class="chapter" data-level="3.3.10" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---deadhorse-main-fractions-with-hydrograph"><i class="fa fa-check"></i><b>3.3.10</b> Hydrograph - Deadhorse Main fractions with hydrograph</a></li>
+<li class="chapter" data-level="3.3.11" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---deadhorse-main-doc-with-no3"><i class="fa fa-check"></i><b>3.3.11</b> Hydrograph - Deadhorse Main DOC with NO3</a></li>
+<li class="chapter" data-level="3.3.12" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---deadhorse-north-fractions-with-hydrograph"><i class="fa fa-check"></i><b>3.3.12</b> Hydrograph - Deadhorse NORTH fractions with hydrograph</a></li>
+<li class="chapter" data-level="3.3.13" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---deadhorse-south-doc-with-no3"><i class="fa fa-check"></i><b>3.3.13</b> Hydrograph - Deadhorse SOUTH DOC with NO3</a></li>
+<li class="chapter" data-level="3.3.14" data-path="relative-loadings.html"><a href="relative-loadings.html#data-preparation-for-multivariate-statistical-analysis---dimension-reduction-techniques"><i class="fa fa-check"></i><b>3.3.14</b> Data preparation for multivariate statistical analysis - dimension reduction techniques</a></li>
+<li class="chapter" data-level="3.3.15" data-path="relative-loadings.html"><a href="relative-loadings.html#rda-redundancy-analysis"><i class="fa fa-check"></i><b>3.3.15</b> RDA (Redundancy Analysis)</a></li>
+<li class="chapter" data-level="3.3.16" data-path="relative-loadings.html"><a href="relative-loadings.html#pca---all-data"><i class="fa fa-check"></i><b>3.3.16</b> PCA - All data</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="normalized-doc.html"><a href="normalized-doc.html"><i class="fa fa-check"></i><b>3.4</b> 2. Normalized DOC</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="normalized-doc.html"><a href="normalized-doc.html#box-plots---doc-normalized-loadings"><i class="fa fa-check"></i><b>3.4.1</b> Box plots - DOC normalized loadings</a></li>
+<li class="chapter" data-level="3.4.2" data-path="normalized-doc.html"><a href="normalized-doc.html#correlation-matrices---normalized-loadings"><i class="fa fa-check"></i><b>3.4.2</b> Correlation matrices - Normalized loadings</a></li>
+<li class="chapter" data-level="3.4.3" data-path="normalized-doc.html"><a href="normalized-doc.html#hydrograph---fluorescence-intensities-in-fool-creek-with-2022-hydrograph"><i class="fa fa-check"></i><b>3.4.3</b> Hydrograph - Fluorescence intensities in Fool creek with 2022 hydrograph</a></li>
+<li class="chapter" data-level="3.4.4" data-path="normalized-doc.html"><a href="normalized-doc.html#pca"><i class="fa fa-check"></i><b>3.4.4</b> PCA</a></li>
+<li class="chapter" data-level="3.4.5" data-path="normalized-doc.html"><a href="normalized-doc.html#rda-redundancy-analysis-1"><i class="fa fa-check"></i><b>3.4.5</b> RDA (Redundancy Analysis)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="biological-oxygen-demand-assays---data-exploration.html"><a href="biological-oxygen-demand-assays---data-exploration.html"><i class="fa fa-check"></i><b>4</b> Biological Oxygen Demand assays - data exploration</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="daily-doc-loss-carbon.html"><a href="daily-doc-loss-carbon.html"><i class="fa fa-check"></i><b>4.1</b> Daily DOC loss (carbon)</a></li>
+<li class="chapter" data-level="4.2" data-path="dissolved-oxygen-loss.html"><a href="dissolved-oxygen-loss.html"><i class="fa fa-check"></i><b>4.2</b> Dissolved oxygen loss</a></li>
+<li class="chapter" data-level="4.3" data-path="explore-relationships..html"><a href="explore-relationships..html"><i class="fa fa-check"></i><b>4.3</b> Explore relationships.</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="demo-partial-least-squares-structural-equation-modeling-pls-sem.html"><a href="demo-partial-least-squares-structural-equation-modeling-pls-sem.html"><i class="fa fa-check"></i><b>5</b> Demo: Partial least squares – Structural Equation Modeling (PLS-SEM)</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="building-the-path-model.html"><a href="building-the-path-model.html"><i class="fa fa-check"></i><b>5.1</b> Building the path model</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="building-the-path-model.html"><a href="building-the-path-model.html#path-diagram-of-our-model-with-tested-indicators"><i class="fa fa-check"></i><b>5.1.1</b> Path diagram of our model with tested indicators</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="data-managment-transformation.html"><a href="data-managment-transformation.html"><i class="fa fa-check"></i><b>5.2</b> Data managment / transformation</a></li>
+<li class="chapter" data-level="5.3" data-path="reporting-initial-results-and-evaluating-the-quality-of-reflective-measurement-models.html"><a href="reporting-initial-results-and-evaluating-the-quality-of-reflective-measurement-models.html"><i class="fa fa-check"></i><b>5.3</b> Reporting initial results and evaluating the quality of reflective measurement models</a></li>
+<li class="chapter" data-level="5.4" data-path="bootstrapping-for-significance.html"><a href="bootstrapping-for-significance.html"><i class="fa fa-check"></i><b>5.4</b> Bootstrapping for significance</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="bootstrapping-for-significance.html"><a href="bootstrapping-for-significance.html#reporting-results-of-bootstrapped-pls"><i class="fa fa-check"></i><b>5.4.1</b> Reporting results of bootstrapped PLS</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="pls-sem-fef-labile-model-iterations.html"><a href="pls-sem-fef-labile-model-iterations.html"><i class="fa fa-check"></i><b>6</b> PLS-SEM FEF LABILE model iterations</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="model-1---test-all-labile-indicators.html"><a href="model-1---test-all-labile-indicators.html"><i class="fa fa-check"></i><b>6.1</b> Model 1 - test all LABILE indicators</a>
+<ul>
+<li class="chapter" data-level="6.1.1" data-path="model-1---test-all-labile-indicators.html"><a href="model-1---test-all-labile-indicators.html#results-of-bootstrapped-pls"><i class="fa fa-check"></i><b>6.1.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+<li class="chapter" data-level="6.2" data-path="model-2---remove-non-significant-indicators.html"><a href="model-2---remove-non-significant-indicators.html"><i class="fa fa-check"></i><b>6.2</b> Model 2 - remove non-significant indicators</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="model-2---remove-non-significant-indicators.html"><a href="model-2---remove-non-significant-indicators.html#results-of-bootstrapped-pls-1"><i class="fa fa-check"></i><b>6.2.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+<li class="chapter" data-level="6.3" data-path="model-3---loop-through-landcover.html"><a href="model-3---loop-through-landcover.html"><i class="fa fa-check"></i><b>6.3</b> Model 3 - loop through landcover</a>
+<ul>
+<li class="chapter" data-level="6.3.1" data-path="model-3---loop-through-landcover.html"><a href="model-3---loop-through-landcover.html#results-of-bootstrapped-pls-2"><i class="fa fa-check"></i><b>6.3.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+<li class="chapter" data-level="6.4" data-path="model-4---flow-state-model.html"><a href="model-4---flow-state-model.html"><i class="fa fa-check"></i><b>6.4</b> Model 4 - Flow state model</a></li>
+<li class="chapter" data-level="6.5" data-path="model-5-labile-early-season---streams.html"><a href="model-5-labile-early-season---streams.html"><i class="fa fa-check"></i><b>6.5</b> Model 5: LABILE early season - streams</a>
+<ul>
+<li class="chapter" data-level="6.5.1" data-path="model-5-labile-early-season---streams.html"><a href="model-5-labile-early-season---streams.html#results-of-bootstrapped-pls-3"><i class="fa fa-check"></i><b>6.5.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+<li class="chapter" data-level="6.6" data-path="model-6-labile-late-season---streams.html"><a href="model-6-labile-late-season---streams.html"><i class="fa fa-check"></i><b>6.6</b> Model 6: LABILE late season - streams</a>
+<ul>
+<li class="chapter" data-level="6.6.1" data-path="model-6-labile-late-season---streams.html"><a href="model-6-labile-late-season---streams.html#results-of-bootstrapped-pls-4"><i class="fa fa-check"></i><b>6.6.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="pls-sem-fef-humic-model-iterations.html"><a href="pls-sem-fef-humic-model-iterations.html"><i class="fa fa-check"></i><b>7</b> PLS-SEM FEF HUMIC model iterations</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="model-1---test-all-humic-indicators.html"><a href="model-1---test-all-humic-indicators.html"><i class="fa fa-check"></i><b>7.1</b> Model 1 - test all HUMIC indicators</a></li>
+<li class="chapter" data-level="7.2" data-path="model-2---remove-non-significant-indicators-1.html"><a href="model-2---remove-non-significant-indicators-1.html"><i class="fa fa-check"></i><b>7.2</b> Model 2 - remove non-significant indicators</a></li>
+<li class="chapter" data-level="7.3" data-path="model-3---loop-through-landcover-1.html"><a href="model-3---loop-through-landcover-1.html"><i class="fa fa-check"></i><b>7.3</b> Model 3 - loop through landcover</a></li>
+<li class="chapter" data-level="7.4" data-path="model-4---flow-state-model-1.html"><a href="model-4---flow-state-model-1.html"><i class="fa fa-check"></i><b>7.4</b> Model 4 - Flow state model</a></li>
+<li class="chapter" data-level="7.5" data-path="model-5-humic-early-season---streams.html"><a href="model-5-humic-early-season---streams.html"><i class="fa fa-check"></i><b>7.5</b> Model 5: HUMIC early season - streams</a>
+<ul>
+<li class="chapter" data-level="7.5.1" data-path="model-5-humic-early-season---streams.html"><a href="model-5-humic-early-season---streams.html#results-of-bootstrapped-pls-5"><i class="fa fa-check"></i><b>7.5.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+<li class="chapter" data-level="7.6" data-path="model-6-humic-late-season---streams.html"><a href="model-6-humic-late-season---streams.html"><i class="fa fa-check"></i><b>7.6</b> Model 6: HUMIC late season - streams</a>
+<ul>
+<li class="chapter" data-level="7.6.1" data-path="model-6-humic-late-season---streams.html"><a href="model-6-humic-late-season---streams.html#results-of-bootstrapped-pls-6"><i class="fa fa-check"></i><b>7.6.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="best-performing-pls-sem-fef-models.html"><a href="best-performing-pls-sem-fef-models.html"><i class="fa fa-check"></i><b>8</b> Best performing PLS-SEM FEF models</a></li>
+<li class="chapter" data-level="9" data-path="model-1-automated-high-flows---humic--wnutrients.html"><a href="model-1-automated-high-flows---humic--wnutrients.html"><i class="fa fa-check"></i><b>9</b> Model 1 (AUTOMATED): High flows - HUMIC -W/NUTRIENTS</a>
+<ul>
+<li class="chapter" data-level="9.0.1" data-path="model-1-automated-high-flows---humic--wnutrients.html"><a href="model-1-automated-high-flows---humic--wnutrients.html#initialize-model_df-with-the-same-number-of-rows-as-filtered_df"><i class="fa fa-check"></i><b>9.0.1</b> Initialize model_df with the same number of rows as filtered_df</a></li>
+<li class="chapter" data-level="9.0.2" data-path="model-1-automated-high-flows---humic--wnutrients.html"><a href="model-1-automated-high-flows---humic--wnutrients.html#run-the-function-written-in-.r-script"><i class="fa fa-check"></i><b>9.0.2</b> Run the function written in .R script</a></li>
+<li class="chapter" data-level="9.0.3" data-path="model-1-automated-high-flows---humic--wnutrients.html"><a href="model-1-automated-high-flows---humic--wnutrients.html#visualizing-all-selected-results-r2-of-doc-0.4"><i class="fa fa-check"></i><b>9.0.3</b> Visualizing all selected results (r2 of DOC &gt;0.4)</a></li>
+<li class="chapter" data-level="9.0.4" data-path="model-1-automated-high-flows---humic--wnutrients.html"><a href="model-1-automated-high-flows---humic--wnutrients.html#visualizing-specific-doc-results-r2-of-doc-0.4"><i class="fa fa-check"></i><b>9.0.4</b> Visualizing specific DOC results (r2 of DOC &gt;0.4)</a></li>
+<li class="chapter" data-level="9.0.5" data-path="model-1-automated-high-flows---humic--wnutrients.html"><a href="model-1-automated-high-flows---humic--wnutrients.html#results-of-bootstrapped-pls-7"><i class="fa fa-check"></i><b>9.0.5</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="model-2-automated-high-flows---humic--wonutrients.html"><a href="model-2-automated-high-flows---humic--wonutrients.html"><i class="fa fa-check"></i><b>10</b> Model 2 (AUTOMATED): High flows - HUMIC -WO/NUTRIENTS</a>
+<ul>
+<li class="chapter" data-level="10.0.1" data-path="model-2-automated-high-flows---humic--wonutrients.html"><a href="model-2-automated-high-flows---humic--wonutrients.html#initialize-model_df-with-the-same-number-of-rows-as-filtered_df-1"><i class="fa fa-check"></i><b>10.0.1</b> Initialize model_df with the same number of rows as filtered_df</a></li>
+<li class="chapter" data-level="10.0.2" data-path="model-2-automated-high-flows---humic--wonutrients.html"><a href="model-2-automated-high-flows---humic--wonutrients.html#run-the-function-written-in-.r-script-1"><i class="fa fa-check"></i><b>10.0.2</b> Run the function written in .R script</a></li>
+<li class="chapter" data-level="10.0.3" data-path="model-2-automated-high-flows---humic--wonutrients.html"><a href="model-2-automated-high-flows---humic--wonutrients.html#visualizing-all-selected-results-r2-of-doc-0.4-1"><i class="fa fa-check"></i><b>10.0.3</b> Visualizing all selected results (r2 of DOC &gt;0.4)</a></li>
+<li class="chapter" data-level="10.0.4" data-path="model-2-automated-high-flows---humic--wonutrients.html"><a href="model-2-automated-high-flows---humic--wonutrients.html#visualizing-specific-doc-results-r2-of-doc-0.4-1"><i class="fa fa-check"></i><b>10.0.4</b> Visualizing specific DOC results (r2 of DOC &gt;0.4)</a></li>
+<li class="chapter" data-level="10.0.5" data-path="model-2-automated-high-flows---humic--wonutrients.html"><a href="model-2-automated-high-flows---humic--wonutrients.html#results-of-bootstrapped-pls-8"><i class="fa fa-check"></i><b>10.0.5</b> Results of bootstrapped PLS</a></li>
+<li class="chapter" data-level="10.1" data-path="model-1-not---automated-high-flows---humic.html"><a href="model-1-not---automated-high-flows---humic.html"><i class="fa fa-check"></i><b>10.1</b> Model 1 (NOT - AUTOMATED): High flows - HUMIC</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="model-1-not---automated-high-flows---humic.html"><a href="model-1-not---automated-high-flows---humic.html#results-of-bootstrapped-pls-9"><i class="fa fa-check"></i><b>10.1.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="model-2-low-flows---streams.html"><a href="model-2-low-flows---streams.html"><i class="fa fa-check"></i><b>10.2</b> Model 2: LOW FLOWS - streams</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="model-2-low-flows---streams.html"><a href="model-2-low-flows---streams.html#results-of-bootstrapped-pls-10"><i class="fa fa-check"></i><b>10.2.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="model-3-labile-high-flows---streams.html"><a href="model-3-labile-high-flows---streams.html"><i class="fa fa-check"></i><b>10.3</b> Model 3: LABILE high flows - streams</a>
+<ul>
+<li class="chapter" data-level="10.3.1" data-path="model-3-labile-high-flows---streams.html"><a href="model-3-labile-high-flows---streams.html#results-of-bootstrapped-pls-11"><i class="fa fa-check"></i><b>10.3.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+<li class="chapter" data-level="10.4" data-path="model-4-labile-low-flows---streams.html"><a href="model-4-labile-low-flows---streams.html"><i class="fa fa-check"></i><b>10.4</b> Model 4: LABILE LOW FLOWS - streams</a>
+<ul>
+<li class="chapter" data-level="10.4.1" data-path="model-4-labile-low-flows---streams.html"><a href="model-4-labile-low-flows---streams.html#results-of-bootstrapped-pls-12"><i class="fa fa-check"></i><b>10.4.1</b> Results of bootstrapped PLS</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="final-model-pngs.html"><a href="final-model-pngs.html"><i class="fa fa-check"></i><b>11</b> Final model pngs</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="model-1.html"><a href="model-1.html"><i class="fa fa-check"></i><b>11.1</b> Model 1:</a></li>
+<li class="chapter" data-level="11.2" data-path="model-2.html"><a href="model-2.html"><i class="fa fa-check"></i><b>11.2</b> Model 2:</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">PLS Data Exploration Book</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="model-2-automated-high-flows---humic--wonutrients" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">Chapter 10</span> Model 2 (AUTOMATED): High flows - HUMIC -WO/NUTRIENTS<a href="model-2-automated-high-flows---humic--wonutrients.html#model-2-automated-high-flows---humic--wonutrients" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>********ADDED 21Jan2025 Automation with same filtering********</p>
+<div id="initialize-model_df-with-the-same-number-of-rows-as-filtered_df-1" class="section level3 hasAnchor" number="10.0.1">
+<h3><span class="header-section-number">10.0.1</span> Initialize model_df with the same number of rows as filtered_df<a href="model-2-automated-high-flows---humic--wonutrients.html#initialize-model_df-with-the-same-number-of-rows-as-filtered_df-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="model-2-automated-high-flows---humic--wonutrients.html#cb12-1" tabindex="-1"></a>model_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">matrix</span>(<span class="at">ncol =</span> <span class="dv">0</span>, <span class="at">nrow =</span> <span class="fu">nrow</span>(filtered_df)))</span>
+<span id="cb12-2"><a href="model-2-automated-high-flows---humic--wonutrients.html#cb12-2" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="model-2-automated-high-flows---humic--wonutrients.html#cb12-3" tabindex="-1"></a>indicators <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb12-4"><a href="model-2-automated-high-flows---humic--wonutrients.html#cb12-4" tabindex="-1"></a>  <span class="at">topo =</span> <span class="fu">c</span>( <span class="st">&quot;disttostreams_mean&quot;</span>, <span class="st">&quot;aspect_mean_rad&quot;</span>, <span class="st">&#39;twi_mean&#39;</span>, <span class="st">&#39;area_km&#39;</span>, <span class="st">&quot;elevabovestreams_mean&quot;</span>, <span class="st">&quot;elevabovestreams_median&quot;</span>,  <span class="st">&quot;aspect_mean_rad&quot;</span>),</span>
+<span id="cb12-5"><a href="model-2-automated-high-flows---humic--wonutrients.html#cb12-5" tabindex="-1"></a>  <span class="at">hydro =</span> <span class="fu">c</span>(<span class="st">&quot;snowpack_3day_avg&quot;</span>, <span class="st">&quot;discharge_m2&quot;</span>),</span>
+<span id="cb12-6"><a href="model-2-automated-high-flows---humic--wonutrients.html#cb12-6" tabindex="-1"></a>  <span class="at">landcover =</span> <span class="fu">c</span>(<span class="st">&quot;percent_Beetle.kill&quot;</span>, <span class="st">&quot;percent_Meadows&quot;</span>,<span class="st">&quot;percent_Old.Forest&quot;</span>,<span class="st">&quot;percent_cut.regenerating&quot;</span>,</span>
+<span id="cb12-7"><a href="model-2-automated-high-flows---humic--wonutrients.html#cb12-7" tabindex="-1"></a><span class="st">&quot;percent_Tundra&quot;</span> ,<span class="st">&quot;ndvi_raster_mean&quot;</span>),</span>
+<span id="cb12-8"><a href="model-2-automated-high-flows---humic--wonutrients.html#cb12-8" tabindex="-1"></a>  <span class="at">doc =</span> <span class="fu">c</span>(<span class="st">&quot;relative_load_comp_1&quot;</span>, <span class="st">&quot;relative_load_comp_2&quot;</span>, <span class="st">&quot;norm_PARAF_c1&quot;</span>, <span class="st">&quot;norm_PARAF_c2&quot;</span>, <span class="st">&quot;peak_T_275.340&quot;</span>, <span class="st">&quot;Fluorescence_Index&quot;</span>, <span class="st">&quot;SUVA254&quot;</span>, <span class="st">&quot;peak_ratioAT&quot;</span>, <span class="st">&quot;peak_ratioCT&quot;</span>)</span>
+<span id="cb12-9"><a href="model-2-automated-high-flows---humic--wonutrients.html#cb12-9" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="run-the-function-written-in-.r-script-1" class="section level3 hasAnchor" number="10.0.2">
+<h3><span class="header-section-number">10.0.2</span> Run the function written in .R script<a href="model-2-automated-high-flows---humic--wonutrients.html#run-the-function-written-in-.r-script-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>#20000 run winner:</p>
+<pre><code>##   [1] 0.5960498 0.5781862 0.4946683 0.5073509 0.5274938 0.5812477 0.4304179
+##   [8] 0.5172193 0.4481826 0.5889583 0.4483678 0.4697791 0.5313429 0.4150566
+##  [15] 0.5725151 0.4483678 0.5498373 0.4614645 0.7617627 0.6066775 0.6189840
+##  [22] 0.4348041 0.6419010 0.4210705 0.4445241 0.5960498 0.4133769 0.5884870
+##  [29] 0.8118957 0.7683306 0.4353154 0.4035916 0.5002639 0.6395029 0.7668672
+##  [36] 0.6607977 0.5434758 0.4434226 0.4843557 0.6107041 0.5034041 0.6281391
+##  [43] 0.4302269 0.4946683 0.4113815 0.8551270 0.4623542 0.6112080 0.4280079
+##  [50] 0.6434251 0.4304179 0.4052761 0.4395988 0.4667998 0.4081290 0.4034055
+##  [57] 0.4014799 0.4134498 0.4280079 0.4560534 0.4950889 0.5496528 0.4728822
+##  [64] 0.6225958 0.5099417 0.4288534 0.5897897 0.4696719 0.4742756 0.5634949
+##  [71] 0.6680073 0.5611810 0.4030306 0.5084015 0.5404873 0.5094844 0.4973578
+##  [78] 0.5821191 0.5087235 0.4879572 0.4103341 0.6665279 0.4472311 0.5601144
+##  [85] 0.5519186 0.5199758 0.5005753 0.4288534 0.5015593 0.5484549 0.5243681
+##  [92] 0.4731889 0.5274938 0.4370462 0.5584727 0.5392455 0.6599312 0.4302269
+##  [99] 0.5104700 0.5309353 0.6749773 0.5295351 0.4016462 0.5995414 0.5575719
+## [106] 0.6559687 0.6053434 0.4312735 0.4850034 0.4157738 0.4052761 0.4429924
+## [113] 0.5559416 0.7732135 0.6559096 0.8002781 0.4662357 0.4778869 0.7514147
+## [120] 0.5381907 0.5381907 0.4727634 0.4013409 0.5200706 0.7683306 0.4175694
+## [127] 0.6607977 0.5364940 0.6559096 0.4481826 0.5743729 0.4161180 0.5171680
+## [134] 0.5634949 0.4370065 0.7967366 0.5825070 0.4848305 0.4501315 0.4950889
+## [141] 0.6607348 0.5015593 0.7078626 0.5690886 0.4696719 0.6049953 0.4036022
+## [148] 0.4675643 0.6464732 0.6611193 0.4054846 0.5026198 0.6163039 0.6806806
+## [155] 0.5015593 0.5585528 0.4377819 0.4196532 0.5052838 0.6149792 0.6607348
+## [162] 0.4081290 0.4705920 0.4579935 0.4134498 0.6156760 0.5791177 0.6327888
+## [169] 0.6290591 0.4950889 0.5316101 0.5200687 0.4265387 0.5717930 0.6467165
+## [176] 0.5917508 0.5381907 0.5003356 0.4278749 0.4254962 0.4288534 0.4668574
+## [183] 0.5180522 0.6651153 0.5151432 0.6272991 0.5781571 0.6627649 0.5039755
+## [190] 0.5003123 0.5419457 0.4525551 0.6156760 0.4782044 0.4870338 0.5002639
+## [197] 0.4266951 0.5065582 0.5186466 0.4675643 0.4643545 0.4280079 0.5011396
+## [204] 0.5960498 0.4348041 0.4219904 0.6046432 0.5575719 0.5014168 0.4154309
+## [211] 0.4373406 0.5386198 0.7159678 0.4427532 0.5174505 0.4054846 0.4779198
+## [218] 0.5403475 0.5026198 0.4749815 0.4481826 0.4920954 0.5366029 0.5118657
+## [225] 0.4988978 0.4458635 0.6607348 0.5009441 0.6758571 0.5375721 0.7688702
+## [232] 0.4348041 0.4901055 0.5144186 0.4295414 0.4593213 0.5015593 0.6824461
+## [239] 0.8370766 0.6535109 0.5149194 0.4072690 0.4240129 0.5601144 0.4280079
+## [246] 0.6049228 0.5202013 0.5376060 0.7387026 0.4965597 0.6824461 0.7305329
+## [253] 0.8118957 0.4053202 0.4426308 0.4461029 0.4283640 0.4353154 0.5538964
+## [260] 0.5015593 0.6890798 0.4472311 0.5055758 0.4807171 0.4850034 0.4373406
+## [267] 0.4285093 0.6434251 0.4013409 0.4885991 0.5451841 0.4472311 0.4781844
+## [274] 0.5274938 0.4348041 0.6665279 0.4278620 0.5096405 0.4675643 0.4890759
+## [281] 0.4353588 0.4948268 0.4052761 0.6156760 0.4977756 0.6611193 0.4304179
+## [288] 0.4312735 0.4052070 0.4840989 0.5585528 0.8118957 0.8002781 0.5039755
+## [295] 0.5003356 0.5201869 0.5040086 0.4067007 0.6149792 0.5755412 0.4332969
+## [302] 0.4250937 0.5009441 0.4238916 0.4847433 0.4334248 0.4304179 0.5672802
+## [309] 0.4367890 0.6389561 0.4434226 0.6378885 0.4481826 0.4019768 0.4175694
+## [316] 0.4835171 0.4780409 0.6557947 0.5240404 0.4977638 0.8002781 0.4417007
+## [323] 0.6156760 0.5480096 0.5026232 0.7732135 0.5169683 0.4627728 0.8370766
+## [330] 0.4302269 0.4373406 0.4161180 0.8524449 0.5911776 0.5065582 0.4615892
+## [337] 0.6758571 0.5386708 0.6826427 0.5099417 0.4881768 0.4668037 0.4620389
+## [344] 0.5364940 0.8551270 0.4973578 0.5201869 0.4143928 0.4977756 0.4667998
+## [351] 0.5634949 0.5040086 0.6066775 0.4578122 0.5185461 0.4697791 0.4003295
+## [358] 0.4003295 0.5364603 0.6627649 0.5014513 0.6498990 0.6594924 0.4720413
+## [365] 0.5493929 0.4373406 0.4702814 0.5260913 0.5287223 0.4367890 0.5457806
+## [372] 0.5634766 0.4373406 0.5479244 0.4434856 0.6014249 0.4577112 0.6046432
+## [379] 0.5634949 0.4154309 0.5118657 0.4434226 0.4213716 0.5407140 0.4278749
+## [386] 0.6125549 0.4973578 0.4778869 0.4668037 0.5187127 0.5015593 0.4901055
+## [393] 0.5039755 0.4434226 0.6120571 0.4823154 0.4014164 0.5865932 0.4407645
+## [400] 0.5960498 0.5680397 0.5482557 0.4373406 0.6066775 0.6799455 0.4778869
+## [407] 0.5684218 0.4478658 0.4402574 0.6890798 0.6290591 0.5659079 0.6803833
+## [414] 0.5144576 0.5104159 0.6005469 0.5172847 0.5169683 0.6180327 0.5087235
+## [421] 0.5952360 0.4113815 0.7617627 0.5096405 0.4850034 0.5087235 0.6419010
+## [428] 0.5104700 0.4901055 0.4213716 0.4162070 0.4840989 0.4250937 0.4933108
+## [435] 0.5584331 0.8370766 0.7193986 0.6057731 0.4615892 0.6066775 0.4054846
+## [442] 0.4721041 0.5359091 0.4154309 0.4614645 0.4461029 0.4246425 0.4137512
+## [449] 0.4533870 0.4946683 0.4983362 0.4134498 0.5065582 0.5293044 0.5774554
+## [456] 0.7449066 0.4043040 0.4280079 0.5313429 0.4840989 0.5040086 0.4384642
+## [463] 0.5199758 0.4892714 0.8370766 0.5377567 0.4814352 0.4143928 0.6665279
+## [470] 0.4668037 0.4557316 0.5851905 0.6669586 0.5575719 0.7861942 0.7159678
+## [477] 0.5601144 0.5431589 0.5366029 0.5646490 0.4353154 0.5712009 0.5781571
+## [484] 0.6195895 0.6599312 0.4043040 0.4053202 0.6941667 0.6014249 0.4069778
+## [491] 0.4614645 0.4134498 0.6105855 0.6611193 0.7668672 0.5634766 0.5013550
+## [498] 0.4161180 0.6890798 0.4353154 0.7193986 0.5746671 0.8264099 0.5646490
+## [505] 0.4974606 0.4946683 0.4213716 0.4415303 0.4154309 0.5788679 0.4449659
+## [512] 0.4052761 0.4133769 0.5538964 0.4175694 0.4058360 0.4675643 0.4161180
+## [519] 0.5427298 0.6066775 0.5023566 0.4572672 0.8370766 0.5169683 0.5076631
+## [526] 0.5451841 0.4071297 0.4013409 0.6920189 0.8524449 0.8023602 0.5601144
+## [533] 0.5102021 0.5959089 0.4808752 0.5419457 0.7617627 0.5013550 0.4614645
+## [540] 0.5015593 0.4449659 0.6002490 0.7305329 0.5227309 0.5099417 0.4534002
+## [547] 0.4134498 0.5645484 0.5013550 0.6749773 0.4018398 0.5405207 0.6627649
+## [554] 0.7360495 0.5402298 0.6774767 0.6378901 0.5122585 0.6607348 0.5683631
+## [561] 0.7159678 0.4353154 0.7362197 0.4956236 0.5140021 0.4525551 0.6594924
+## [568] 0.6397683 0.4702814 0.4946683 0.6695835 0.5227309 0.4639668 0.5774554
+## [575] 0.4685960 0.4304179 0.5244785 0.5443399 0.5202013 0.4483678 0.4950889
+## [582] 0.4450938 0.5531901 0.4344464 0.4686963 0.4656691 0.4535364 0.4513779
+## [589] 0.4000088 0.4302269 0.4054846 0.6890798 0.4280079 0.5401782 0.5609474
+## [596] 0.5076631 0.4267780 0.5681108 0.4003295 0.5611688 0.8551270 0.6619228
+## [603] 0.6803833 0.4662357 0.5489015 0.5197859 0.4583059 0.6125549 0.4593213
+## [610] 0.4280079 0.4527150 0.4994451 0.5684218 0.5126196 0.6413395 0.5199758
+## [617] 0.4973578 0.4449659 0.4973578 0.5126196 0.4696427 0.6633196 0.4451781
+## [624] 0.5087235 0.4481826 0.4339329 0.4781844 0.5063598 0.5960498 0.6619228
+## [631] 0.4437783 0.4213716 0.5535633 0.5096405 0.4910310 0.5053045 0.5287356
+## [638] 0.5960498 0.5255530 0.6467165 0.5079305 0.4843557 0.4965597 0.4305884
+## [645] 0.5084015 0.4843557 0.5509000 0.6594924 0.5556609 0.4948268 0.6890798
+## [652] 0.4525551 0.4154309 0.5343260 0.5201869 0.4052070 0.5096405 0.6524429
+## [659] 0.4701724 0.5645484 0.4438204 0.4395988 0.4847433 0.6607977 0.4620389
+## [666] 0.8118957 0.4955802 0.5009441 0.4267780 0.4159359 0.5084015 0.5529807
+## [673] 0.5169683 0.4677556 0.6195895 0.5634949 0.4124776 0.7300868 0.4614645
+## [680] 0.5187648 0.4304179 0.4300268 0.4161180 0.4304192 0.5386708 0.4298877
+## [687] 0.4241102 0.4134498 0.6180594 0.4560534 0.5052838 0.4527150 0.4219904
+## [694] 0.4778869 0.4557316 0.6890798 0.5011396 0.4781844 0.5559416 0.4156572
+## [701] 0.6272991 0.4286813 0.4955802 0.4018398 0.5102543 0.4847433 0.5607058
+## [708] 0.7732135 0.8551270 0.5092572 0.7549830 0.7193986 0.4283640 0.4159694
+## [715] 0.4155924 0.6618784 0.6866309 0.6118203 0.7738082 0.6359869 0.4240361
+## [722] 0.4870338 0.5046018 0.4901055 0.5755389 0.5988765 0.4579935 0.5242963
+## [729] 0.4527150 0.6272991 0.5634766 0.4583867 0.6112968 0.5200706 0.4196532
+## [736] 0.5042770 0.4206027 0.4053202 0.4069778 0.4429924 0.5451841 0.5274938
+## [743] 0.6049953 0.6046432 0.4583059 0.6607977 0.5851905 0.4155924 0.5040086</code></pre>
+<pre><code>## [1] 0.855127</code></pre>
+<pre><code>## $topo
+## [1] &quot;aspect_mean_rad&quot;
+## 
+## $hydro
+## [1] &quot;discharge_m2&quot;
+## 
+## $landcover
+## [1] &quot;percent_Tundra&quot;     &quot;percent_Old.Forest&quot;
+## 
+## $doc
+## [1] &quot;Fluorescence_Index&quot;</code></pre>
+<p>Or we can use this to find the highest performing model where some value is specified for the ‘DOC’ response</p>
+<pre><code>## Best R^2 for DOC: 0.7387026 
+## Sampled indicators for best model:
+## $topo
+## [1] &quot;aspect_mean_rad&quot;
+## 
+## $hydro
+## [1] &quot;discharge_m2&quot;
+## 
+## $landcover
+## [1] &quot;percent_Tundra&quot;
+## 
+## $doc
+## [1] &quot;relative_load_comp_1&quot; &quot;peak_ratioCT&quot;         &quot;SUVA254&quot;</code></pre>
+<p>Best R^2 for DOC: 0.7387026
+Sampled indicators for best model:
+$topo
+[1] “aspect_mean_rad”</p>
+<p>$hydro
+[1] “discharge_m2”</p>
+<p>$landcover
+[1] “percent_Tundra”</p>
+<p>$doc
+[1] “relative_load_comp_1” “peak_ratioCT” “SUVA254”</p>
+</div>
+<div id="visualizing-all-selected-results-r2-of-doc-0.4-1" class="section level3 hasAnchor" number="10.0.3">
+<h3><span class="header-section-number">10.0.3</span> Visualizing all selected results (r2 of DOC &gt;0.4)<a href="model-2-automated-high-flows---humic--wonutrients.html#visualizing-all-selected-results-r2-of-doc-0.4-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="indicator-frequency-2" class="section level4 hasAnchor" number="10.0.3.1">
+<h4><span class="header-section-number">10.0.3.1</span> indicator frequency<a href="model-2-automated-high-flows---humic--wonutrients.html#indicator-frequency-2" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
+</div>
+<div id="r2-distribution-2" class="section level4 hasAnchor" number="10.0.3.2">
+<h4><span class="header-section-number">10.0.3.2</span> R2 distribution<a href="model-2-automated-high-flows---humic--wonutrients.html#r2-distribution-2" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+</div>
+<div id="combine-these-two-ideas-create-the-dataframe-2" class="section level4 hasAnchor" number="10.0.3.3">
+<h4><span class="header-section-number">10.0.3.3</span> Combine these two ideas: Create the dataframe<a href="model-2-automated-high-flows---humic--wonutrients.html#combine-these-two-ideas-create-the-dataframe-2" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
+</div>
+</div>
+<div id="visualizing-specific-doc-results-r2-of-doc-0.4-1" class="section level3 hasAnchor" number="10.0.4">
+<h3><span class="header-section-number">10.0.4</span> Visualizing specific DOC results (r2 of DOC &gt;0.4)<a href="model-2-automated-high-flows---humic--wonutrients.html#visualizing-specific-doc-results-r2-of-doc-0.4-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="indicator-frequency-3" class="section level4 hasAnchor" number="10.0.4.1">
+<h4><span class="header-section-number">10.0.4.1</span> indicator frequency<a href="model-2-automated-high-flows---humic--wonutrients.html#indicator-frequency-3" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-31-1.png" width="672" /></p>
+</div>
+<div id="r2-distribution-3" class="section level4 hasAnchor" number="10.0.4.2">
+<h4><span class="header-section-number">10.0.4.2</span> R2 distribution<a href="model-2-automated-high-flows---humic--wonutrients.html#r2-distribution-3" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+</div>
+<div id="combine-these-two-ideas-create-the-dataframe-3" class="section level4 hasAnchor" number="10.0.4.3">
+<h4><span class="header-section-number">10.0.4.3</span> Combine these two ideas: Create the dataframe<a href="model-2-automated-high-flows---humic--wonutrients.html#combine-these-two-ideas-create-the-dataframe-3" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<p>###Generate the 20000 model</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="model-2-automated-high-flows---humic--wonutrients.html#cb17-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)  <span class="co"># For reproducibility</span></span></code></pre></div>
+<pre><code>## [1] &quot;topo_1&quot;      &quot;hydro_1&quot;     &quot;landcover_1&quot; &quot;doc_1&quot;       &quot;nutr_1&quot;</code></pre>
+<pre><code>## Generating the seminr model</code></pre>
+<pre><code>## All 33 observations are valid.</code></pre>
+<pre><code>## 
+## Results from  package seminr (2.3.4)
+## 
+## Path Coefficients:
+##            HYDRO LANDCOVER NUTRIENT    DOC
+## R^2        0.001     0.163    0.344  0.701
+## AdjR^2    -0.066     0.136    0.300  0.670
+## TOPO      -0.029    -0.404   -0.287      .
+## LANDCOVER -0.025         .   -0.640 -1.002
+## HYDRO          .         .        .  0.208
+## NUTRIENT       .         .        . -0.506
+## 
+## Reliability:
+##           alpha  rhoC   AVE  rhoA
+## TOPO      1.000 1.000 1.000 1.000
+## LANDCOVER 1.000 1.000 1.000 1.000
+## HYDRO     1.000 1.000 1.000 1.000
+## NUTRIENT  1.000 1.000 1.000 1.000
+## DOC       1.000 1.000 1.000 1.000
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
+</div>
+</div>
+<div id="results-of-bootstrapped-pls-8" class="section level3 hasAnchor" number="10.0.5">
+<h3><span class="header-section-number">10.0.5</span> Results of bootstrapped PLS<a href="model-2-automated-high-flows---humic--wonutrients.html#results-of-bootstrapped-pls-8" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<pre><code>##                         Original Est. Bootstrap Mean Bootstrap SD T Stat. 5% CI
+## TOPO  -&gt;  LANDCOVER             0.404          0.464        0.167   2.417 0.216
+## TOPO  -&gt;  HYDRO                 0.019          0.168        0.140   0.138 0.011
+## TOPO  -&gt;  NUTRIENT              0.028          0.129        0.094   0.301 0.013
+## TOPO  -&gt;  DOC                   0.624          0.647        0.125   5.005 0.439
+## LANDCOVER  -&gt;  HYDRO            0.013          0.135        0.117   0.109 0.011
+## LANDCOVER  -&gt;  NUTRIENT         0.525          0.514        0.122   4.294 0.284
+## LANDCOVER  -&gt;  DOC              0.740          0.699        0.131   5.626 0.448
+## HYDRO  -&gt;  NUTRIENT             0.360          0.351        0.180   2.004 0.044
+## HYDRO  -&gt;  DOC                  0.039          0.119        0.098   0.393 0.007
+## NUTRIENT  -&gt;  DOC               0.095          0.188        0.133   0.717 0.017
+##                         95% CI
+## TOPO  -&gt;  LANDCOVER      0.723
+## TOPO  -&gt;  HYDRO          0.458
+## TOPO  -&gt;  NUTRIENT       0.304
+## TOPO  -&gt;  DOC            0.844
+## LANDCOVER  -&gt;  HYDRO     0.384
+## LANDCOVER  -&gt;  NUTRIENT  0.677
+## LANDCOVER  -&gt;  DOC       0.873
+## HYDRO  -&gt;  NUTRIENT      0.637
+## HYDRO  -&gt;  DOC           0.301
+## NUTRIENT  -&gt;  DOC        0.439</code></pre>
+<p>This gives us the confidence intervals of the HTMT ratio.</p>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-f30d7598595affc4f25a" style="width:768px;height:384px;"></div>
+<script type="application/json" data-for="htmlwidget-f30d7598595affc4f25a">{"x":{"diagram":"digraph G {\n\n// ----------------------\n// General graph settings\n// ----------------------\ngraph [\ncharset = \"UTF-8\",\nlayout = dot,\nlabel = \"Bootstrapped Model\nHigh flow - Humic\",\nfontsize = 24,\nfontcolor = black,\nfontname = helvetica,\nrankdir = LR,\nlabelloc = t,\nsplines = TRUE\nbgcolor = transparent\n]\n\n// --------------------\n// The structural model\n// --------------------\nsubgraph sm {\nrankdir = LR;\nnode [\nshape = ellipse,\ncolor = black,\nfillcolor = white,\nstyle = filled,\nfontsize = 12,\nfontcolor = black,\nheight = 0.919303385416667,\nwidth = 0.918636067708333,\nfontname = helvetica,\nfixedsize = true\n]\n\"TOPO\" [label=<<B>TOPO <\/B>>, shape = hexagon]\n\"LANDCOVER\" [label=<<B>LANDCOVER <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.163<\/FONT>>, shape = hexagon]\n\"HYDRO\" [label=<<B>HYDRO <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.001<\/FONT>>, shape = hexagon]\n\"NUTRIENT\" [label=<<B>NUTRIENT <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.344<\/FONT>>, shape = hexagon]\n\"DOC\" [label=<<B>DOC <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.701<\/FONT>>, shape = hexagon]\nedge [\ncolor = black,\nfontsize = 9,\nfontcolor = black,\nfontname = helvetica,\ndir = both,\narrowhead = normal,\narrowtail = none\n]\n\"TOPO\" -> {\"HYDRO\"}[weight = 1, label = < 𝛽 = -0.029<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.535, 0.277]   <\/FONT> >, penwidth = 0.645, style = dashed, color = black]\n\"TOPO\" -> {\"LANDCOVER\"}[weight = 1, label = < 𝛽 = -0.404*<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.748, -0.186]   <\/FONT> >, penwidth = 2.52, style = dashed, color = black]\n\"TOPO\" -> {\"NUTRIENT\"}[weight = 1, label = < 𝛽 = -0.287<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.843, -0.001]   <\/FONT> >, penwidth = 1.935, style = dashed, color = black]\n\"LANDCOVER\" -> {\"HYDRO\"}[weight = 1, label = < 𝛽 = -0.025<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.305, 0.418]   <\/FONT> >, penwidth = 0.625, style = dashed, color = black]\n\"LANDCOVER\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = -1.002***<BR /><FONT POINT-SIZE=\"7\">95% CI [-1.191, -0.625]   <\/FONT> >, penwidth = 5.51, style = dashed, color = black]\n\"LANDCOVER\" -> {\"NUTRIENT\"}[weight = 1, label = < 𝛽 = -0.64***<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.984, -0.524]   <\/FONT> >, penwidth = 3.7, style = dashed, color = black]\n\"HYDRO\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = 0.208<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.089, 0.447]   <\/FONT> >, penwidth = 1.54, style = solid, color = black]\n\"NUTRIENT\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = -0.506***<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.801, -0.234]   <\/FONT> >, penwidth = 3.03, style = dashed, color = black]\n}\n// ---------------------\n// The measurement model\n// ---------------------\n\nsubgraph construct_1 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"topo_1\" [label = \"topo_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"topo_1\" -> {\"TOPO\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_2 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"landcover_1\" [label = \"landcover_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"landcover_1\" -> {\"LANDCOVER\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_3 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"hydro_1\" [label = \"hydro_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"hydro_1\" -> {\"HYDRO\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_4 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"nutr_1\" [label = \"nutr_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"nutr_1\" -> {\"NUTRIENT\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_5 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"doc_1\" [label = \"doc_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = normal\narrowtail = none\n]\n\"DOC\" -> {\"doc_1\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="model-1-automated-high-flows---humic--wnutrients.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="model-1-not---automated-high-flows---humic.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/lekokremer/FEF_PLS_SEM/edit/main/08_best_models_only.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/lekokremer/FEF_PLS_SEM/blob/main/08_best_models_only.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection",
+"depth": 1
+},
+"toolbar": {
+"position": "static"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

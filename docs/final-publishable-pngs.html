@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 7 Final publishable pngs | PLS Data Exploration Book</title>
+  <meta name="description" content="Chapter 7 Final publishable pngs | PLS Data Exploration Book" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 7 Final publishable pngs | PLS Data Exploration Book" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 7 Final publishable pngs | PLS Data Exploration Book" />
+  
+  
+  
+
+<meta name="author" content="Lauren Kremer" />
+
+
+<meta name="date" content="2025-01-30" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="the-code.html"/>
+
+<script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="assets/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="assets/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="assets/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="assets/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="assets/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="assets/viz-1.8.2/viz.js"></script>
+<link href="assets/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="assets/grViz-binding-1.0.11/grViz.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="about.html"><a href="about.html"><i class="fa fa-check"></i><b>1.1</b> About</a></li>
+<li class="chapter" data-level="1.2" data-path="usage.html"><a href="usage.html"><i class="fa fa-check"></i><b>1.2</b> Usage</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="addition-of-precipitation-and-runoff-data.html"><a href="addition-of-precipitation-and-runoff-data.html"><i class="fa fa-check"></i><b>2</b> Addition of precipitation and runoff data</a></li>
+<li class="chapter" data-level="3" data-path="relating-parafac-components-to-fef-watersheds-correlations-plots.html"><a href="relating-parafac-components-to-fef-watersheds-correlations-plots.html"><i class="fa fa-check"></i><b>3</b> Relating PARAFAC components to FEF watersheds: Correlations plots</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="parafac-results-summary-figures.html"><a href="parafac-results-summary-figures.html"><i class="fa fa-check"></i><b>3.1</b> PARAFAC results summary figures:</a></li>
+<li class="chapter" data-level="3.2" data-path="structure.html"><a href="structure.html"><i class="fa fa-check"></i><b>3.2</b> Structure:</a></li>
+<li class="chapter" data-level="3.3" data-path="relative-loadings.html"><a href="relative-loadings.html"><i class="fa fa-check"></i><b>3.3</b> 1. Relative loadings</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="relative-loadings.html"><a href="relative-loadings.html#box-plots---relative-loadings"><i class="fa fa-check"></i><b>3.3.1</b> Box plots - Relative loadings</a></li>
+<li class="chapter" data-level="3.3.2" data-path="relative-loadings.html"><a href="relative-loadings.html#spearmans"><i class="fa fa-check"></i><b>3.3.2</b> Spearman’s</a></li>
+<li class="chapter" data-level="3.3.3" data-path="relative-loadings.html"><a href="relative-loadings.html#pearson-correlation-matrices-scaled-data---relative-loadings"><i class="fa fa-check"></i><b>3.3.3</b> Pearson correlation matrices (scaled data) - Relative loadings</a></li>
+<li class="chapter" data-level="3.3.4" data-path="relative-loadings.html"><a href="relative-loadings.html#spearmans-correlation-figure-for-agu-poster-2024"><i class="fa fa-check"></i><b>3.3.4</b> Spearman’s correlation figure for AGU poster 2024</a></li>
+<li class="chapter" data-level="3.3.5" data-path="relative-loadings.html"><a href="relative-loadings.html#spearmans-correlation-figure-for-poster2"><i class="fa fa-check"></i><b>3.3.5</b> Spearman’s correlation figure for POSTER2</a></li>
+<li class="chapter" data-level="3.3.6" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---fool-creek-fractions-with-hydrograph"><i class="fa fa-check"></i><b>3.3.6</b> Hydrograph - Fool Creek fractions with hydrograph</a></li>
+<li class="chapter" data-level="3.3.7" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---fool-creek-with-no3"><i class="fa fa-check"></i><b>3.3.7</b> Hydrograph - Fool Creek with NO3</a></li>
+<li class="chapter" data-level="3.3.8" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---fool-creek-with-doc"><i class="fa fa-check"></i><b>3.3.8</b> Hydrograph - Fool Creek with DOC</a></li>
+<li class="chapter" data-level="3.3.9" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---lexen-creek-fractions-with-hydrograph"><i class="fa fa-check"></i><b>3.3.9</b> Hydrograph - Lexen Creek fractions with hydrograph</a></li>
+<li class="chapter" data-level="3.3.10" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---lexen-creek-doc"><i class="fa fa-check"></i><b>3.3.10</b> Hydrograph - Lexen Creek DOC</a></li>
+<li class="chapter" data-level="3.3.11" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---lexen-creek-doc-with-no3"><i class="fa fa-check"></i><b>3.3.11</b> Hydrograph - Lexen Creek DOC with NO3</a></li>
+<li class="chapter" data-level="3.3.12" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---deadhorse-main-fractions-with-hydrograph"><i class="fa fa-check"></i><b>3.3.12</b> Hydrograph - Deadhorse Main fractions with hydrograph</a></li>
+<li class="chapter" data-level="3.3.13" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---deadhorse-main-doc-with-no3"><i class="fa fa-check"></i><b>3.3.13</b> Hydrograph - Deadhorse Main DOC with NO3</a></li>
+<li class="chapter" data-level="3.3.14" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---deadhorse-north-fractions-with-hydrograph"><i class="fa fa-check"></i><b>3.3.14</b> Hydrograph - Deadhorse NORTH fractions with hydrograph</a></li>
+<li class="chapter" data-level="3.3.15" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---deadhorse-south-doc-with-no3"><i class="fa fa-check"></i><b>3.3.15</b> Hydrograph - Deadhorse SOUTH DOC with NO3</a></li>
+<li class="chapter" data-level="3.3.16" data-path="relative-loadings.html"><a href="relative-loadings.html#data-preparation-for-multivariate-statistical-analysis---dimension-reduction-techniques"><i class="fa fa-check"></i><b>3.3.16</b> Data preparation for multivariate statistical analysis - dimension reduction techniques</a></li>
+<li class="chapter" data-level="3.3.17" data-path="relative-loadings.html"><a href="relative-loadings.html#rda-redundancy-analysis"><i class="fa fa-check"></i><b>3.3.17</b> RDA (Redundancy Analysis)</a></li>
+<li class="chapter" data-level="3.3.18" data-path="relative-loadings.html"><a href="relative-loadings.html#pca---all-data"><i class="fa fa-check"></i><b>3.3.18</b> PCA - All data</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="normalized-doc.html"><a href="normalized-doc.html"><i class="fa fa-check"></i><b>3.4</b> 2. Normalized DOC</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="normalized-doc.html"><a href="normalized-doc.html#box-plots---doc-normalized-loadings"><i class="fa fa-check"></i><b>3.4.1</b> Box plots - DOC normalized loadings</a></li>
+<li class="chapter" data-level="3.4.2" data-path="normalized-doc.html"><a href="normalized-doc.html#correlation-matrices---normalized-loadings"><i class="fa fa-check"></i><b>3.4.2</b> Correlation matrices - Normalized loadings</a></li>
+<li class="chapter" data-level="3.4.3" data-path="normalized-doc.html"><a href="normalized-doc.html#hydrograph---fluorescence-intensities-in-fool-creek-with-2022-hydrograph"><i class="fa fa-check"></i><b>3.4.3</b> Hydrograph - Fluorescence intensities in Fool creek with 2022 hydrograph</a></li>
+<li class="chapter" data-level="3.4.4" data-path="normalized-doc.html"><a href="normalized-doc.html#pca"><i class="fa fa-check"></i><b>3.4.4</b> PCA</a></li>
+<li class="chapter" data-level="3.4.5" data-path="normalized-doc.html"><a href="normalized-doc.html#rda-redundancy-analysis-1"><i class="fa fa-check"></i><b>3.4.5</b> RDA (Redundancy Analysis)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="biological-oxygen-demand-assays---data-exploration.html"><a href="biological-oxygen-demand-assays---data-exploration.html"><i class="fa fa-check"></i><b>4</b> Biological Oxygen Demand assays - data exploration</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="daily-doc-loss-carbon.html"><a href="daily-doc-loss-carbon.html"><i class="fa fa-check"></i><b>4.1</b> Daily DOC loss (carbon)</a></li>
+<li class="chapter" data-level="4.2" data-path="dissolved-oxygen-loss.html"><a href="dissolved-oxygen-loss.html"><i class="fa fa-check"></i><b>4.2</b> Dissolved oxygen loss</a></li>
+<li class="chapter" data-level="4.3" data-path="explore-relationships..html"><a href="explore-relationships..html"><i class="fa fa-check"></i><b>4.3</b> Explore relationships.</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="demo-partial-least-squares-structural-equation-modeling-pls-sem.html"><a href="demo-partial-least-squares-structural-equation-modeling-pls-sem.html"><i class="fa fa-check"></i><b>5</b> Demo: Partial least squares – Structural Equation Modeling (PLS-SEM)</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="building-the-path-model.html"><a href="building-the-path-model.html"><i class="fa fa-check"></i><b>5.1</b> Building the path model</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="building-the-path-model.html"><a href="building-the-path-model.html#path-diagram-of-our-model-with-tested-indicators"><i class="fa fa-check"></i><b>5.1.1</b> Path diagram of our model with tested indicators</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="data-managment-transformation.html"><a href="data-managment-transformation.html"><i class="fa fa-check"></i><b>5.2</b> Data managment / transformation</a></li>
+<li class="chapter" data-level="5.3" data-path="reporting-initial-results-and-evaluating-the-quality-of-reflective-measurement-models.html"><a href="reporting-initial-results-and-evaluating-the-quality-of-reflective-measurement-models.html"><i class="fa fa-check"></i><b>5.3</b> Reporting initial results and evaluating the quality of reflective measurement models</a></li>
+<li class="chapter" data-level="5.4" data-path="bootstrapping-for-significance.html"><a href="bootstrapping-for-significance.html"><i class="fa fa-check"></i><b>5.4</b> Bootstrapping for significance</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="bootstrapping-for-significance.html"><a href="bootstrapping-for-significance.html#reporting-results-of-bootstrapped-pls"><i class="fa fa-check"></i><b>5.4.1</b> Reporting results of bootstrapped PLS</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="pls_sem-automation.html"><a href="pls_sem-automation.html"><i class="fa fa-check"></i><b>6</b> PLS_SEM Automation</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="workflow-description.html"><a href="workflow-description.html"><i class="fa fa-check"></i><b>6.1</b> Workflow description:</a></li>
+<li class="chapter" data-level="6.2" data-path="the-code.html"><a href="the-code.html"><i class="fa fa-check"></i><b>6.2</b> The code:</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="the-code.html"><a href="the-code.html#model-1-high-flows---humic--wnutrients-automated"><i class="fa fa-check"></i><b>6.2.1</b> Model 1: High flows - HUMIC -W/NUTRIENTS (AUTOMATED)</a></li>
+<li class="chapter" data-level="6.2.2" data-path="the-code.html"><a href="the-code.html#model-2-high-flows---humic--wonutrients-automated"><i class="fa fa-check"></i><b>6.2.2</b> Model 2: High flows - HUMIC -WO/NUTRIENTS (AUTOMATED)</a></li>
+<li class="chapter" data-level="6.2.3" data-path="the-code.html"><a href="the-code.html#model-3-high-flows---labile--wonutrients-automated"><i class="fa fa-check"></i><b>6.2.3</b> Model 3: High flows - LABILE -WO/NUTRIENTS (AUTOMATED)</a></li>
+<li class="chapter" data-level="6.2.4" data-path="the-code.html"><a href="the-code.html#model-4-low-flows---humic--wonutrients-automated"><i class="fa fa-check"></i><b>6.2.4</b> Model 4: Low flows - HUMIC -WO/NUTRIENTS (AUTOMATED)</a></li>
+<li class="chapter" data-level="6.2.5" data-path="the-code.html"><a href="the-code.html#model-5-low-flows---labile--wonutrients-automated"><i class="fa fa-check"></i><b>6.2.5</b> Model 5: Low flows - LABILE -WO/NUTRIENTS (AUTOMATED)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="final-publishable-pngs.html"><a href="final-publishable-pngs.html"><i class="fa fa-check"></i><b>7</b> Final publishable pngs</a>
+<ul>
+<li class="chapter" data-level="7.0.1" data-path="final-publishable-pngs.html"><a href="final-publishable-pngs.html#parafac-results-summary-figures-1"><i class="fa fa-check"></i><b>7.0.1</b> 1. PARAFAC results summary figures:</a></li>
+<li class="chapter" data-level="7.0.2" data-path="final-publishable-pngs.html"><a href="final-publishable-pngs.html#relative-loadings-1"><i class="fa fa-check"></i><b>7.0.2</b> 2. Relative loadings</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">PLS Data Exploration Book</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="final-publishable-pngs" class="section level1 hasAnchor" number="7">
+<h1><span class="header-section-number">Chapter 7</span> Final publishable pngs<a href="final-publishable-pngs.html#final-publishable-pngs" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><strong>Addendum Figures</strong></p>
+<div id="parafac-results-summary-figures-1" class="section level3 hasAnchor" number="7.0.1">
+<h3><span class="header-section-number">7.0.1</span> 1. PARAFAC results summary figures:<a href="final-publishable-pngs.html#parafac-results-summary-figures-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Emission-Excitation matrices for the 3 components identified by the 3 component PARAFAC model. Components 1 and 2 correspond with peaks for humic components, while component 3 is protein-like.
+<img src="images/comp3%208outliersremoved.png" alt="EEM matrices for final model" /></p>
+</div>
+<div id="relative-loadings-1" class="section level3 hasAnchor" number="7.0.2">
+<h3><span class="header-section-number">7.0.2</span> 2. Relative loadings<a href="final-publishable-pngs.html#relative-loadings-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Relative loadings for each sample (i.e., loading for each component/total loading for the sample in the 3 component model). This tells us how much of each component contributes to the total fluorescence of that particular sample.
+<img src="images/component3_loadings_proportions_plot.png" alt="Relative fluoresence of each component im each sample" /></p>
+<p><strong>Final figures</strong></p>
+<p>Exploration of DOC concentrations across watersheds
+<img src="images/3D_DEM_DOC_high_flows_2022_Fool.png" alt="Mean DOC during high flows 2022" /></p>
+<p><img src="images/3D_DEM_DOC_high_flows_2022_Deadhorse.png" alt="Mean DOC during high flows 2022" />
+<img src="images/3D_DEM_DOC_high_flows_2022_Lexen.png" alt="Mean DOC during high flows 2022" /></p>
+<p><strong>DOC temporal patterns</strong>
+<img src="images/full_FChydro_and_chem.png" alt="DOC w/ hydrograph Fool Creek outlet 2020-2022" /></p>
+<p>DOC bioavailability - EEMS indices</p>
+<div class="float">
+<img src="images/eems_parafac.png" alt="Correlations between PARAFAC componet proportions and EEMs indices" />
+<div class="figcaption">Correlations between PARAFAC componet proportions and EEMs indices</div>
+</div>
+<p>DOC composition PARAFAC
+<img src="images/comp_ws_boxplot.png" alt="Distributions of PARAFAC component proportions across watersheds" />
+<img src="correlationplot_PLSvariables_spearman.png" alt="Correlations of the relationships between potential response variables (e.g., DOM characteristics from EEMs and PARAFAC analysis) and predictor variables (hydrological, topographical, landcover or chemical characteristics of each watersample subcatchment) for all samples with EEMs data (July 2021- Oct 1, 2022). Color indicates direction and correlation value (Pearson’s). Asterisks indicate level of significance." /></p>
+<p><strong>PLS_SEM</strong></p>
+<p>This script contains recreations of models that explain the most variability in labile and humic DOM. The intent is to generate images that are quickly interpretable for posters, presentations or papers.</p>
+<p><strong>AGU Model 1: </strong></p>
+<p><img src="images/humic_high_PLS.png" alt="FEF watershed HUMIC path model, high flows." width="800" height="300"></p>
+<p><img src="images/humic_low_PLS.png" alt="FEF watershed HUMIC path model, low flows." width="800" height="300"></p>
+<p>Figure: PLS-SEM models depicting the effects of four variables on the humic fraction of fluorescing DOM in high flows (a) and low flows (b). The beta coefficients (β) in each relationship indicates the strength of the relationship between latent variables. Negative relationships are shown in red, positive relationships are printed in black, with significant relationships in bold text and asterisks to indicate level of significance. A negative β indicates that as the latent variable increases the dependent latent variable decreases. The coefficient of determination (R2) represents the proportion of variance in the latent variable explained by the variables (latent or observed). Higher R2 values indicate a better ability of the model to explain the variance in the latent variable.</p>
+<p>In this high-flow to low-flow comparison, we see that topography has a strong reinforcing effect on landcover composition, which in this model is characterized by the % coverage of harvested and regenerating forest, and the % of beetle kill affected forest. In high flows, the humic fraction of fluorescing DOM is strong and positive, indicating that as the % of beetle kill and regenerating forest increase, humic fractions increase. In low flows,the humic fraction of DOM decreases as NO3- concentration in the water sample increases. This could be an indication that NO3- is being allochthonously utilized by microbial communities to oxidize and polymerize carbon (increasing humic fractions) rather than being transported to the stream channel.</p>
+<p><strong>AGU Model 2: </strong></p>
+<p><img src="images/labile_high_PLS.png" alt="FEF watershed HUMIC path model, high flows." width="800" height="300"></p>
+<p><img src="images/labile_low_PLS.png" alt="FEF watershed HUMIC path model, low flows." width="800" height="300"></p>
+<p>Figure: PLS-SEM models depicting the effects of four variables on the protein-like fraction of fluorescing DOM in high flows (a) and low flows (b). The beta coefficients (β) in each relationship indicates the strength of the relationship between latent variables.</p>
+<p>In this high-flow to low-flow comparison, we see that topography has a strong reinforcing effect on landcover composition, which in this model is characterized by the % coverage of harvested and regenerating forest, and the % of beetle kill affected forest. In high flows, the protein-like (labile) fraction of fluorescing DOM is strong and negative, indicating that as the % of beetle kill and regenerating forest decrease, labile fractions increase. In low flows, NO3- has a significant positive influence on the labile fraction, as the labile fraction of DOM increases as NO3- concentration in the water sample increases.</p>
+<p><strong>Nutrient Free models</strong>
+<img src="images/Humic_PLS_SEM.png" alt="FEF watershed HUMIC path model." width="800" height="700"></p>
+<p>Low Flows:
+indicators &lt;- list(
+topo = c(“twi_mean”),
+hydro = c(“discharge_m2”),
+landcover = c(“percent_cut.regenerating”),
+doc = c(“peak_ratioCT”, “relative_load_comp_2”, “SUVA254”)
+)</p>
+<p>High Flows:
+indicators &lt;- list(
+topo = c(“twi_mean”),
+hydro = c(“discharge_m2”),
+landcover = c(“percent_Tundra”),
+doc = c( “Fluorescence_Index”)
+)</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="the-code.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/lekokremer/FEF_PLS_SEM/edit/main/07_final_model_pngs.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/lekokremer/FEF_PLS_SEM/blob/main/07_final_model_pngs.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection",
+"depth": 1
+},
+"toolbar": {
+"position": "static"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

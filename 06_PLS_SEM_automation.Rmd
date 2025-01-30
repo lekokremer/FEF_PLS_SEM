@@ -1,0 +1,2574 @@
+# PLS_SEM Automation
+
+## Workflow description: 
+
+Here we are using a form of Monte Carlo-based Partial Least Squares - SEM with model screening and post-hoc variable significance analysis. The workflow is as follows: 
+
+1. Model automation with random indicator selection<br>
+  - We run 20,000 iteration of PLS-SEM models (which predict a response variable related to DOC characteristics) where a subset of indicators is randomly selected for each model<br> 
+  - In this script, we have run 20000 iterations for 6 different subsets of data:<br>
+      - Model 1: one for all flows (n=91) with 'humic' responses (complex, high weight, stable, partially degradable by microbes) AND IONS as indicator variables. Here we demonstrate that while ions can improve response R^2 values, they may not contribute to path model in a meaningful way.<br>
+      - Model 2: high flows (n=33) with 'humic' responses - NO IONS <br>
+      - Model 3: high flows (n=33) with 'labile' responses (simpler, lower weight, high bioavailabilty, easily decomposed)<br>
+      - Model 4: low flows (n=64) with 'humic' responses<br>
+      - Model 5: low flows (n=64) with 'labile' responses<br>
+2. Each iteration screens and retains results based on two criteria:<br>
+      - High reliability metrics<br>
+      - High R2 for the response variable. This is easily changed in the automation function, currently set at 0.4.<br>
+3. Analysis of indicator frequency:<br>
+      - Among saved models (~1% of all iterations), we analyze the frequency of indicators across retained models<br>
+      - we also review the relationship between indicator frequency and the response r2<br>
+      - this might need a little more work to formalize this process. We could come up with an equation, maybe of all models run where this indicator shows up, what percent have an R2 < than 0.1, 0.2...etc? <br>
+4. Some initial observations<br>
+      - Indicators that appear in models with the highest R2 values often have low overall frequency across a broader set of retained models. Specific to this tend to be indicators of water ion concentrations. 
+      - While these indicators may occasionally yield strong predictive power (high R2), their overall contribution to the DOC characteristic process may be unlikely or spurious. 
+      
+This workflow is intended to identify high-performing models with strong explanatory power (high R²). However, indicators that appear exclusively in a few high-R² models but have low frequency across other retained models may not reflect robust drivers of the DOC processes. Instead, their significance may result from chance, suggesting these indicators have low probability of being substantively important despite their occasional high R² contribution.
+
+Therefore, in the final model selection, we will build models with higher probability as determined by some measure of frequency and mean r2. Indicator Frequency-Predictive Value Analysis (IF-PVA)? Check PLS_SEM literature and see if they have something similar. 
+
+## The code:
+
+```{r pkgs, include=FALSE}
+# pkgTest is a helper function to load packages and install packages only when they are not installed yet.
+pkgTest <- function(x)
+{
+  if (x %in% rownames(installed.packages()) == FALSE) {
+    install.packages(x, dependencies= TRUE)
+  }
+  library(x, character.only = TRUE)
+}
+
+#"rstan", "devtools", "tidyverse",  "ggpmisc", "reshape2", 
+neededPackages <- c('seminr', 'tidyr', 'dplyr', 'lubridate', 'ggplot2')
+
+for (package in neededPackages){pkgTest(package)}
+
+source('test_pls_models_function.R')
+```
+
+```{r import_data, include = FALSE}
+# IMPORT PARAFAC results
+file <- normalizePath(file.path(getwd(), "datafiles/df_loadings.csv"))
+parafac <- read.csv(file, header = TRUE, sep = ",", quote = "\"",
+         dec = ".", fill = TRUE) %>%
+  # Widen the parafac dataframe
+  #pivot_wider(names_from = Component, values_from = Proportion) %>%
+  # Extract the sample no. to match other dataframe
+  mutate(ID = substr(Sample, nchar(Sample) - 2, nchar(Sample)))
+```
+
+```{r import_data2, include = FALSE}
+
+# Move up one directory from the current working directory
+file <- normalizePath(file.path(getwd(), "/datafiles/fluoro_topo_melt_PARAFAC.csv"))
+
+# Read the CSV file
+sample_vege_fluro_topo <- read.csv(file) 
+```
+
+```{r Merge_dataframes, include=FALSE}
+# Merge vegetation, topography and fluoro data with PARAFAC results. 
+merged_df <- merge(sample_vege_fluro_topo, parafac, by='ID')%>%
+  mutate(across(c(watershed, reach, position, TYPE), as.factor))%>%
+  mutate(datetime = ymd(date))
+
+merged_df <- merged_df %>%
+  mutate(
+    percent_Beetle.kill = replace_na(percent_Beetle.kill, 0),
+    percent_Old.Forest = replace_na(percent_Old.Forest, 0),
+    percent_cut.regenerating = replace_na(percent_cut.regenerating, 0),
+    percent_Tundra = replace_na(percent_Tundra, 0),
+    percent_Meadows = replace_na(percent_Meadows, 0)
+  )
+```
+
+```{r Formatting_subsetting, include=FALSE}
+# Generate a discharge column that is normalized by the area of the respective watershed.
+merged_df<- merged_df%>%
+  mutate(Qm3_s = replace_na(Qm3_s, 0.005)) %>%
+  dplyr::select(-c(PARAF_comp_1.x, PARAF_comp_2.x, PARAF_comp_3.x, total_loadings.x, Sample.x, relative_load_comp_1.x, relative_load_comp_2.x, relative_load_comp_3.x)) %>% #remove duplicate columns
+  rename_with(~ gsub("\\.y$", "", .), ends_with(".y")) #removes .y from names 
+
+# Generate a discharge column that is normalized by the area of the respective watershed.
+merged_df<- merged_df%>%
+  mutate(Qm3_s = replace_na(Qm3_s, 0.005))
+
+merged_df$discharge_m2 <- merged_df$Qm3_s/merged_df$area_m
+merged_df$Input.mm_m2 <- merged_df$Input.mm/merged_df$area_m
+merged_df$snowpack_m2 <- merged_df$snowpack_3day_avg/merged_df$area_m
+
+# Transform aspect from degrees to radians
+merged_df$aspect_mean_rad <- merged_df$aspect_mean*pi/180
+```
+
+For this model demonstration, our EEMs dataset has been filtered to 'stream' samples only (no wells) (n= 91)
+
+### Model 1: High flows - HUMIC -W/NUTRIENTS (AUTOMATED)
+
+```{r, include=FALSE}
+
+# All flows
+filtered_df <- merged_df %>%
+  filter(position == 'stream')%>%
+  mutate(
+    baseflow = ifelse(stage_num == 1, 1, 0),
+    lower_decreasing = ifelse(stage_num == 2, 1, 0),
+    upper_decreasing = ifelse(stage_num == 3, 1, 0),
+    increasing = ifelse(stage_num == 4, 1, 0)
+  )#%>%
+  #filter(format(datetime, "%m-%d") >= "05-01" & format(datetime, "%m-%d") <= "07-31")
+
+# Add log discharge column
+filtered_df$log_discharge <- log10(filtered_df$Qm3_s) 
+
+# add per m
+filtered_df$log_discharge_m2 <- log10(filtered_df$discharge_m2)  
+
+#Adjust constant as needed
+filtered_df$log_input_m2 <- log10(filtered_df$Input.mm_m2+ 1e-6) 
+```
+
+#### Indicator list 
+These will be the indicators that will be randomly selected from during automation. Select labile or humic DOC responses here
+
+```{r}
+model_df <- data.frame(matrix(ncol = 0, nrow = nrow(filtered_df)))
+
+indicators <- list(
+  topo = c( "disttostreams_mean", "aspect_mean_rad", 'twi_mean', 'area_km', "elevabovestreams_mean"),
+  hydro = c("snowpack_3day_avg", "discharge_m2"),
+  landcover = c("percent_Beetle.kill", "percent_Meadows","percent_Old.Forest","percent_cut.regenerating",
+"percent_Tundra" ,"ndvi_raster_mean"),
+  doc = c("relative_load_comp_1", "relative_load_comp_2", "norm_PARAF_c1", "norm_PARAF_c2", "peak_T_275.340", "Fluorescence_Index", "SUVA254", "peak_ratioAT", "peak_ratioCT"),
+  nutr = c('NO3_mg.l', "na_mg.l", "nh4_mg.l", "K_mg.l",  "Mg_mg.l", "Ca_mg.l", "F_mg.l", "Cl_mg.l", "SO4_mg.l")
+)
+```
+
+#### Run the function written in .R script
+Here we have the option of running multiple iterations, or if this has already been done, we can import the .rds generated from 20000 runs. 
+```{r, echo=FALSE}
+set.seed(123)  # For reproducibility
+#org_runs <- pls_models_nutrients(filtered_df, indicators, n_iter = 20000)
+# Filter out NULL entries from the org_runs list
+#org_runs_no_nan <- org_runs[!sapply(org_runs, is.null)]
+
+# Save the list
+#saveRDS(org_runs_no_nan, file = "humic_ions_all_flow_20000.rds")
+
+# Load the list
+imp_results <- readRDS("humic_ions_all_flow_20000.rds")
+```
+
+```{r, echo=FALSE}
+# Extract the R^2 for DOC for each non-NULL result
+r2_humic_values <- sapply(imp_results, function(res) {
+  res$summary$paths["R^2", "DOC"]
+})
+```
+
+```{r, echo=FALSE}
+# Sort indices based on the extracted R^2 values
+sorted_indices <- order(r2_humic_values, decreasing = TRUE)
+
+# Sort the non-NULL results by the sorted indices
+sorted_results <- imp_results[sorted_indices]
+
+# Sorted results now contains the summaries ordered by R^2 for DOC
+print('20000 run winner: ', sep ='')
+sorted_results[[1]]$summary$paths["R^2", "DOC"]
+sorted_results[[1]]$sampled_indicators
+```
+
+Or we can find the highest performing model where some value is specified for the 'DOC' response. 
+
+```{r, echo=FALSE}
+# Filter results for the specific DOC component 'relative_load_comp_3'
+docresponse <- 'relative_load_comp_1'
+specific_DOC_results <- Filter(function(res) {
+  docresponse %in% res$sampled_indicators$doc
+}, sorted_results)
+
+# If there are multiple models, select the one with the highest R^2 for DOC
+if (length(specific_DOC_results) > 0) {
+  best_model <- specific_DOC_results[[1]]  # Select the first model (best-performing)
+  
+  # Display the R^2 value for DOC
+  best_r2_DOC <- best_model$summary$paths["R^2", "DOC"]
+  cat("Best R^2 for DOC:", best_r2_DOC, "\n")
+  
+  # Display sampled indicators for this best model
+  cat("Selected DOC response:\n")
+  print(docresponse)
+  cat("Sampled indicators for best model:\n")
+  print(best_model$sampled_indicators)
+} else {
+  cat("No models found with DOC as \n")
+  print(docresponse)
+}
+```
+
+#### Visualizing all selected results (r2 of DOC >0.4)
+##### Indicator frequency
+
+```{r, echo=FALSE}
+# Extract the associated latent variable with each indicator:
+indicator_list <- lapply(sorted_results, function(result) {
+  # Iterate over each category in sampled_indicators
+  do.call(rbind, lapply(names(result$sampled_indicators), function(category) {
+    # Create a data frame for each category and its indicators
+    data.frame(
+      Indicator = result$sampled_indicators[[category]],
+      Category = category)
+    }))
+  })
+
+# Combine all data frames into a single data frame
+indicator_df <- do.call(rbind, indicator_list)
+
+# Create the frequency table
+indicator_counts <- as.data.frame(table(indicator_df$Indicator))
+colnames(indicator_counts) <- c("Indicator", "Frequency")
+
+# Merge the Category information from indicator_df
+indicator_counts <- merge(indicator_counts, indicator_df[, c("Indicator", "Category")], by = "Indicator", all.x = TRUE)
+
+# Ensure unique rows (to avoid duplication during merge)
+indicator_counts <- indicator_counts[!duplicated(indicator_counts), ]
+
+# Step 4: Visualize the results with a bar plot (using ggplot2)
+# Create the bar plot with colors by category
+ggplot(indicator_counts, aes(x = reorder(Indicator, Frequency), y = Frequency, fill = Category)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  scale_fill_manual(
+    values = c("topo" = "#e31a1c", "hydro" = "#1f78b4", 
+               "landcover" = "#33a02c", "doc" = "#ff7f00", 
+               "nutr" = "#6a3d9a")
+  ) +
+  labs(
+    title = "Frequency of Sampled Indicators by Category",
+    x = "Indicator",
+    y = "Frequency",
+    fill = "Category"
+  ) +
+  theme_minimal()
+
+```
+
+##### R2 distribution
+
+```{r, echo=FALSE, include=FALSE}
+# Extract R^2 values for DOC
+r_squared_values <- sapply(sorted_results, function(result) {
+  if (!is.null(result$summary$paths)) {
+    result$summary$paths["R^2", "DOC"]
+  } else {
+    NA  # Return NA if paths is missing
+  }
+}, USE.NAMES = FALSE)
+
+# Remove NA values
+r_squared_values <- na.omit(r_squared_values)
+
+# Step 3: Visualize the distribution
+# Histogram
+ggplot(data.frame(R2 = r_squared_values), aes(x = R2)) +
+  geom_histogram(binwidth = 0.05, fill = "#ff7f00", color = "black") +
+  labs(
+    title = "Distribution of R^2 Values for DOC",
+    x = "R^2 Value",
+    y = "Frequency"
+  ) +
+  theme_minimal()
+```
+
+```{r, echo=FALSE}
+# Function to create a dataframe with iteration, indicator, category, and R2 columns
+generate_dataframe_with_R2 <- function(sorted_results) {
+  do.call(rbind, lapply(seq_along(sorted_results), function(i) {
+    iteration <- rep(i, length(unlist(sorted_results[[i]]$sampled_indicators, use.names = FALSE)))
+    indicators <- unlist(sorted_results[[i]]$sampled_indicators, use.names = FALSE)
+    categories <- rep(names(sorted_results[[i]]$sampled_indicators), lengths(sorted_results[[i]]$sampled_indicators))
+    R2_value <- rep(sorted_results[[i]]$summary$paths["R^2", "DOC"], length(indicators))
+    data.frame(Iteration = iteration, Indicator = indicators, Category = categories, R2 = R2_value)
+  }))
+}
+
+# Example usage
+indicator_list <- generate_dataframe_with_R2(sorted_results)
+
+```
+
+##### Combine these two ideas: Create the dataframe
+
+```{r, echo=FALSE}
+# Apply the same color scheme for categories
+ggplot(indicator_list, aes(x = Indicator, y = R2, fill = Category)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.2, alpha = 0.5) +
+  scale_fill_manual(values = c(
+    "topo" = "#e31a1c",   # Example color for topo
+    "hydro" = "#1f78b4",  # Example color for hydro
+    "landcover" = "#33a02c", # Example color for landcover
+    "doc" = "#ff7f00",    # Example color for doc
+    "nutr" = "#6a3d9a"   # Example color for nutr (added here)
+  )) + 
+  labs(
+    title = "Distribution of R^2 Values by Indicator",
+    x = "Indicator",
+    y = "R^2 Value"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+#### Visualizing specific DOC results (r2 of DOC >0.4)
+##### Indicator frequency
+
+```{r, echo=FALSE}
+# Extract the associated latent variable with each indicator:
+indicator_list <- lapply(specific_DOC_results, function(result) {
+  # Iterate over each category in sampled_indicators
+  do.call(rbind, lapply(names(result$sampled_indicators), function(category) {
+    # Create a data frame for each category and its indicators
+    data.frame(
+      Indicator = result$sampled_indicators[[category]],
+      Category = category)
+    }))
+  })
+
+# Combine all data frames into a single data frame
+indicator_df <- do.call(rbind, indicator_list)
+
+# Create the frequency table
+indicator_counts <- as.data.frame(table(indicator_df$Indicator))
+colnames(indicator_counts) <- c("Indicator", "Frequency")
+
+# Merge the Category information from indicator_df
+indicator_counts <- merge(indicator_counts, indicator_df[, c("Indicator", "Category")], by = "Indicator", all.x = TRUE)
+
+# Ensure unique rows (to avoid duplication during merge)
+indicator_counts <- indicator_counts[!duplicated(indicator_counts), ]
+
+# Step 4: Visualize the results with a bar plot (using ggplot2)
+# Create the bar plot with colors by category
+ggplot(indicator_counts, aes(x = reorder(Indicator, Frequency), y = Frequency, fill = Category)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  scale_fill_manual(
+    values = c("topo" = "#e31a1c", "hydro" = "#1f78b4", 
+               "landcover" = "#33a02c", "doc" = "#ff7f00", 
+               "nutr" = "#6a3d9a")
+  ) +
+  labs(
+    title = "Frequency of Sampled Indicators by Category",
+    x = "Indicator",
+    y = "Frequency",
+    fill = "Category"
+  ) +
+  theme_minimal()
+
+```
+
+
+```{r, echo=FALSE}
+# Function to create a dataframe with iteration, indicator, category, and R2 columns
+generate_dataframe_with_R2 <- function(specific_DOC_results) {
+  do.call(rbind, lapply(seq_along(specific_DOC_results), function(i) {
+    iteration <- rep(i, length(unlist(specific_DOC_results[[i]]$sampled_indicators, use.names = FALSE)))
+    indicators <- unlist(specific_DOC_results[[i]]$sampled_indicators, use.names = FALSE)
+    categories <- rep(names(specific_DOC_results[[i]]$sampled_indicators), lengths(specific_DOC_results[[i]]$sampled_indicators))
+    R2_value <- rep(specific_DOC_results[[i]]$summary$paths["R^2", "DOC"], length(indicators))
+    data.frame(Iteration = iteration, Indicator = indicators, Category = categories, R2 = R2_value)
+  }))
+}
+
+# usage
+indicator_list <- generate_dataframe_with_R2(specific_DOC_results)
+```
+
+##### Combine these two ideas: Create the dataframe
+
+```{r, echo=FALSE}
+# Apply the same color scheme for categories
+ggplot(indicator_list, aes(x = Indicator, y = R2, fill = Category)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.2, alpha = 0.5) +
+  scale_fill_manual(values = c(
+    "topo" = "#e31a1c",   # Example color for topo
+    "hydro" = "#1f78b4",  # Example color for hydro
+    "landcover" = "#33a02c", # Example color for landcover
+    "doc" = "#ff7f00",    # Example color for doc
+    "nutr" = "#6a3d9a"   # Example color for nutr (added here)
+  )) + 
+  labs(
+    title = "Distribution of R^2 Values by Indicator",
+    x = "Indicator",
+    y = "R^2 Value"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+#### Generate flow diagram for the top performing model
+
+```{r, echo=FALSE}
+# Initialize model_df with the same number of rows as merged_df
+model_df <- data.frame(matrix(ncol = 0, nrow = nrow(filtered_df)))
+
+# Define a list of constructs and their corresponding variables
+indicators <- list(
+  topo = c("elevabovestreams_mean"),
+  hydro = c("snowpack_3day_avg"),
+  landcover = c("percent_Tundra"),
+  doc = c( "peak_ratioCT", "relative_load_comp_1", "SUVA254" ),
+  nutr = c("Mg_mg.l")
+)
+```
+
+```{r, include=FALSE}
+set.seed(123)  # For reproducibility
+```
+
+```{r, echo=FALSE}
+# Loop through each indicator and rename columns
+for (indicator in names(indicators)) {
+  variables <- indicators[[indicator]]
+  for (i in seq_along(variables)) {
+    old_name <- variables[i]
+    new_name <- paste0(indicator, "_", i)
+    
+    # Check if the old name exists in filtered_dfand add it to model_df with the new name
+    if (old_name %in% colnames(filtered_df)) {
+      model_df[[new_name]] <- filtered_df[[old_name]]
+    } else {
+      warning(paste("Column", old_name, "not found in filtered_df"))
+    }
+  }
+}
+
+# Check the new column names in model_df
+colnames(model_df)
+
+# Standardizing the environmental variables
+model_df_standardized <- as.data.frame(scale(model_df, center = TRUE, scale = TRUE))
+
+simple_FEF_mm <- constructs(
+  composite("TOPO", single_item("topo_1")),
+  composite("HYDRO",  single_item("hydro_1")),
+  composite("LANDCOVER", single_item("landcover_1")),
+  composite("DOC",  multi_items("doc_", 1:length(indicators$doc))),
+  composite("NUTRIENT", single_item("nutr_1"))
+)
+
+# Create structural model
+simple_FEF_sm <- relationships(
+paths(from = c("TOPO"), to = c("HYDRO","LANDCOVER","NUTRIENT","DOC")), #"NUTRIENT",
+paths(from = c("LANDCOVER"), to = c("HYDRO","DOC", "NUTRIENT")), #"NUTRIENT",
+paths(from = c("HYDRO"), to = c("DOC")),
+paths(from =c("NUTRIENT"), to = c("DOC"))
+)
+set.seed=123
+# Estimate the model
+single_run <- estimate_pls(data = model_df_standardized,
+measurement_model = simple_FEF_mm,
+structural_model = simple_FEF_sm,
+inner_weights = path_weighting,
+missing = mean_replacement,
+missing_value = "NA")
+```
+
+```{r, echo = FALSE}
+# Summarize the model results
+summary_single_run <- summary(single_run)
+
+# Inspect the model’s path coefficients and the R^2 values
+print(summary_single_run)
+```
+
+```{r, echo = FALSE}
+Sys.sleep(1)
+```
+
+```{r, include=FALSE}
+# Bootstrap the model
+boot_simple_fef <- bootstrap_model(seminr_model =single_run ,
+nboot = 1000,
+cores = NULL,
+seed = 123)
+# Store the summary of the bootstrapped model
+sum_boot_simple_fef <- summary(boot_simple_fef)
+```
+
+
+```{r, echo=FALSE}
+# Extract the bootstrapped HTMT
+sum_boot_fef <- summary(boot_simple_fef, alpha= 0.10)
+
+sum_boot_fef$bootstrapped_HTMT
+```
+
+This gives us the confidence intervals of the HTMT ratio.
+
+```{r, include=FALSE}
+# Inspect the bootstrapped structural paths
+sum_boot_simple_fef$bootstrapped_paths
+# Inspect the bootstrapped indicator loadings
+sum_boot_simple_fef$bootstrapped_loadings
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width=8, fig.height=4}
+# bootstrap results in boot_simple_fef
+# Save the original graphical parameters
+old_par <- par()  
+
+# Change 'cex' for larger text size
+par(cex = 0.5)  
+
+plot(boot_simple_fef, title = "Bootstrapped Model\nHigh flow - Humic")
+par(old_par)
+```
+
+```{r}
+print(indicators)
+```
+
+### Model 2: High flows - HUMIC -WO/NUTRIENTS (AUTOMATED)
+
+```{r, include=FALSE}
+
+# filter for high flows
+filtered_df <- merged_df %>%
+  filter(position == 'stream')%>%
+  mutate(
+    baseflow = ifelse(stage_num == 1, 1, 0),
+    lower_decreasing = ifelse(stage_num == 2, 1, 0),
+    upper_decreasing = ifelse(stage_num == 3, 1, 0),
+    increasing = ifelse(stage_num == 4, 1, 0)
+  )%>%
+  filter(format(datetime, "%m-%d") >= "05-01" & format(datetime, "%m-%d") <= "07-31")
+
+# Add log discharge column
+filtered_df$log_discharge <- log10(filtered_df$Qm3_s) 
+
+# add per m
+filtered_df$log_discharge_m2 <- log10(filtered_df$discharge_m2)  
+
+#Adjust constant as needed
+filtered_df$log_input_m2 <- log10(filtered_df$Input.mm_m2+ 1e-6)  
+```
+
+#### Indicator list 
+These will be the indicators that will be randomly selected from during automation. Select labile or humic DOC responses here
+
+```{r}
+model_df <- data.frame(matrix(ncol = 0, nrow = nrow(filtered_df)))
+
+indicators <- list(
+  topo = c( "disttostreams_mean", 'twi_mean', 'area_km', "elevabovestreams_mean",  "aspect_mean_rad"),
+  hydro = c("snowpack_3day_avg", "discharge_m2"),
+  landcover = c("percent_Beetle.kill", "percent_Meadows","percent_Old.Forest","percent_cut.regenerating",
+"percent_Tundra" ,"ndvi_raster_mean"),
+  doc = c("relative_load_comp_1", "relative_load_comp_2", "norm_PARAF_c1", "norm_PARAF_c2", "peak_T_275.340", "Fluorescence_Index", "SUVA254", "peak_ratioAT", "peak_ratioCT")
+)
+```
+
+#### Run the function written in .R script
+
+```{r, echo=FALSE}
+set.seed(123)  # For reproducibility
+#org_runs2 <- pls_models_no_nutrients(filtered_df, indicators, n_iter = 20000)
+# Filter out NULL entries from the org_runs list
+#org_runs_no_nan2 <- org_runs2[!sapply(org_runs2, is.null)]
+
+# Save the list
+#saveRDS(org_runs_no_nan2, file = "humic_noions_high_flow_20000.rds")
+
+# Load the list
+imp_results2 <- imp_results <- readRDS("humic_noions_high_flow_20000.rds")
+```
+
+```{r, echo=FALSE}
+# Extract the R^2 for DOC for each non-NULL result
+r2_values <- sapply(imp_results2, function(res) {
+  res$summary$paths["R^2", "DOC"]
+})
+```
+
+```{r, echo=FALSE}
+# Sort indices based on the extracted R^2 values
+sorted_indices <- order(r2_values, decreasing = TRUE)
+
+# Sort the non-NULL results by the sorted indices
+sorted_results <- imp_results[sorted_indices]
+
+# Sorted results now contains the summaries ordered by R^2 for DOC
+print('20000 run winner: ', sep ='')
+sorted_results[[1]]$summary$paths["R^2", "DOC"]
+sorted_results[[1]]$sampled_indicators
+
+```
+
+Or we can find the highest performing model where some value is specified for the 'DOC' response
+
+```{r, echo=FALSE}
+# Filter results for the specific DOC component 'relative_load_comp_3'
+landcover_response <- 'percent_cut.regenerating'
+docresponse <- 'relative_load_comp_2'
+
+#specific_DOC_results <- Filter(function(res) {
+#  docresponse %in% res$sampled_indicators$doc
+#}, sorted_results)
+
+specific_DOC_results <- Filter(function(res) {
+  docresponse %in% res$sampled_indicators$doc &&
+  landcover_response %in% res$sampled_indicators$landcover
+}, sorted_results)
+
+# If there are multiple models, select the one with the highest R^2 for DOC
+if (length(specific_DOC_results) > 0) {
+  best_model <- specific_DOC_results[[1]]  # Select the first model (best-performing)
+  
+  # Display the R^2 value for DOC
+  best_r2_DOC <- best_model$summary$paths["R^2", "DOC"]
+  cat("Best R^2 for DOC:", best_r2_DOC, "\n")
+  
+  # Display sampled indicators for this best model
+  cat("Selected DOC response:\n")
+  print(docresponse)
+  cat("Sampled indicators for best model:\n")
+  print(best_model$sampled_indicators)
+} else {
+  cat("No models found with DOC as \n")
+  print(docresponse)
+}
+```
+
+#### Visualizing all selected results (r2 of DOC >0.4)
+##### Indicator frequency
+
+```{r, echo=FALSE}
+# Extract the associated latent variable with each indicator:
+indicator_list <- lapply(sorted_results, function(result) {
+  # Iterate over each category in sampled_indicators
+  do.call(rbind, lapply(names(result$sampled_indicators), function(category) {
+    # Create a data frame for each category and its indicators
+    data.frame(
+      Indicator = result$sampled_indicators[[category]],
+      Category = category)
+    }))
+  })
+
+# Combine all data frames into a single data frame
+indicator_df <- do.call(rbind, indicator_list)
+
+# Create the frequency table
+indicator_counts <- as.data.frame(table(indicator_df$Indicator))
+colnames(indicator_counts) <- c("Indicator", "Frequency")
+
+# Merge the Category information from indicator_df
+indicator_counts <- merge(indicator_counts, indicator_df[, c("Indicator", "Category")], by = "Indicator", all.x = TRUE)
+
+# Ensure unique rows (to avoid duplication during merge)
+indicator_counts <- indicator_counts[!duplicated(indicator_counts), ]
+
+# Step 4: Visualize the results with a bar plot (using ggplot2)
+# Create the bar plot with colors by category
+ggplot(indicator_counts, aes(x = reorder(Indicator, Frequency), y = Frequency, fill = Category)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  scale_fill_manual(
+    values = c("topo" = "#e31a1c", "hydro" = "#1f78b4", 
+               "landcover" = "#33a02c", "doc" = "#ff7f00", 
+               "nutr" = "#6a3d9a")
+  ) +
+  labs(
+    title = "Frequency of Sampled Indicators by Category",
+    x = "Indicator",
+    y = "Frequency",
+    fill = "Category"
+  ) +
+  theme_minimal()
+
+```
+
+##### R2 distribution
+
+```{r, echo=FALSE, include=FALSE}
+# Function to create a dataframe with iteration, indicator, category, and R2 columns
+generate_dataframe_with_R2 <- function(sorted_results) {
+  do.call(rbind, lapply(seq_along(sorted_results), function(i) {
+    iteration <- rep(i, length(unlist(sorted_results[[i]]$sampled_indicators, use.names = FALSE)))
+    indicators <- unlist(sorted_results[[i]]$sampled_indicators, use.names = FALSE)
+    categories <- rep(names(sorted_results[[i]]$sampled_indicators), lengths(sorted_results[[i]]$sampled_indicators))
+    R2_value <- rep(sorted_results[[i]]$summary$paths["R^2", "DOC"], length(indicators))
+    data.frame(Iteration = iteration, Indicator = indicators, Category = categories, R2 = R2_value)
+  }))
+}
+
+# Example usage
+indicator_list <- generate_dataframe_with_R2(sorted_results)
+```
+
+##### Combine these two ideas: Create the dataframe
+
+```{r, echo=FALSE}
+# Apply the same color scheme for categories
+ggplot(indicator_list, aes(x = Indicator, y = R2, fill = Category)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.2, alpha = 0.5) +
+  scale_fill_manual(values = c(
+    "topo" = "#e31a1c",   # Example color for topo
+    "hydro" = "#1f78b4",  # Example color for hydro
+    "landcover" = "#33a02c", # Example color for landcover
+    "doc" = "#ff7f00",    # Example color for doc
+    "nutr" = "#6a3d9a"   # Example color for nutr (added here)
+  )) + 
+  labs(
+    title = "Distribution of R^2 Values by Indicator",
+    x = "Indicator",
+    y = "R^2 Value"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+#### Visualizing specific DOC results (r2 of DOC >0.4)
+##### Indicator frequency
+
+```{r, echo=FALSE}
+# Extract the associated latent variable with each indicator:
+indicator_list <- lapply(specific_DOC_results, function(result) {
+  # Iterate over each category in sampled_indicators
+  do.call(rbind, lapply(names(result$sampled_indicators), function(category) {
+    # Create a data frame for each category and its indicators
+    data.frame(
+      Indicator = result$sampled_indicators[[category]],
+      Category = category)
+    }))
+  })
+
+# Combine all data frames into a single data frame
+indicator_df <- do.call(rbind, indicator_list)
+
+# Create the frequency table
+indicator_counts <- as.data.frame(table(indicator_df$Indicator))
+colnames(indicator_counts) <- c("Indicator", "Frequency")
+
+# Merge the Category information from indicator_df
+indicator_counts <- merge(indicator_counts, indicator_df[, c("Indicator", "Category")], by = "Indicator", all.x = TRUE)
+
+# Ensure unique rows (to avoid duplication during merge)
+indicator_counts <- indicator_counts[!duplicated(indicator_counts), ]
+
+# Step 4: Visualize the results with a bar plot (using ggplot2)
+# Create the bar plot with colors by category
+ggplot(indicator_counts, aes(x = reorder(Indicator, Frequency), y = Frequency, fill = Category)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  scale_fill_manual(
+    values = c("topo" = "#e31a1c", "hydro" = "#1f78b4", 
+               "landcover" = "#33a02c", "doc" = "#ff7f00", 
+               "nutr" = "#6a3d9a")
+  ) +
+  labs(
+    title = "Frequency of Sampled Indicators by Category",
+    x = "Indicator",
+    y = "Frequency",
+    fill = "Category"
+  ) +
+  theme_minimal()
+
+```
+
+##### R2 distribution
+
+```{r, echo=FALSE}
+# Function to create a dataframe with iteration, indicator, category, and R2 columns
+generate_dataframe_with_R2 <- function(specific_DOC_results) {
+  do.call(rbind, lapply(seq_along(specific_DOC_results), function(i) {
+    iteration <- rep(i, length(unlist(specific_DOC_results[[i]]$sampled_indicators, use.names = FALSE)))
+    indicators <- unlist(specific_DOC_results[[i]]$sampled_indicators, use.names = FALSE)
+    categories <- rep(names(specific_DOC_results[[i]]$sampled_indicators), lengths(specific_DOC_results[[i]]$sampled_indicators))
+    R2_value <- rep(specific_DOC_results[[i]]$summary$paths["R^2", "DOC"], length(indicators))
+    data.frame(Iteration = iteration, Indicator = indicators, Category = categories, R2 = R2_value)
+  }))
+}
+
+# usage
+indicator_list <- generate_dataframe_with_R2(specific_DOC_results)
+```
+
+##### Combine these two ideas: Create the dataframe
+
+```{r, echo=FALSE}
+# Apply the same color scheme for categories
+ggplot(indicator_list, aes(x = Indicator, y = R2, fill = Category)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.2, alpha = 0.5) +
+  scale_fill_manual(values = c(
+    "topo" = "#e31a1c",   # Example color for topo
+    "hydro" = "#1f78b4",  # Example color for hydro
+    "landcover" = "#33a02c", # Example color for landcover
+    "doc" = "#ff7f00",    # Example color for doc
+    "nutr" = "#6a3d9a"   # Example color for nutr (added here)
+  )) + 
+  labs(
+    title = "Distribution of R^2 Values by Indicator",
+    x = "Indicator",
+    y = "R^2 Value"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+#### Generate flow diagram for the top performing model
+
+```{r, echo=FALSE}
+# Initialize model_df with the same number of rows as merged_df
+model_df <- data.frame(matrix(ncol = 0, nrow = nrow(filtered_df)))
+
+# Define a list of constructs and their corresponding variables
+indicators <- list(
+  topo = c("twi_mean"),
+  hydro = c("snowpack_3day_avg"),
+  landcover = c("percent_cut.regenerating", "percent_Tundra"),
+  doc = c( "relative_load_comp_1", "SUVA254", "relative_load_comp_2")
+)
+
+```
+
+```{r, include=FALSE}
+set.seed(123)  # For reproducibility
+```
+
+```{r, echo=FALSE}
+# Loop through each indicator and rename columns
+for (indicator in names(indicators)) {
+  variables <- indicators[[indicator]]
+  for (i in seq_along(variables)) {
+    old_name <- variables[i]
+    new_name <- paste0(indicator, "_", i)
+    
+    # Check if the old name exists in filtered_dfand add it to model_df with the new name
+    if (old_name %in% colnames(filtered_df)) {
+      model_df[[new_name]] <- filtered_df[[old_name]]
+    } else {
+      warning(paste("Column", old_name, "not found in filtered_df"))
+    }
+  }
+}
+
+# Check the new column names in model_df
+colnames(model_df)
+
+# Standardizing the environmental variables
+model_df_standardized <- as.data.frame(scale(model_df, center = TRUE, scale = TRUE))
+
+simple_FEF_mm <- constructs(
+  composite("TOPO", multi_items("topo_", 1:length(indicators$topo))),
+  composite("HYDRO",  single_item("hydro_1")),
+  composite("LANDCOVER", single_item("landcover_1")),
+    composite("DOC", multi_items("doc_", 1:length(indicators$doc)))
+)
+
+# Create structural model
+simple_FEF_sm <- relationships(
+paths(from = c("TOPO"), to = c("HYDRO","LANDCOVER","DOC")), #"NUTRIENT",
+paths(from = c("LANDCOVER"), to = c("HYDRO","DOC")), #"NUTRIENT",
+paths(from = c("HYDRO"), to = c("DOC"))
+)
+
+set.seed=123
+# Estimate the model
+single_run <- estimate_pls(data = model_df_standardized,
+measurement_model = simple_FEF_mm,
+structural_model = simple_FEF_sm,
+inner_weights = path_weighting,
+missing = mean_replacement,
+missing_value = "NA")
+```
+
+```{r, echo = FALSE}
+# Summarize the model results
+summary_single_run <- summary(single_run)
+
+# Inspect the model’s path coefficients and the R^2 values
+print(summary_single_run)
+```
+
+```{r, echo = FALSE}
+Sys.sleep(1)
+```
+
+```{r, include=FALSE}
+# Bootstrap the model
+boot_simple_fef <- bootstrap_model(seminr_model =single_run ,
+nboot = 1000,
+cores = NULL,
+seed = 123)
+# Store the summary of the bootstrapped model
+sum_boot_simple_fef <- summary(boot_simple_fef)
+```
+
+```{r, echo=FALSE}
+# Extract the bootstrapped HTMT
+sum_boot_fef <- summary(boot_simple_fef, alpha= 0.10)
+
+sum_boot_fef$bootstrapped_HTMT
+```
+
+This gives us the confidence intervals of the HTMT ratio.
+
+```{r, include=FALSE}
+# Inspect the bootstrapped structural paths
+sum_boot_simple_fef$bootstrapped_paths
+# Inspect the bootstrapped indicator loadings
+sum_boot_simple_fef$bootstrapped_loadings
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width=8, fig.height=4}
+# bootstrap results in boot_simple_fef
+# Save the original graphical parameters
+old_par <- par()  
+
+# Change 'cex' for larger text size
+par(cex = 0.5)  
+
+plot(boot_simple_fef, title = "Bootstrapped Model\nHigh flow - Humic")
+par(old_par)
+```
+
+```{r}
+print(indicators)
+```
+
+### Model 3: High flows - LABILE -WO/NUTRIENTS (AUTOMATED)
+
+```{r, include=FALSE}
+
+# filter for high flows
+filtered_df <- merged_df %>%
+  filter(position == 'stream')%>%
+  mutate(
+    baseflow = ifelse(stage_num == 1, 1, 0),
+    lower_decreasing = ifelse(stage_num == 2, 1, 0),
+    upper_decreasing = ifelse(stage_num == 3, 1, 0),
+    increasing = ifelse(stage_num == 4, 1, 0)
+  )%>%
+  filter(format(datetime, "%m-%d") >= "05-01" & format(datetime, "%m-%d") <= "07-31")
+
+# Add log discharge column
+filtered_df$log_discharge <- log10(filtered_df$Qm3_s) 
+
+# add per m
+filtered_df$log_discharge_m2 <- log10(filtered_df$discharge_m2)  
+
+#Adjust constant as needed
+filtered_df$log_input_m2 <- log10(filtered_df$Input.mm_m2+ 1e-6)  
+```
+
+#### Indicator list 
+These will be the indicators that will be randomly selected from during automation. Select labile or humic DOC responses here
+
+```{r}
+model_df <- data.frame(matrix(ncol = 0, nrow = nrow(filtered_df)))
+
+indicators <- list(
+  topo = c( "disttostreams_mean", 'twi_mean', 'area_km', "elevabovestreams_mean",  "aspect_mean_rad"),
+  hydro = c("snowpack_3day_avg", "discharge_m2"),
+  landcover = c("percent_Beetle.kill", "percent_Meadows","percent_Old.Forest","percent_cut.regenerating",
+"percent_Tundra" ,"ndvi_raster_mean"),
+  doc = c("relative_load_comp_3", "norm_PARAF_c3", "peak_T_275.340", "Fluorescence_Index", "SUVA254", "peak_ratioAT", "peak_ratioCT")
+)
+```
+
+#### Run the function written in .R script
+
+```{r, echo=FALSE}
+set.seed(123)  # For reproducibility
+#org_runs3 <- pls_models_no_nutrients(filtered_df, indicators, n_iter = 20000)
+# Filter out NULL entries from the org_runs list
+#org_runs_no_nan3 <- org_runs3[!sapply(org_runs3, is.null)]
+
+# Save the list
+#saveRDS(org_runs_no_nan3, file = "labile_noions_high_flow_20000.rds")
+
+# Load the list
+imp_results <- readRDS("labile_noions_high_flow_20000.rds")
+```
+
+```{r, echo=FALSE}
+# Extract the R^2 for DOC for each non-NULL result
+r2_values <- sapply(imp_results, function(res) {
+  res$summary$paths["R^2", "DOC"]
+})
+```
+
+```{r, echo=FALSE}
+# Sort indices based on the extracted R^2 values
+sorted_indices <- order(r2_values, decreasing = TRUE)
+
+# Sort the non-NULL results by the sorted indices
+sorted_results <- imp_results[sorted_indices]
+
+# Sorted results now contains the summaries ordered by R^2 for DOC
+print('20000 run winner: ', sep ='')
+sorted_results[[1]]$summary$paths["R^2", "DOC"]
+sorted_results[[1]]$sampled_indicators
+
+```
+
+Or we can find the highest performing model where some value is specified for the 'DOC' response
+
+```{r, echo=FALSE}
+# Filter results for the specific DOC component 'relative_load_comp_3'
+landcover_response <- 'percent_cut.regenerating'
+docresponse <- 'relative_load_comp_3'
+
+#specific_DOC_results <- Filter(function(res) {
+#  docresponse %in% res$sampled_indicators$doc
+#}, sorted_results)
+
+specific_DOC_results <- Filter(function(res) {
+  docresponse %in% res$sampled_indicators$doc &&
+  landcover_response %in% res$sampled_indicators$landcover
+}, sorted_results)
+
+# If there are multiple models, select the one with the highest R^2 for DOC
+if (length(specific_DOC_results) > 0) {
+  best_model <- specific_DOC_results[[1]]  # Select the first model (best-performing)
+  
+  # Display the R^2 value for DOC
+  best_r2_DOC <- best_model$summary$paths["R^2", "DOC"]
+  cat("Best R^2 for DOC:", best_r2_DOC, "\n")
+  
+  # Display sampled indicators for this best model
+  cat("Selected DOC response:\n")
+  print(docresponse)
+  cat("Sampled indicators for best model:\n")
+  print(best_model$sampled_indicators)
+} else {
+  cat("No models found with DOC as \n")
+  print(docresponse)
+}
+```
+
+#### Visualizing all selected results (r2 of DOC >0.4)
+##### Indicator frequency
+
+```{r, echo=FALSE}
+# Extract the associated latent variable with each indicator:
+indicator_list <- lapply(sorted_results, function(result) {
+  # Iterate over each category in sampled_indicators
+  do.call(rbind, lapply(names(result$sampled_indicators), function(category) {
+    # Create a data frame for each category and its indicators
+    data.frame(
+      Indicator = result$sampled_indicators[[category]],
+      Category = category)
+    }))
+  })
+
+# Combine all data frames into a single data frame
+indicator_df <- do.call(rbind, indicator_list)
+
+# Create the frequency table
+indicator_counts <- as.data.frame(table(indicator_df$Indicator))
+colnames(indicator_counts) <- c("Indicator", "Frequency")
+
+# Merge the Category information from indicator_df
+indicator_counts <- merge(indicator_counts, indicator_df[, c("Indicator", "Category")], by = "Indicator", all.x = TRUE)
+
+# Ensure unique rows (to avoid duplication during merge)
+indicator_counts <- indicator_counts[!duplicated(indicator_counts), ]
+
+# Step 4: Visualize the results with a bar plot (using ggplot2)
+# Create the bar plot with colors by category
+ggplot(indicator_counts, aes(x = reorder(Indicator, Frequency), y = Frequency, fill = Category)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  scale_fill_manual(
+    values = c("topo" = "#e31a1c", "hydro" = "#1f78b4", 
+               "landcover" = "#33a02c", "doc" = "#ff7f00", 
+               "nutr" = "#6a3d9a")
+  ) +
+  labs(
+    title = "Frequency of Sampled Indicators by Category",
+    x = "Indicator",
+    y = "Frequency",
+    fill = "Category"
+  ) +
+  theme_minimal()
+
+```
+
+##### R2 distribution
+
+```{r, echo=FALSE, include=FALSE}
+# Function to create a dataframe with iteration, indicator, category, and R2 columns
+generate_dataframe_with_R2 <- function(sorted_results) {
+  do.call(rbind, lapply(seq_along(sorted_results), function(i) {
+    iteration <- rep(i, length(unlist(sorted_results[[i]]$sampled_indicators, use.names = FALSE)))
+    indicators <- unlist(sorted_results[[i]]$sampled_indicators, use.names = FALSE)
+    categories <- rep(names(sorted_results[[i]]$sampled_indicators), lengths(sorted_results[[i]]$sampled_indicators))
+    R2_value <- rep(sorted_results[[i]]$summary$paths["R^2", "DOC"], length(indicators))
+    data.frame(Iteration = iteration, Indicator = indicators, Category = categories, R2 = R2_value)
+  }))
+}
+
+# Example usage
+indicator_list <- generate_dataframe_with_R2(sorted_results)
+```
+
+##### Combine these two ideas: Create the dataframe
+
+```{r, echo=FALSE}
+# Apply the same color scheme for categories
+ggplot(indicator_list, aes(x = Indicator, y = R2, fill = Category)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.2, alpha = 0.5) +
+  scale_fill_manual(values = c(
+    "topo" = "#e31a1c",   # Example color for topo
+    "hydro" = "#1f78b4",  # Example color for hydro
+    "landcover" = "#33a02c", # Example color for landcover
+    "doc" = "#ff7f00",    # Example color for doc
+    "nutr" = "#6a3d9a"   # Example color for nutr (added here)
+  )) + 
+  labs(
+    title = "Distribution of R^2 Values by Indicator",
+    x = "Indicator",
+    y = "R^2 Value"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+#### Visualizing specific DOC results (r2 of DOC >0.4)
+##### Indicator frequency
+
+```{r, echo=FALSE}
+# Extract the associated latent variable with each indicator:
+indicator_list <- lapply(specific_DOC_results, function(result) {
+  # Iterate over each category in sampled_indicators
+  do.call(rbind, lapply(names(result$sampled_indicators), function(category) {
+    # Create a data frame for each category and its indicators
+    data.frame(
+      Indicator = result$sampled_indicators[[category]],
+      Category = category)
+    }))
+  })
+
+# Combine all data frames into a single data frame
+indicator_df <- do.call(rbind, indicator_list)
+
+# Create the frequency table
+indicator_counts <- as.data.frame(table(indicator_df$Indicator))
+colnames(indicator_counts) <- c("Indicator", "Frequency")
+
+# Merge the Category information from indicator_df
+indicator_counts <- merge(indicator_counts, indicator_df[, c("Indicator", "Category")], by = "Indicator", all.x = TRUE)
+
+# Ensure unique rows (to avoid duplication during merge)
+indicator_counts <- indicator_counts[!duplicated(indicator_counts), ]
+
+# Step 4: Visualize the results with a bar plot (using ggplot2)
+# Create the bar plot with colors by category
+ggplot(indicator_counts, aes(x = reorder(Indicator, Frequency), y = Frequency, fill = Category)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  scale_fill_manual(
+    values = c("topo" = "#e31a1c", "hydro" = "#1f78b4", 
+               "landcover" = "#33a02c", "doc" = "#ff7f00", 
+               "nutr" = "#6a3d9a")
+  ) +
+  labs(
+    title = "Frequency of Sampled Indicators by Category",
+    x = "Indicator",
+    y = "Frequency",
+    fill = "Category"
+  ) +
+  theme_minimal()
+```
+
+##### R2 distribution
+
+```{r, echo=FALSE}
+# Function to create a dataframe with iteration, indicator, category, and R2 columns
+generate_dataframe_with_R2 <- function(specific_DOC_results) {
+  do.call(rbind, lapply(seq_along(specific_DOC_results), function(i) {
+    iteration <- rep(i, length(unlist(specific_DOC_results[[i]]$sampled_indicators, use.names = FALSE)))
+    indicators <- unlist(specific_DOC_results[[i]]$sampled_indicators, use.names = FALSE)
+    categories <- rep(names(specific_DOC_results[[i]]$sampled_indicators), lengths(specific_DOC_results[[i]]$sampled_indicators))
+    R2_value <- rep(specific_DOC_results[[i]]$summary$paths["R^2", "DOC"], length(indicators))
+    data.frame(Iteration = iteration, Indicator = indicators, Category = categories, R2 = R2_value)
+  }))
+}
+
+# usage
+indicator_list <- generate_dataframe_with_R2(specific_DOC_results)
+```
+
+##### Combine these two ideas: Create the dataframe
+
+```{r, echo=FALSE}
+# Apply the same color scheme for categories
+ggplot(indicator_list, aes(x = Indicator, y = R2, fill = Category)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.2, alpha = 0.5) +
+  scale_fill_manual(values = c(
+    "topo" = "#e31a1c",   # Example color for topo
+    "hydro" = "#1f78b4",  # Example color for hydro
+    "landcover" = "#33a02c", # Example color for landcover
+    "doc" = "#ff7f00",    # Example color for doc
+    "nutr" = "#6a3d9a"   # Example color for nutr (added here)
+  )) + 
+  labs(
+    title = "Distribution of R^2 Values by Indicator",
+    x = "Indicator",
+    y = "R^2 Value"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+Select the 'best' indicators based on mean R2, standard deviation and probability of appearance. 
+
+```{r}
+# Calculate percentage for each indicator and category
+result <- indicator_list %>%
+  group_by(Indicator, Category) %>%
+  summarise(count = n(), .groups = "drop") %>%
+  mutate(percentage = count / max(indicator_list$Iteration) * 100)
+
+# Add a ranking index based on mean_R2 and sd_R2 where I want the highest ranking for indicators with relatively mean R^2 and relatively small standard deviation. 
+result <- indicator_list %>%
+  group_by(Indicator, Category) %>%
+  summarise(
+    count = n(),
+    mean_R2 = mean(R2, na.rm = TRUE),
+    sd_R2 = sd(R2, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    percentage = count / max(indicator_list$Iteration) * 100,
+    # Normalize mean_R2 (higher is better) and sd_R2 (lower is better)
+    mean_R2_norm = (mean_R2 - min(mean_R2)) / (max(mean_R2) - min(mean_R2)),
+    sd_R2_norm = (max(sd_R2) - sd_R2) / (max(sd_R2) - min(sd_R2)),
+    # Create a custom index (e.g., weighted sum of normalized values)
+    ranking_index = mean_R2_norm * 0.7 + sd_R2_norm * 0.3
+  ) %>%
+  arrange(desc(ranking_index)) # Sort by the ranking index in descending order
+
+# View the result
+print(result)
+```
+
+#### Generate flow diagram for the top performing model
+##### Beetlekill forest
+```{r, echo=FALSE}
+# Initialize model_df with the same number of rows as merged_df
+model_df <- data.frame(matrix(ncol = 0, nrow = nrow(filtered_df)))
+
+# Define a list of constructs and their corresponding variables
+indicators <- list(
+  topo = c("aspect_mean_rad"),
+  hydro = c("discharge_m2"),
+  landcover = c("percent_Tundra",      "percent_Old.Forest",  "percent_Beetle.kill"),
+  doc = c( "relative_load_comp_3", "peak_ratioAT", "Fluorescence_Index")
+)
+```
+
+```{r, include=FALSE}
+set.seed(123)  # For reproducibility
+```
+
+```{r, echo=FALSE}
+# Loop through each indicator and rename columns
+for (indicator in names(indicators)) {
+  variables <- indicators[[indicator]]
+  for (i in seq_along(variables)) {
+    old_name <- variables[i]
+    new_name <- paste0(indicator, "_", i)
+    
+    # Check if the old name exists in filtered_dfand add it to model_df with the new name
+    if (old_name %in% colnames(filtered_df)) {
+      model_df[[new_name]] <- filtered_df[[old_name]]
+    } else {
+      warning(paste("Column", old_name, "not found in filtered_df"))
+    }
+  }
+}
+
+# Check the new column names in model_df
+colnames(model_df)
+
+# Standardizing the environmental variables
+model_df_standardized <- as.data.frame(scale(model_df, center = TRUE, scale = TRUE))
+
+simple_FEF_mm <- constructs(
+  composite("TOPO", single_item("topo_1")),
+  composite("HYDRO",  single_item("hydro_1")),
+  composite("LANDCOVER", multi_items("landcover_", 1:length(indicators$landcover))),
+  composite("DOC",  single_item("doc_1"))
+)
+
+# Create structural model
+simple_FEF_sm <- relationships(
+paths(from = c("TOPO"), to = c("HYDRO","LANDCOVER", "DOC")), #"NUTRIENT",
+paths(from = c("LANDCOVER"), to = c("HYDRO","DOC")), #"NUTRIENT",
+paths(from = c("HYDRO"), to = c("DOC"))
+)
+set.seed=123
+# Estimate the model
+single_run <- estimate_pls(data = model_df_standardized,
+measurement_model = simple_FEF_mm,
+structural_model = simple_FEF_sm,
+inner_weights = path_weighting,
+missing = mean_replacement,
+missing_value = "NA")
+```
+
+```{r, echo = FALSE}
+# Summarize the model results
+summary_single_run <- summary(single_run)
+
+# Inspect the model’s path coefficients and the R^2 values
+print(summary_single_run)
+```
+
+```{r, echo = FALSE}
+Sys.sleep(1)
+```
+
+```{r, include=FALSE}
+# Bootstrap the model
+boot_simple_fef <- bootstrap_model(seminr_model =single_run ,
+nboot = 1000,
+cores = NULL,
+seed = 123)
+# Store the summary of the bootstrapped model
+sum_boot_simple_fef <- summary(boot_simple_fef)
+```
+
+```{r, echo=FALSE}
+# Extract the bootstrapped HTMT
+sum_boot_fef <- summary(boot_simple_fef, alpha= 0.10)
+
+sum_boot_fef$bootstrapped_HTMT
+```
+
+This gives us the confidence intervals of the HTMT ratio.
+
+```{r, include=FALSE}
+# Inspect the bootstrapped structural paths
+sum_boot_simple_fef$bootstrapped_paths
+# Inspect the bootstrapped indicator loadings
+sum_boot_simple_fef$bootstrapped_loadings
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width=8, fig.height=4}
+# bootstrap results in boot_simple_fef
+# Save the original graphical parameters
+old_par <- par()  
+
+# Change 'cex' for larger text size
+par(cex = 0.5)  
+
+plot(boot_simple_fef, title = "Bootstrapped Model\nHigh flow - Labile\n % Beetlekill\n Fluorescence Index")
+par(old_par)
+```
+
+```{r}
+print(indicators)
+```
+
+##### Regenerating forest
+```{r, echo=FALSE}
+# Initialize model_df with the same number of rows as merged_df
+model_df <- data.frame(matrix(ncol = 0, nrow = nrow(filtered_df)))
+
+# Define a list of constructs and their corresponding variables
+indicators <- list(
+  topo = c("twi_mean"),
+  hydro = c("snowpack_3day_avg"),
+  landcover = c("percent_cut.regenerating"),
+  doc = c( "Fluorescence_Index")
+)
+```
+
+```{r, include=FALSE}
+set.seed(123)  # For reproducibility
+```
+
+```{r, echo=FALSE}
+# Loop through each indicator and rename columns
+for (indicator in names(indicators)) {
+  variables <- indicators[[indicator]]
+  for (i in seq_along(variables)) {
+    old_name <- variables[i]
+    new_name <- paste0(indicator, "_", i)
+    
+    # Check if the old name exists in filtered_dfand add it to model_df with the new name
+    if (old_name %in% colnames(filtered_df)) {
+      model_df[[new_name]] <- filtered_df[[old_name]]
+    } else {
+      warning(paste("Column", old_name, "not found in filtered_df"))
+    }
+  }
+}
+
+# Check the new column names in model_df
+colnames(model_df)
+
+# Standardizing the environmental variables
+model_df_standardized <- as.data.frame(scale(model_df, center = TRUE, scale = TRUE))
+
+simple_FEF_mm <- constructs(
+  composite("TOPO", multi_items("topo_", 1:length(indicators$topo))),
+  composite("HYDRO",  single_item("hydro_1")),
+  composite("LANDCOVER", multi_items("landcover_", 1:length(indicators$landcover))),
+  composite("DOC",  single_item("doc_1"))
+)
+
+# Create structural model
+simple_FEF_sm <- relationships(
+paths(from = c("TOPO"), to = c("HYDRO","LANDCOVER", "DOC")), #"NUTRIENT",
+paths(from = c("LANDCOVER"), to = c("HYDRO","DOC")), #"NUTRIENT",
+paths(from = c("HYDRO"), to = c("DOC"))
+)
+set.seed=123
+# Estimate the model
+single_run <- estimate_pls(data = model_df_standardized,
+measurement_model = simple_FEF_mm,
+structural_model = simple_FEF_sm,
+inner_weights = path_weighting,
+missing = mean_replacement,
+missing_value = "NA")
+```
+
+```{r, echo = FALSE}
+# Summarize the model results
+summary_single_run <- summary(single_run)
+
+# Inspect the model’s path coefficients and the R^2 values
+print(summary_single_run)
+```
+
+```{r, echo = FALSE}
+Sys.sleep(1)
+```
+
+```{r, include=FALSE}
+# Bootstrap the model
+boot_simple_fef <- bootstrap_model(seminr_model =single_run ,
+nboot = 1000,
+cores = NULL,
+seed = 123)
+# Store the summary of the bootstrapped model
+sum_boot_simple_fef <- summary(boot_simple_fef)
+```
+
+```{r, echo=FALSE}
+# Extract the bootstrapped HTMT
+sum_boot_fef <- summary(boot_simple_fef, alpha= 0.10)
+
+sum_boot_fef$bootstrapped_HTMT
+```
+
+This gives us the confidence intervals of the HTMT ratio.
+
+```{r, include=FALSE}
+# Inspect the bootstrapped structural paths
+sum_boot_simple_fef$bootstrapped_paths
+# Inspect the bootstrapped indicator loadings
+sum_boot_simple_fef$bootstrapped_loadings
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width=8, fig.height=4}
+# bootstrap results in boot_simple_fef
+# Save the original graphical parameters
+old_par <- par()  
+
+# Change 'cex' for larger text size
+par(cex = 0.5)  
+
+plot(boot_simple_fef, title = "Bootstrapped Model\nHigh flow - Labile\n % Regenerating Harvest\n Fluorescence Index")
+par(old_par)
+```
+
+```{r}
+print(indicators)
+```
+
+##### Old Forest
+```{r, echo=FALSE}
+# Initialize model_df with the same number of rows as merged_df
+model_df <- data.frame(matrix(ncol = 0, nrow = nrow(filtered_df)))
+
+# Define a list of constructs and their corresponding variables
+indicators <- list(
+  topo = c("twi_mean", 'aspect_mean_rad'),
+  hydro = c("snowpack_3day_avg"),
+  landcover = c("percent_Old.Forest"),
+  doc = c( "Fluorescence_Index")
+)
+```
+
+```{r, include=FALSE}
+set.seed(123)  # For reproducibility
+```
+
+```{r, echo=FALSE}
+# Loop through each indicator and rename columns
+for (indicator in names(indicators)) {
+  variables <- indicators[[indicator]]
+  for (i in seq_along(variables)) {
+    old_name <- variables[i]
+    new_name <- paste0(indicator, "_", i)
+    
+    # Check if the old name exists in filtered_dfand add it to model_df with the new name
+    if (old_name %in% colnames(filtered_df)) {
+      model_df[[new_name]] <- filtered_df[[old_name]]
+    } else {
+      warning(paste("Column", old_name, "not found in filtered_df"))
+    }
+  }
+}
+
+# Check the new column names in model_df
+colnames(model_df)
+
+# Standardizing the environmental variables
+model_df_standardized <- as.data.frame(scale(model_df, center = TRUE, scale = TRUE))
+
+simple_FEF_mm <- constructs(
+  composite("TOPO", multi_items("topo_", 1:length(indicators$topo))),
+  composite("HYDRO",  single_item("hydro_1")),
+  composite("LANDCOVER", multi_items("landcover_", 1:length(indicators$landcover))),
+  composite("DOC",  single_item("doc_1"))
+)
+
+# Create structural model
+simple_FEF_sm <- relationships(
+paths(from = c("TOPO"), to = c("HYDRO","LANDCOVER", "DOC")), #"NUTRIENT",
+paths(from = c("LANDCOVER"), to = c("HYDRO","DOC")), #"NUTRIENT",
+paths(from = c("HYDRO"), to = c("DOC"))
+)
+set.seed=123
+# Estimate the model
+single_run <- estimate_pls(data = model_df_standardized,
+measurement_model = simple_FEF_mm,
+structural_model = simple_FEF_sm,
+inner_weights = path_weighting,
+missing = mean_replacement,
+missing_value = "NA")
+```
+
+```{r, echo = FALSE}
+# Summarize the model results
+summary_single_run <- summary(single_run)
+
+# Inspect the model’s path coefficients and the R^2 values
+print(summary_single_run)
+```
+
+```{r, echo = FALSE}
+Sys.sleep(1)
+```
+
+```{r, include=FALSE}
+# Bootstrap the model
+boot_simple_fef <- bootstrap_model(seminr_model =single_run ,
+nboot = 1000,
+cores = NULL,
+seed = 123)
+# Store the summary of the bootstrapped model
+sum_boot_simple_fef <- summary(boot_simple_fef)
+```
+
+```{r, echo=FALSE}
+# Extract the bootstrapped HTMT
+sum_boot_fef <- summary(boot_simple_fef, alpha= 0.10)
+
+sum_boot_fef$bootstrapped_HTMT
+```
+
+This gives us the confidence intervals of the HTMT ratio.
+
+```{r, include=FALSE}
+# Inspect the bootstrapped structural paths
+sum_boot_simple_fef$bootstrapped_paths
+# Inspect the bootstrapped indicator loadings
+sum_boot_simple_fef$bootstrapped_loadings
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width=8, fig.height=4}
+# bootstrap results in boot_simple_fef
+# Save the original graphical parameters
+old_par <- par()  
+
+# Change 'cex' for larger text size
+par(cex = 0.5)  
+
+plot(boot_simple_fef, title = "Bootstrapped Model\nHigh flow - Labile\n % Old Forest\n Fluorescence Index")
+par(old_par)
+```
+
+##### Beetlekill forest and PARAFAC C3
+```{r, echo=FALSE}
+# Initialize model_df with the same number of rows as merged_df
+model_df <- data.frame(matrix(ncol = 0, nrow = nrow(filtered_df)))
+
+# Define a list of constructs and their corresponding variables
+indicators <- list(
+  topo = c("twi_mean"),
+  hydro = c("snowpack_3day_avg"),
+  landcover = c("percent_Beetle.kill"),
+  doc = c( "relative_load_comp_3")
+)
+```
+
+```{r, include=FALSE}
+set.seed(123)  # For reproducibility
+```
+
+```{r, echo=FALSE}
+# Loop through each indicator and rename columns
+for (indicator in names(indicators)) {
+  variables <- indicators[[indicator]]
+  for (i in seq_along(variables)) {
+    old_name <- variables[i]
+    new_name <- paste0(indicator, "_", i)
+    
+    # Check if the old name exists in filtered_dfand add it to model_df with the new name
+    if (old_name %in% colnames(filtered_df)) {
+      model_df[[new_name]] <- filtered_df[[old_name]]
+    } else {
+      warning(paste("Column", old_name, "not found in filtered_df"))
+    }
+  }
+}
+
+# Check the new column names in model_df
+colnames(model_df)
+
+# Standardizing the environmental variables
+model_df_standardized <- as.data.frame(scale(model_df, center = TRUE, scale = TRUE))
+
+simple_FEF_mm <- constructs(
+  composite("TOPO", multi_items("topo_", 1:length(indicators$topo))),
+  composite("HYDRO",  single_item("hydro_1")),
+  composite("LANDCOVER", multi_items("landcover_", 1:length(indicators$landcover))),
+  composite("DOC",  single_item("doc_1"))
+)
+
+# Create structural model
+simple_FEF_sm <- relationships(
+paths(from = c("TOPO"), to = c("HYDRO","LANDCOVER", "DOC")), #"NUTRIENT",
+paths(from = c("LANDCOVER"), to = c("HYDRO","DOC")), #"NUTRIENT",
+paths(from = c("HYDRO"), to = c("DOC"))
+)
+set.seed=123
+# Estimate the model
+single_run <- estimate_pls(data = model_df_standardized,
+measurement_model = simple_FEF_mm,
+structural_model = simple_FEF_sm,
+inner_weights = path_weighting,
+missing = mean_replacement,
+missing_value = "NA")
+```
+
+```{r, echo = FALSE}
+# Summarize the model results
+summary_single_run <- summary(single_run)
+
+# Inspect the model’s path coefficients and the R^2 values
+print(summary_single_run)
+```
+
+```{r, echo = FALSE}
+Sys.sleep(1)
+```
+
+```{r, include=FALSE}
+# Bootstrap the model
+boot_simple_fef <- bootstrap_model(seminr_model =single_run ,
+nboot = 1000,
+cores = NULL,
+seed = 123)
+# Store the summary of the bootstrapped model
+sum_boot_simple_fef <- summary(boot_simple_fef)
+```
+
+```{r, echo=FALSE}
+# Extract the bootstrapped HTMT
+sum_boot_fef <- summary(boot_simple_fef, alpha= 0.10)
+
+sum_boot_fef$bootstrapped_HTMT
+```
+
+This gives us the confidence intervals of the HTMT ratio.
+
+```{r, include=FALSE}
+# Inspect the bootstrapped structural paths
+sum_boot_simple_fef$bootstrapped_paths
+# Inspect the bootstrapped indicator loadings
+sum_boot_simple_fef$bootstrapped_loadings
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width=8, fig.height=4}
+# bootstrap results in boot_simple_fef
+# Save the original graphical parameters
+old_par <- par()  
+
+# Change 'cex' for larger text size
+par(cex = 0.5)  
+
+plot(boot_simple_fef, title = "Bootstrapped Model\nHigh flow - Labile\n % Beetlekill\n PARAFAC %Component3")
+par(old_par)
+```
+
+```{r}
+print(indicators)
+```
+
+### Model 4: Low flows - HUMIC -WO/NUTRIENTS (AUTOMATED)
+
+```{r, include=FALSE}
+
+# filter for low flows
+filtered_df <- merged_df %>%
+  filter(position == 'stream')%>%
+  mutate(
+    baseflow = ifelse(stage_num == 1, 1, 0),
+    lower_decreasing = ifelse(stage_num == 2, 1, 0),
+    upper_decreasing = ifelse(stage_num == 3, 1, 0),
+    increasing = ifelse(stage_num == 4, 1, 0)
+  )%>%
+  filter(baseflow == 1 | lower_decreasing == 1)
+
+# Add log discharge column
+filtered_df$log_discharge <- log10(filtered_df$Qm3_s) 
+
+# add per m
+filtered_df$log_discharge_m2 <- log10(filtered_df$discharge_m2)  
+
+#Adjust constant as needed
+filtered_df$log_input_m2 <- log10(filtered_df$Input.mm_m2+ 1e-6)  
+```
+
+#### Indicator list 
+These will be the indicators that will be randomly selected from during automation. Select labile or humic DOC responses here
+
+```{r}
+model_df <- data.frame(matrix(ncol = 0, nrow = nrow(filtered_df)))
+
+indicators <- list(
+  topo = c( "disttostreams_mean", 'twi_mean', 'area_km', "elevabovestreams_mean",  "aspect_mean_rad"),
+  hydro = c("discharge_m2"),
+  landcover = c("percent_Beetle.kill", "percent_Meadows","percent_Old.Forest","percent_cut.regenerating",
+"percent_Tundra" ,"ndvi_raster_mean"),
+  doc = c("relative_load_comp_1", "relative_load_comp_2", "norm_PARAF_c1", "norm_PARAF_c2", "peak_T_275.340", "Fluorescence_Index", "SUVA254", "peak_ratioAT", "peak_ratioCT")
+)
+```
+
+#### Run the function written in .R script
+
+```{r, echo=FALSE}
+set.seed(123)  # For reproducibility
+#org_runs4 <- pls_models_no_nutrients(filtered_df, indicators, n_iter = 20000)
+# Filter out NULL entries from the org_runs list
+#org_runs_no_nan4 <- org_runs4[!sapply(org_runs4, is.null)]
+
+# Save the list
+#saveRDS(org_runs_no_nan4, file = "humic_noions_low_flow_20000.rds")
+
+# Load the list
+imp_results4 <- imp_results <- readRDS("humic_noions_low_flow_20000.rds")
+```
+
+```{r, echo=FALSE}
+# Extract the R^2 for DOC for each non-NULL result
+r2_values <- sapply(imp_results4, function(res) {
+  res$summary$paths["R^2", "DOC"]
+})
+```
+
+```{r, echo=FALSE}
+# Sort indices based on the extracted R^2 values
+sorted_indices <- order(r2_values, decreasing = TRUE)
+
+# Sort the non-NULL results by the sorted indices
+sorted_results <- imp_results[sorted_indices]
+
+# Sorted results now contains the summaries ordered by R^2 for DOC
+print('20000 run winner: ', sep ='')
+sorted_results[[1]]$summary$paths["R^2", "DOC"]
+sorted_results[[1]]$sampled_indicators
+
+```
+
+Or we can find the highest performing model where some value is specified for the 'DOC' response
+
+```{r, echo=FALSE}
+# Filter results for the specific DOC component 'relative_load_comp_3'
+landcover_response <-'percent_cut.regenerating'
+docresponse <- 'relative_load_comp_1'
+
+#specific_DOC_results <- Filter(function(res) {
+#  docresponse %in% res$sampled_indicators$doc
+#}, sorted_results)
+
+specific_DOC_results <- Filter(function(res) {
+  docresponse %in% res$sampled_indicators$doc &&
+  landcover_response %in% res$sampled_indicators$landcover
+}, sorted_results)
+
+# If there are multiple models, select the one with the highest R^2 for DOC
+if (length(specific_DOC_results) > 0) {
+  best_model <- specific_DOC_results[[1]]  # Select the first model (best-performing)
+  
+  # Display the R^2 value for DOC
+  best_r2_DOC <- best_model$summary$paths["R^2", "DOC"]
+  cat("Best R^2 for DOC:", best_r2_DOC, "\n")
+  
+  # Display sampled indicators for this best model
+  cat("Selected DOC response:\n")
+  print(docresponse)
+  cat("Sampled indicators for best model:\n")
+  print(best_model$sampled_indicators)
+} else {
+  cat("No models found with DOC as \n")
+  print(docresponse)
+}
+```
+
+#### Visualizing all selected results (r2 of DOC >0.4)
+##### Indicator frequency
+
+```{r, echo=FALSE}
+# Extract the associated latent variable with each indicator:
+indicator_list <- lapply(sorted_results, function(result) {
+  # Iterate over each category in sampled_indicators
+  do.call(rbind, lapply(names(result$sampled_indicators), function(category) {
+    # Create a data frame for each category and its indicators
+    data.frame(
+      Indicator = result$sampled_indicators[[category]],
+      Category = category)
+    }))
+  })
+
+# Combine all data frames into a single data frame
+indicator_df <- do.call(rbind, indicator_list)
+
+# Create the frequency table
+indicator_counts <- as.data.frame(table(indicator_df$Indicator))
+colnames(indicator_counts) <- c("Indicator", "Frequency")
+
+# Merge the Category information from indicator_df
+indicator_counts <- merge(indicator_counts, indicator_df[, c("Indicator", "Category")], by = "Indicator", all.x = TRUE)
+
+# Ensure unique rows (to avoid duplication during merge)
+indicator_counts <- indicator_counts[!duplicated(indicator_counts), ]
+
+# Step 4: Visualize the results with a bar plot (using ggplot2)
+# Create the bar plot with colors by category
+ggplot(indicator_counts, aes(x = reorder(Indicator, Frequency), y = Frequency, fill = Category)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  scale_fill_manual(
+    values = c("topo" = "#e31a1c", "hydro" = "#1f78b4", 
+               "landcover" = "#33a02c", "doc" = "#ff7f00", 
+               "nutr" = "#6a3d9a")
+  ) +
+  labs(
+    title = "Frequency of Sampled Indicators by Category",
+    x = "Indicator",
+    y = "Frequency",
+    fill = "Category"
+  ) +
+  theme_minimal()
+
+```
+
+##### R2 distribution
+
+```{r, echo=FALSE, include=FALSE}
+# Function to create a dataframe with iteration, indicator, category, and R2 columns
+generate_dataframe_with_R2 <- function(sorted_results) {
+  do.call(rbind, lapply(seq_along(sorted_results), function(i) {
+    iteration <- rep(i, length(unlist(sorted_results[[i]]$sampled_indicators, use.names = FALSE)))
+    indicators <- unlist(sorted_results[[i]]$sampled_indicators, use.names = FALSE)
+    categories <- rep(names(sorted_results[[i]]$sampled_indicators), lengths(sorted_results[[i]]$sampled_indicators))
+    R2_value <- rep(sorted_results[[i]]$summary$paths["R^2", "DOC"], length(indicators))
+    data.frame(Iteration = iteration, Indicator = indicators, Category = categories, R2 = R2_value)
+  }))
+}
+
+# Example usage
+indicator_list <- generate_dataframe_with_R2(sorted_results)
+```
+
+##### Combine these two ideas: Create the dataframe
+
+```{r, echo=FALSE}
+# Apply the same color scheme for categories
+ggplot(indicator_list, aes(x = Indicator, y = R2, fill = Category)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.2, alpha = 0.5) +
+  scale_fill_manual(values = c(
+    "topo" = "#e31a1c",   # Example color for topo
+    "hydro" = "#1f78b4",  # Example color for hydro
+    "landcover" = "#33a02c", # Example color for landcover
+    "doc" = "#ff7f00",    # Example color for doc
+    "nutr" = "#6a3d9a"   # Example color for nutr (added here)
+  )) + 
+  labs(
+    title = "Distribution of R^2 Values by Indicator",
+    x = "Indicator",
+    y = "R^2 Value"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+#### Visualizing specific DOC results (r2 of DOC >0.4)
+##### Indicator frequency
+
+```{r, echo=FALSE}
+# Extract the associated latent variable with each indicator:
+indicator_list <- lapply(specific_DOC_results, function(result) {
+  # Iterate over each category in sampled_indicators
+  do.call(rbind, lapply(names(result$sampled_indicators), function(category) {
+    # Create a data frame for each category and its indicators
+    data.frame(
+      Indicator = result$sampled_indicators[[category]],
+      Category = category)
+    }))
+  })
+
+# Combine all data frames into a single data frame
+indicator_df <- do.call(rbind, indicator_list)
+
+# Create the frequency table
+indicator_counts <- as.data.frame(table(indicator_df$Indicator))
+colnames(indicator_counts) <- c("Indicator", "Frequency")
+
+# Merge the Category information from indicator_df
+indicator_counts <- merge(indicator_counts, indicator_df[, c("Indicator", "Category")], by = "Indicator", all.x = TRUE)
+
+# Ensure unique rows (to avoid duplication during merge)
+indicator_counts <- indicator_counts[!duplicated(indicator_counts), ]
+
+# Step 4: Visualize the results with a bar plot (using ggplot2)
+# Create the bar plot with colors by category
+ggplot(indicator_counts, aes(x = reorder(Indicator, Frequency), y = Frequency, fill = Category)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  scale_fill_manual(
+    values = c("topo" = "#e31a1c", "hydro" = "#1f78b4", 
+               "landcover" = "#33a02c", "doc" = "#ff7f00", 
+               "nutr" = "#6a3d9a")
+  ) +
+  labs(
+    title = "Frequency of Sampled Indicators by Category",
+    x = "Indicator",
+    y = "Frequency",
+    fill = "Category"
+  ) +
+  theme_minimal()
+
+```
+
+##### R2 distribution
+
+```{r, echo=FALSE, include=FALSE}
+# Function to create a dataframe with iteration, indicator, category, and R2 columns
+generate_dataframe_with_R2 <- function(specific_DOC_results) {
+  do.call(rbind, lapply(seq_along(specific_DOC_results), function(i) {
+    iteration <- rep(i, length(unlist(specific_DOC_results[[i]]$sampled_indicators, use.names = FALSE)))
+    indicators <- unlist(specific_DOC_results[[i]]$sampled_indicators, use.names = FALSE)
+    categories <- rep(names(specific_DOC_results[[i]]$sampled_indicators), lengths(specific_DOC_results[[i]]$sampled_indicators))
+    R2_value <- rep(specific_DOC_results[[i]]$summary$paths["R^2", "DOC"], length(indicators))
+    data.frame(Iteration = iteration, Indicator = indicators, Category = categories, R2 = R2_value)
+  }))
+}
+
+# usage
+indicator_list <- generate_dataframe_with_R2(specific_DOC_results)
+```
+
+##### Combine these two ideas: Create the dataframe
+
+```{r, echo=FALSE}
+# Apply the same color scheme for categories
+ggplot(indicator_list, aes(x = Indicator, y = R2, fill = Category)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.2, alpha = 0.5) +
+  scale_fill_manual(values = c(
+    "topo" = "#e31a1c",   # Example color for topo
+    "hydro" = "#1f78b4",  # Example color for hydro
+    "landcover" = "#33a02c", # Example color for landcover
+    "doc" = "#ff7f00",    # Example color for doc
+    "nutr" = "#6a3d9a"   # Example color for nutr (added here)
+  )) + 
+  labs(
+    title = "Distribution of R^2 Values by Indicator",
+    x = "Indicator",
+    y = "R^2 Value"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+#### Generate flow diagram for the top performing model
+
+```{r, echo=FALSE}
+# Initialize model_df with the same number of rows as merged_df
+model_df <- data.frame(matrix(ncol = 0, nrow = nrow(filtered_df)))
+
+# Define a list of constructs and their corresponding variables
+indicators <- list(
+  topo = c("twi_mean"),
+  hydro = c("discharge_m2"),
+  landcover = c("percent_cut.regenerating"),
+  doc = c("peak_ratioCT", "relative_load_comp_2", "SUVA254")
+)
+```
+
+```{r, include=FALSE}
+set.seed(123)  # For reproducibility
+```
+
+```{r, echo=FALSE}
+# Loop through each indicator and rename columns
+for (indicator in names(indicators)) {
+  variables <- indicators[[indicator]]
+  for (i in seq_along(variables)) {
+    old_name <- variables[i]
+    new_name <- paste0(indicator, "_", i)
+    
+    # Check if the old name exists in filtered_dfand add it to model_df with the new name
+    if (old_name %in% colnames(filtered_df)) {
+      model_df[[new_name]] <- filtered_df[[old_name]]
+    } else {
+      warning(paste("Column", old_name, "not found in filtered_df"))
+    }
+  }
+}
+
+# Check the new column names in model_df
+colnames(model_df)
+
+# Standardizing the environmental variables
+model_df_standardized <- as.data.frame(scale(model_df, center = TRUE, scale = TRUE))
+
+simple_FEF_mm <- constructs(
+  composite("TOPO", single_item("topo_1")),
+  composite("HYDRO",  single_item("hydro_1")),
+  composite("LANDCOVER", single_item("landcover_1")),
+  composite("DOC",  multi_items("doc_", 1:length(indicators$doc)))
+)
+
+# Create structural model
+simple_FEF_sm <- relationships(
+paths(from = c("TOPO"), to = c("HYDRO","LANDCOVER","DOC")), #"NUTRIENT",
+paths(from = c("LANDCOVER"), to = c("HYDRO","DOC")), #"NUTRIENT",
+paths(from = c("HYDRO"), to = c("DOC"))
+)
+set.seed=123
+# Estimate the model
+single_run <- estimate_pls(data = model_df_standardized,
+measurement_model = simple_FEF_mm,
+structural_model = simple_FEF_sm,
+inner_weights = path_weighting,
+missing = mean_replacement,
+missing_value = "NA")
+```
+
+```{r, echo = FALSE}
+# Summarize the model results
+summary_single_run <- summary(single_run)
+
+# Inspect the model’s path coefficients and the R^2 values
+print(summary_single_run)
+```
+
+```{r, echo = FALSE}
+Sys.sleep(1)
+```
+
+```{r, include=FALSE}
+# Bootstrap the model
+boot_simple_fef <- bootstrap_model(seminr_model =single_run ,
+nboot = 10000,
+cores = NULL,
+seed = 123)
+# Store the summary of the bootstrapped model
+sum_boot_simple_fef <- summary(boot_simple_fef)
+```
+
+```{r, echo=FALSE}
+# Extract the bootstrapped HTMT
+sum_boot_fef <- summary(boot_simple_fef, alpha= 0.10)
+
+sum_boot_fef$bootstrapped_HTMT
+```
+
+This gives us the confidence intervals of the HTMT ratio.
+
+```{r, include=FALSE}
+# Inspect the bootstrapped structural paths
+sum_boot_simple_fef$bootstrapped_paths
+# Inspect the bootstrapped indicator loadings
+sum_boot_simple_fef$bootstrapped_loadings
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width=8, fig.height=4}
+# bootstrap results in boot_simple_fef
+# Save the original graphical parameters
+old_par <- par()  
+
+# Change 'cex' for larger text size
+par(cex = 0.5)  
+
+plot(boot_simple_fef, title = "Bootstrapped Model\nLow flow - Humic")
+par(old_par)
+```
+
+```{r}
+print(indicators)
+```
+
+### Model 5: Low flows - LABILE -WO/NUTRIENTS (AUTOMATED)
+
+```{r, include=FALSE}
+
+# filter for low flows
+filtered_df <- merged_df %>%
+  filter(position == 'stream')%>%
+  mutate(
+    baseflow = ifelse(stage_num == 1, 1, 0),
+    lower_decreasing = ifelse(stage_num == 2, 1, 0),
+    upper_decreasing = ifelse(stage_num == 3, 1, 0),
+    increasing = ifelse(stage_num == 4, 1, 0)
+  )%>%
+  filter(baseflow == 1 | lower_decreasing == 1)
+  #filter(format(datetime, "%m-%d") >= "07-31" & format(datetime, "%m-%d") <= "04-31")
+
+# Add log discharge column
+filtered_df$log_discharge <- log10(filtered_df$Qm3_s) 
+
+# add per m
+filtered_df$log_discharge_m2 <- log10(filtered_df$discharge_m2)  
+
+#Adjust constant as needed
+filtered_df$log_input_m2 <- log10(filtered_df$Input.mm_m2+ 1e-6)  
+```
+
+#### Indicator list 
+These will be the indicators that will be randomly selected from during automation. Select labile or humic DOC responses here
+
+```{r}
+model_df <- data.frame(matrix(ncol = 0, nrow = nrow(filtered_df)))
+
+indicators <- list(
+  topo = c( "disttostreams_mean", 'twi_mean', 'area_km', "elevabovestreams_mean",  "aspect_mean_rad"),
+  hydro = c("discharge_m2"),
+  landcover = c("percent_Beetle.kill", "percent_Meadows","percent_Old.Forest","percent_cut.regenerating","percent_Tundra" ,"ndvi_raster_mean"),
+  doc = c("relative_load_comp_3", "norm_PARAF_c3", "peak_T_275.340", "Fluorescence_Index", "SUVA254", "peak_ratioAT", "peak_ratioCT")
+)
+```
+
+#### Run the function written in .R script
+
+```{r, echo=FALSE}
+set.seed(123)  # For reproducibility
+#org_runs5 <- pls_models_no_nutrients(filtered_df, indicators, n_iter = 20000)
+# Filter out NULL entries from the org_runs list
+#org_runs_no_nan5 <- org_runs5[!sapply(org_runs5, is.null)]
+
+# Save the list
+#saveRDS(org_runs_no_nan5, file = "labile_noions_low_flow_20000.rds")
+
+# Load the list
+imp_results5 <- imp_results <- readRDS("labile_noions_low_flow_20000.rds")
+```
+
+```{r, echo=FALSE}
+# Extract the R^2 for DOC for each non-NULL result
+r2_values <- sapply(imp_results5, function(res) {
+  res$summary$paths["R^2", "DOC"]
+})
+```
+
+```{r, echo=FALSE}
+# Sort indices based on the extracted R^2 values
+sorted_indices <- order(r2_values, decreasing = TRUE)
+
+# Sort the non-NULL results by the sorted indices
+sorted_results <- imp_results[sorted_indices]
+
+# Sorted results now contains the summaries ordered by R^2 for DOC
+print('20000 run winner: ', sep ='')
+sorted_results[[1]]$summary$paths["R^2", "DOC"]
+sorted_results[[1]]$sampled_indicators
+
+```
+
+Or we can find the highest performing model where some value is specified for the 'DOC' response
+
+```{r, echo=FALSE}
+# Filter results for the specific DOC component 'relative_load_comp_3'
+landcover_response <- 'percent_cut.regenerating'
+docresponse <- 'relative_load_comp_3'
+
+#specific_DOC_results <- Filter(function(res) {
+#  docresponse %in% res$sampled_indicators$doc
+#}, sorted_results)
+
+specific_DOC_results <- Filter(function(res) {
+  docresponse %in% res$sampled_indicators$doc &&
+  landcover_response %in% res$sampled_indicators$landcover
+}, sorted_results)
+
+# If there are multiple models, select the one with the highest R^2 for DOC
+if (length(specific_DOC_results) > 0) {
+  best_model <- specific_DOC_results[[1]]  # Select the first model (best-performing)
+  
+  # Display the R^2 value for DOC
+  best_r2_DOC <- best_model$summary$paths["R^2", "DOC"]
+  cat("Best R^2 for DOC:", best_r2_DOC, "\n")
+  
+  # Display sampled indicators for this best model
+  cat("Selected DOC response:\n")
+  print(docresponse)
+  cat("Sampled indicators for best model:\n")
+  print(best_model$sampled_indicators)
+} else {
+  cat("No models found with DOC as \n")
+  print(docresponse)
+}
+```
+
+#### Visualizing all selected results (r2 of DOC >0.4)
+##### Indicator frequency
+
+```{r, echo=FALSE}
+# Extract the associated latent variable with each indicator:
+indicator_list <- lapply(sorted_results, function(result) {
+  # Iterate over each category in sampled_indicators
+  do.call(rbind, lapply(names(result$sampled_indicators), function(category) {
+    # Create a data frame for each category and its indicators
+    data.frame(
+      Indicator = result$sampled_indicators[[category]],
+      Category = category)
+    }))
+  })
+
+# Combine all data frames into a single data frame
+indicator_df <- do.call(rbind, indicator_list)
+
+# Create the frequency table
+indicator_counts <- as.data.frame(table(indicator_df$Indicator))
+colnames(indicator_counts) <- c("Indicator", "Frequency")
+
+# Merge the Category information from indicator_df
+indicator_counts <- merge(indicator_counts, indicator_df[, c("Indicator", "Category")], by = "Indicator", all.x = TRUE)
+
+# Ensure unique rows (to avoid duplication during merge)
+indicator_counts <- indicator_counts[!duplicated(indicator_counts), ]
+
+# Step 4: Visualize the results with a bar plot (using ggplot2)
+# Create the bar plot with colors by category
+ggplot(indicator_counts, aes(x = reorder(Indicator, Frequency), y = Frequency, fill = Category)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  scale_fill_manual(
+    values = c("topo" = "#e31a1c", "hydro" = "#1f78b4", 
+               "landcover" = "#33a02c", "doc" = "#ff7f00", 
+               "nutr" = "#6a3d9a")
+  ) +
+  labs(
+    title = "Frequency of Sampled Indicators by Category",
+    x = "Indicator",
+    y = "Frequency",
+    fill = "Category"
+  ) +
+  theme_minimal()
+
+```
+
+##### R2 distribution
+
+```{r, echo=FALSE}
+# Function to create a dataframe with iteration, indicator, category, and R2 columns
+generate_dataframe_with_R2 <- function(sorted_results) {
+  do.call(rbind, lapply(seq_along(sorted_results), function(i) {
+    iteration <- rep(i, length(unlist(sorted_results[[i]]$sampled_indicators, use.names = FALSE)))
+    indicators <- unlist(sorted_results[[i]]$sampled_indicators, use.names = FALSE)
+    categories <- rep(names(sorted_results[[i]]$sampled_indicators), lengths(sorted_results[[i]]$sampled_indicators))
+    R2_value <- rep(sorted_results[[i]]$summary$paths["R^2", "DOC"], length(indicators))
+    data.frame(Iteration = iteration, Indicator = indicators, Category = categories, R2 = R2_value)
+  }))
+}
+
+# Example usage
+indicator_list <- generate_dataframe_with_R2(sorted_results)
+```
+
+##### Combine these two ideas: Create the dataframe
+
+```{r, echo=FALSE}
+# Apply the same color scheme for categories
+ggplot(indicator_list, aes(x = Indicator, y = R2, fill = Category)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.2, alpha = 0.5) +
+  scale_fill_manual(values = c(
+    "topo" = "#e31a1c",   # Example color for topo
+    "hydro" = "#1f78b4",  # Example color for hydro
+    "landcover" = "#33a02c", # Example color for landcover
+    "doc" = "#ff7f00",    # Example color for doc
+    "nutr" = "#6a3d9a"   # Example color for nutr (added here)
+  )) + 
+  labs(
+    title = "Distribution of R^2 Values by Indicator",
+    x = "Indicator",
+    y = "R^2 Value"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+#### Visualizing specific DOC results (r2 of DOC >0.4)
+##### Indicator frequency
+
+```{r, echo=FALSE}
+# Extract the associated latent variable with each indicator:
+indicator_list <- lapply(specific_DOC_results, function(result) {
+  # Iterate over each category in sampled_indicators
+  do.call(rbind, lapply(names(result$sampled_indicators), function(category) {
+    # Create a data frame for each category and its indicators
+    data.frame(
+      Indicator = result$sampled_indicators[[category]],
+      Category = category)
+    }))
+  })
+
+# Combine all data frames into a single data frame
+indicator_df <- do.call(rbind, indicator_list)
+
+# Create the frequency table
+indicator_counts <- as.data.frame(table(indicator_df$Indicator))
+colnames(indicator_counts) <- c("Indicator", "Frequency")
+
+# Merge the Category information from indicator_df
+indicator_counts <- merge(indicator_counts, indicator_df[, c("Indicator", "Category")], by = "Indicator", all.x = TRUE)
+
+# Ensure unique rows (to avoid duplication during merge)
+indicator_counts <- indicator_counts[!duplicated(indicator_counts), ]
+
+# Step 4: Visualize the results with a bar plot (using ggplot2)
+# Create the bar plot with colors by category
+ggplot(indicator_counts, aes(x = reorder(Indicator, Frequency), y = Frequency, fill = Category)) +
+  geom_bar(stat = "identity") +
+  coord_flip() +
+  scale_fill_manual(
+    values = c("topo" = "#e31a1c", "hydro" = "#1f78b4", 
+               "landcover" = "#33a02c", "doc" = "#ff7f00", 
+               "nutr" = "#6a3d9a")
+  ) +
+  labs(
+    title = "Frequency of Sampled Indicators by Category",
+    x = "Indicator",
+    y = "Frequency",
+    fill = "Category"
+  ) +
+  theme_minimal()
+
+```
+
+##### R2 distribution
+
+```{r, echo=FALSE}
+# Function to create a dataframe with iteration, indicator, category, and R2 columns
+generate_dataframe_with_R2 <- function(specific_DOC_results) {
+  do.call(rbind, lapply(seq_along(specific_DOC_results), function(i) {
+    iteration <- rep(i, length(unlist(specific_DOC_results[[i]]$sampled_indicators, use.names = FALSE)))
+    indicators <- unlist(specific_DOC_results[[i]]$sampled_indicators, use.names = FALSE)
+    categories <- rep(names(specific_DOC_results[[i]]$sampled_indicators), lengths(specific_DOC_results[[i]]$sampled_indicators))
+    R2_value <- rep(specific_DOC_results[[i]]$summary$paths["R^2", "DOC"], length(indicators))
+    data.frame(Iteration = iteration, Indicator = indicators, Category = categories, R2 = R2_value)
+  }))
+}
+
+# usage
+indicator_list <- generate_dataframe_with_R2(specific_DOC_results)
+```
+
+##### Combine these two ideas: Create the dataframe
+
+```{r, echo=FALSE}
+# Apply the same color scheme for categories
+ggplot(indicator_list, aes(x = Indicator, y = R2, fill = Category)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.2, alpha = 0.5) +
+  scale_fill_manual(values = c(
+    "topo" = "#e31a1c",   # Example color for topo
+    "hydro" = "#1f78b4",  # Example color for hydro
+    "landcover" = "#33a02c", # Example color for landcover
+    "doc" = "#ff7f00",    # Example color for doc
+    "nutr" = "#6a3d9a"   # Example color for nutr (added here)
+  )) + 
+  labs(
+    title = "Distribution of R^2 Values by Indicator",
+    x = "Indicator",
+    y = "R^2 Value"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+#### Generate flow diagram for the top performing model
+
+```{r, echo=FALSE}
+# Initialize model_df with the same number of rows as merged_df
+model_df <- data.frame(matrix(ncol = 0, nrow = nrow(filtered_df)))
+
+# Define a list of constructs and their corresponding variables
+indicators <- list(
+  topo = c("twi_mean"),
+  hydro = c("discharge_m2"),
+  landcover = c("percent_Beetle.kill", "ndvi_raster_mean"),
+  doc = c( "relative_load_comp_3", "norm_PARAF_c3","Fluorescence_Index" )
+)
+```
+
+```{r, include=FALSE}
+set.seed(123)  # For reproducibility
+```
+
+```{r, echo=FALSE}
+# Loop through each indicator and rename columns
+for (indicator in names(indicators)) {
+  variables <- indicators[[indicator]]
+  for (i in seq_along(variables)) {
+    old_name <- variables[i]
+    new_name <- paste0(indicator, "_", i)
+    
+    # Check if the old name exists in filtered_dfand add it to model_df with the new name
+    if (old_name %in% colnames(filtered_df)) {
+      model_df[[new_name]] <- filtered_df[[old_name]]
+    } else {
+      warning(paste("Column", old_name, "not found in filtered_df"))
+    }
+  }
+}
+
+# Check the new column names in model_df
+colnames(model_df)
+
+# Standardizing the environmental variables
+model_df_standardized <- as.data.frame(scale(model_df, center = TRUE, scale = TRUE))
+
+simple_FEF_mm <- constructs(
+  composite("TOPO", single_item("topo_1")),
+  composite("HYDRO",  single_item("hydro_1")),
+  composite("LANDCOVER",  multi_items("landcover_", 1:length(indicators$landcover))),
+  composite("DOC",  single_item("doc_1"))
+)
+
+# Create structural model
+simple_FEF_sm <- relationships(
+paths(from = c("TOPO"), to = c("HYDRO","LANDCOVER", "DOC")), #"NUTRIENT",
+paths(from = c("LANDCOVER"), to = c("HYDRO","DOC")), #"NUTRIENT",
+paths(from = c("HYDRO"), to = c("DOC"))
+)
+set.seed=123
+# Estimate the model
+single_run <- estimate_pls(data = model_df_standardized,
+measurement_model = simple_FEF_mm,
+structural_model = simple_FEF_sm,
+inner_weights = path_weighting,
+missing = mean_replacement,
+missing_value = "NA")
+```
+
+```{r, echo = FALSE}
+# Summarize the model results
+summary_single_run <- summary(single_run)
+
+# Inspect the model’s path coefficients and the R^2 values
+print(summary_single_run)
+```
+
+```{r, echo = FALSE}
+Sys.sleep(1)
+```
+
+```{r, include=FALSE}
+# Bootstrap the model
+boot_simple_fef <- bootstrap_model(seminr_model =single_run,
+nboot = 1000,
+cores = NULL,
+seed = 123)
+# Store the summary of the bootstrapped model
+sum_boot_simple_fef <- summary(boot_simple_fef)
+```
+
+```{r, echo=FALSE}
+# Extract the bootstrapped HTMT
+sum_boot_fef <- summary(boot_simple_fef, alpha= 0.10)
+
+sum_boot_fef$bootstrapped_HTMT
+```
+
+This gives us the confidence intervals of the HTMT ratio.
+
+```{r, include=FALSE}
+# Inspect the bootstrapped structural paths
+sum_boot_simple_fef$bootstrapped_paths
+# Inspect the bootstrapped indicator loadings
+sum_boot_simple_fef$bootstrapped_loadings
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, fig.width=8, fig.height=4}
+# bootstrap results in boot_simple_fef
+# Save the original graphical parameters
+old_par <- par()  
+
+# Change 'cex' for larger text size
+par(cex = 0.5)  
+
+plot(boot_simple_fef, title = "Bootstrapped Model\nLow flow - Labile")
+par(old_par)
+```
+
+```{r}
+print(indicators)
+```
+
+
+
+
+```{r}
+
+```
+
+
+
+
+
+
+
+

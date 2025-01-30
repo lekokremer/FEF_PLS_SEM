@@ -1,0 +1,91 @@
+# Final publishable pngs
+
+```{r, include=FALSE}
+# pkgTest is a helper function to load packages and install packages only when they are not installed yet.
+pkgTest <- function(x)
+{
+  if (x %in% rownames(installed.packages()) == FALSE) {
+    install.packages(x, dependencies= TRUE)
+  }
+  library(x, character.only = TRUE)
+}
+
+#"rstan", "devtools", "tidyverse",  "ggpmisc", "reshape2", 
+neededPackages <- c('seminr', 'tidyr', 'dplyr', 'lubridate', 'ggplot2')
+
+for (package in neededPackages){pkgTest(package)}
+```
+
+**Addendum Figures**
+
+### 1. PARAFAC results summary figures:
+Emission-Excitation matrices for the 3 components identified by the 3 component PARAFAC model. Components 1 and 2 correspond with peaks for humic components, while component 3 is protein-like. 
+![EEM matrices for final model](images/comp3 8outliersremoved.png)
+
+### 2. Relative loadings
+Relative loadings for each sample (i.e., loading for each component/total loading for the sample in the 3 component model). This tells us how much of each component contributes to the total fluorescence of that particular sample. 
+![Relative fluoresence of each component im each sample](images/component3_loadings_proportions_plot.png)
+
+**Final figures**
+
+Exploration of DOC concentrations across watersheds
+![Mean DOC during high flows 2022](images/3D_DEM_DOC_high_flows_2022_Fool.png)
+
+![Mean DOC during high flows 2022](images/3D_DEM_DOC_high_flows_2022_Deadhorse.png)
+![Mean DOC during high flows 2022](images/3D_DEM_DOC_high_flows_2022_Lexen.png)
+
+**DOC temporal patterns**
+![DOC w/ hydrograph Fool Creek outlet 2020-2022](images/full_FChydro_and_chem.png)
+
+
+
+DOC bioavailability - EEMS indices
+
+![Correlations between PARAFAC componet proportions and EEMs indices](images/eems_parafac.png)
+
+DOC composition PARAFAC
+![Distributions of PARAFAC component proportions across watersheds](images/comp_ws_boxplot.png)
+![Correlations of the relationships between potential response variables (e.g., DOM characteristics from EEMs and PARAFAC analysis) and predictor variables (hydrological, topographical, landcover or chemical characteristics of each watersample subcatchment) for all samples with EEMs data (July 2021- Oct 1, 2022). Color indicates direction and correlation value (Pearson's). Asterisks indicate level of significance.](correlationplot_PLSvariables_spearman.png)
+
+**PLS_SEM**
+
+This script contains recreations of models that explain the most variability in labile and humic DOM. The intent is to generate images that are quickly interpretable for posters, presentations or papers. 
+
+**AGU Model 1: **
+
+<img src="images/humic_high_PLS.png" alt="FEF watershed HUMIC path model, high flows." width="800" height="300">
+
+<img src="images/humic_low_PLS.png" alt="FEF watershed HUMIC path model, low flows." width="800" height="300">
+
+Figure: PLS-SEM models depicting the effects of four variables on the humic fraction of fluorescing DOM in high flows (a) and low flows (b). The beta coefficients (β) in each relationship indicates the strength of the relationship between latent variables. Negative relationships are shown in red, positive relationships are printed in black, with significant relationships in bold text and asterisks to indicate level of significance. A negative β indicates that as the latent variable increases the dependent latent variable decreases. The coefficient of determination (R2) represents the proportion of variance in the latent variable explained by the variables (latent or observed). Higher R2 values indicate a better ability of the model to explain the variance in the latent variable. 
+
+In this high-flow to low-flow comparison, we see that topography has a strong reinforcing effect on landcover composition, which in this model is characterized by the % coverage of harvested and regenerating forest, and the % of beetle kill affected forest. In high flows, the humic fraction of fluorescing DOM is strong and positive, indicating that as the % of beetle kill and regenerating forest increase, humic fractions increase. In low flows,the humic fraction of DOM decreases as NO3- concentration in the water sample increases. This could be an indication that NO3- is being allochthonously utilized by microbial communities to oxidize and polymerize carbon (increasing humic fractions) rather than being transported to the stream channel. 
+
+**AGU Model 2: **
+
+<img src="images/labile_high_PLS.png" alt="FEF watershed HUMIC path model, high flows." width="800" height="300">
+
+<img src="images/labile_low_PLS.png" alt="FEF watershed HUMIC path model, low flows." width="800" height="300">
+
+Figure: PLS-SEM models depicting the effects of four variables on the protein-like fraction of fluorescing DOM in high flows (a) and low flows (b). The beta coefficients (β) in each relationship indicates the strength of the relationship between latent variables.
+
+In this high-flow to low-flow comparison, we see that topography has a strong reinforcing effect on landcover composition, which in this model is characterized by the % coverage of harvested and regenerating forest, and the % of beetle kill affected forest. In high flows, the protein-like (labile) fraction of fluorescing DOM is strong and negative, indicating that as the % of beetle kill and regenerating forest decrease, labile fractions increase. In low flows, NO3- has a significant positive influence on the labile fraction, as the labile fraction of DOM increases as NO3- concentration in the water sample increases. 
+
+**Nutrient Free models**
+<img src="images/Humic_PLS_SEM.png" alt="FEF watershed HUMIC path model." width="800" height="700">
+
+Low Flows:
+indicators <- list(
+  topo = c("twi_mean"),
+  hydro = c("discharge_m2"),
+  landcover = c("percent_cut.regenerating"),
+  doc = c("peak_ratioCT", "relative_load_comp_2", "SUVA254")
+)
+
+High Flows:
+indicators <- list(
+  topo = c("twi_mean"),
+  hydro = c("discharge_m2"),
+  landcover = c("percent_Tundra"),
+  doc = c( "Fluorescence_Index")
+)

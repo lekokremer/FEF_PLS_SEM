@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>6.2 The code: | PLS Data Exploration Book</title>
+  <meta name="description" content="6.2 The code: | PLS Data Exploration Book" />
+  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="6.2 The code: | PLS Data Exploration Book" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="6.2 The code: | PLS Data Exploration Book" />
+  
+  
+  
+
+<meta name="author" content="Lauren Kremer" />
+
+
+<meta name="date" content="2025-01-30" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="workflow-description.html"/>
+<link rel="next" href="final-publishable-pngs.html"/>
+<script src="assets/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="assets/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="assets/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="assets/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="assets/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="assets/anchor-sections-1.1.0/anchor-sections.js"></script>
+<link href="assets/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet" />
+<script src="assets/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<script src="assets/viz-1.8.2/viz.js"></script>
+<link href="assets/DiagrammeR-styles-0.2/styles.css" rel="stylesheet" />
+<script src="assets/grViz-binding-1.0.11/grViz.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="about.html"><a href="about.html"><i class="fa fa-check"></i><b>1.1</b> About</a></li>
+<li class="chapter" data-level="1.2" data-path="usage.html"><a href="usage.html"><i class="fa fa-check"></i><b>1.2</b> Usage</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="addition-of-precipitation-and-runoff-data.html"><a href="addition-of-precipitation-and-runoff-data.html"><i class="fa fa-check"></i><b>2</b> Addition of precipitation and runoff data</a></li>
+<li class="chapter" data-level="3" data-path="relating-parafac-components-to-fef-watersheds-correlations-plots.html"><a href="relating-parafac-components-to-fef-watersheds-correlations-plots.html"><i class="fa fa-check"></i><b>3</b> Relating PARAFAC components to FEF watersheds: Correlations plots</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="parafac-results-summary-figures.html"><a href="parafac-results-summary-figures.html"><i class="fa fa-check"></i><b>3.1</b> PARAFAC results summary figures:</a></li>
+<li class="chapter" data-level="3.2" data-path="structure.html"><a href="structure.html"><i class="fa fa-check"></i><b>3.2</b> Structure:</a></li>
+<li class="chapter" data-level="3.3" data-path="relative-loadings.html"><a href="relative-loadings.html"><i class="fa fa-check"></i><b>3.3</b> 1. Relative loadings</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="relative-loadings.html"><a href="relative-loadings.html#box-plots---relative-loadings"><i class="fa fa-check"></i><b>3.3.1</b> Box plots - Relative loadings</a></li>
+<li class="chapter" data-level="3.3.2" data-path="relative-loadings.html"><a href="relative-loadings.html#spearmans"><i class="fa fa-check"></i><b>3.3.2</b> Spearman’s</a></li>
+<li class="chapter" data-level="3.3.3" data-path="relative-loadings.html"><a href="relative-loadings.html#pearson-correlation-matrices-scaled-data---relative-loadings"><i class="fa fa-check"></i><b>3.3.3</b> Pearson correlation matrices (scaled data) - Relative loadings</a></li>
+<li class="chapter" data-level="3.3.4" data-path="relative-loadings.html"><a href="relative-loadings.html#spearmans-correlation-figure-for-agu-poster-2024"><i class="fa fa-check"></i><b>3.3.4</b> Spearman’s correlation figure for AGU poster 2024</a></li>
+<li class="chapter" data-level="3.3.5" data-path="relative-loadings.html"><a href="relative-loadings.html#spearmans-correlation-figure-for-poster2"><i class="fa fa-check"></i><b>3.3.5</b> Spearman’s correlation figure for POSTER2</a></li>
+<li class="chapter" data-level="3.3.6" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---fool-creek-fractions-with-hydrograph"><i class="fa fa-check"></i><b>3.3.6</b> Hydrograph - Fool Creek fractions with hydrograph</a></li>
+<li class="chapter" data-level="3.3.7" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---fool-creek-with-no3"><i class="fa fa-check"></i><b>3.3.7</b> Hydrograph - Fool Creek with NO3</a></li>
+<li class="chapter" data-level="3.3.8" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---fool-creek-with-doc"><i class="fa fa-check"></i><b>3.3.8</b> Hydrograph - Fool Creek with DOC</a></li>
+<li class="chapter" data-level="3.3.9" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---lexen-creek-fractions-with-hydrograph"><i class="fa fa-check"></i><b>3.3.9</b> Hydrograph - Lexen Creek fractions with hydrograph</a></li>
+<li class="chapter" data-level="3.3.10" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---lexen-creek-doc"><i class="fa fa-check"></i><b>3.3.10</b> Hydrograph - Lexen Creek DOC</a></li>
+<li class="chapter" data-level="3.3.11" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---lexen-creek-doc-with-no3"><i class="fa fa-check"></i><b>3.3.11</b> Hydrograph - Lexen Creek DOC with NO3</a></li>
+<li class="chapter" data-level="3.3.12" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---deadhorse-main-fractions-with-hydrograph"><i class="fa fa-check"></i><b>3.3.12</b> Hydrograph - Deadhorse Main fractions with hydrograph</a></li>
+<li class="chapter" data-level="3.3.13" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---deadhorse-main-doc-with-no3"><i class="fa fa-check"></i><b>3.3.13</b> Hydrograph - Deadhorse Main DOC with NO3</a></li>
+<li class="chapter" data-level="3.3.14" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---deadhorse-north-fractions-with-hydrograph"><i class="fa fa-check"></i><b>3.3.14</b> Hydrograph - Deadhorse NORTH fractions with hydrograph</a></li>
+<li class="chapter" data-level="3.3.15" data-path="relative-loadings.html"><a href="relative-loadings.html#hydrograph---deadhorse-south-doc-with-no3"><i class="fa fa-check"></i><b>3.3.15</b> Hydrograph - Deadhorse SOUTH DOC with NO3</a></li>
+<li class="chapter" data-level="3.3.16" data-path="relative-loadings.html"><a href="relative-loadings.html#data-preparation-for-multivariate-statistical-analysis---dimension-reduction-techniques"><i class="fa fa-check"></i><b>3.3.16</b> Data preparation for multivariate statistical analysis - dimension reduction techniques</a></li>
+<li class="chapter" data-level="3.3.17" data-path="relative-loadings.html"><a href="relative-loadings.html#rda-redundancy-analysis"><i class="fa fa-check"></i><b>3.3.17</b> RDA (Redundancy Analysis)</a></li>
+<li class="chapter" data-level="3.3.18" data-path="relative-loadings.html"><a href="relative-loadings.html#pca---all-data"><i class="fa fa-check"></i><b>3.3.18</b> PCA - All data</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="normalized-doc.html"><a href="normalized-doc.html"><i class="fa fa-check"></i><b>3.4</b> 2. Normalized DOC</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="normalized-doc.html"><a href="normalized-doc.html#box-plots---doc-normalized-loadings"><i class="fa fa-check"></i><b>3.4.1</b> Box plots - DOC normalized loadings</a></li>
+<li class="chapter" data-level="3.4.2" data-path="normalized-doc.html"><a href="normalized-doc.html#correlation-matrices---normalized-loadings"><i class="fa fa-check"></i><b>3.4.2</b> Correlation matrices - Normalized loadings</a></li>
+<li class="chapter" data-level="3.4.3" data-path="normalized-doc.html"><a href="normalized-doc.html#hydrograph---fluorescence-intensities-in-fool-creek-with-2022-hydrograph"><i class="fa fa-check"></i><b>3.4.3</b> Hydrograph - Fluorescence intensities in Fool creek with 2022 hydrograph</a></li>
+<li class="chapter" data-level="3.4.4" data-path="normalized-doc.html"><a href="normalized-doc.html#pca"><i class="fa fa-check"></i><b>3.4.4</b> PCA</a></li>
+<li class="chapter" data-level="3.4.5" data-path="normalized-doc.html"><a href="normalized-doc.html#rda-redundancy-analysis-1"><i class="fa fa-check"></i><b>3.4.5</b> RDA (Redundancy Analysis)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="biological-oxygen-demand-assays---data-exploration.html"><a href="biological-oxygen-demand-assays---data-exploration.html"><i class="fa fa-check"></i><b>4</b> Biological Oxygen Demand assays - data exploration</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="daily-doc-loss-carbon.html"><a href="daily-doc-loss-carbon.html"><i class="fa fa-check"></i><b>4.1</b> Daily DOC loss (carbon)</a></li>
+<li class="chapter" data-level="4.2" data-path="dissolved-oxygen-loss.html"><a href="dissolved-oxygen-loss.html"><i class="fa fa-check"></i><b>4.2</b> Dissolved oxygen loss</a></li>
+<li class="chapter" data-level="4.3" data-path="explore-relationships..html"><a href="explore-relationships..html"><i class="fa fa-check"></i><b>4.3</b> Explore relationships.</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="demo-partial-least-squares-structural-equation-modeling-pls-sem.html"><a href="demo-partial-least-squares-structural-equation-modeling-pls-sem.html"><i class="fa fa-check"></i><b>5</b> Demo: Partial least squares – Structural Equation Modeling (PLS-SEM)</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="building-the-path-model.html"><a href="building-the-path-model.html"><i class="fa fa-check"></i><b>5.1</b> Building the path model</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="building-the-path-model.html"><a href="building-the-path-model.html#path-diagram-of-our-model-with-tested-indicators"><i class="fa fa-check"></i><b>5.1.1</b> Path diagram of our model with tested indicators</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="data-managment-transformation.html"><a href="data-managment-transformation.html"><i class="fa fa-check"></i><b>5.2</b> Data managment / transformation</a></li>
+<li class="chapter" data-level="5.3" data-path="reporting-initial-results-and-evaluating-the-quality-of-reflective-measurement-models.html"><a href="reporting-initial-results-and-evaluating-the-quality-of-reflective-measurement-models.html"><i class="fa fa-check"></i><b>5.3</b> Reporting initial results and evaluating the quality of reflective measurement models</a></li>
+<li class="chapter" data-level="5.4" data-path="bootstrapping-for-significance.html"><a href="bootstrapping-for-significance.html"><i class="fa fa-check"></i><b>5.4</b> Bootstrapping for significance</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="bootstrapping-for-significance.html"><a href="bootstrapping-for-significance.html#reporting-results-of-bootstrapped-pls"><i class="fa fa-check"></i><b>5.4.1</b> Reporting results of bootstrapped PLS</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="pls_sem-automation.html"><a href="pls_sem-automation.html"><i class="fa fa-check"></i><b>6</b> PLS_SEM Automation</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="workflow-description.html"><a href="workflow-description.html"><i class="fa fa-check"></i><b>6.1</b> Workflow description:</a></li>
+<li class="chapter" data-level="6.2" data-path="the-code.html"><a href="the-code.html"><i class="fa fa-check"></i><b>6.2</b> The code:</a>
+<ul>
+<li class="chapter" data-level="6.2.1" data-path="the-code.html"><a href="the-code.html#model-1-high-flows---humic--wnutrients-automated"><i class="fa fa-check"></i><b>6.2.1</b> Model 1: High flows - HUMIC -W/NUTRIENTS (AUTOMATED)</a></li>
+<li class="chapter" data-level="6.2.2" data-path="the-code.html"><a href="the-code.html#model-2-high-flows---humic--wonutrients-automated"><i class="fa fa-check"></i><b>6.2.2</b> Model 2: High flows - HUMIC -WO/NUTRIENTS (AUTOMATED)</a></li>
+<li class="chapter" data-level="6.2.3" data-path="the-code.html"><a href="the-code.html#model-3-high-flows---labile--wonutrients-automated"><i class="fa fa-check"></i><b>6.2.3</b> Model 3: High flows - LABILE -WO/NUTRIENTS (AUTOMATED)</a></li>
+<li class="chapter" data-level="6.2.4" data-path="the-code.html"><a href="the-code.html#model-4-low-flows---humic--wonutrients-automated"><i class="fa fa-check"></i><b>6.2.4</b> Model 4: Low flows - HUMIC -WO/NUTRIENTS (AUTOMATED)</a></li>
+<li class="chapter" data-level="6.2.5" data-path="the-code.html"><a href="the-code.html#model-5-low-flows---labile--wonutrients-automated"><i class="fa fa-check"></i><b>6.2.5</b> Model 5: Low flows - LABILE -WO/NUTRIENTS (AUTOMATED)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="final-publishable-pngs.html"><a href="final-publishable-pngs.html"><i class="fa fa-check"></i><b>7</b> Final publishable pngs</a>
+<ul>
+<li class="chapter" data-level="7.0.1" data-path="final-publishable-pngs.html"><a href="final-publishable-pngs.html#parafac-results-summary-figures-1"><i class="fa fa-check"></i><b>7.0.1</b> 1. PARAFAC results summary figures:</a></li>
+<li class="chapter" data-level="7.0.2" data-path="final-publishable-pngs.html"><a href="final-publishable-pngs.html#relative-loadings-1"><i class="fa fa-check"></i><b>7.0.2</b> 2. Relative loadings</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">PLS Data Exploration Book</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="the-code" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> The code:<a href="the-code.html#the-code" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For this model demonstration, our EEMs dataset has been filtered to ‘stream’ samples only (no wells) (n= 91)</p>
+<div id="model-1-high-flows---humic--wnutrients-automated" class="section level3 hasAnchor" number="6.2.1">
+<h3><span class="header-section-number">6.2.1</span> Model 1: High flows - HUMIC -W/NUTRIENTS (AUTOMATED)<a href="the-code.html#model-1-high-flows---humic--wnutrients-automated" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="indicator-list" class="section level4 hasAnchor" number="6.2.1.1">
+<h4><span class="header-section-number">6.2.1.1</span> Indicator list<a href="the-code.html#indicator-list" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>These will be the indicators that will be randomly selected from during automation. Select labile or humic DOC responses here</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="the-code.html#cb48-1" tabindex="-1"></a>model_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">matrix</span>(<span class="at">ncol =</span> <span class="dv">0</span>, <span class="at">nrow =</span> <span class="fu">nrow</span>(filtered_df)))</span>
+<span id="cb48-2"><a href="the-code.html#cb48-2" tabindex="-1"></a></span>
+<span id="cb48-3"><a href="the-code.html#cb48-3" tabindex="-1"></a>indicators <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb48-4"><a href="the-code.html#cb48-4" tabindex="-1"></a>  <span class="at">topo =</span> <span class="fu">c</span>( <span class="st">&quot;disttostreams_mean&quot;</span>, <span class="st">&quot;aspect_mean_rad&quot;</span>, <span class="st">&#39;twi_mean&#39;</span>, <span class="st">&#39;area_km&#39;</span>, <span class="st">&quot;elevabovestreams_mean&quot;</span>),</span>
+<span id="cb48-5"><a href="the-code.html#cb48-5" tabindex="-1"></a>  <span class="at">hydro =</span> <span class="fu">c</span>(<span class="st">&quot;snowpack_3day_avg&quot;</span>, <span class="st">&quot;discharge_m2&quot;</span>),</span>
+<span id="cb48-6"><a href="the-code.html#cb48-6" tabindex="-1"></a>  <span class="at">landcover =</span> <span class="fu">c</span>(<span class="st">&quot;percent_Beetle.kill&quot;</span>, <span class="st">&quot;percent_Meadows&quot;</span>,<span class="st">&quot;percent_Old.Forest&quot;</span>,<span class="st">&quot;percent_cut.regenerating&quot;</span>,</span>
+<span id="cb48-7"><a href="the-code.html#cb48-7" tabindex="-1"></a><span class="st">&quot;percent_Tundra&quot;</span> ,<span class="st">&quot;ndvi_raster_mean&quot;</span>),</span>
+<span id="cb48-8"><a href="the-code.html#cb48-8" tabindex="-1"></a>  <span class="at">doc =</span> <span class="fu">c</span>(<span class="st">&quot;relative_load_comp_1&quot;</span>, <span class="st">&quot;relative_load_comp_2&quot;</span>, <span class="st">&quot;norm_PARAF_c1&quot;</span>, <span class="st">&quot;norm_PARAF_c2&quot;</span>, <span class="st">&quot;peak_T_275.340&quot;</span>, <span class="st">&quot;Fluorescence_Index&quot;</span>, <span class="st">&quot;SUVA254&quot;</span>, <span class="st">&quot;peak_ratioAT&quot;</span>, <span class="st">&quot;peak_ratioCT&quot;</span>),</span>
+<span id="cb48-9"><a href="the-code.html#cb48-9" tabindex="-1"></a>  <span class="at">nutr =</span> <span class="fu">c</span>(<span class="st">&#39;NO3_mg.l&#39;</span>, <span class="st">&quot;na_mg.l&quot;</span>, <span class="st">&quot;nh4_mg.l&quot;</span>, <span class="st">&quot;K_mg.l&quot;</span>,  <span class="st">&quot;Mg_mg.l&quot;</span>, <span class="st">&quot;Ca_mg.l&quot;</span>, <span class="st">&quot;F_mg.l&quot;</span>, <span class="st">&quot;Cl_mg.l&quot;</span>, <span class="st">&quot;SO4_mg.l&quot;</span>)</span>
+<span id="cb48-10"><a href="the-code.html#cb48-10" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="run-the-function-written-in-.r-script" class="section level4 hasAnchor" number="6.2.1.2">
+<h4><span class="header-section-number">6.2.1.2</span> Run the function written in .R script<a href="the-code.html#run-the-function-written-in-.r-script" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>Here we have the option of running multiple iterations, or if this has already been done, we can import the .rds generated from 20000 runs.</p>
+<pre><code>## [1] &quot;20000 run winner: &quot;</code></pre>
+<pre><code>## [1] 0.5443818</code></pre>
+<pre><code>## $topo
+## [1] &quot;elevabovestreams_mean&quot;
+## 
+## $hydro
+## [1] &quot;snowpack_3day_avg&quot;
+## 
+## $landcover
+## [1] &quot;percent_Tundra&quot;
+## 
+## $doc
+## [1] &quot;peak_ratioCT&quot;         &quot;SUVA254&quot;              &quot;relative_load_comp_1&quot;
+## 
+## $nutr
+## [1] &quot;Mg_mg.l&quot;</code></pre>
+<p>Or we can find the highest performing model where some value is specified for the ‘DOC’ response.</p>
+<pre><code>## Best R^2 for DOC: 0.5443818 
+## Selected DOC response:
+## [1] &quot;relative_load_comp_1&quot;
+## Sampled indicators for best model:
+## $topo
+## [1] &quot;elevabovestreams_mean&quot;
+## 
+## $hydro
+## [1] &quot;snowpack_3day_avg&quot;
+## 
+## $landcover
+## [1] &quot;percent_Tundra&quot;
+## 
+## $doc
+## [1] &quot;peak_ratioCT&quot;         &quot;SUVA254&quot;              &quot;relative_load_comp_1&quot;
+## 
+## $nutr
+## [1] &quot;Mg_mg.l&quot;</code></pre>
+</div>
+<div id="visualizing-all-selected-results-r2-of-doc-0.4" class="section level4 hasAnchor" number="6.2.1.3">
+<h4><span class="header-section-number">6.2.1.3</span> Visualizing all selected results (r2 of DOC &gt;0.4)<a href="the-code.html#visualizing-all-selected-results-r2-of-doc-0.4" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="indicator-frequency" class="section level5 hasAnchor" number="6.2.1.3.1">
+<h5><span class="header-section-number">6.2.1.3.1</span> Indicator frequency<a href="the-code.html#indicator-frequency" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-188-1.png" width="672" /></p>
+</div>
+<div id="r2-distribution" class="section level5 hasAnchor" number="6.2.1.3.2">
+<h5><span class="header-section-number">6.2.1.3.2</span> R2 distribution<a href="the-code.html#r2-distribution" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+</div>
+<div id="combine-these-two-ideas-create-the-dataframe" class="section level5 hasAnchor" number="6.2.1.3.3">
+<h5><span class="header-section-number">6.2.1.3.3</span> Combine these two ideas: Create the dataframe<a href="the-code.html#combine-these-two-ideas-create-the-dataframe" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-191-1.png" width="672" /></p>
+</div>
+</div>
+<div id="visualizing-specific-doc-results-r2-of-doc-0.4" class="section level4 hasAnchor" number="6.2.1.4">
+<h4><span class="header-section-number">6.2.1.4</span> Visualizing specific DOC results (r2 of DOC &gt;0.4)<a href="the-code.html#visualizing-specific-doc-results-r2-of-doc-0.4" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="indicator-frequency-1" class="section level5 hasAnchor" number="6.2.1.4.1">
+<h5><span class="header-section-number">6.2.1.4.1</span> Indicator frequency<a href="the-code.html#indicator-frequency-1" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-192-1.png" width="672" /></p>
+</div>
+<div id="combine-these-two-ideas-create-the-dataframe-1" class="section level5 hasAnchor" number="6.2.1.4.2">
+<h5><span class="header-section-number">6.2.1.4.2</span> Combine these two ideas: Create the dataframe<a href="the-code.html#combine-these-two-ideas-create-the-dataframe-1" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-194-1.png" width="672" /></p>
+</div>
+</div>
+<div id="generate-flow-diagram-for-the-top-performing-model" class="section level4 hasAnchor" number="6.2.1.5">
+<h4><span class="header-section-number">6.2.1.5</span> Generate flow diagram for the top performing model<a href="the-code.html#generate-flow-diagram-for-the-top-performing-model" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## [1] &quot;topo_1&quot;      &quot;hydro_1&quot;     &quot;landcover_1&quot; &quot;doc_1&quot;       &quot;doc_2&quot;       &quot;doc_3&quot;       &quot;nutr_1&quot;</code></pre>
+<pre><code>## Generating the seminr model</code></pre>
+<pre><code>## All 91 observations are valid.</code></pre>
+<pre><code>## 
+## Results from  package seminr (2.3.4)
+## 
+## Path Coefficients:
+##            HYDRO LANDCOVER NUTRIENT    DOC
+## R^2        0.026     0.393    0.059  0.558
+## AdjR^2     0.004     0.386    0.038  0.537
+## TOPO      -0.087     0.627   -0.121 -0.150
+## LANDCOVER -0.091         .   -0.148 -0.634
+## HYDRO          .         .        .  0.084
+## NUTRIENT       .         .        . -0.397
+## 
+## Reliability:
+##           alpha  rhoC   AVE  rhoA
+## TOPO      1.000 1.000 1.000 1.000
+## LANDCOVER 1.000 1.000 1.000 1.000
+## HYDRO     1.000 1.000 1.000 1.000
+## NUTRIENT  1.000 1.000 1.000 1.000
+## DOC       0.778 0.874 0.702 0.832
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
+<pre><code>##                         Original Est. Bootstrap Mean Bootstrap SD T Stat. 5% CI 95% CI
+## TOPO  -&gt;  LANDCOVER             0.627          0.614        0.097   6.451 0.432  0.755
+## TOPO  -&gt;  HYDRO                 0.144          0.148        0.074   1.958 0.028  0.273
+## TOPO  -&gt;  NUTRIENT              0.214          0.224        0.116   1.838 0.039  0.421
+## TOPO  -&gt;  DOC                   0.524          0.512        0.118   4.430 0.307  0.691
+## LANDCOVER  -&gt;  HYDRO            0.146          0.143        0.048   3.057 0.063  0.220
+## LANDCOVER  -&gt;  NUTRIENT         0.224          0.220        0.086   2.610 0.082  0.364
+## LANDCOVER  -&gt;  DOC              0.734          0.723        0.102   7.190 0.539  0.866
+## HYDRO  -&gt;  NUTRIENT             0.472          0.474        0.071   6.641 0.353  0.583
+## HYDRO  -&gt;  DOC                  0.049          0.102        0.050   0.976 0.034  0.196
+## NUTRIENT  -&gt;  DOC               0.203          0.219        0.113   1.801 0.055  0.412</code></pre>
+<p>This gives us the confidence intervals of the HTMT ratio.</p>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-27e6029b8b121e8421b3" style="width:768px;height:384px;"></div>
+<script type="application/json" data-for="htmlwidget-27e6029b8b121e8421b3">{"x":{"diagram":"digraph G {\n\n// ----------------------\n// General graph settings\n// ----------------------\ngraph [\ncharset = \"UTF-8\",\nlayout = dot,\nlabel = \"Bootstrapped Model\nHigh flow - Humic\",\nfontsize = 24,\nfontcolor = black,\nfontname = helvetica,\nrankdir = LR,\nlabelloc = t,\nsplines = TRUE\nbgcolor = transparent\n]\n\n// --------------------\n// The structural model\n// --------------------\nsubgraph sm {\nrankdir = LR;\nnode [\nshape = ellipse,\ncolor = black,\nfillcolor = white,\nstyle = filled,\nfontsize = 12,\nfontcolor = black,\nheight = 0.919303385416667,\nwidth = 0.918636067708333,\nfontname = helvetica,\nfixedsize = true\n]\n\"TOPO\" [label=<<B>TOPO <\/B>>, shape = hexagon]\n\"LANDCOVER\" [label=<<B>LANDCOVER <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.393<\/FONT>>, shape = hexagon]\n\"HYDRO\" [label=<<B>HYDRO <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.026<\/FONT>>, shape = hexagon]\n\"NUTRIENT\" [label=<<B>NUTRIENT <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.059<\/FONT>>, shape = hexagon]\n\"DOC\" [label=<<B>DOC <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.558<\/FONT>>, shape = hexagon]\nedge [\ncolor = black,\nfontsize = 9,\nfontcolor = black,\nfontname = helvetica,\ndir = both,\narrowhead = normal,\narrowtail = none\n]\n\"TOPO\" -> {\"HYDRO\"}[weight = 1, label = < 𝛽 = -0.087<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.32, 0.088]   <\/FONT> >, penwidth = 0.935, style = dashed, color = black]\n\"TOPO\" -> {\"LANDCOVER\"}[weight = 1, label = < 𝛽 = 0.627***<BR /><FONT POINT-SIZE=\"7\">95% CI [0.395, 0.776]   <\/FONT> >, penwidth = 3.635, style = solid, color = black]\n\"TOPO\" -> {\"NUTRIENT\"}[weight = 1, label = < 𝛽 = -0.121<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.494, 0.176]   <\/FONT> >, penwidth = 1.105, style = dashed, color = black]\n\"TOPO\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = -0.15<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.373, 0.047]   <\/FONT> >, penwidth = 1.25, style = dashed, color = black]\n\"LANDCOVER\" -> {\"HYDRO\"}[weight = 1, label = < 𝛽 = -0.091<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.238, 0.071]   <\/FONT> >, penwidth = 0.955, style = dashed, color = black]\n\"LANDCOVER\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = -0.634***<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.858, -0.358]   <\/FONT> >, penwidth = 3.67, style = dashed, color = black]\n\"LANDCOVER\" -> {\"NUTRIENT\"}[weight = 1, label = < 𝛽 = -0.148<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.387, 0.108]   <\/FONT> >, penwidth = 1.24, style = dashed, color = black]\n\"HYDRO\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = 0.084<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.062, 0.226]   <\/FONT> >, penwidth = 0.92, style = solid, color = black]\n\"NUTRIENT\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = -0.397***<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.592, -0.234]   <\/FONT> >, penwidth = 2.485, style = dashed, color = black]\n}\n// ---------------------\n// The measurement model\n// ---------------------\n\nsubgraph construct_1 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"topo_1\" [label = \"topo_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"topo_1\" -> {\"TOPO\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_2 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"landcover_1\" [label = \"landcover_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"landcover_1\" -> {\"LANDCOVER\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_3 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"hydro_1\" [label = \"hydro_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"hydro_1\" -> {\"HYDRO\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_4 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"nutr_1\" [label = \"nutr_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"nutr_1\" -> {\"NUTRIENT\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_5 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"doc_1\" [label = \"doc_1\", shape = box]\n\"doc_2\" [label = \"doc_2\", shape = box]\n\"doc_3\" [label = \"doc_3\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = normal\narrowtail = none\n]\n\"DOC\" -> {\"doc_1\"}[weight = 1000, label = < 𝜆 = 0.928*** >, penwidth = 3.284, style = solid, color = dimgrey]\n\"DOC\" -> {\"doc_2\"}[weight = 1000, label = < 𝜆 = 0.903*** >, penwidth = 3.209, style = solid, color = dimgrey]\n\"DOC\" -> {\"doc_3\"}[weight = 1000, label = < 𝜆 = 0.655*** >, penwidth = 2.465, style = solid, color = dimgrey]\n\n}\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="the-code.html#cb58-1" tabindex="-1"></a><span class="fu">print</span>(indicators)</span></code></pre></div>
+<pre><code>## $topo
+## [1] &quot;elevabovestreams_mean&quot;
+## 
+## $hydro
+## [1] &quot;snowpack_3day_avg&quot;
+## 
+## $landcover
+## [1] &quot;percent_Tundra&quot;
+## 
+## $doc
+## [1] &quot;peak_ratioCT&quot;         &quot;relative_load_comp_1&quot; &quot;SUVA254&quot;             
+## 
+## $nutr
+## [1] &quot;Mg_mg.l&quot;</code></pre>
+</div>
+</div>
+<div id="model-2-high-flows---humic--wonutrients-automated" class="section level3 hasAnchor" number="6.2.2">
+<h3><span class="header-section-number">6.2.2</span> Model 2: High flows - HUMIC -WO/NUTRIENTS (AUTOMATED)<a href="the-code.html#model-2-high-flows---humic--wonutrients-automated" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="indicator-list-1" class="section level4 hasAnchor" number="6.2.2.1">
+<h4><span class="header-section-number">6.2.2.1</span> Indicator list<a href="the-code.html#indicator-list-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>These will be the indicators that will be randomly selected from during automation. Select labile or humic DOC responses here</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="the-code.html#cb60-1" tabindex="-1"></a>model_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">matrix</span>(<span class="at">ncol =</span> <span class="dv">0</span>, <span class="at">nrow =</span> <span class="fu">nrow</span>(filtered_df)))</span>
+<span id="cb60-2"><a href="the-code.html#cb60-2" tabindex="-1"></a></span>
+<span id="cb60-3"><a href="the-code.html#cb60-3" tabindex="-1"></a>indicators <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb60-4"><a href="the-code.html#cb60-4" tabindex="-1"></a>  <span class="at">topo =</span> <span class="fu">c</span>( <span class="st">&quot;disttostreams_mean&quot;</span>, <span class="st">&#39;twi_mean&#39;</span>, <span class="st">&#39;area_km&#39;</span>, <span class="st">&quot;elevabovestreams_mean&quot;</span>,  <span class="st">&quot;aspect_mean_rad&quot;</span>),</span>
+<span id="cb60-5"><a href="the-code.html#cb60-5" tabindex="-1"></a>  <span class="at">hydro =</span> <span class="fu">c</span>(<span class="st">&quot;snowpack_3day_avg&quot;</span>, <span class="st">&quot;discharge_m2&quot;</span>),</span>
+<span id="cb60-6"><a href="the-code.html#cb60-6" tabindex="-1"></a>  <span class="at">landcover =</span> <span class="fu">c</span>(<span class="st">&quot;percent_Beetle.kill&quot;</span>, <span class="st">&quot;percent_Meadows&quot;</span>,<span class="st">&quot;percent_Old.Forest&quot;</span>,<span class="st">&quot;percent_cut.regenerating&quot;</span>,</span>
+<span id="cb60-7"><a href="the-code.html#cb60-7" tabindex="-1"></a><span class="st">&quot;percent_Tundra&quot;</span> ,<span class="st">&quot;ndvi_raster_mean&quot;</span>),</span>
+<span id="cb60-8"><a href="the-code.html#cb60-8" tabindex="-1"></a>  <span class="at">doc =</span> <span class="fu">c</span>(<span class="st">&quot;relative_load_comp_1&quot;</span>, <span class="st">&quot;relative_load_comp_2&quot;</span>, <span class="st">&quot;norm_PARAF_c1&quot;</span>, <span class="st">&quot;norm_PARAF_c2&quot;</span>, <span class="st">&quot;peak_T_275.340&quot;</span>, <span class="st">&quot;Fluorescence_Index&quot;</span>, <span class="st">&quot;SUVA254&quot;</span>, <span class="st">&quot;peak_ratioAT&quot;</span>, <span class="st">&quot;peak_ratioCT&quot;</span>)</span>
+<span id="cb60-9"><a href="the-code.html#cb60-9" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="run-the-function-written-in-.r-script-1" class="section level4 hasAnchor" number="6.2.2.2">
+<h4><span class="header-section-number">6.2.2.2</span> Run the function written in .R script<a href="the-code.html#run-the-function-written-in-.r-script-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## [1] &quot;20000 run winner: &quot;</code></pre>
+<pre><code>## [1] 0.8524449</code></pre>
+<pre><code>## $topo
+## [1] &quot;twi_mean&quot;
+## 
+## $hydro
+## [1] &quot;discharge_m2&quot;
+## 
+## $landcover
+## [1] &quot;percent_Tundra&quot;
+## 
+## $doc
+## [1] &quot;Fluorescence_Index&quot;</code></pre>
+<p>Or we can find the highest performing model where some value is specified for the ‘DOC’ response</p>
+<pre><code>## Best R^2 for DOC: 0.6440625 
+## Selected DOC response:
+## [1] &quot;relative_load_comp_2&quot;
+## Sampled indicators for best model:
+## $topo
+## [1] &quot;twi_mean&quot;
+## 
+## $hydro
+## [1] &quot;snowpack_3day_avg&quot;
+## 
+## $landcover
+## [1] &quot;percent_cut.regenerating&quot; &quot;percent_Tundra&quot;          
+## 
+## $doc
+## [1] &quot;relative_load_comp_1&quot; &quot;SUVA254&quot;              &quot;relative_load_comp_2&quot;</code></pre>
+</div>
+<div id="visualizing-all-selected-results-r2-of-doc-0.4-1" class="section level4 hasAnchor" number="6.2.2.3">
+<h4><span class="header-section-number">6.2.2.3</span> Visualizing all selected results (r2 of DOC &gt;0.4)<a href="the-code.html#visualizing-all-selected-results-r2-of-doc-0.4-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="indicator-frequency-2" class="section level5 hasAnchor" number="6.2.2.3.1">
+<h5><span class="header-section-number">6.2.2.3.1</span> Indicator frequency<a href="the-code.html#indicator-frequency-2" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-211-1.png" width="672" /></p>
+</div>
+<div id="r2-distribution-1" class="section level5 hasAnchor" number="6.2.2.3.2">
+<h5><span class="header-section-number">6.2.2.3.2</span> R2 distribution<a href="the-code.html#r2-distribution-1" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+</div>
+<div id="combine-these-two-ideas-create-the-dataframe-2" class="section level5 hasAnchor" number="6.2.2.3.3">
+<h5><span class="header-section-number">6.2.2.3.3</span> Combine these two ideas: Create the dataframe<a href="the-code.html#combine-these-two-ideas-create-the-dataframe-2" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-213-1.png" width="672" /></p>
+</div>
+</div>
+<div id="visualizing-specific-doc-results-r2-of-doc-0.4-1" class="section level4 hasAnchor" number="6.2.2.4">
+<h4><span class="header-section-number">6.2.2.4</span> Visualizing specific DOC results (r2 of DOC &gt;0.4)<a href="the-code.html#visualizing-specific-doc-results-r2-of-doc-0.4-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="indicator-frequency-3" class="section level5 hasAnchor" number="6.2.2.4.1">
+<h5><span class="header-section-number">6.2.2.4.1</span> Indicator frequency<a href="the-code.html#indicator-frequency-3" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-214-1.png" width="672" /></p>
+</div>
+<div id="r2-distribution-2" class="section level5 hasAnchor" number="6.2.2.4.2">
+<h5><span class="header-section-number">6.2.2.4.2</span> R2 distribution<a href="the-code.html#r2-distribution-2" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+</div>
+<div id="combine-these-two-ideas-create-the-dataframe-3" class="section level5 hasAnchor" number="6.2.2.4.3">
+<h5><span class="header-section-number">6.2.2.4.3</span> Combine these two ideas: Create the dataframe<a href="the-code.html#combine-these-two-ideas-create-the-dataframe-3" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-216-1.png" width="672" /></p>
+</div>
+</div>
+<div id="generate-flow-diagram-for-the-top-performing-model-1" class="section level4 hasAnchor" number="6.2.2.5">
+<h4><span class="header-section-number">6.2.2.5</span> Generate flow diagram for the top performing model<a href="the-code.html#generate-flow-diagram-for-the-top-performing-model-1" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## [1] &quot;topo_1&quot;      &quot;hydro_1&quot;     &quot;landcover_1&quot; &quot;landcover_2&quot; &quot;doc_1&quot;       &quot;doc_2&quot;       &quot;doc_3&quot;</code></pre>
+<pre><code>## Generating the seminr model</code></pre>
+<pre><code>## All 33 observations are valid.</code></pre>
+<pre><code>## 
+## Results from  package seminr (2.3.4)
+## 
+## Path Coefficients:
+##            HYDRO LANDCOVER    DOC
+## R^2        0.070     0.709  0.644
+## AdjR^2     0.008     0.699  0.607
+## TOPO      -0.337     0.842  0.865
+## LANDCOVER  0.476         . -0.089
+## HYDRO          .         .  0.102
+## 
+## Reliability:
+##           alpha  rhoC   AVE  rhoA
+## TOPO      1.000 1.000 1.000 1.000
+## LANDCOVER 1.000 1.000 1.000 1.000
+## HYDRO     1.000 1.000 1.000 1.000
+## DOC       0.829 0.897 0.745 0.843
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
+<pre><code>##                      Original Est. Bootstrap Mean Bootstrap SD T Stat. 5% CI 95% CI
+## TOPO  -&gt;  LANDCOVER          0.842          0.850        0.054  15.691 0.761  0.940
+## TOPO  -&gt;  HYDRO              0.064          0.141        0.101   0.635 0.015  0.334
+## TOPO  -&gt;  DOC                0.866          0.861        0.071  12.208 0.737  0.971
+## LANDCOVER  -&gt;  HYDRO         0.193          0.200        0.116   1.667 0.022  0.400
+## LANDCOVER  -&gt;  DOC           0.724          0.729        0.081   8.939 0.601  0.849
+## HYDRO  -&gt;  DOC               0.163          0.220        0.086   1.892 0.105  0.369</code></pre>
+<p>This gives us the confidence intervals of the HTMT ratio.</p>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-de35c7856692a3c21d96" style="width:768px;height:384px;"></div>
+<script type="application/json" data-for="htmlwidget-de35c7856692a3c21d96">{"x":{"diagram":"digraph G {\n\n// ----------------------\n// General graph settings\n// ----------------------\ngraph [\ncharset = \"UTF-8\",\nlayout = dot,\nlabel = \"Bootstrapped Model\nHigh flow - Humic\",\nfontsize = 24,\nfontcolor = black,\nfontname = helvetica,\nrankdir = LR,\nlabelloc = t,\nsplines = TRUE\nbgcolor = transparent\n]\n\n// --------------------\n// The structural model\n// --------------------\nsubgraph sm {\nrankdir = LR;\nnode [\nshape = ellipse,\ncolor = black,\nfillcolor = white,\nstyle = filled,\nfontsize = 12,\nfontcolor = black,\nheight = 0.919303385416667,\nwidth = 0.918636067708333,\nfontname = helvetica,\nfixedsize = true\n]\n\"TOPO\" [label=<<B>TOPO <\/B>>, shape = hexagon]\n\"LANDCOVER\" [label=<<B>LANDCOVER <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.709<\/FONT>>, shape = hexagon]\n\"HYDRO\" [label=<<B>HYDRO <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.07<\/FONT>>, shape = hexagon]\n\"DOC\" [label=<<B>DOC <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.644<\/FONT>>, shape = hexagon]\nedge [\ncolor = black,\nfontsize = 9,\nfontcolor = black,\nfontname = helvetica,\ndir = both,\narrowhead = normal,\narrowtail = none\n]\n\"TOPO\" -> {\"HYDRO\"}[weight = 1, label = < 𝛽 = -0.337<BR /><FONT POINT-SIZE=\"7\">95% CI [-1.25, -0.108]   <\/FONT> >, penwidth = 2.185, style = dashed, color = black]\n\"TOPO\" -> {\"LANDCOVER\"}[weight = 1, label = < 𝛽 = 0.842***<BR /><FONT POINT-SIZE=\"7\">95% CI [0.746, 0.949]   <\/FONT> >, penwidth = 4.71, style = solid, color = black]\n\"TOPO\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = 0.865**<BR /><FONT POINT-SIZE=\"7\">95% CI [0.505, 1.495]   <\/FONT> >, penwidth = 4.825, style = solid, color = black]\n\"LANDCOVER\" -> {\"HYDRO\"}[weight = 1, label = < 𝛽 = 0.476*<BR /><FONT POINT-SIZE=\"7\">95% CI [0.17, 1.234]   <\/FONT> >, penwidth = 2.88, style = solid, color = black]\n\"LANDCOVER\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = -0.089<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.763, 0.274]   <\/FONT> >, penwidth = 0.945, style = dashed, color = black]\n\"HYDRO\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = 0.102<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.049, 0.408]   <\/FONT> >, penwidth = 1.01, style = solid, color = black]\n}\n// ---------------------\n// The measurement model\n// ---------------------\n\nsubgraph construct_1 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"topo_1\" [label = \"topo_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"topo_1\" -> {\"TOPO\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_2 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"landcover_1\" [label = \"landcover_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"landcover_1\" -> {\"LANDCOVER\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_3 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"hydro_1\" [label = \"hydro_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"hydro_1\" -> {\"HYDRO\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_4 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"doc_1\" [label = \"doc_1\", shape = box]\n\"doc_2\" [label = \"doc_2\", shape = box]\n\"doc_3\" [label = \"doc_3\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = normal\narrowtail = none\n]\n\"DOC\" -> {\"doc_1\"}[weight = 1000, label = < 𝜆 = 0.897*** >, penwidth = 3.191, style = solid, color = dimgrey]\n\"DOC\" -> {\"doc_2\"}[weight = 1000, label = < 𝜆 = 0.847*** >, penwidth = 3.041, style = solid, color = dimgrey]\n\"DOC\" -> {\"doc_3\"}[weight = 1000, label = < 𝜆 = 0.844*** >, penwidth = 3.032, style = solid, color = dimgrey]\n\n}\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb70-1"><a href="the-code.html#cb70-1" tabindex="-1"></a><span class="fu">print</span>(indicators)</span></code></pre></div>
+<pre><code>## $topo
+## [1] &quot;twi_mean&quot;
+## 
+## $hydro
+## [1] &quot;snowpack_3day_avg&quot;
+## 
+## $landcover
+## [1] &quot;percent_cut.regenerating&quot; &quot;percent_Tundra&quot;          
+## 
+## $doc
+## [1] &quot;relative_load_comp_1&quot; &quot;SUVA254&quot;              &quot;relative_load_comp_2&quot;</code></pre>
+</div>
+</div>
+<div id="model-3-high-flows---labile--wonutrients-automated" class="section level3 hasAnchor" number="6.2.3">
+<h3><span class="header-section-number">6.2.3</span> Model 3: High flows - LABILE -WO/NUTRIENTS (AUTOMATED)<a href="the-code.html#model-3-high-flows---labile--wonutrients-automated" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="indicator-list-2" class="section level4 hasAnchor" number="6.2.3.1">
+<h4><span class="header-section-number">6.2.3.1</span> Indicator list<a href="the-code.html#indicator-list-2" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>These will be the indicators that will be randomly selected from during automation. Select labile or humic DOC responses here</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="the-code.html#cb72-1" tabindex="-1"></a>model_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">matrix</span>(<span class="at">ncol =</span> <span class="dv">0</span>, <span class="at">nrow =</span> <span class="fu">nrow</span>(filtered_df)))</span>
+<span id="cb72-2"><a href="the-code.html#cb72-2" tabindex="-1"></a></span>
+<span id="cb72-3"><a href="the-code.html#cb72-3" tabindex="-1"></a>indicators <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb72-4"><a href="the-code.html#cb72-4" tabindex="-1"></a>  <span class="at">topo =</span> <span class="fu">c</span>( <span class="st">&quot;disttostreams_mean&quot;</span>, <span class="st">&#39;twi_mean&#39;</span>, <span class="st">&#39;area_km&#39;</span>, <span class="st">&quot;elevabovestreams_mean&quot;</span>,  <span class="st">&quot;aspect_mean_rad&quot;</span>),</span>
+<span id="cb72-5"><a href="the-code.html#cb72-5" tabindex="-1"></a>  <span class="at">hydro =</span> <span class="fu">c</span>(<span class="st">&quot;snowpack_3day_avg&quot;</span>, <span class="st">&quot;discharge_m2&quot;</span>),</span>
+<span id="cb72-6"><a href="the-code.html#cb72-6" tabindex="-1"></a>  <span class="at">landcover =</span> <span class="fu">c</span>(<span class="st">&quot;percent_Beetle.kill&quot;</span>, <span class="st">&quot;percent_Meadows&quot;</span>,<span class="st">&quot;percent_Old.Forest&quot;</span>,<span class="st">&quot;percent_cut.regenerating&quot;</span>,</span>
+<span id="cb72-7"><a href="the-code.html#cb72-7" tabindex="-1"></a><span class="st">&quot;percent_Tundra&quot;</span> ,<span class="st">&quot;ndvi_raster_mean&quot;</span>),</span>
+<span id="cb72-8"><a href="the-code.html#cb72-8" tabindex="-1"></a>  <span class="at">doc =</span> <span class="fu">c</span>(<span class="st">&quot;relative_load_comp_3&quot;</span>, <span class="st">&quot;norm_PARAF_c3&quot;</span>, <span class="st">&quot;peak_T_275.340&quot;</span>, <span class="st">&quot;Fluorescence_Index&quot;</span>, <span class="st">&quot;SUVA254&quot;</span>, <span class="st">&quot;peak_ratioAT&quot;</span>, <span class="st">&quot;peak_ratioCT&quot;</span>)</span>
+<span id="cb72-9"><a href="the-code.html#cb72-9" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="run-the-function-written-in-.r-script-2" class="section level4 hasAnchor" number="6.2.3.2">
+<h4><span class="header-section-number">6.2.3.2</span> Run the function written in .R script<a href="the-code.html#run-the-function-written-in-.r-script-2" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## [1] &quot;20000 run winner: &quot;</code></pre>
+<pre><code>## [1] 0.855127</code></pre>
+<pre><code>## $topo
+## [1] &quot;aspect_mean_rad&quot;
+## 
+## $hydro
+## [1] &quot;discharge_m2&quot;
+## 
+## $landcover
+## [1] &quot;percent_Tundra&quot;           &quot;percent_cut.regenerating&quot; &quot;percent_Meadows&quot;         
+## 
+## $doc
+## [1] &quot;Fluorescence_Index&quot;</code></pre>
+<p>Or we can find the highest performing model where some value is specified for the ‘DOC’ response</p>
+<pre><code>## Best R^2 for DOC: 0.7697365 
+## Selected DOC response:
+## [1] &quot;relative_load_comp_3&quot;
+## Sampled indicators for best model:
+## $topo
+## [1] &quot;twi_mean&quot;
+## 
+## $hydro
+## [1] &quot;discharge_m2&quot;
+## 
+## $landcover
+## [1] &quot;percent_Tundra&quot;           &quot;ndvi_raster_mean&quot;         &quot;percent_cut.regenerating&quot;
+## 
+## $doc
+## [1] &quot;relative_load_comp_3&quot; &quot;norm_PARAF_c3&quot;        &quot;Fluorescence_Index&quot;</code></pre>
+</div>
+<div id="visualizing-all-selected-results-r2-of-doc-0.4-2" class="section level4 hasAnchor" number="6.2.3.3">
+<h4><span class="header-section-number">6.2.3.3</span> Visualizing all selected results (r2 of DOC &gt;0.4)<a href="the-code.html#visualizing-all-selected-results-r2-of-doc-0.4-2" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="indicator-frequency-4" class="section level5 hasAnchor" number="6.2.3.3.1">
+<h5><span class="header-section-number">6.2.3.3.1</span> Indicator frequency<a href="the-code.html#indicator-frequency-4" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-233-1.png" width="672" /></p>
+</div>
+<div id="r2-distribution-3" class="section level5 hasAnchor" number="6.2.3.3.2">
+<h5><span class="header-section-number">6.2.3.3.2</span> R2 distribution<a href="the-code.html#r2-distribution-3" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+</div>
+<div id="combine-these-two-ideas-create-the-dataframe-4" class="section level5 hasAnchor" number="6.2.3.3.3">
+<h5><span class="header-section-number">6.2.3.3.3</span> Combine these two ideas: Create the dataframe<a href="the-code.html#combine-these-two-ideas-create-the-dataframe-4" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-235-1.png" width="672" /></p>
+</div>
+</div>
+<div id="visualizing-specific-doc-results-r2-of-doc-0.4-2" class="section level4 hasAnchor" number="6.2.3.4">
+<h4><span class="header-section-number">6.2.3.4</span> Visualizing specific DOC results (r2 of DOC &gt;0.4)<a href="the-code.html#visualizing-specific-doc-results-r2-of-doc-0.4-2" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="indicator-frequency-5" class="section level5 hasAnchor" number="6.2.3.4.1">
+<h5><span class="header-section-number">6.2.3.4.1</span> Indicator frequency<a href="the-code.html#indicator-frequency-5" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-236-1.png" width="672" /></p>
+</div>
+<div id="r2-distribution-4" class="section level5 hasAnchor" number="6.2.3.4.2">
+<h5><span class="header-section-number">6.2.3.4.2</span> R2 distribution<a href="the-code.html#r2-distribution-4" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+</div>
+<div id="combine-these-two-ideas-create-the-dataframe-5" class="section level5 hasAnchor" number="6.2.3.4.3">
+<h5><span class="header-section-number">6.2.3.4.3</span> Combine these two ideas: Create the dataframe<a href="the-code.html#combine-these-two-ideas-create-the-dataframe-5" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-238-1.png" width="672" /></p>
+<p>Select the ‘best’ indicators based on mean R2, standard deviation and probability of appearance.</p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="the-code.html#cb77-1" tabindex="-1"></a><span class="co"># Calculate percentage for each indicator and category</span></span>
+<span id="cb77-2"><a href="the-code.html#cb77-2" tabindex="-1"></a>result <span class="ot">&lt;-</span> indicator_list <span class="sc">%&gt;%</span></span>
+<span id="cb77-3"><a href="the-code.html#cb77-3" tabindex="-1"></a>  <span class="fu">group_by</span>(Indicator, Category) <span class="sc">%&gt;%</span></span>
+<span id="cb77-4"><a href="the-code.html#cb77-4" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb77-5"><a href="the-code.html#cb77-5" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">percentage =</span> count <span class="sc">/</span> <span class="fu">max</span>(indicator_list<span class="sc">$</span>Iteration) <span class="sc">*</span> <span class="dv">100</span>)</span>
+<span id="cb77-6"><a href="the-code.html#cb77-6" tabindex="-1"></a></span>
+<span id="cb77-7"><a href="the-code.html#cb77-7" tabindex="-1"></a><span class="co"># Add a ranking index based on mean_R2 and sd_R2 where I want the highest ranking for indicators with relatively mean R^2 and relatively small standard deviation. </span></span>
+<span id="cb77-8"><a href="the-code.html#cb77-8" tabindex="-1"></a>result <span class="ot">&lt;-</span> indicator_list <span class="sc">%&gt;%</span></span>
+<span id="cb77-9"><a href="the-code.html#cb77-9" tabindex="-1"></a>  <span class="fu">group_by</span>(Indicator, Category) <span class="sc">%&gt;%</span></span>
+<span id="cb77-10"><a href="the-code.html#cb77-10" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb77-11"><a href="the-code.html#cb77-11" tabindex="-1"></a>    <span class="at">count =</span> <span class="fu">n</span>(),</span>
+<span id="cb77-12"><a href="the-code.html#cb77-12" tabindex="-1"></a>    <span class="at">mean_R2 =</span> <span class="fu">mean</span>(R2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb77-13"><a href="the-code.html#cb77-13" tabindex="-1"></a>    <span class="at">sd_R2 =</span> <span class="fu">sd</span>(R2, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb77-14"><a href="the-code.html#cb77-14" tabindex="-1"></a>    <span class="at">.groups =</span> <span class="st">&quot;drop&quot;</span></span>
+<span id="cb77-15"><a href="the-code.html#cb77-15" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb77-16"><a href="the-code.html#cb77-16" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb77-17"><a href="the-code.html#cb77-17" tabindex="-1"></a>    <span class="at">percentage =</span> count <span class="sc">/</span> <span class="fu">max</span>(indicator_list<span class="sc">$</span>Iteration) <span class="sc">*</span> <span class="dv">100</span>,</span>
+<span id="cb77-18"><a href="the-code.html#cb77-18" tabindex="-1"></a>    <span class="co"># Normalize mean_R2 (higher is better) and sd_R2 (lower is better)</span></span>
+<span id="cb77-19"><a href="the-code.html#cb77-19" tabindex="-1"></a>    <span class="at">mean_R2_norm =</span> (mean_R2 <span class="sc">-</span> <span class="fu">min</span>(mean_R2)) <span class="sc">/</span> (<span class="fu">max</span>(mean_R2) <span class="sc">-</span> <span class="fu">min</span>(mean_R2)),</span>
+<span id="cb77-20"><a href="the-code.html#cb77-20" tabindex="-1"></a>    <span class="at">sd_R2_norm =</span> (<span class="fu">max</span>(sd_R2) <span class="sc">-</span> sd_R2) <span class="sc">/</span> (<span class="fu">max</span>(sd_R2) <span class="sc">-</span> <span class="fu">min</span>(sd_R2)),</span>
+<span id="cb77-21"><a href="the-code.html#cb77-21" tabindex="-1"></a>    <span class="co"># Create a custom index (e.g., weighted sum of normalized values)</span></span>
+<span id="cb77-22"><a href="the-code.html#cb77-22" tabindex="-1"></a>    <span class="at">ranking_index =</span> mean_R2_norm <span class="sc">*</span> <span class="fl">0.7</span> <span class="sc">+</span> sd_R2_norm <span class="sc">*</span> <span class="fl">0.3</span></span>
+<span id="cb77-23"><a href="the-code.html#cb77-23" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb77-24"><a href="the-code.html#cb77-24" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(ranking_index)) <span class="co"># Sort by the ranking index in descending order</span></span>
+<span id="cb77-25"><a href="the-code.html#cb77-25" tabindex="-1"></a></span>
+<span id="cb77-26"><a href="the-code.html#cb77-26" tabindex="-1"></a><span class="co"># View the result</span></span>
+<span id="cb77-27"><a href="the-code.html#cb77-27" tabindex="-1"></a><span class="fu">print</span>(result)</span></code></pre></div>
+<pre><code>## # A tibble: 17 × 9
+##    Indicator            Category count mean_R2  sd_R2 percentage mean_R2_norm sd_R2_norm ranking_index
+##    &lt;chr&gt;                &lt;chr&gt;    &lt;int&gt;   &lt;dbl&gt;  &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;      &lt;dbl&gt;         &lt;dbl&gt;
+##  1 twi_mean             topo        44   0.611 0.0691      40.7        1           0.927         0.978
+##  2 percent_Beetle.kill  landcov…    37   0.535 0.0648      34.3        0.409       0.993         0.584
+##  3 percent_Old.Forest   landcov…    24   0.553 0.0898      22.2        0.547       0.618         0.569
+##  4 percent_Tundra       landcov…    28   0.570 0.116       25.9        0.680       0.219         0.542
+##  5 norm_PARAF_c3        doc         44   0.547 0.0989      40.7        0.507       0.482         0.500
+##  6 peak_ratioAT         doc         35   0.541 0.0910      32.4        0.455       0.601         0.499
+##  7 snowpack_3day_avg    hydro       56   0.538 0.0902      51.9        0.436       0.612         0.488
+##  8 percent_cut.regener… landcov…   108   0.538 0.0964     100          0.433       0.519         0.459
+##  9 relative_load_comp_3 doc        108   0.538 0.0964     100          0.433       0.519         0.459
+## 10 disttostreams_mean   topo        22   0.516 0.0749      20.4        0.269       0.841         0.441
+## 11 Fluorescence_Index   doc         27   0.562 0.131       25          0.618       0             0.432
+## 12 percent_Meadows      landcov…    22   0.538 0.102       20.4        0.434       0.429         0.432
+## 13 discharge_m2         hydro       52   0.537 0.104       48.1        0.430       0.413         0.425
+## 14 ndvi_raster_mean     landcov…    27   0.523 0.0892      25          0.317       0.627         0.410
+## 15 area_km              topo         5   0.508 0.0820       4.63       0.200       0.735         0.361
+## 16 aspect_mean_rad      topo        39   0.488 0.0643      36.1        0.0510      1             0.336
+## 17 elevabovestreams_me… topo        14   0.482 0.0896      13.0        0           0.621         0.186</code></pre>
+</div>
+</div>
+<div id="generate-flow-diagram-for-the-top-performing-model-2" class="section level4 hasAnchor" number="6.2.3.5">
+<h4><span class="header-section-number">6.2.3.5</span> Generate flow diagram for the top performing model<a href="the-code.html#generate-flow-diagram-for-the-top-performing-model-2" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="beetlekill-forest" class="section level5 hasAnchor" number="6.2.3.5.1">
+<h5><span class="header-section-number">6.2.3.5.1</span> Beetlekill forest<a href="the-code.html#beetlekill-forest" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<pre><code>## [1] &quot;topo_1&quot;      &quot;hydro_1&quot;     &quot;landcover_1&quot; &quot;landcover_2&quot; &quot;landcover_3&quot; &quot;doc_1&quot;       &quot;doc_2&quot;      
+## [8] &quot;doc_3&quot;</code></pre>
+<pre><code>## Generating the seminr model</code></pre>
+<pre><code>## All 33 observations are valid.</code></pre>
+<pre><code>## 
+## Results from  package seminr (2.3.4)
+## 
+## Path Coefficients:
+##            HYDRO LANDCOVER    DOC
+## R^2        0.100     0.672  0.560
+## AdjR^2     0.040     0.661  0.515
+## TOPO      -0.149    -0.820 -0.007
+## LANDCOVER  0.182         .  0.734
+## HYDRO          .         .  0.027
+## 
+## Reliability:
+##            alpha  rhoC   AVE  rhoA
+## TOPO       1.000 1.000 1.000 1.000
+## LANDCOVER -9.856 0.222 0.697 0.803
+## HYDRO      1.000 1.000 1.000 1.000
+## DOC        1.000 1.000 1.000 1.000
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
+<pre><code>##                      Original Est. Bootstrap Mean Bootstrap SD T Stat. 5% CI 95% CI
+## TOPO  -&gt;  LANDCOVER          0.941          0.934        0.057  16.624 0.837  1.022
+## TOPO  -&gt;  HYDRO              0.298          0.297        0.108   2.751 0.039  0.455
+## TOPO  -&gt;  DOC                0.617          0.641        0.126   4.898 0.424  0.839
+## LANDCOVER  -&gt;  HYDRO         0.358          0.400        0.177   2.027 0.131  0.702
+## LANDCOVER  -&gt;  DOC           0.852          0.824        0.092   9.217 0.655  0.959
+## HYDRO  -&gt;  DOC               0.253          0.319        0.138   1.837 0.174  0.652</code></pre>
+<p>This gives us the confidence intervals of the HTMT ratio.</p>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-a78860abe3b980cd4595" style="width:768px;height:384px;"></div>
+<script type="application/json" data-for="htmlwidget-a78860abe3b980cd4595">{"x":{"diagram":"digraph G {\n\n// ----------------------\n// General graph settings\n// ----------------------\ngraph [\ncharset = \"UTF-8\",\nlayout = dot,\nlabel = \"Bootstrapped Model\nHigh flow - Labile\n % Beetlekill\n Fluorescence Index\",\nfontsize = 24,\nfontcolor = black,\nfontname = helvetica,\nrankdir = LR,\nlabelloc = t,\nsplines = TRUE\nbgcolor = transparent\n]\n\n// --------------------\n// The structural model\n// --------------------\nsubgraph sm {\nrankdir = LR;\nnode [\nshape = ellipse,\ncolor = black,\nfillcolor = white,\nstyle = filled,\nfontsize = 12,\nfontcolor = black,\nheight = 0.919303385416667,\nwidth = 0.918636067708333,\nfontname = helvetica,\nfixedsize = true\n]\n\"TOPO\" [label=<<B>TOPO <\/B>>, shape = hexagon]\n\"LANDCOVER\" [label=<<B>LANDCOVER <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.672<\/FONT>>, shape = hexagon]\n\"HYDRO\" [label=<<B>HYDRO <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.1<\/FONT>>, shape = hexagon]\n\"DOC\" [label=<<B>DOC <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.56<\/FONT>>, shape = hexagon]\nedge [\ncolor = black,\nfontsize = 9,\nfontcolor = black,\nfontname = helvetica,\ndir = both,\narrowhead = normal,\narrowtail = none\n]\n\"TOPO\" -> {\"HYDRO\"}[weight = 1, label = < 𝛽 = -0.149<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.687, 1.042]   <\/FONT> >, penwidth = 1.245, style = dashed, color = black]\n\"TOPO\" -> {\"LANDCOVER\"}[weight = 1, label = < 𝛽 = -0.82***<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.927, -0.623]   <\/FONT> >, penwidth = 4.6, style = dashed, color = black]\n\"TOPO\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = -0.007<BR /><FONT POINT-SIZE=\"7\">95% CI [-1.175, 0.436]   <\/FONT> >, penwidth = 0.535, style = dashed, color = black]\n\"LANDCOVER\" -> {\"HYDRO\"}[weight = 1, label = < 𝛽 = 0.182<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.56, 1.418]   <\/FONT> >, penwidth = 1.41, style = solid, color = black]\n\"LANDCOVER\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = 0.734<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.446, 1.152]   <\/FONT> >, penwidth = 4.17, style = solid, color = black]\n\"HYDRO\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = 0.027<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.118, 0.671]   <\/FONT> >, penwidth = 0.635, style = solid, color = black]\n}\n// ---------------------\n// The measurement model\n// ---------------------\n\nsubgraph construct_1 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"topo_1\" [label = \"topo_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"topo_1\" -> {\"TOPO\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_2 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"landcover_1\" [label = \"landcover_1\", shape = box]\n\"landcover_2\" [label = \"landcover_2\", shape = box]\n\"landcover_3\" [label = \"landcover_3\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"landcover_1\" -> {\"LANDCOVER\"}[weight = 1000, label = < 𝜆 = 0.734*** >, penwidth = 2.702, style = solid, color = dimgrey]\n\"landcover_2\" -> {\"LANDCOVER\"}[weight = 1000, label = < 𝜆 = 0.761*** >, penwidth = 2.783, style = solid, color = dimgrey]\n\"landcover_3\" -> {\"LANDCOVER\"}[weight = 1000, label = < 𝜆 = -0.986*** >, penwidth = 3.458, style = dashed, color = dimgrey]\n\n}\nsubgraph construct_3 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"hydro_1\" [label = \"hydro_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"hydro_1\" -> {\"HYDRO\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_4 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"doc_1\" [label = \"doc_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = normal\narrowtail = none\n]\n\"DOC\" -> {\"doc_1\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="the-code.html#cb84-1" tabindex="-1"></a><span class="fu">print</span>(indicators)</span></code></pre></div>
+<pre><code>## $topo
+## [1] &quot;aspect_mean_rad&quot;
+## 
+## $hydro
+## [1] &quot;discharge_m2&quot;
+## 
+## $landcover
+## [1] &quot;percent_Tundra&quot;      &quot;percent_Old.Forest&quot;  &quot;percent_Beetle.kill&quot;
+## 
+## $doc
+## [1] &quot;relative_load_comp_3&quot; &quot;peak_ratioAT&quot;         &quot;Fluorescence_Index&quot;</code></pre>
+</div>
+<div id="regenerating-forest" class="section level5 hasAnchor" number="6.2.3.5.2">
+<h5><span class="header-section-number">6.2.3.5.2</span> Regenerating forest<a href="the-code.html#regenerating-forest" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<pre><code>## [1] &quot;topo_1&quot;      &quot;hydro_1&quot;     &quot;landcover_1&quot; &quot;doc_1&quot;</code></pre>
+<pre><code>## Generating the seminr model</code></pre>
+<pre><code>## All 33 observations are valid.</code></pre>
+<pre><code>## 
+## Results from  package seminr (2.3.4)
+## 
+## Path Coefficients:
+##            HYDRO LANDCOVER    DOC
+## R^2        0.070     0.709  0.769
+## AdjR^2     0.008     0.699  0.745
+## TOPO      -0.337     0.842 -1.154
+## LANDCOVER  0.476         .  0.355
+## HYDRO          .         .  0.035
+## 
+## Reliability:
+##           alpha  rhoC   AVE  rhoA
+## TOPO      1.000 1.000 1.000 1.000
+## LANDCOVER 1.000 1.000 1.000 1.000
+## HYDRO     1.000 1.000 1.000 1.000
+## DOC       1.000 1.000 1.000 1.000
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
+<pre><code>##                      Original Est. Bootstrap Mean Bootstrap SD T Stat. 5% CI 95% CI
+## TOPO  -&gt;  LANDCOVER          0.842          0.850        0.054  15.691 0.761  0.940
+## TOPO  -&gt;  HYDRO              0.064          0.141        0.101   0.635 0.015  0.334
+## TOPO  -&gt;  DOC                0.853          0.864        0.033  25.765 0.805  0.912
+## LANDCOVER  -&gt;  HYDRO         0.193          0.200        0.116   1.667 0.022  0.400
+## LANDCOVER  -&gt;  DOC           0.609          0.648        0.081   7.555 0.523  0.789
+## HYDRO  -&gt;  DOC               0.030          0.086        0.085   0.352 0.006  0.258</code></pre>
+<p>This gives us the confidence intervals of the HTMT ratio.</p>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-b5a39d552d2fd133d483" style="width:768px;height:384px;"></div>
+<script type="application/json" data-for="htmlwidget-b5a39d552d2fd133d483">{"x":{"diagram":"digraph G {\n\n// ----------------------\n// General graph settings\n// ----------------------\ngraph [\ncharset = \"UTF-8\",\nlayout = dot,\nlabel = \"Bootstrapped Model\nHigh flow - Labile\n % Regenerating Harvest\n Fluorescence Index\",\nfontsize = 24,\nfontcolor = black,\nfontname = helvetica,\nrankdir = LR,\nlabelloc = t,\nsplines = TRUE\nbgcolor = transparent\n]\n\n// --------------------\n// The structural model\n// --------------------\nsubgraph sm {\nrankdir = LR;\nnode [\nshape = ellipse,\ncolor = black,\nfillcolor = white,\nstyle = filled,\nfontsize = 12,\nfontcolor = black,\nheight = 0.919303385416667,\nwidth = 0.918636067708333,\nfontname = helvetica,\nfixedsize = true\n]\n\"TOPO\" [label=<<B>TOPO <\/B>>, shape = hexagon]\n\"LANDCOVER\" [label=<<B>LANDCOVER <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.709<\/FONT>>, shape = hexagon]\n\"HYDRO\" [label=<<B>HYDRO <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.07<\/FONT>>, shape = hexagon]\n\"DOC\" [label=<<B>DOC <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.769<\/FONT>>, shape = hexagon]\nedge [\ncolor = black,\nfontsize = 9,\nfontcolor = black,\nfontname = helvetica,\ndir = both,\narrowhead = normal,\narrowtail = none\n]\n\"TOPO\" -> {\"HYDRO\"}[weight = 1, label = < 𝛽 = -0.337<BR /><FONT POINT-SIZE=\"7\">95% CI [-1.25, -0.108]   <\/FONT> >, penwidth = 2.185, style = dashed, color = black]\n\"TOPO\" -> {\"LANDCOVER\"}[weight = 1, label = < 𝛽 = 0.842***<BR /><FONT POINT-SIZE=\"7\">95% CI [0.746, 0.949]   <\/FONT> >, penwidth = 4.71, style = solid, color = black]\n\"TOPO\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = -1.154***<BR /><FONT POINT-SIZE=\"7\">95% CI [-1.706, -0.715]   <\/FONT> >, penwidth = 6.27, style = dashed, color = black]\n\"LANDCOVER\" -> {\"HYDRO\"}[weight = 1, label = < 𝛽 = 0.476*<BR /><FONT POINT-SIZE=\"7\">95% CI [0.17, 1.234]   <\/FONT> >, penwidth = 2.88, style = solid, color = black]\n\"LANDCOVER\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = 0.355<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.189, 0.936]   <\/FONT> >, penwidth = 2.275, style = solid, color = black]\n\"HYDRO\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = 0.035<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.193, 0.244]   <\/FONT> >, penwidth = 0.675, style = solid, color = black]\n}\n// ---------------------\n// The measurement model\n// ---------------------\n\nsubgraph construct_1 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"topo_1\" [label = \"topo_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"topo_1\" -> {\"TOPO\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_2 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"landcover_1\" [label = \"landcover_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"landcover_1\" -> {\"LANDCOVER\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_3 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"hydro_1\" [label = \"hydro_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"hydro_1\" -> {\"HYDRO\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_4 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"doc_1\" [label = \"doc_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = normal\narrowtail = none\n]\n\"DOC\" -> {\"doc_1\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="the-code.html#cb91-1" tabindex="-1"></a><span class="fu">print</span>(indicators)</span></code></pre></div>
+<pre><code>## $topo
+## [1] &quot;twi_mean&quot;
+## 
+## $hydro
+## [1] &quot;snowpack_3day_avg&quot;
+## 
+## $landcover
+## [1] &quot;percent_cut.regenerating&quot;
+## 
+## $doc
+## [1] &quot;Fluorescence_Index&quot;</code></pre>
+</div>
+<div id="old-forest" class="section level5 hasAnchor" number="6.2.3.5.3">
+<h5><span class="header-section-number">6.2.3.5.3</span> Old Forest<a href="the-code.html#old-forest" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<pre><code>## [1] &quot;topo_1&quot;      &quot;topo_2&quot;      &quot;hydro_1&quot;     &quot;landcover_1&quot; &quot;doc_1&quot;</code></pre>
+<pre><code>## Generating the seminr model</code></pre>
+<pre><code>## All 33 observations are valid.</code></pre>
+<pre><code>## 
+## Results from  package seminr (2.3.4)
+## 
+## Path Coefficients:
+##            HYDRO LANDCOVER    DOC
+## R^2        0.001     0.629  0.706
+## AdjR^2    -0.065     0.617  0.676
+## TOPO      -0.014    -0.793 -1.241
+## LANDCOVER -0.049         . -0.619
+## HYDRO          .         .  0.037
+## 
+## Reliability:
+##           alpha  rhoC   AVE  rhoA
+## TOPO      0.899 0.952 0.908 0.902
+## LANDCOVER 1.000 1.000 1.000 1.000
+## HYDRO     1.000 1.000 1.000 1.000
+## DOC       1.000 1.000 1.000 1.000
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
+<pre><code>##                      Original Est. Bootstrap Mean Bootstrap SD T Stat. 5% CI 95% CI
+## TOPO  -&gt;  LANDCOVER          0.840          0.841        0.078  10.820 0.704  0.954
+## TOPO  -&gt;  HYDRO              0.046          0.171        0.121   0.382 0.034  0.423
+## TOPO  -&gt;  DOC                0.785          0.826        0.068  11.502 0.726  0.935
+## LANDCOVER  -&gt;  HYDRO         0.038          0.116        0.088   0.430 0.009  0.291
+## LANDCOVER  -&gt;  DOC           0.365          0.466        0.283   1.290 0.056  0.874
+## HYDRO  -&gt;  DOC               0.030          0.086        0.085   0.352 0.006  0.258</code></pre>
+<p>This gives us the confidence intervals of the HTMT ratio.</p>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-dda062be1f0774fadcbd" style="width:768px;height:384px;"></div>
+<script type="application/json" data-for="htmlwidget-dda062be1f0774fadcbd">{"x":{"diagram":"digraph G {\n\n// ----------------------\n// General graph settings\n// ----------------------\ngraph [\ncharset = \"UTF-8\",\nlayout = dot,\nlabel = \"Bootstrapped Model\nHigh flow - Labile\n % Old Forest\n Fluorescence Index\",\nfontsize = 24,\nfontcolor = black,\nfontname = helvetica,\nrankdir = LR,\nlabelloc = t,\nsplines = TRUE\nbgcolor = transparent\n]\n\n// --------------------\n// The structural model\n// --------------------\nsubgraph sm {\nrankdir = LR;\nnode [\nshape = ellipse,\ncolor = black,\nfillcolor = white,\nstyle = filled,\nfontsize = 12,\nfontcolor = black,\nheight = 0.919303385416667,\nwidth = 0.918636067708333,\nfontname = helvetica,\nfixedsize = true\n]\n\"TOPO\" [label=<<B>TOPO <\/B>>, shape = hexagon]\n\"LANDCOVER\" [label=<<B>LANDCOVER <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.629<\/FONT>>, shape = hexagon]\n\"HYDRO\" [label=<<B>HYDRO <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.001<\/FONT>>, shape = hexagon]\n\"DOC\" [label=<<B>DOC <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.706<\/FONT>>, shape = hexagon]\nedge [\ncolor = black,\nfontsize = 9,\nfontcolor = black,\nfontname = helvetica,\ndir = both,\narrowhead = normal,\narrowtail = none\n]\n\"TOPO\" -> {\"HYDRO\"}[weight = 1, label = < 𝛽 = -0.014<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.997, 0.502]   <\/FONT> >, penwidth = 0.57, style = dashed, color = black]\n\"TOPO\" -> {\"LANDCOVER\"}[weight = 1, label = < 𝛽 = -0.793***<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.948, -0.584]   <\/FONT> >, penwidth = 4.465, style = dashed, color = black]\n\"TOPO\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = -1.241***<BR /><FONT POINT-SIZE=\"7\">95% CI [-1.542, -0.414]   <\/FONT> >, penwidth = 6.705, style = dashed, color = black]\n\"LANDCOVER\" -> {\"HYDRO\"}[weight = 1, label = < 𝛽 = -0.049<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.772, 0.451]   <\/FONT> >, penwidth = 0.745, style = dashed, color = black]\n\"LANDCOVER\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = -0.619<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.94, 0.501]   <\/FONT> >, penwidth = 3.595, style = dashed, color = black]\n\"HYDRO\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = 0.037<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.298, 0.256]   <\/FONT> >, penwidth = 0.685, style = solid, color = black]\n}\n// ---------------------\n// The measurement model\n// ---------------------\n\nsubgraph construct_1 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"topo_1\" [label = \"topo_1\", shape = box]\n\"topo_2\" [label = \"topo_2\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"topo_1\" -> {\"TOPO\"}[weight = 1000, label = < 𝜆 = 0.956*** >, penwidth = 3.368, style = solid, color = dimgrey]\n\"topo_2\" -> {\"TOPO\"}[weight = 1000, label = < 𝜆 = 0.95*** >, penwidth = 3.35, style = solid, color = dimgrey]\n\n}\nsubgraph construct_2 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"landcover_1\" [label = \"landcover_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"landcover_1\" -> {\"LANDCOVER\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_3 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"hydro_1\" [label = \"hydro_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"hydro_1\" -> {\"HYDRO\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_4 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"doc_1\" [label = \"doc_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = normal\narrowtail = none\n]\n\"DOC\" -> {\"doc_1\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="beetlekill-forest-and-parafac-c3" class="section level5 hasAnchor" number="6.2.3.5.4">
+<h5><span class="header-section-number">6.2.3.5.4</span> Beetlekill forest and PARAFAC C3<a href="the-code.html#beetlekill-forest-and-parafac-c3" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<pre><code>## [1] &quot;topo_1&quot;      &quot;hydro_1&quot;     &quot;landcover_1&quot; &quot;doc_1&quot;</code></pre>
+<pre><code>## Generating the seminr model</code></pre>
+<pre><code>## All 33 observations are valid.</code></pre>
+<pre><code>## 
+## Results from  package seminr (2.3.4)
+## 
+## Path Coefficients:
+##            HYDRO LANDCOVER    DOC
+## R^2        0.041     0.712  0.627
+## AdjR^2    -0.023     0.703  0.588
+## TOPO       0.367     0.844 -0.633
+## LANDCOVER -0.359         . -0.177
+## HYDRO          .         . -0.052
+## 
+## Reliability:
+##           alpha  rhoC   AVE  rhoA
+## TOPO      1.000 1.000 1.000 1.000
+## LANDCOVER 1.000 1.000 1.000 1.000
+## HYDRO     1.000 1.000 1.000 1.000
+## DOC       1.000 1.000 1.000 1.000
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
+<pre><code>##                      Original Est. Bootstrap Mean Bootstrap SD T Stat. 5% CI 95% CI
+## TOPO  -&gt;  LANDCOVER          0.844          0.847        0.040  20.957 0.777  0.908
+## TOPO  -&gt;  HYDRO              0.064          0.141        0.101   0.635 0.015  0.334
+## TOPO  -&gt;  DOC                0.786          0.772        0.080   9.817 0.631  0.887
+## LANDCOVER  -&gt;  HYDRO         0.049          0.143        0.122   0.404 0.011  0.396
+## LANDCOVER  -&gt;  DOC           0.708          0.709        0.076   9.374 0.574  0.823
+## HYDRO  -&gt;  DOC               0.084          0.134        0.092   0.913 0.014  0.300</code></pre>
+<p>This gives us the confidence intervals of the HTMT ratio.</p>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-09e65ae2a6f8fbf0b6a2" style="width:768px;height:384px;"></div>
+<script type="application/json" data-for="htmlwidget-09e65ae2a6f8fbf0b6a2">{"x":{"diagram":"digraph G {\n\n// ----------------------\n// General graph settings\n// ----------------------\ngraph [\ncharset = \"UTF-8\",\nlayout = dot,\nlabel = \"Bootstrapped Model\nHigh flow - Labile\n % Beetlekill\n PARAFAC %Component3\",\nfontsize = 24,\nfontcolor = black,\nfontname = helvetica,\nrankdir = LR,\nlabelloc = t,\nsplines = TRUE\nbgcolor = transparent\n]\n\n// --------------------\n// The structural model\n// --------------------\nsubgraph sm {\nrankdir = LR;\nnode [\nshape = ellipse,\ncolor = black,\nfillcolor = white,\nstyle = filled,\nfontsize = 12,\nfontcolor = black,\nheight = 0.919303385416667,\nwidth = 0.918636067708333,\nfontname = helvetica,\nfixedsize = true\n]\n\"TOPO\" [label=<<B>TOPO <\/B>>, shape = hexagon]\n\"LANDCOVER\" [label=<<B>LANDCOVER <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.712<\/FONT>>, shape = hexagon]\n\"HYDRO\" [label=<<B>HYDRO <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.041<\/FONT>>, shape = hexagon]\n\"DOC\" [label=<<B>DOC <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.627<\/FONT>>, shape = hexagon]\nedge [\ncolor = black,\nfontsize = 9,\nfontcolor = black,\nfontname = helvetica,\ndir = both,\narrowhead = normal,\narrowtail = none\n]\n\"TOPO\" -> {\"HYDRO\"}[weight = 1, label = < 𝛽 = 0.367*<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.053, 0.733]   <\/FONT> >, penwidth = 2.335, style = solid, color = black]\n\"TOPO\" -> {\"LANDCOVER\"}[weight = 1, label = < 𝛽 = 0.844***<BR /><FONT POINT-SIZE=\"7\">95% CI [0.765, 0.925]   <\/FONT> >, penwidth = 4.72, style = solid, color = black]\n\"TOPO\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = -0.633**<BR /><FONT POINT-SIZE=\"7\">95% CI [-1.117, -0.144]   <\/FONT> >, penwidth = 3.665, style = dashed, color = black]\n\"LANDCOVER\" -> {\"HYDRO\"}[weight = 1, label = < 𝛽 = -0.359*<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.851, -0.128]   <\/FONT> >, penwidth = 2.295, style = dashed, color = black]\n\"LANDCOVER\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = -0.177<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.659, 0.291]   <\/FONT> >, penwidth = 1.385, style = dashed, color = black]\n\"HYDRO\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = -0.052<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.243, 0.116]   <\/FONT> >, penwidth = 0.76, style = dashed, color = black]\n}\n// ---------------------\n// The measurement model\n// ---------------------\n\nsubgraph construct_1 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"topo_1\" [label = \"topo_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"topo_1\" -> {\"TOPO\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_2 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"landcover_1\" [label = \"landcover_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"landcover_1\" -> {\"LANDCOVER\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_3 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"hydro_1\" [label = \"hydro_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"hydro_1\" -> {\"HYDRO\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_4 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"doc_1\" [label = \"doc_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = normal\narrowtail = none\n]\n\"DOC\" -> {\"doc_1\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="the-code.html#cb103-1" tabindex="-1"></a><span class="fu">print</span>(indicators)</span></code></pre></div>
+<pre><code>## $topo
+## [1] &quot;twi_mean&quot;
+## 
+## $hydro
+## [1] &quot;snowpack_3day_avg&quot;
+## 
+## $landcover
+## [1] &quot;percent_Beetle.kill&quot;
+## 
+## $doc
+## [1] &quot;relative_load_comp_3&quot;</code></pre>
+</div>
+</div>
+</div>
+<div id="model-4-low-flows---humic--wonutrients-automated" class="section level3 hasAnchor" number="6.2.4">
+<h3><span class="header-section-number">6.2.4</span> Model 4: Low flows - HUMIC -WO/NUTRIENTS (AUTOMATED)<a href="the-code.html#model-4-low-flows---humic--wonutrients-automated" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="indicator-list-3" class="section level4 hasAnchor" number="6.2.4.1">
+<h4><span class="header-section-number">6.2.4.1</span> Indicator list<a href="the-code.html#indicator-list-3" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>These will be the indicators that will be randomly selected from during automation. Select labile or humic DOC responses here</p>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="the-code.html#cb105-1" tabindex="-1"></a>model_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">matrix</span>(<span class="at">ncol =</span> <span class="dv">0</span>, <span class="at">nrow =</span> <span class="fu">nrow</span>(filtered_df)))</span>
+<span id="cb105-2"><a href="the-code.html#cb105-2" tabindex="-1"></a></span>
+<span id="cb105-3"><a href="the-code.html#cb105-3" tabindex="-1"></a>indicators <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb105-4"><a href="the-code.html#cb105-4" tabindex="-1"></a>  <span class="at">topo =</span> <span class="fu">c</span>( <span class="st">&quot;disttostreams_mean&quot;</span>, <span class="st">&#39;twi_mean&#39;</span>, <span class="st">&#39;area_km&#39;</span>, <span class="st">&quot;elevabovestreams_mean&quot;</span>,  <span class="st">&quot;aspect_mean_rad&quot;</span>),</span>
+<span id="cb105-5"><a href="the-code.html#cb105-5" tabindex="-1"></a>  <span class="at">hydro =</span> <span class="fu">c</span>(<span class="st">&quot;discharge_m2&quot;</span>),</span>
+<span id="cb105-6"><a href="the-code.html#cb105-6" tabindex="-1"></a>  <span class="at">landcover =</span> <span class="fu">c</span>(<span class="st">&quot;percent_Beetle.kill&quot;</span>, <span class="st">&quot;percent_Meadows&quot;</span>,<span class="st">&quot;percent_Old.Forest&quot;</span>,<span class="st">&quot;percent_cut.regenerating&quot;</span>,</span>
+<span id="cb105-7"><a href="the-code.html#cb105-7" tabindex="-1"></a><span class="st">&quot;percent_Tundra&quot;</span> ,<span class="st">&quot;ndvi_raster_mean&quot;</span>),</span>
+<span id="cb105-8"><a href="the-code.html#cb105-8" tabindex="-1"></a>  <span class="at">doc =</span> <span class="fu">c</span>(<span class="st">&quot;relative_load_comp_1&quot;</span>, <span class="st">&quot;relative_load_comp_2&quot;</span>, <span class="st">&quot;norm_PARAF_c1&quot;</span>, <span class="st">&quot;norm_PARAF_c2&quot;</span>, <span class="st">&quot;peak_T_275.340&quot;</span>, <span class="st">&quot;Fluorescence_Index&quot;</span>, <span class="st">&quot;SUVA254&quot;</span>, <span class="st">&quot;peak_ratioAT&quot;</span>, <span class="st">&quot;peak_ratioCT&quot;</span>)</span>
+<span id="cb105-9"><a href="the-code.html#cb105-9" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="run-the-function-written-in-.r-script-3" class="section level4 hasAnchor" number="6.2.4.2">
+<h4><span class="header-section-number">6.2.4.2</span> Run the function written in .R script<a href="the-code.html#run-the-function-written-in-.r-script-3" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## [1] &quot;20000 run winner: &quot;</code></pre>
+<pre><code>## [1] 0.6039023</code></pre>
+<pre><code>## $topo
+## [1] &quot;twi_mean&quot;
+## 
+## $hydro
+## [1] &quot;snowpack_3day_avg&quot;
+## 
+## $landcover
+## [1] &quot;percent_cut.regenerating&quot;
+## 
+## $doc
+## [1] &quot;peak_ratioCT&quot;         &quot;relative_load_comp_2&quot; &quot;SUVA254&quot;</code></pre>
+<p>Or we can find the highest performing model where some value is specified for the ‘DOC’ response</p>
+<pre><code>## Best R^2 for DOC: 0.5316313 
+## Selected DOC response:
+## [1] &quot;relative_load_comp_1&quot;
+## Sampled indicators for best model:
+## $topo
+## [1] &quot;twi_mean&quot;
+## 
+## $hydro
+## [1] &quot;snowpack_3day_avg&quot;
+## 
+## $landcover
+## [1] &quot;percent_Beetle.kill&quot;      &quot;ndvi_raster_mean&quot;         &quot;percent_cut.regenerating&quot;
+## 
+## $doc
+## [1] &quot;relative_load_comp_1&quot; &quot;relative_load_comp_2&quot; &quot;peak_T_275.340&quot;</code></pre>
+</div>
+<div id="visualizing-all-selected-results-r2-of-doc-0.4-3" class="section level4 hasAnchor" number="6.2.4.3">
+<h4><span class="header-section-number">6.2.4.3</span> Visualizing all selected results (r2 of DOC &gt;0.4)<a href="the-code.html#visualizing-all-selected-results-r2-of-doc-0.4-3" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="indicator-frequency-6" class="section level5 hasAnchor" number="6.2.4.3.1">
+<h5><span class="header-section-number">6.2.4.3.1</span> Indicator frequency<a href="the-code.html#indicator-frequency-6" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-285-1.png" width="672" /></p>
+</div>
+<div id="r2-distribution-5" class="section level5 hasAnchor" number="6.2.4.3.2">
+<h5><span class="header-section-number">6.2.4.3.2</span> R2 distribution<a href="the-code.html#r2-distribution-5" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+</div>
+<div id="combine-these-two-ideas-create-the-dataframe-6" class="section level5 hasAnchor" number="6.2.4.3.3">
+<h5><span class="header-section-number">6.2.4.3.3</span> Combine these two ideas: Create the dataframe<a href="the-code.html#combine-these-two-ideas-create-the-dataframe-6" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-287-1.png" width="672" /></p>
+</div>
+</div>
+<div id="visualizing-specific-doc-results-r2-of-doc-0.4-3" class="section level4 hasAnchor" number="6.2.4.4">
+<h4><span class="header-section-number">6.2.4.4</span> Visualizing specific DOC results (r2 of DOC &gt;0.4)<a href="the-code.html#visualizing-specific-doc-results-r2-of-doc-0.4-3" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="indicator-frequency-7" class="section level5 hasAnchor" number="6.2.4.4.1">
+<h5><span class="header-section-number">6.2.4.4.1</span> Indicator frequency<a href="the-code.html#indicator-frequency-7" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-288-1.png" width="672" /></p>
+</div>
+<div id="r2-distribution-6" class="section level5 hasAnchor" number="6.2.4.4.2">
+<h5><span class="header-section-number">6.2.4.4.2</span> R2 distribution<a href="the-code.html#r2-distribution-6" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+</div>
+<div id="combine-these-two-ideas-create-the-dataframe-7" class="section level5 hasAnchor" number="6.2.4.4.3">
+<h5><span class="header-section-number">6.2.4.4.3</span> Combine these two ideas: Create the dataframe<a href="the-code.html#combine-these-two-ideas-create-the-dataframe-7" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-290-1.png" width="672" /></p>
+</div>
+</div>
+<div id="generate-flow-diagram-for-the-top-performing-model-3" class="section level4 hasAnchor" number="6.2.4.5">
+<h4><span class="header-section-number">6.2.4.5</span> Generate flow diagram for the top performing model<a href="the-code.html#generate-flow-diagram-for-the-top-performing-model-3" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## [1] &quot;topo_1&quot;      &quot;hydro_1&quot;     &quot;landcover_1&quot; &quot;doc_1&quot;       &quot;doc_2&quot;       &quot;doc_3&quot;</code></pre>
+<pre><code>## Generating the seminr model</code></pre>
+<pre><code>## All 64 observations are valid.</code></pre>
+<pre><code>## 
+## Results from  package seminr (2.3.4)
+## 
+## Path Coefficients:
+##            HYDRO LANDCOVER    DOC
+## R^2        0.025     0.564  0.595
+## AdjR^2    -0.007     0.557  0.575
+## TOPO      -0.135     0.751  0.781
+## LANDCOVER -0.031         . -0.013
+## HYDRO          .         . -0.005
+## 
+## Reliability:
+##           alpha  rhoC   AVE  rhoA
+## TOPO      1.000 1.000 1.000 1.000
+## LANDCOVER 1.000 1.000 1.000 1.000
+## HYDRO     1.000 1.000 1.000 1.000
+## DOC       0.777 0.876 0.713 0.878
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
+<pre><code>##                      Original Est. Bootstrap Mean Bootstrap SD T Stat. 5% CI 95% CI
+## TOPO  -&gt;  LANDCOVER          0.751          0.756        0.090   8.324 0.592  0.879
+## TOPO  -&gt;  HYDRO              0.158          0.212        0.118   1.346 0.122  0.530
+## TOPO  -&gt;  DOC                0.862          0.858        0.063  13.581 0.748  0.956
+## LANDCOVER  -&gt;  HYDRO         0.132          0.151        0.046   2.904 0.093  0.240
+## LANDCOVER  -&gt;  DOC           0.647          0.647        0.090   7.167 0.494  0.790
+## HYDRO  -&gt;  DOC               0.141          0.209        0.175   0.806 0.072  0.679</code></pre>
+<p>This gives us the confidence intervals of the HTMT ratio.</p>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-f909df8b22b55075db0c" style="width:768px;height:384px;"></div>
+<script type="application/json" data-for="htmlwidget-f909df8b22b55075db0c">{"x":{"diagram":"digraph G {\n\n// ----------------------\n// General graph settings\n// ----------------------\ngraph [\ncharset = \"UTF-8\",\nlayout = dot,\nlabel = \"Bootstrapped Model\nLow flow - Humic\",\nfontsize = 24,\nfontcolor = black,\nfontname = helvetica,\nrankdir = LR,\nlabelloc = t,\nsplines = TRUE\nbgcolor = transparent\n]\n\n// --------------------\n// The structural model\n// --------------------\nsubgraph sm {\nrankdir = LR;\nnode [\nshape = ellipse,\ncolor = black,\nfillcolor = white,\nstyle = filled,\nfontsize = 12,\nfontcolor = black,\nheight = 0.919303385416667,\nwidth = 0.918636067708333,\nfontname = helvetica,\nfixedsize = true\n]\n\"TOPO\" [label=<<B>TOPO <\/B>>, shape = hexagon]\n\"LANDCOVER\" [label=<<B>LANDCOVER <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.564<\/FONT>>, shape = hexagon]\n\"HYDRO\" [label=<<B>HYDRO <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.025<\/FONT>>, shape = hexagon]\n\"DOC\" [label=<<B>DOC <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.595<\/FONT>>, shape = hexagon]\nedge [\ncolor = black,\nfontsize = 9,\nfontcolor = black,\nfontname = helvetica,\ndir = both,\narrowhead = normal,\narrowtail = none\n]\n\"TOPO\" -> {\"HYDRO\"}[weight = 1, label = < 𝛽 = -0.135<BR /><FONT POINT-SIZE=\"7\">95% CI [-1.111, -0.077]   <\/FONT> >, penwidth = 1.175, style = dashed, color = black]\n\"TOPO\" -> {\"LANDCOVER\"}[weight = 1, label = < 𝛽 = 0.751***<BR /><FONT POINT-SIZE=\"7\">95% CI [0.559, 0.892]   <\/FONT> >, penwidth = 4.255, style = solid, color = black]\n\"TOPO\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = 0.781***<BR /><FONT POINT-SIZE=\"7\">95% CI [0.489, 1.12]   <\/FONT> >, penwidth = 4.405, style = solid, color = black]\n\"LANDCOVER\" -> {\"HYDRO\"}[weight = 1, label = < 𝛽 = -0.031<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.124, 0.712]   <\/FONT> >, penwidth = 0.655, style = dashed, color = black]\n\"LANDCOVER\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = -0.013<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.375, 0.223]   <\/FONT> >, penwidth = 0.565, style = dashed, color = black]\n\"HYDRO\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = -0.005<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.328, 0.085]   <\/FONT> >, penwidth = 0.525, style = dashed, color = black]\n}\n// ---------------------\n// The measurement model\n// ---------------------\n\nsubgraph construct_1 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"topo_1\" [label = \"topo_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"topo_1\" -> {\"TOPO\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_2 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"landcover_1\" [label = \"landcover_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"landcover_1\" -> {\"LANDCOVER\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_3 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"hydro_1\" [label = \"hydro_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"hydro_1\" -> {\"HYDRO\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_4 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"doc_1\" [label = \"doc_1\", shape = box]\n\"doc_2\" [label = \"doc_2\", shape = box]\n\"doc_3\" [label = \"doc_3\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = normal\narrowtail = none\n]\n\"DOC\" -> {\"doc_1\"}[weight = 1000, label = < 𝜆 = 0.952*** >, penwidth = 3.356, style = solid, color = dimgrey]\n\"DOC\" -> {\"doc_2\"}[weight = 1000, label = < 𝜆 = 0.963*** >, penwidth = 3.389, style = solid, color = dimgrey]\n\"DOC\" -> {\"doc_3\"}[weight = 1000, label = < 𝜆 = 0.552*** >, penwidth = 2.156, style = solid, color = dimgrey]\n\n}\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="the-code.html#cb115-1" tabindex="-1"></a><span class="fu">print</span>(indicators)</span></code></pre></div>
+<pre><code>## $topo
+## [1] &quot;twi_mean&quot;
+## 
+## $hydro
+## [1] &quot;discharge_m2&quot;
+## 
+## $landcover
+## [1] &quot;percent_cut.regenerating&quot;
+## 
+## $doc
+## [1] &quot;peak_ratioCT&quot;         &quot;relative_load_comp_2&quot; &quot;SUVA254&quot;</code></pre>
+</div>
+</div>
+<div id="model-5-low-flows---labile--wonutrients-automated" class="section level3 hasAnchor" number="6.2.5">
+<h3><span class="header-section-number">6.2.5</span> Model 5: Low flows - LABILE -WO/NUTRIENTS (AUTOMATED)<a href="the-code.html#model-5-low-flows---labile--wonutrients-automated" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="indicator-list-4" class="section level4 hasAnchor" number="6.2.5.1">
+<h4><span class="header-section-number">6.2.5.1</span> Indicator list<a href="the-code.html#indicator-list-4" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<p>These will be the indicators that will be randomly selected from during automation. Select labile or humic DOC responses here</p>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="the-code.html#cb117-1" tabindex="-1"></a>model_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">matrix</span>(<span class="at">ncol =</span> <span class="dv">0</span>, <span class="at">nrow =</span> <span class="fu">nrow</span>(filtered_df)))</span>
+<span id="cb117-2"><a href="the-code.html#cb117-2" tabindex="-1"></a></span>
+<span id="cb117-3"><a href="the-code.html#cb117-3" tabindex="-1"></a>indicators <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb117-4"><a href="the-code.html#cb117-4" tabindex="-1"></a>  <span class="at">topo =</span> <span class="fu">c</span>( <span class="st">&quot;disttostreams_mean&quot;</span>, <span class="st">&#39;twi_mean&#39;</span>, <span class="st">&#39;area_km&#39;</span>, <span class="st">&quot;elevabovestreams_mean&quot;</span>,  <span class="st">&quot;aspect_mean_rad&quot;</span>),</span>
+<span id="cb117-5"><a href="the-code.html#cb117-5" tabindex="-1"></a>  <span class="at">hydro =</span> <span class="fu">c</span>(<span class="st">&quot;discharge_m2&quot;</span>),</span>
+<span id="cb117-6"><a href="the-code.html#cb117-6" tabindex="-1"></a>  <span class="at">landcover =</span> <span class="fu">c</span>(<span class="st">&quot;percent_Beetle.kill&quot;</span>, <span class="st">&quot;percent_Meadows&quot;</span>,<span class="st">&quot;percent_Old.Forest&quot;</span>,<span class="st">&quot;percent_cut.regenerating&quot;</span>,<span class="st">&quot;percent_Tundra&quot;</span> ,<span class="st">&quot;ndvi_raster_mean&quot;</span>),</span>
+<span id="cb117-7"><a href="the-code.html#cb117-7" tabindex="-1"></a>  <span class="at">doc =</span> <span class="fu">c</span>(<span class="st">&quot;relative_load_comp_3&quot;</span>, <span class="st">&quot;norm_PARAF_c3&quot;</span>, <span class="st">&quot;peak_T_275.340&quot;</span>, <span class="st">&quot;Fluorescence_Index&quot;</span>, <span class="st">&quot;SUVA254&quot;</span>, <span class="st">&quot;peak_ratioAT&quot;</span>, <span class="st">&quot;peak_ratioCT&quot;</span>)</span>
+<span id="cb117-8"><a href="the-code.html#cb117-8" tabindex="-1"></a>)</span></code></pre></div>
+</div>
+<div id="run-the-function-written-in-.r-script-4" class="section level4 hasAnchor" number="6.2.5.2">
+<h4><span class="header-section-number">6.2.5.2</span> Run the function written in .R script<a href="the-code.html#run-the-function-written-in-.r-script-4" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## [1] &quot;20000 run winner: &quot;</code></pre>
+<pre><code>## [1] 0.5984462</code></pre>
+<pre><code>## $topo
+## [1] &quot;aspect_mean_rad&quot;
+## 
+## $hydro
+## [1] &quot;discharge_m2&quot;
+## 
+## $landcover
+## [1] &quot;percent_Tundra&quot;   &quot;ndvi_raster_mean&quot;
+## 
+## $doc
+## [1] &quot;peak_ratioCT&quot;</code></pre>
+<p>Or we can find the highest performing model where some value is specified for the ‘DOC’ response</p>
+<pre><code>## Best R^2 for DOC: 0.4839981 
+## Selected DOC response:
+## [1] &quot;relative_load_comp_3&quot;
+## Sampled indicators for best model:
+## $topo
+## [1] &quot;twi_mean&quot;
+## 
+## $hydro
+## [1] &quot;discharge_m2&quot;
+## 
+## $landcover
+## [1] &quot;percent_Tundra&quot;           &quot;ndvi_raster_mean&quot;         &quot;percent_cut.regenerating&quot;
+## 
+## $doc
+## [1] &quot;relative_load_comp_3&quot; &quot;norm_PARAF_c3&quot;        &quot;Fluorescence_Index&quot;</code></pre>
+</div>
+<div id="visualizing-all-selected-results-r2-of-doc-0.4-4" class="section level4 hasAnchor" number="6.2.5.3">
+<h4><span class="header-section-number">6.2.5.3</span> Visualizing all selected results (r2 of DOC &gt;0.4)<a href="the-code.html#visualizing-all-selected-results-r2-of-doc-0.4-4" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="indicator-frequency-8" class="section level5 hasAnchor" number="6.2.5.3.1">
+<h5><span class="header-section-number">6.2.5.3.1</span> Indicator frequency<a href="the-code.html#indicator-frequency-8" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-307-1.png" width="672" /></p>
+</div>
+<div id="r2-distribution-7" class="section level5 hasAnchor" number="6.2.5.3.2">
+<h5><span class="header-section-number">6.2.5.3.2</span> R2 distribution<a href="the-code.html#r2-distribution-7" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+</div>
+<div id="combine-these-two-ideas-create-the-dataframe-8" class="section level5 hasAnchor" number="6.2.5.3.3">
+<h5><span class="header-section-number">6.2.5.3.3</span> Combine these two ideas: Create the dataframe<a href="the-code.html#combine-these-two-ideas-create-the-dataframe-8" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-309-1.png" width="672" /></p>
+</div>
+</div>
+<div id="visualizing-specific-doc-results-r2-of-doc-0.4-4" class="section level4 hasAnchor" number="6.2.5.4">
+<h4><span class="header-section-number">6.2.5.4</span> Visualizing specific DOC results (r2 of DOC &gt;0.4)<a href="the-code.html#visualizing-specific-doc-results-r2-of-doc-0.4-4" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<div id="indicator-frequency-9" class="section level5 hasAnchor" number="6.2.5.4.1">
+<h5><span class="header-section-number">6.2.5.4.1</span> Indicator frequency<a href="the-code.html#indicator-frequency-9" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-310-1.png" width="672" /></p>
+</div>
+<div id="r2-distribution-8" class="section level5 hasAnchor" number="6.2.5.4.2">
+<h5><span class="header-section-number">6.2.5.4.2</span> R2 distribution<a href="the-code.html#r2-distribution-8" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+</div>
+<div id="combine-these-two-ideas-create-the-dataframe-9" class="section level5 hasAnchor" number="6.2.5.4.3">
+<h5><span class="header-section-number">6.2.5.4.3</span> Combine these two ideas: Create the dataframe<a href="the-code.html#combine-these-two-ideas-create-the-dataframe-9" class="anchor-section" aria-label="Anchor link to header"></a></h5>
+<p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-312-1.png" width="672" /></p>
+</div>
+</div>
+<div id="generate-flow-diagram-for-the-top-performing-model-4" class="section level4 hasAnchor" number="6.2.5.5">
+<h4><span class="header-section-number">6.2.5.5</span> Generate flow diagram for the top performing model<a href="the-code.html#generate-flow-diagram-for-the-top-performing-model-4" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<pre><code>## [1] &quot;topo_1&quot;      &quot;hydro_1&quot;     &quot;landcover_1&quot; &quot;landcover_2&quot; &quot;doc_1&quot;       &quot;doc_2&quot;       &quot;doc_3&quot;</code></pre>
+<pre><code>## Generating the seminr model</code></pre>
+<pre><code>## All 64 observations are valid.</code></pre>
+<pre><code>## 
+## Results from  package seminr (2.3.4)
+## 
+## Path Coefficients:
+##            HYDRO LANDCOVER    DOC
+## R^2        0.202     0.664  0.365
+## AdjR^2     0.175     0.658  0.333
+## TOPO       0.432     0.815 -0.413
+## LANDCOVER -0.725         . -0.239
+## HYDRO          .         . -0.148
+## 
+## Reliability:
+##           alpha  rhoC   AVE  rhoA
+## TOPO      1.000 1.000 1.000 1.000
+## LANDCOVER 0.882 0.944 0.894 0.888
+## HYDRO     1.000 1.000 1.000 1.000
+## DOC       1.000 1.000 1.000 1.000
+## 
+## Alpha, rhoC, and rhoA should exceed 0.7 while AVE should exceed 0.5</code></pre>
+<pre><code>##                      Original Est. Bootstrap Mean Bootstrap SD T Stat. 5% CI 95% CI
+## TOPO  -&gt;  LANDCOVER          0.864          0.862        0.058  14.854 0.750  0.940
+## TOPO  -&gt;  HYDRO              0.158          0.211        0.118   1.338 0.122  0.521
+## TOPO  -&gt;  DOC                0.585          0.581        0.111   5.272 0.381  0.743
+## LANDCOVER  -&gt;  HYDRO         0.403          0.433        0.092   4.402 0.306  0.593
+## LANDCOVER  -&gt;  DOC           0.549          0.546        0.106   5.184 0.360  0.701
+## HYDRO  -&gt;  DOC               0.006          0.083        0.158   0.039 0.002  0.521</code></pre>
+<p>This gives us the confidence intervals of the HTMT ratio.</p>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-a5e361c51e5e159862f3" style="width:768px;height:384px;"></div>
+<script type="application/json" data-for="htmlwidget-a5e361c51e5e159862f3">{"x":{"diagram":"digraph G {\n\n// ----------------------\n// General graph settings\n// ----------------------\ngraph [\ncharset = \"UTF-8\",\nlayout = dot,\nlabel = \"Bootstrapped Model\nLow flow - Labile\",\nfontsize = 24,\nfontcolor = black,\nfontname = helvetica,\nrankdir = LR,\nlabelloc = t,\nsplines = TRUE\nbgcolor = transparent\n]\n\n// --------------------\n// The structural model\n// --------------------\nsubgraph sm {\nrankdir = LR;\nnode [\nshape = ellipse,\ncolor = black,\nfillcolor = white,\nstyle = filled,\nfontsize = 12,\nfontcolor = black,\nheight = 0.919303385416667,\nwidth = 0.918636067708333,\nfontname = helvetica,\nfixedsize = true\n]\n\"TOPO\" [label=<<B>TOPO <\/B>>, shape = hexagon]\n\"LANDCOVER\" [label=<<B>LANDCOVER <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.664<\/FONT>>, shape = hexagon]\n\"HYDRO\" [label=<<B>HYDRO <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.202<\/FONT>>, shape = hexagon]\n\"DOC\" [label=<<B>DOC <\/B><BR /><FONT POINT-SIZE=\"10\">r² = 0.365<\/FONT>>, shape = hexagon]\nedge [\ncolor = black,\nfontsize = 9,\nfontcolor = black,\nfontname = helvetica,\ndir = both,\narrowhead = normal,\narrowtail = none\n]\n\"TOPO\" -> {\"HYDRO\"}[weight = 1, label = < 𝛽 = 0.432<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.424, 0.887]   <\/FONT> >, penwidth = 2.66, style = solid, color = black]\n\"TOPO\" -> {\"LANDCOVER\"}[weight = 1, label = < 𝛽 = 0.815***<BR /><FONT POINT-SIZE=\"7\">95% CI [0.678, 0.903]   <\/FONT> >, penwidth = 4.575, style = solid, color = black]\n\"TOPO\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = -0.413**<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.682, -0.03]   <\/FONT> >, penwidth = 2.565, style = dashed, color = black]\n\"LANDCOVER\" -> {\"HYDRO\"}[weight = 1, label = < 𝛽 = -0.725**<BR /><FONT POINT-SIZE=\"7\">95% CI [-1.232, -0.079]   <\/FONT> >, penwidth = 4.125, style = dashed, color = black]\n\"LANDCOVER\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = -0.239*<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.554, 0.007]   <\/FONT> >, penwidth = 1.695, style = dashed, color = black]\n\"HYDRO\" -> {\"DOC\"}[weight = 1, label = < 𝛽 = -0.148<BR /><FONT POINT-SIZE=\"7\">95% CI [-0.308, 0.3]   <\/FONT> >, penwidth = 1.24, style = dashed, color = black]\n}\n// ---------------------\n// The measurement model\n// ---------------------\n\nsubgraph construct_1 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"topo_1\" [label = \"topo_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"topo_1\" -> {\"TOPO\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_2 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"landcover_1\" [label = \"landcover_1\", shape = box]\n\"landcover_2\" [label = \"landcover_2\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"landcover_1\" -> {\"LANDCOVER\"}[weight = 1000, label = < 𝜆 = 0.951*** >, penwidth = 3.353, style = solid, color = dimgrey]\n\"landcover_2\" -> {\"LANDCOVER\"}[weight = 1000, label = < 𝜆 = 0.94*** >, penwidth = 3.32, style = solid, color = dimgrey]\n\n}\nsubgraph construct_3 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"hydro_1\" [label = \"hydro_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = none\narrowtail = normal\n]\n\"hydro_1\" -> {\"HYDRO\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\nsubgraph construct_4 {\nnode [\nshape = box,\ncolor = dimgrey,\nfillcolor = white,\nstyle = filled,\nfontsize = 8,\nfontcolor = black,\nheight = 0.109651692708333,\nwidth = 0.454020182291667,\nfontname = helvetica,\nfixedsize = true\n]\n\"doc_1\" [label = \"doc_1\", shape = box]\nedge [\ncolor = dimgrey,\nfontsize = 7,\nfontcolor = black,\nfontname = helvetica,\nminlen = 1,\ndir = both\narrowhead = normal\narrowtail = none\n]\n\"DOC\" -> {\"doc_1\"}[weight = 1000, label = < 𝜆 = 1 >, penwidth = 3.5, style = solid, color = dimgrey]\n\n}\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="the-code.html#cb127-1" tabindex="-1"></a><span class="fu">print</span>(indicators)</span></code></pre></div>
+<pre><code>## $topo
+## [1] &quot;twi_mean&quot;
+## 
+## $hydro
+## [1] &quot;discharge_m2&quot;
+## 
+## $landcover
+## [1] &quot;percent_Beetle.kill&quot; &quot;ndvi_raster_mean&quot;   
+## 
+## $doc
+## [1] &quot;relative_load_comp_3&quot; &quot;norm_PARAF_c3&quot;        &quot;Fluorescence_Index&quot;</code></pre>
+
+</div>
+</div>
+</div>
+<!-- </div> -->
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="workflow-description.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="final-publishable-pngs.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="assets/gitbook-2.6.7/js/app.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="assets/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="assets/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/lekokremer/FEF_PLS_SEM/edit/main/06_PLS_SEM_automation.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/lekokremer/FEF_PLS_SEM/blob/main/06_PLS_SEM_automation.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection",
+"depth": 1
+},
+"toolbar": {
+"position": "static"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

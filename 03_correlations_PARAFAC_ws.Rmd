@@ -193,8 +193,7 @@ plot <- ggplot(merged_df, aes(x = watershed, y = relative_load_comp_1)) +
 print(plot)
 
 # Save the plot as a .png
-#ggsave(filename = "comp1_boxplot.png", plot = plot, width = 8, height = 6, dpi = 300)
-
+ggsave(filename = "images/comp1_boxplot.png", plot = plot, width = 8, height = 6, dpi = 300)
 ```
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=10, fig.height=6, fig.cap="Figure. Box plots showing the relationships between the sample proportion of PARAFAC component 2 (humic-type) and watershed. dh,dhn and dhs = Deadhorse, fc = Fool Creek"}
@@ -223,6 +222,121 @@ print(plot)
 # Save the plot as a .png
 #ggsave(filename = "comp2_boxplot.png", plot = plot, width = 8, height = 6, dpi = 300)
 ```
+
+```{r}
+mean_df <- merged_df %>%
+  mutate(watershed_group = case_when(
+    str_detect(watershed, "dh") ~ "Deadhorse",
+    TRUE ~ as.character(watershed)  # Ensures other watershed names are retained as characters
+  )) %>%
+  group_by(watershed_group) %>%
+  summarise(mean_value = mean(relative_load_comp_1, na.rm = TRUE), .groups = 'drop')
+
+merged_merged_df <- merged_df %>%
+  mutate(watershed_group = case_when(
+    str_detect(watershed, "dh") ~ "Deadhorse",
+    TRUE ~ as.character(watershed)  # Ensures other watershed names are retained as characters
+  ))
+
+# Create the box plot for relative_load_comp_3 across watersheds
+plot <- ggplot(merged_merged_df, aes(x = watershed_group, y = relative_load_comp_3)) +
+  geom_boxplot(fill = "skyblue", outlier.color = "black", outlier.size = 2) +  # Box plot with outliers
+  geom_point(data = mean_df, aes(x = watershed_group, y = mean_value), 
+             color = "darkorange", size = 3, shape = 8) +  # Add mean as a point
+  theme_minimal() +
+  labs(x = "Watershed", y = "Proportion of sample\ncontaining protein-like component", title = "Box Plot of component 3 with Mean Indicator Across Watersheds") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 12),  # Adjust x-axis tick label size
+        axis.text.y = element_text(size = 16),  # Adjust y-axis tick label size
+        axis.title.x = element_text(size = 16),  # Adjust x-axis title size
+        axis.title.y = element_text(size = 16)) +  # Adjust y-axis title size
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + # Rotate x-axis labels
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + # Rotate x-axis labels
+  annotate("text", x = 5.1, y = 0.29, 
+           label = "Mean", color = "darkorange", size = 5, hjust = 0) 
+# Print the plot
+print(plot)
+
+```
+
+```{r}
+
+# Select only the necessary columns
+fred_df <- merged_df %>%
+  dplyr::select("watershed", "relative_load_comp_1", "relative_load_comp_2", "relative_load_comp_3")
+
+# Reshape data to long format
+long_df <- fred_df %>%
+  mutate(watershed_group = case_when(
+    str_detect(watershed, "dh") ~ "Deadhorse",
+    TRUE ~ as.character(watershed)  # Retains original watershed names
+  )) %>%
+  pivot_longer(cols = starts_with("relative_load_comp_"), 
+               names_to = "component", 
+               values_to = "value")  %>%
+  mutate(watershed_group = str_replace(watershed_group, "lexen", "Lexen"))%>%
+  mutate(watershed_group = str_replace(watershed_group, "fc", "Fool"))
+
+# Compute means for each watershed and component
+mean_df <- long_df %>%
+  group_by(watershed_group, component) %>%
+  summarise(mean_value = mean(value, na.rm = TRUE), .groups = "drop")
+
+plot <- ggplot(long_df, aes(x = watershed_group, y = value, fill = component)) +
+  geom_boxplot(outlier.color = "black", outlier.size = 2) +  # Box plot with outliers
+  geom_point(data = mean_df, aes(x = watershed_group, y = mean_value), 
+             color = "darkorange", size = 3, shape = 8, inherit.aes = FALSE) +  # Mean points
+  theme_minimal() +
+  labs(x = "Watershed", y = "Proportion of sample\ncontaining indicated component", 
+       title = "Box Plots of PARAFAC Components Across Watersheds") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 12),  # Adjust x-axis labels
+        axis.text.y = element_text(size = 14),  
+        axis.title.x = element_text(size = 14),  
+        axis.title.y = element_text(size = 14), 
+        strip.text = element_blank()) +  # Remove facet labels
+  facet_wrap(~component, scales = "fixed") +  # Same Y-axis scale across facets
+  scale_fill_manual(values = c("relative_load_comp_1" = "skyblue", 
+                               "relative_load_comp_2" = "lightcoral", 
+                               "relative_load_comp_3" = "mediumseagreen")) +  # Custom colors
+  annotate("text", x = 5.1, y = max(long_df$value, na.rm = TRUE) * 0.9, 
+           label = "Mean", color = "darkorange", size = 5, hjust = 0)  
+
+# Print the plot
+print(plot)
+
+# Save the plot as a .png
+ggsave(filename = "images/comp_ws_boxplot.png", plot = plot, width = 8, height = 6, dpi = 300)
+
+```
+
+####By REACH
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=10, fig.height=6, fig.cap="Figure. Box plots showing the relationships between the sample proportion of PARAFAC component 1 (humic-type) and reach. dh= Deadhorse, lx = Lexen Creek, fc = Fool Creek"}
+# Calculate mean for each watershed
+mean_df <- merged_df %>%
+  group_by(reach) %>%
+  summarise(mean_value = mean(relative_load_comp_1, na.rm = TRUE), .groups = 'drop')
+
+# Create the box plot for relative_load_comp_1 across watersheds
+plot <- ggplot(merged_df, aes(x = reach, y = relative_load_comp_1)) +
+  geom_boxplot(fill = "lightgreen", outlier.color = "black", outlier.size = 2) +  # Box plot with outliers
+  geom_point(data = mean_df, aes(x = reach, y = mean_value), 
+             color = "darkorange", size = 3, shape = 8) +  # Add mean as a point
+  theme_minimal() +
+  labs(x = "Watershed", y = "Proportion of sample\ncontaining humic component 1", title = "Box Plot of component 1 with Mean Indicator Across Watersheds") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 12),  # Adjust x-axis tick label size
+        axis.text.y = element_text(size = 16),  # Adjust y-axis tick label size
+        axis.title.x = element_text(size = 16),  # Adjust x-axis title size
+        axis.title.y = element_text(size = 16)) +  # Adjust y-axis title size
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + # Rotate x-axis labels
+  annotate("text", x = 5.1, y = 0.17, 
+           label = "Mean", color = "darkorange", size = 5, hjust = 0) 
+# Print the plot
+print(plot)
+
+# Save the plot as a .png
+#ggsave(filename = "comp2_boxplot.png", plot = plot, width = 8, height = 6, dpi = 300)
+```
+
 
 ### Spearman's
 While Pearson's correlation assumes linear relationships and normal distributions among variables, and Spearman assumptions are that data is monotonic (distribution consistently increases or decreases), most of our data for both response and explanatory variables are skewed or bimodal but uni-directional. 
@@ -372,6 +486,48 @@ This figure indicates that: <br>
 - but **increase** with increased coverage by short canopy (<5m) and Tundra.<br>
 - Significant but weaker correlations indicate that protein-like fractions increase with increasing meadow and old forest coverage. 
 
+##### PARAFAC and EEM ratios - all EEMS
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=10, fig.height=6, fig.cap= "Figure. Combined plot showing the relationships between relative loadings of 3 PARAFAC components and landcover characteristics for all samples with EEMs data (July 2021- Oct 1, 2022). Color indicates direction and correlation value (Pearson's). Asterisks indicate level of significance."}
+
+correlation_df <- merged_df %>%
+  dplyr::select(relative_load_comp_1, relative_load_comp_2, relative_load_comp_3,  Fluorescence_Index, SUVA254, peak_ratioAT, peak_ratioCA, peak_ratioCT)
+#peak_A_250.450,peak_C_350.450, peak_T_275.340,
+# Scale the data
+scaled_df <- correlation_df %>%
+  mutate(across(everything(), scale))
+
+# Calculate correlation and p-value matrices on the scaled data
+Mp <- rcorr(as.matrix(scaled_df))
+
+# Rename the labels in the correlation matrix
+colnames(Mp$r) <- c("Relative Load Comp1 (humic)", "Relative Load Comp2 (humic)", "Relative Load Comp3 (protein)", "Fluorescence Index", "SUVA254", "Peak Ratio AT", "Peak Ratio CA", "Peak Ratio CT")
+
+rownames(Mp$r) <- c("Relative Load Comp1 (humic)", "Relative Load Comp2 (humic)", "Relative Load Comp3 (protein)",  "Fluorescence Index", "SUVA254", "Peak Ratio AT", "Peak Ratio CA", "Peak Ratio CT")
+
+#"Peak A em250ex450", "Peak C ex350em450", "Peak T ex275em340",
+
+# Save the corrplot as a .png
+png("images/eems_parafac.png", width = 8, height = 6, units = "in", res = 300)
+
+# Plot matrix
+pcor <- corrplot(Mp$r[1:3, 4:8], 
+         p.mat = Mp$P[1:3, 4:8], 
+         method = "color", 
+         col = COL2('PuOr', 10),
+         sig.level = c(0.001, 0.01, 0.05), 
+         tl.col = 'black', 
+         tl.srt = 45,
+         insig = 'label_sig',
+         pch.cex = 1)
+
+# Close the device to save the plot
+dev.off()
+
+```
+
+This figure show significant correlations between common matrix-derived indices and PARAFAC component compositions. <br>
+Relative loads show opposite correlations with indices, while DOC normalized values show similar trends (e.g., Fluorescence Index has a negative relationship with all normalized values.)
 
 ##### Topo and moisture - all EEMS
 
@@ -745,6 +901,71 @@ fchydrograph <- read.csv(file_path) %>%
   mutate(TMSTAMP = mdy_hm(TMSTAMP))
 ```
 
+```{r}
+file_path <- "datafiles/LFC_usfs_discharge_WY18-WY22.csv"
+fchydrograph2122 <- read.csv(file_path) %>%
+  mutate(TMSTAMP = mdy_hm(TIMESTAMP))
+
+file_path <- "datafiles/fef_h2ochemistry_2020_rformatted.csv"
+fcchem20 <- read.csv(file_path) %>%
+  mutate(DATE = mdy(DATE), reach = as.factor(reach))
+
+file_path <- "datafiles/fef_h2ochemistry_2021_rformatted.csv"
+fcchem21 <- read.csv(file_path) %>%
+  mutate(DATE = mdy(DATE), reach = as.factor(reach))
+
+file_path <- "datafiles/fef_h2ochemistry_2022_rformatted.csv"
+fcchem22 <- read.csv(file_path) %>%
+  mutate(DATE = mdy(DATE), reach = as.factor(reach))
+
+fcchem <- rbind(fcchem20, fcchem21)
+fcchem <- rbind(fcchem, fcchem22)
+```
+
+```{r}
+
+plot_df <- fcchem %>%
+  filter(position == 'stream' & reach == 'FC1') %>%
+  dplyr::select(DATE, doc_mg.l)
+
+plot_df <-plot_df %>%
+  drop_na(doc_mg.l)
+
+fchydrograph2122$DATE <- as.Date(fchydrograph2122$TMSTAMP)
+filtered_hydro <- fchydrograph2122 %>% 
+  filter(DATE >= as.Date("2020-01-01"))
+
+# large hydrographs, all data:
+gg <- ggplot() +
+  # Add points for the components, with different colors
+  geom_point(data = plot_df, aes(x = DATE, y = doc_mg.l*0.15), size = 1.5) +
+  #geom_line(data = plot_data_long, aes(x = datetime, y = value, color = variable))+
+  
+  # Add the hydrograph as a line in the background
+  geom_line(data = filtered_hydro, aes(x = DATE, y = Q..cfs. / max(Q..cfs.) * max(plot_data_long$value)), 
+            color = "blue", linetype = "solid", alpha = 0.5) +
+  # Add secondary y-axis for the hydrograph
+  scale_y_continuous(
+    name = "Concentration/Load",
+    sec.axis = sec_axis(~ ./0.15 * max(fchydrograph2122$Q..cfs.) / max(plot_df$doc_mg.l), name = "Discharge (cfs)")) +
+      
+  # Styling
+  theme_minimal() +
+    labs(x = "Date", y = "Concentration/Load", title = "Time Series of Components in FC1 with FC outlet Hydrograph") +
+  theme(
+    legend.position = "right",  # Keep the legend for identifying the components
+    strip.text = element_text(size = 10)  # Adjust labels size
+  
+  ) 
+
+plot(gg)
+
+# Save the plot as a .png
+ggsave(filename = "images/full_FChydro_and_chem.png", plot = plot, width = 8, height = 6, dpi = 300)
+
+
+```
+
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=10, fig.height=8, fig.cap = "Figure. relative loadings over time from Fool Creek outlet stream site only. Component 1 (humic) appears to increase with discharge while the fraction of Component 2 (humic) and Component 3 (protein-like) decrease during peak flow"}
 
@@ -857,6 +1078,74 @@ print(gg)
 
 ```
 
+### Hydrograph - Fool Creek with DOC
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+# Filter and dplyr::select the columns of interest, including date and reachposition
+plot_df <- merged_df %>%
+  filter(position == 'stream' & reach == 'fc1') %>%
+  dplyr::select(datetime, doc_mg.l)
+
+plot_df <-plot_df %>%
+  drop_na(doc_mg.l)
+
+# Reshape data into long format for ggplot
+plot_data_long <- plot_df %>%
+  pivot_longer(cols = -c(datetime), names_to = "variable", values_to = "value")
+
+gg <- ggplot() +
+  # Add points for the components, with specific styling for NO3_mg.l
+  geom_point(
+    data = plot_data_long,
+    aes(
+      x = datetime, 
+      y = value, 
+      color = variable,
+      
+      size = ifelse(variable == "doc_mg.l", 2.5, 1.5) # Larger size for NO3
+    )
+  ) +
+  # Add lines for the components
+  geom_line(data = plot_data_long, aes(x = datetime, y = value, color = variable)) +
+  
+  # Add the hydrograph as a line in the background
+  geom_line(
+    data = fchydrograph, 
+    aes(
+      x = TMSTAMP, 
+      y = Q..cfs. / max(Q..cfs.) * max(plot_data_long$value)
+    ), 
+    color = "blue", 
+    linetype = "solid", 
+    alpha = 0.5
+  ) +
+  
+  # Add secondary y-axis for the hydrograph
+  scale_y_continuous(
+    name = "Concentration",
+    sec.axis = sec_axis(~ . * max(fchydrograph$Q..cfs.) / max(plot_data_long$value), name = "Discharge (cfs)")
+  ) +
+  
+  # Customize shape scale (optional, but makes the legend more descriptive)
+  scale_shape_manual(values = c("DOC" = 17, "Other" = 16)) + # Change shapes for NO3 and others
+  scale_size_identity() + # Directly map sizes without scaling
+  
+  # Styling
+  theme_minimal() +
+  labs(
+    x = "Date", 
+    y = "Concentration/Load", 
+    title = "Time Series of DOC in FC1 with Fool Creek Outlet Hydrograph"
+  ) +
+  theme(
+    #legend.position = "none",  # Remove the legend
+    strip.text = element_text(size = 10)  # Adjust labels size
+  )
+
+# Display the plot
+print(gg)
+
+```
+
 ### Hydrograph - Lexen Creek fractions with hydrograph
 ```{r, echo=FALSE}
 file_path <- "datafiles/LEXw_2022.csv"
@@ -906,6 +1195,74 @@ gg <- ggplot() +
 # Display the plot
 print(gg)
 
+```
+
+### Hydrograph - Lexen Creek DOC
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+# Filter and dplyr::select the columns of interest, including date and reachposition
+plot_df <- merged_df %>%
+  filter(position == 'stream' & reach == 'lexen1') %>%
+  dplyr::select(datetime, doc_mg.l, NO3_mg.l)
+
+plot_df <-plot_df %>%
+  drop_na(doc_mg.l, NO3_mg.l)
+
+# Reshape data into long format for ggplot
+plot_data_long <- plot_df %>%
+  pivot_longer(cols = -c(datetime), names_to = "variable", values_to = "value")
+
+gg <- ggplot() +
+  # Add points for the components, with specific styling for NO3_mg.l
+  geom_point(
+    data = plot_data_long,
+    aes(
+      x = datetime, 
+      y = value, 
+      color = variable,
+      
+      size = ifelse(variable == "NO3_mg.l", 2.5, 1.5) # Larger size for NO3
+    )
+  ) +
+  # Add lines for the components
+  geom_line(data = plot_data_long, aes(x = datetime, y = value, color = variable)) +
+  
+  # Add the hydrograph as a line in the background
+  geom_line(
+    data = lxhydrograph, 
+    aes(
+      x = TMSTAMP, 
+      y = Q..cfs. / max(Q..cfs.) * max(plot_data_long$value)
+    ), 
+    color = "blue", 
+    linetype = "solid", 
+    alpha = 0.5
+  ) +
+  
+  # Add secondary y-axis for the hydrograph
+  scale_y_continuous(
+    name = "Concentration",
+    sec.axis = sec_axis(~ . * max(lxhydrograph$Q..cfs.) / max(plot_data_long$value), name = "Discharge (cfs)")
+  ) +
+  
+  # Customize shape scale (optional, but makes the legend more descriptive)
+  scale_shape_manual(values = c("NO3" = 17, "Other" = 16)) + # Change shapes for NO3 and others
+  scale_size_identity() + # Directly map sizes without scaling
+  
+  # Styling
+  theme_minimal() +
+  labs(
+    x = "Date", 
+    y = "Concentration/Load", 
+    title = "Time Series of DOC and NH3 in Lexen1 with Lexen Outlet Hydrograph"
+  ) +
+  theme(
+    #legend.position = "none",  # Remove the legend
+    strip.text = element_text(size = 10)  # Adjust labels size
+  )
+
+# Display the plot
+print(gg)
 ```
 
 ### Hydrograph - Lexen Creek DOC with NO3
@@ -973,7 +1330,6 @@ gg <- ggplot() +
 
 # Display the plot
 print(gg)
-
 ```
 
 ### Hydrograph - Deadhorse Main fractions with hydrograph
@@ -2655,6 +3011,9 @@ gg <- ggplot() +
 
 # Display the plot
 print(gg)
+
+# Save the plot as a .png
+#ggsave(filename = "comp3_boxplot.png", plot = plot, width = 8, height = 6, dpi = 300)
 ```
 
 ### PCA

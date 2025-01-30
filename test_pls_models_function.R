@@ -35,6 +35,7 @@ pls_models_no_nutrients <- function(filtered_df, indicators, n_iter = 10, r2_val
     #Step 4: Define measurement model
     measurement_model <- constructs(
       composite("TOPO", multi_items("topo_", 1:length(sampled_indicators$topo))),
+      composite("LANDCOVER", multi_items("landcover_", 1:length(sampled_indicators$topo))),
       composite("HYDRO", multi_items("hydro_", 1:length(sampled_indicators$hydro))),# multi_items("hydro_", 1:2)),,      composite("LANDCOVER", multi_items("landcover_", 1:length(sampled_indicators$landcover))),
       composite("DOC",  multi_items("doc_", 1:length(sampled_indicators$doc)))# single_item('dom_1'))#,
     )
@@ -121,7 +122,7 @@ pls_models_nutrients <- function(filtered_df, indicators, n_iter = 10, r2_value=
     #Step 5: Define structural model
     # Create structural model
     structural_model <- relationships(
-      paths(from = c("TOPO"), to = c("HYDRO", "LANDCOVER",  "NUTRIENT")), #"F_IONS",
+      paths(from = c("TOPO"), to = c("HYDRO", "LANDCOVER",  "NUTRIENT", "DOC")), #"F_IONS",
       paths(from = c("LANDCOVER"), to = c("HYDRO", "DOC", "NUTRIENT")), #"F_IONS",
       paths(from = c("HYDRO"), to = c("DOC")),
       paths(from =c("NUTRIENT"), to = c("DOC"))
