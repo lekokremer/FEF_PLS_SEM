@@ -23,7 +23,7 @@
 <meta name="author" content="Lauren Kremer" />
 
 
-<meta name="date" content="2025-01-30" />
+<meta name="date" content="2025-01-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -495,62 +495,7 @@ Figure 3.16: Figure. Combined plot showing the relationships between relative lo
 </div>
 <div id="hydrograph---fool-creek-fractions-with-hydrograph" class="section level3 hasAnchor" number="3.3.6">
 <h3><span class="header-section-number">3.3.6</span> Hydrograph - Fool Creek fractions with hydrograph<a href="relative-loadings.html#hydrograph---fool-creek-fractions-with-hydrograph" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="relative-loadings.html#cb6-1" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="st">&quot;datafiles/LFC_usfs_discharge_WY18-WY22.csv&quot;</span></span>
-<span id="cb6-2"><a href="relative-loadings.html#cb6-2" tabindex="-1"></a>fchydrograph2122 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(file_path) <span class="sc">%&gt;%</span></span>
-<span id="cb6-3"><a href="relative-loadings.html#cb6-3" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">TMSTAMP =</span> <span class="fu">mdy_hm</span>(TIMESTAMP))</span>
-<span id="cb6-4"><a href="relative-loadings.html#cb6-4" tabindex="-1"></a></span>
-<span id="cb6-5"><a href="relative-loadings.html#cb6-5" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="st">&quot;datafiles/fef_h2ochemistry_2020_rformatted.csv&quot;</span></span>
-<span id="cb6-6"><a href="relative-loadings.html#cb6-6" tabindex="-1"></a>fcchem20 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(file_path) <span class="sc">%&gt;%</span></span>
-<span id="cb6-7"><a href="relative-loadings.html#cb6-7" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DATE =</span> <span class="fu">mdy</span>(DATE), <span class="at">reach =</span> <span class="fu">as.factor</span>(reach))</span>
-<span id="cb6-8"><a href="relative-loadings.html#cb6-8" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="relative-loadings.html#cb6-9" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="st">&quot;datafiles/fef_h2ochemistry_2021_rformatted.csv&quot;</span></span>
-<span id="cb6-10"><a href="relative-loadings.html#cb6-10" tabindex="-1"></a>fcchem21 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(file_path) <span class="sc">%&gt;%</span></span>
-<span id="cb6-11"><a href="relative-loadings.html#cb6-11" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DATE =</span> <span class="fu">mdy</span>(DATE), <span class="at">reach =</span> <span class="fu">as.factor</span>(reach))</span>
-<span id="cb6-12"><a href="relative-loadings.html#cb6-12" tabindex="-1"></a></span>
-<span id="cb6-13"><a href="relative-loadings.html#cb6-13" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="st">&quot;datafiles/fef_h2ochemistry_2022_rformatted.csv&quot;</span></span>
-<span id="cb6-14"><a href="relative-loadings.html#cb6-14" tabindex="-1"></a>fcchem22 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(file_path) <span class="sc">%&gt;%</span></span>
-<span id="cb6-15"><a href="relative-loadings.html#cb6-15" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">DATE =</span> <span class="fu">mdy</span>(DATE), <span class="at">reach =</span> <span class="fu">as.factor</span>(reach))</span>
-<span id="cb6-16"><a href="relative-loadings.html#cb6-16" tabindex="-1"></a></span>
-<span id="cb6-17"><a href="relative-loadings.html#cb6-17" tabindex="-1"></a>fcchem <span class="ot">&lt;-</span> <span class="fu">rbind</span>(fcchem20, fcchem21)</span>
-<span id="cb6-18"><a href="relative-loadings.html#cb6-18" tabindex="-1"></a>fcchem <span class="ot">&lt;-</span> <span class="fu">rbind</span>(fcchem, fcchem22)</span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="relative-loadings.html#cb7-1" tabindex="-1"></a>plot_df <span class="ot">&lt;-</span> fcchem <span class="sc">%&gt;%</span></span>
-<span id="cb7-2"><a href="relative-loadings.html#cb7-2" tabindex="-1"></a>  <span class="fu">filter</span>(position <span class="sc">==</span> <span class="st">&#39;stream&#39;</span> <span class="sc">&amp;</span> reach <span class="sc">==</span> <span class="st">&#39;FC1&#39;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb7-3"><a href="relative-loadings.html#cb7-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(DATE, doc_mg.l)</span>
-<span id="cb7-4"><a href="relative-loadings.html#cb7-4" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="relative-loadings.html#cb7-5" tabindex="-1"></a>plot_df <span class="ot">&lt;-</span>plot_df <span class="sc">%&gt;%</span></span>
-<span id="cb7-6"><a href="relative-loadings.html#cb7-6" tabindex="-1"></a>  <span class="fu">drop_na</span>(doc_mg.l)</span>
-<span id="cb7-7"><a href="relative-loadings.html#cb7-7" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="relative-loadings.html#cb7-8" tabindex="-1"></a>fchydrograph2122<span class="sc">$</span>DATE <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(fchydrograph2122<span class="sc">$</span>TMSTAMP)</span>
-<span id="cb7-9"><a href="relative-loadings.html#cb7-9" tabindex="-1"></a>filtered_hydro <span class="ot">&lt;-</span> fchydrograph2122 <span class="sc">%&gt;%</span> </span>
-<span id="cb7-10"><a href="relative-loadings.html#cb7-10" tabindex="-1"></a>  <span class="fu">filter</span>(DATE <span class="sc">&gt;=</span> <span class="fu">as.Date</span>(<span class="st">&quot;2020-01-01&quot;</span>))</span>
-<span id="cb7-11"><a href="relative-loadings.html#cb7-11" tabindex="-1"></a></span>
-<span id="cb7-12"><a href="relative-loadings.html#cb7-12" tabindex="-1"></a><span class="co"># large hydrographs, all data:</span></span>
-<span id="cb7-13"><a href="relative-loadings.html#cb7-13" tabindex="-1"></a>gg <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb7-14"><a href="relative-loadings.html#cb7-14" tabindex="-1"></a>  <span class="co"># Add points for the components, with different colors</span></span>
-<span id="cb7-15"><a href="relative-loadings.html#cb7-15" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> plot_df, <span class="fu">aes</span>(<span class="at">x =</span> DATE, <span class="at">y =</span> doc_mg.l<span class="sc">*</span><span class="fl">0.15</span>), <span class="at">size =</span> <span class="fl">1.5</span>) <span class="sc">+</span></span>
-<span id="cb7-16"><a href="relative-loadings.html#cb7-16" tabindex="-1"></a>  <span class="co">#geom_line(data = plot_data_long, aes(x = datetime, y = value, color = variable))+</span></span>
-<span id="cb7-17"><a href="relative-loadings.html#cb7-17" tabindex="-1"></a>  </span>
-<span id="cb7-18"><a href="relative-loadings.html#cb7-18" tabindex="-1"></a>  <span class="co"># Add the hydrograph as a line in the background</span></span>
-<span id="cb7-19"><a href="relative-loadings.html#cb7-19" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> filtered_hydro, <span class="fu">aes</span>(<span class="at">x =</span> DATE, <span class="at">y =</span> Q..cfs. <span class="sc">/</span> <span class="fu">max</span>(Q..cfs.) <span class="sc">*</span> <span class="fu">max</span>(plot_data_long<span class="sc">$</span>value)), </span>
-<span id="cb7-20"><a href="relative-loadings.html#cb7-20" tabindex="-1"></a>            <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>, <span class="at">linetype =</span> <span class="st">&quot;solid&quot;</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb7-21"><a href="relative-loadings.html#cb7-21" tabindex="-1"></a>  <span class="co"># Add secondary y-axis for the hydrograph</span></span>
-<span id="cb7-22"><a href="relative-loadings.html#cb7-22" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
-<span id="cb7-23"><a href="relative-loadings.html#cb7-23" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&quot;Concentration/Load&quot;</span>,</span>
-<span id="cb7-24"><a href="relative-loadings.html#cb7-24" tabindex="-1"></a>    <span class="at">sec.axis =</span> <span class="fu">sec_axis</span>(<span class="sc">~</span> .<span class="sc">/</span><span class="fl">0.15</span> <span class="sc">*</span> <span class="fu">max</span>(fchydrograph2122<span class="sc">$</span>Q..cfs.) <span class="sc">/</span> <span class="fu">max</span>(plot_df<span class="sc">$</span>doc_mg.l), <span class="at">name =</span> <span class="st">&quot;Discharge (cfs)&quot;</span>)) <span class="sc">+</span></span>
-<span id="cb7-25"><a href="relative-loadings.html#cb7-25" tabindex="-1"></a>      </span>
-<span id="cb7-26"><a href="relative-loadings.html#cb7-26" tabindex="-1"></a>  <span class="co"># Styling</span></span>
-<span id="cb7-27"><a href="relative-loadings.html#cb7-27" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb7-28"><a href="relative-loadings.html#cb7-28" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Date&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Concentration/Load&quot;</span>, <span class="at">title =</span> <span class="st">&quot;Time Series of Components in FC1 with FC outlet Hydrograph&quot;</span>) <span class="sc">+</span></span>
-<span id="cb7-29"><a href="relative-loadings.html#cb7-29" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb7-30"><a href="relative-loadings.html#cb7-30" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">&quot;right&quot;</span>,  <span class="co"># Keep the legend for identifying the components</span></span>
-<span id="cb7-31"><a href="relative-loadings.html#cb7-31" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>)  <span class="co"># Adjust labels size</span></span>
-<span id="cb7-32"><a href="relative-loadings.html#cb7-32" tabindex="-1"></a>  </span>
-<span id="cb7-33"><a href="relative-loadings.html#cb7-33" tabindex="-1"></a>  ) </span>
-<span id="cb7-34"><a href="relative-loadings.html#cb7-34" tabindex="-1"></a></span>
-<span id="cb7-35"><a href="relative-loadings.html#cb7-35" tabindex="-1"></a><span class="fu">plot</span>(gg)</span></code></pre></div>
 <p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="relative-loadings.html#cb8-1" tabindex="-1"></a><span class="co"># Save the plot as a .png</span></span>
-<span id="cb8-2"><a href="relative-loadings.html#cb8-2" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">&quot;images/full_FChydro_and_chem.png&quot;</span>, <span class="at">plot =</span> plot, <span class="at">width =</span> <span class="dv">8</span>, <span class="at">height =</span> <span class="dv">6</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span></code></pre></div>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-39"></span>
 <img src="PLSbookdownproj_files/figure-html/unnamed-chunk-39-1.png" alt="Figure. relative loadings over time from Fool Creek outlet stream site only. Component 1 (humic) appears to increase with discharge while the fraction of Component 2 (humic) and Component 3 (protein-like) decrease during peak flow" width="960" />
 <p class="caption">
@@ -614,6 +559,62 @@ Figure 3.21: Figure. relative loadings over time from Deadhorse NORTH outlet str
 </div>
 <div id="hydrograph---deadhorse-south-doc-with-no3" class="section level3 hasAnchor" number="3.3.15">
 <h3><span class="header-section-number">3.3.15</span> Hydrograph - Deadhorse SOUTH DOC with NO3<a href="relative-loadings.html#hydrograph---deadhorse-south-doc-with-no3" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="relative-loadings.html#cb6-1" tabindex="-1"></a><span class="co"># Combine specific watersheds into one category</span></span>
+<span id="cb6-2"><a href="relative-loadings.html#cb6-2" tabindex="-1"></a>plot_df <span class="ot">&lt;-</span> sample_vege_fluro_topo <span class="sc">%&gt;%</span></span>
+<span id="cb6-3"><a href="relative-loadings.html#cb6-3" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb6-4"><a href="relative-loadings.html#cb6-4" tabindex="-1"></a>    <span class="at">datetime =</span> <span class="fu">mdy_hm</span>(datetime),</span>
+<span id="cb6-5"><a href="relative-loadings.html#cb6-5" tabindex="-1"></a>    <span class="at">combined_watershed =</span> <span class="fu">case_when</span>(</span>
+<span id="cb6-6"><a href="relative-loadings.html#cb6-6" tabindex="-1"></a>      watershed <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;dh&#39;</span>, <span class="st">&#39;dhn&#39;</span>, <span class="st">&#39;dhs&#39;</span>) <span class="sc">~</span> <span class="st">&#39;dh_combined&#39;</span>,  <span class="co"># Combine &#39;dh&#39;, &#39;dhn&#39;, &#39;dhs&#39;</span></span>
+<span id="cb6-7"><a href="relative-loadings.html#cb6-7" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="fu">as.character</span>(watershed)  <span class="co"># Keep other watersheds as they are</span></span>
+<span id="cb6-8"><a href="relative-loadings.html#cb6-8" tabindex="-1"></a>    )</span>
+<span id="cb6-9"><a href="relative-loadings.html#cb6-9" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb6-10"><a href="relative-loadings.html#cb6-10" tabindex="-1"></a>  <span class="fu">filter</span>(position <span class="sc">==</span> <span class="st">&#39;stream&#39;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-11"><a href="relative-loadings.html#cb6-11" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(datetime, NO3_mg.l, combined_watershed) <span class="sc">%&gt;%</span></span>
+<span id="cb6-12"><a href="relative-loadings.html#cb6-12" tabindex="-1"></a>  <span class="fu">drop_na</span>(NO3_mg.l)</span>
+<span id="cb6-13"><a href="relative-loadings.html#cb6-13" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="relative-loadings.html#cb6-14" tabindex="-1"></a><span class="co"># Plot NO3_mg.l by combined watershed</span></span>
+<span id="cb6-15"><a href="relative-loadings.html#cb6-15" tabindex="-1"></a>gg <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(plot_df, <span class="fu">aes</span>(<span class="at">x =</span> datetime, <span class="at">y =</span> NO3_mg.l, <span class="at">color =</span> combined_watershed)) <span class="sc">+</span></span>
+<span id="cb6-16"><a href="relative-loadings.html#cb6-16" tabindex="-1"></a>  <span class="co"># Add points for NO3_mg.l</span></span>
+<span id="cb6-17"><a href="relative-loadings.html#cb6-17" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.5</span>) <span class="sc">+</span></span>
+<span id="cb6-18"><a href="relative-loadings.html#cb6-18" tabindex="-1"></a>  <span class="co"># Add lines for NO3_mg.l</span></span>
+<span id="cb6-19"><a href="relative-loadings.html#cb6-19" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb6-20"><a href="relative-loadings.html#cb6-20" tabindex="-1"></a>  <span class="co"># Add the hydrograph as a line in the background</span></span>
+<span id="cb6-21"><a href="relative-loadings.html#cb6-21" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
+<span id="cb6-22"><a href="relative-loadings.html#cb6-22" tabindex="-1"></a>    <span class="at">data =</span> dhhydrograph, </span>
+<span id="cb6-23"><a href="relative-loadings.html#cb6-23" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
+<span id="cb6-24"><a href="relative-loadings.html#cb6-24" tabindex="-1"></a>      <span class="at">x =</span> TMSTAMP, </span>
+<span id="cb6-25"><a href="relative-loadings.html#cb6-25" tabindex="-1"></a>      <span class="at">y =</span> Q..cfs. <span class="sc">/</span> <span class="fu">max</span>(Q..cfs., <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="fu">max</span>(plot_df<span class="sc">$</span>NO3_mg.l, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-26"><a href="relative-loadings.html#cb6-26" tabindex="-1"></a>    ), </span>
+<span id="cb6-27"><a href="relative-loadings.html#cb6-27" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>, </span>
+<span id="cb6-28"><a href="relative-loadings.html#cb6-28" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="st">&quot;solid&quot;</span>, </span>
+<span id="cb6-29"><a href="relative-loadings.html#cb6-29" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.5</span></span>
+<span id="cb6-30"><a href="relative-loadings.html#cb6-30" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-31"><a href="relative-loadings.html#cb6-31" tabindex="-1"></a>  <span class="co"># Add secondary y-axis for the hydrograph</span></span>
+<span id="cb6-32"><a href="relative-loadings.html#cb6-32" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb6-33"><a href="relative-loadings.html#cb6-33" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&quot;Concentration (mg/L)&quot;</span>,</span>
+<span id="cb6-34"><a href="relative-loadings.html#cb6-34" tabindex="-1"></a>    <span class="at">sec.axis =</span> <span class="fu">sec_axis</span>(</span>
+<span id="cb6-35"><a href="relative-loadings.html#cb6-35" tabindex="-1"></a>      <span class="at">trans =</span> <span class="sc">~</span> . <span class="sc">*</span> (<span class="fu">max</span>(dhhydrograph<span class="sc">$</span>Q..cfs., <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">max</span>(plot_df<span class="sc">$</span>NO3_mg.l, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
+<span id="cb6-36"><a href="relative-loadings.html#cb6-36" tabindex="-1"></a>      <span class="at">name =</span> <span class="st">&quot;Discharge (cfs)&quot;</span></span>
+<span id="cb6-37"><a href="relative-loadings.html#cb6-37" tabindex="-1"></a>    )</span>
+<span id="cb6-38"><a href="relative-loadings.html#cb6-38" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-39"><a href="relative-loadings.html#cb6-39" tabindex="-1"></a>  <span class="co"># Styling</span></span>
+<span id="cb6-40"><a href="relative-loadings.html#cb6-40" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb6-41"><a href="relative-loadings.html#cb6-41" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb6-42"><a href="relative-loadings.html#cb6-42" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Date&quot;</span>, </span>
+<span id="cb6-43"><a href="relative-loadings.html#cb6-43" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;NO3 Concentration (mg/L)&quot;</span>, </span>
+<span id="cb6-44"><a href="relative-loadings.html#cb6-44" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;Watershed&quot;</span>, </span>
+<span id="cb6-45"><a href="relative-loadings.html#cb6-45" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Time Series of NO3 Concentration with Hydrograph (Combined dh, dhn, dhs)&quot;</span></span>
+<span id="cb6-46"><a href="relative-loadings.html#cb6-46" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-47"><a href="relative-loadings.html#cb6-47" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb6-48"><a href="relative-loadings.html#cb6-48" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>,</span>
+<span id="cb6-49"><a href="relative-loadings.html#cb6-49" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>)</span>
+<span id="cb6-50"><a href="relative-loadings.html#cb6-50" tabindex="-1"></a>  )</span>
+<span id="cb6-51"><a href="relative-loadings.html#cb6-51" tabindex="-1"></a></span>
+<span id="cb6-52"><a href="relative-loadings.html#cb6-52" tabindex="-1"></a><span class="co"># Display the plot</span></span>
+<span id="cb6-53"><a href="relative-loadings.html#cb6-53" tabindex="-1"></a><span class="fu">print</span>(gg)</span></code></pre></div>
+<pre><code>## Warning: Removed 2 rows containing missing values or values outside the scale range (`geom_point()`).</code></pre>
+<pre><code>## Warning: Removed 2 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
+<p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="relative-loadings.html#cb9-1" tabindex="-1"></a><span class="co"># Combine specific watersheds into one category</span></span>
 <span id="cb9-2"><a href="relative-loadings.html#cb9-2" tabindex="-1"></a>plot_df <span class="ot">&lt;-</span> sample_vege_fluro_topo <span class="sc">%&gt;%</span></span>
 <span id="cb9-3"><a href="relative-loadings.html#cb9-3" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
@@ -667,62 +668,6 @@ Figure 3.21: Figure. relative loadings over time from Deadhorse NORTH outlet str
 <span id="cb9-51"><a href="relative-loadings.html#cb9-51" tabindex="-1"></a></span>
 <span id="cb9-52"><a href="relative-loadings.html#cb9-52" tabindex="-1"></a><span class="co"># Display the plot</span></span>
 <span id="cb9-53"><a href="relative-loadings.html#cb9-53" tabindex="-1"></a><span class="fu">print</span>(gg)</span></code></pre></div>
-<pre><code>## Warning: Removed 2 rows containing missing values or values outside the scale range (`geom_point()`).</code></pre>
-<pre><code>## Warning: Removed 2 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
-<p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="relative-loadings.html#cb12-1" tabindex="-1"></a><span class="co"># Combine specific watersheds into one category</span></span>
-<span id="cb12-2"><a href="relative-loadings.html#cb12-2" tabindex="-1"></a>plot_df <span class="ot">&lt;-</span> sample_vege_fluro_topo <span class="sc">%&gt;%</span></span>
-<span id="cb12-3"><a href="relative-loadings.html#cb12-3" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb12-4"><a href="relative-loadings.html#cb12-4" tabindex="-1"></a>    <span class="at">datetime =</span> <span class="fu">mdy_hm</span>(datetime),</span>
-<span id="cb12-5"><a href="relative-loadings.html#cb12-5" tabindex="-1"></a>    <span class="at">combined_watershed =</span> <span class="fu">case_when</span>(</span>
-<span id="cb12-6"><a href="relative-loadings.html#cb12-6" tabindex="-1"></a>      watershed <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&#39;dh&#39;</span>, <span class="st">&#39;dhn&#39;</span>, <span class="st">&#39;dhs&#39;</span>) <span class="sc">~</span> <span class="st">&#39;dh_combined&#39;</span>,  <span class="co"># Combine &#39;dh&#39;, &#39;dhn&#39;, &#39;dhs&#39;</span></span>
-<span id="cb12-7"><a href="relative-loadings.html#cb12-7" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="fu">as.character</span>(watershed)  <span class="co"># Keep other watersheds as they are</span></span>
-<span id="cb12-8"><a href="relative-loadings.html#cb12-8" tabindex="-1"></a>    )</span>
-<span id="cb12-9"><a href="relative-loadings.html#cb12-9" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb12-10"><a href="relative-loadings.html#cb12-10" tabindex="-1"></a>  <span class="fu">filter</span>(position <span class="sc">==</span> <span class="st">&#39;stream&#39;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-11"><a href="relative-loadings.html#cb12-11" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(datetime, NO3_mg.l, combined_watershed) <span class="sc">%&gt;%</span></span>
-<span id="cb12-12"><a href="relative-loadings.html#cb12-12" tabindex="-1"></a>  <span class="fu">drop_na</span>(NO3_mg.l)</span>
-<span id="cb12-13"><a href="relative-loadings.html#cb12-13" tabindex="-1"></a></span>
-<span id="cb12-14"><a href="relative-loadings.html#cb12-14" tabindex="-1"></a><span class="co"># Plot NO3_mg.l by combined watershed</span></span>
-<span id="cb12-15"><a href="relative-loadings.html#cb12-15" tabindex="-1"></a>gg <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(plot_df, <span class="fu">aes</span>(<span class="at">x =</span> datetime, <span class="at">y =</span> NO3_mg.l, <span class="at">color =</span> combined_watershed)) <span class="sc">+</span></span>
-<span id="cb12-16"><a href="relative-loadings.html#cb12-16" tabindex="-1"></a>  <span class="co"># Add points for NO3_mg.l</span></span>
-<span id="cb12-17"><a href="relative-loadings.html#cb12-17" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">2.5</span>) <span class="sc">+</span></span>
-<span id="cb12-18"><a href="relative-loadings.html#cb12-18" tabindex="-1"></a>  <span class="co"># Add lines for NO3_mg.l</span></span>
-<span id="cb12-19"><a href="relative-loadings.html#cb12-19" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb12-20"><a href="relative-loadings.html#cb12-20" tabindex="-1"></a>  <span class="co"># Add the hydrograph as a line in the background</span></span>
-<span id="cb12-21"><a href="relative-loadings.html#cb12-21" tabindex="-1"></a>  <span class="fu">geom_line</span>(</span>
-<span id="cb12-22"><a href="relative-loadings.html#cb12-22" tabindex="-1"></a>    <span class="at">data =</span> dhhydrograph, </span>
-<span id="cb12-23"><a href="relative-loadings.html#cb12-23" tabindex="-1"></a>    <span class="fu">aes</span>(</span>
-<span id="cb12-24"><a href="relative-loadings.html#cb12-24" tabindex="-1"></a>      <span class="at">x =</span> TMSTAMP, </span>
-<span id="cb12-25"><a href="relative-loadings.html#cb12-25" tabindex="-1"></a>      <span class="at">y =</span> Q..cfs. <span class="sc">/</span> <span class="fu">max</span>(Q..cfs., <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">*</span> <span class="fu">max</span>(plot_df<span class="sc">$</span>NO3_mg.l, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb12-26"><a href="relative-loadings.html#cb12-26" tabindex="-1"></a>    ), </span>
-<span id="cb12-27"><a href="relative-loadings.html#cb12-27" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;blue&quot;</span>, </span>
-<span id="cb12-28"><a href="relative-loadings.html#cb12-28" tabindex="-1"></a>    <span class="at">linetype =</span> <span class="st">&quot;solid&quot;</span>, </span>
-<span id="cb12-29"><a href="relative-loadings.html#cb12-29" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.5</span></span>
-<span id="cb12-30"><a href="relative-loadings.html#cb12-30" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb12-31"><a href="relative-loadings.html#cb12-31" tabindex="-1"></a>  <span class="co"># Add secondary y-axis for the hydrograph</span></span>
-<span id="cb12-32"><a href="relative-loadings.html#cb12-32" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
-<span id="cb12-33"><a href="relative-loadings.html#cb12-33" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&quot;Concentration (mg/L)&quot;</span>,</span>
-<span id="cb12-34"><a href="relative-loadings.html#cb12-34" tabindex="-1"></a>    <span class="at">sec.axis =</span> <span class="fu">sec_axis</span>(</span>
-<span id="cb12-35"><a href="relative-loadings.html#cb12-35" tabindex="-1"></a>      <span class="at">trans =</span> <span class="sc">~</span> . <span class="sc">*</span> (<span class="fu">max</span>(dhhydrograph<span class="sc">$</span>Q..cfs., <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">/</span> <span class="fu">max</span>(plot_df<span class="sc">$</span>NO3_mg.l, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)),</span>
-<span id="cb12-36"><a href="relative-loadings.html#cb12-36" tabindex="-1"></a>      <span class="at">name =</span> <span class="st">&quot;Discharge (cfs)&quot;</span></span>
-<span id="cb12-37"><a href="relative-loadings.html#cb12-37" tabindex="-1"></a>    )</span>
-<span id="cb12-38"><a href="relative-loadings.html#cb12-38" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb12-39"><a href="relative-loadings.html#cb12-39" tabindex="-1"></a>  <span class="co"># Styling</span></span>
-<span id="cb12-40"><a href="relative-loadings.html#cb12-40" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb12-41"><a href="relative-loadings.html#cb12-41" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb12-42"><a href="relative-loadings.html#cb12-42" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">&quot;Date&quot;</span>, </span>
-<span id="cb12-43"><a href="relative-loadings.html#cb12-43" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">&quot;NO3 Concentration (mg/L)&quot;</span>, </span>
-<span id="cb12-44"><a href="relative-loadings.html#cb12-44" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">&quot;Watershed&quot;</span>, </span>
-<span id="cb12-45"><a href="relative-loadings.html#cb12-45" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Time Series of NO3 Concentration with Hydrograph (Combined dh, dhn, dhs)&quot;</span></span>
-<span id="cb12-46"><a href="relative-loadings.html#cb12-46" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb12-47"><a href="relative-loadings.html#cb12-47" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb12-48"><a href="relative-loadings.html#cb12-48" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">&quot;bottom&quot;</span>,</span>
-<span id="cb12-49"><a href="relative-loadings.html#cb12-49" tabindex="-1"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>)</span>
-<span id="cb12-50"><a href="relative-loadings.html#cb12-50" tabindex="-1"></a>  )</span>
-<span id="cb12-51"><a href="relative-loadings.html#cb12-51" tabindex="-1"></a></span>
-<span id="cb12-52"><a href="relative-loadings.html#cb12-52" tabindex="-1"></a><span class="co"># Display the plot</span></span>
-<span id="cb12-53"><a href="relative-loadings.html#cb12-53" tabindex="-1"></a><span class="fu">print</span>(gg)</span></code></pre></div>
 <pre><code>## Warning: Removed 2 rows containing missing values or values outside the scale range (`geom_point()`).</code></pre>
 <pre><code>## Warning: Removed 2 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
 <p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
@@ -922,7 +867,7 @@ Similar to PCA, but RDA is a <u>constrained</u> method that requries two dataset
 ## Model: rda(formula = standardized_resp ~ aspect_mean + twi_mean + ndvi_raster_mean + disttostreams_mean + percent_Beetle.kill + percent_Old.Forest + percent_cut.regenerating + area_km + Qm3_s, data = explanatory_standardized, na.action = na.exclude)
 ##          Df Variance       F Pr(&gt;F)    
 ## RDA1      1  2.01775 89.9920  0.001 ***
-## RDA2      1  0.15266  6.8087  0.773    
+## RDA2      1  0.15266  6.8087  0.777    
 ## Residual 37  0.82959                   
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
@@ -934,15 +879,15 @@ Similar to PCA, but RDA is a <u>constrained</u> method that requries two dataset
 ## 
 ## Model: rda(formula = standardized_resp ~ aspect_mean + twi_mean + ndvi_raster_mean + disttostreams_mean + percent_Beetle.kill + percent_Old.Forest + percent_cut.regenerating + area_km + Qm3_s, data = explanatory_standardized, na.action = na.exclude)
 ##                          Df Variance       F Pr(&gt;F)    
-## aspect_mean               1  0.09478  3.4274  0.058 .  
+## aspect_mean               1  0.09478  3.4274  0.054 .  
 ## twi_mean                  1  1.06887 38.6529  0.001 ***
-## ndvi_raster_mean          1  0.20600  7.4496  0.011 *  
+## ndvi_raster_mean          1  0.20600  7.4496  0.010 ** 
 ## disttostreams_mean        1  0.43123 15.5942  0.002 ** 
-## percent_Beetle.kill       1  0.01110  0.4013  0.623    
-## percent_Old.Forest        1  0.21447  7.7558  0.012 *  
-## percent_cut.regenerating  1  0.00007  0.0025  0.996    
-## area_km                   1  0.10385  3.7556  0.048 *  
-## Qm3_s                     1  0.04004  1.4478  0.232    
+## percent_Beetle.kill       1  0.01110  0.4013  0.649    
+## percent_Old.Forest        1  0.21447  7.7558  0.010 ** 
+## percent_cut.regenerating  1  0.00007  0.0025  0.998    
+## area_km                   1  0.10385  3.7556  0.047 *  
+## Qm3_s                     1  0.04004  1.4478  0.230    
 ## Residual                 30  0.82959                   
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>

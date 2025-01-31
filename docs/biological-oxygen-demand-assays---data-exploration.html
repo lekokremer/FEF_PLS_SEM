@@ -23,7 +23,7 @@
 <meta name="author" content="Lauren Kremer" />
 
 
-<meta name="date" content="2025-01-30" />
+<meta name="date" content="2025-01-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -251,10 +251,10 @@ microcosm end DOC -->
 <!--Calculate daily rate of change-->
 <!--Format daily rate of change-->
 <!--These structures are used for plotting later-->
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="biological-oxygen-demand-assays---data-exploration.html#cb38-1" tabindex="-1"></a>stat_subset <span class="ot">&lt;-</span> rates_of_change <span class="sc">%&gt;%</span></span>
-<span id="cb38-2"><a href="biological-oxygen-demand-assays---data-exploration.html#cb38-2" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">&#39;sample&#39;</span>, watershed <span class="sc">!=</span> <span class="st">&#39;SSFP&#39;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb38-3"><a href="biological-oxygen-demand-assays---data-exploration.html#cb38-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>watershed) <span class="sc">%&gt;%</span></span>
-<span id="cb38-4"><a href="biological-oxygen-demand-assays---data-exploration.html#cb38-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ID =</span> <span class="fu">as.integer</span>(<span class="fu">substr</span>(<span class="fu">as.character</span>(sample_no), <span class="dv">1</span>, <span class="dv">3</span>)))</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="biological-oxygen-demand-assays---data-exploration.html#cb35-1" tabindex="-1"></a>stat_subset <span class="ot">&lt;-</span> rates_of_change <span class="sc">%&gt;%</span></span>
+<span id="cb35-2"><a href="biological-oxygen-demand-assays---data-exploration.html#cb35-2" tabindex="-1"></a>  <span class="fu">filter</span>(type <span class="sc">==</span> <span class="st">&#39;sample&#39;</span>, watershed <span class="sc">!=</span> <span class="st">&#39;SSFP&#39;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb35-3"><a href="biological-oxygen-demand-assays---data-exploration.html#cb35-3" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>watershed) <span class="sc">%&gt;%</span></span>
+<span id="cb35-4"><a href="biological-oxygen-demand-assays---data-exploration.html#cb35-4" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ID =</span> <span class="fu">as.integer</span>(<span class="fu">substr</span>(<span class="fu">as.character</span>(sample_no), <span class="dv">1</span>, <span class="dv">3</span>)))</span></code></pre></div>
 <p><strong>Workflow:</strong><br>
 In the script, three datasets were imported:<br>
 1. the DO depletion at 10min intervals as recorded by PreSens instrument as experimental microcosms <br>

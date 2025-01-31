@@ -23,7 +23,7 @@
 <meta name="author" content="Lauren Kremer" />
 
 
-<meta name="date" content="2025-01-30" />
+<meta name="date" content="2025-01-31" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -267,20 +267,20 @@ Figure 5.1: Figure. Checking out the distribution of explanatory variables
 </p>
 </div>
 <p>Build the outer model or ‘constructs’ or latent variables</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="data-managment-transformation.html#cb40-1" tabindex="-1"></a>simple_FEF_mm <span class="ot">&lt;-</span> <span class="fu">constructs</span>(</span>
-<span id="cb40-2"><a href="data-managment-transformation.html#cb40-2" tabindex="-1"></a>  <span class="fu">composite</span>(<span class="st">&quot;TOPO&quot;</span>, <span class="fu">multi_items</span>(<span class="st">&quot;topo_&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)),</span>
-<span id="cb40-3"><a href="data-managment-transformation.html#cb40-3" tabindex="-1"></a>  <span class="fu">composite</span>(<span class="st">&quot;HYDRO&quot;</span>, <span class="fu">single_item</span>(<span class="st">&quot;hydro_1&quot;</span>)),</span>
-<span id="cb40-4"><a href="data-managment-transformation.html#cb40-4" tabindex="-1"></a>  <span class="fu">composite</span>(<span class="st">&quot;LANDCOVER&quot;</span>, <span class="fu">multi_items</span>(<span class="st">&quot;landcover_&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)),</span>
-<span id="cb40-5"><a href="data-managment-transformation.html#cb40-5" tabindex="-1"></a>  <span class="fu">composite</span>(<span class="st">&quot;DOC&quot;</span>, <span class="fu">single_item</span>(<span class="st">&#39;doc_1&#39;</span>))</span>
-<span id="cb40-6"><a href="data-managment-transformation.html#cb40-6" tabindex="-1"></a>)</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="data-managment-transformation.html#cb37-1" tabindex="-1"></a>simple_FEF_mm <span class="ot">&lt;-</span> <span class="fu">constructs</span>(</span>
+<span id="cb37-2"><a href="data-managment-transformation.html#cb37-2" tabindex="-1"></a>  <span class="fu">composite</span>(<span class="st">&quot;TOPO&quot;</span>, <span class="fu">multi_items</span>(<span class="st">&quot;topo_&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)),</span>
+<span id="cb37-3"><a href="data-managment-transformation.html#cb37-3" tabindex="-1"></a>  <span class="fu">composite</span>(<span class="st">&quot;HYDRO&quot;</span>, <span class="fu">single_item</span>(<span class="st">&quot;hydro_1&quot;</span>)),</span>
+<span id="cb37-4"><a href="data-managment-transformation.html#cb37-4" tabindex="-1"></a>  <span class="fu">composite</span>(<span class="st">&quot;LANDCOVER&quot;</span>, <span class="fu">multi_items</span>(<span class="st">&quot;landcover_&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)),</span>
+<span id="cb37-5"><a href="data-managment-transformation.html#cb37-5" tabindex="-1"></a>  <span class="fu">composite</span>(<span class="st">&quot;DOC&quot;</span>, <span class="fu">single_item</span>(<span class="st">&#39;doc_1&#39;</span>))</span>
+<span id="cb37-6"><a href="data-managment-transformation.html#cb37-6" tabindex="-1"></a>)</span></code></pre></div>
 <p>Now for the structural model:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="data-managment-transformation.html#cb41-1" tabindex="-1"></a><span class="co"># Create structural model</span></span>
-<span id="cb41-2"><a href="data-managment-transformation.html#cb41-2" tabindex="-1"></a>simple_FEF_sm <span class="ot">&lt;-</span> <span class="fu">relationships</span>(</span>
-<span id="cb41-3"><a href="data-managment-transformation.html#cb41-3" tabindex="-1"></a><span class="fu">paths</span>(<span class="at">from =</span> <span class="fu">c</span>(<span class="st">&quot;TOPO&quot;</span>), <span class="at">to =</span> <span class="fu">c</span>(<span class="st">&quot;HYDRO&quot;</span>, <span class="st">&quot;LANDCOVER&quot;</span>, <span class="st">&quot;DOC&quot;</span>)),</span>
-<span id="cb41-4"><a href="data-managment-transformation.html#cb41-4" tabindex="-1"></a><span class="fu">paths</span>(<span class="at">from =</span> <span class="fu">c</span>(<span class="st">&quot;LANDCOVER&quot;</span>), <span class="at">to =</span> <span class="fu">c</span>(<span class="st">&quot;HYDRO&quot;</span>, <span class="st">&quot;DOC&quot;</span>)),</span>
-<span id="cb41-5"><a href="data-managment-transformation.html#cb41-5" tabindex="-1"></a><span class="fu">paths</span>(<span class="at">from =</span> <span class="fu">c</span>(<span class="st">&quot;HYDRO&quot;</span>), <span class="at">to =</span> <span class="fu">c</span>(<span class="st">&quot;DOC&quot;</span>)))</span>
-<span id="cb41-6"><a href="data-managment-transformation.html#cb41-6" tabindex="-1"></a></span>
-<span id="cb41-7"><a href="data-managment-transformation.html#cb41-7" tabindex="-1"></a><span class="co"># Note that neither a dataset nor a measurement model is specified in the structural model stage, so we can reuse the structural model object simple_sm across different datasets and measurement models.</span></span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="data-managment-transformation.html#cb38-1" tabindex="-1"></a><span class="co"># Create structural model</span></span>
+<span id="cb38-2"><a href="data-managment-transformation.html#cb38-2" tabindex="-1"></a>simple_FEF_sm <span class="ot">&lt;-</span> <span class="fu">relationships</span>(</span>
+<span id="cb38-3"><a href="data-managment-transformation.html#cb38-3" tabindex="-1"></a><span class="fu">paths</span>(<span class="at">from =</span> <span class="fu">c</span>(<span class="st">&quot;TOPO&quot;</span>), <span class="at">to =</span> <span class="fu">c</span>(<span class="st">&quot;HYDRO&quot;</span>, <span class="st">&quot;LANDCOVER&quot;</span>, <span class="st">&quot;DOC&quot;</span>)),</span>
+<span id="cb38-4"><a href="data-managment-transformation.html#cb38-4" tabindex="-1"></a><span class="fu">paths</span>(<span class="at">from =</span> <span class="fu">c</span>(<span class="st">&quot;LANDCOVER&quot;</span>), <span class="at">to =</span> <span class="fu">c</span>(<span class="st">&quot;HYDRO&quot;</span>, <span class="st">&quot;DOC&quot;</span>)),</span>
+<span id="cb38-5"><a href="data-managment-transformation.html#cb38-5" tabindex="-1"></a><span class="fu">paths</span>(<span class="at">from =</span> <span class="fu">c</span>(<span class="st">&quot;HYDRO&quot;</span>), <span class="at">to =</span> <span class="fu">c</span>(<span class="st">&quot;DOC&quot;</span>)))</span>
+<span id="cb38-6"><a href="data-managment-transformation.html#cb38-6" tabindex="-1"></a></span>
+<span id="cb38-7"><a href="data-managment-transformation.html#cb38-7" tabindex="-1"></a><span class="co"># Note that neither a dataset nor a measurement model is specified in the structural model stage, so we can reuse the structural model object simple_sm across different datasets and measurement models.</span></span></code></pre></div>
 <p>Model Estimation using the PLS-SEM algorithm. The algorithm needs to determine the scores of the constructs that are used as input for partial regression models within the path model. After the algorithm has calculated the construct scores, the scores are used to estimate each partial regression model in the path model. As a result, we obtain the estimates for all relationships in the measurement models (i.e., the indicator weights/loadings) and the structural model (i.e., the path coefficients). (more on pg 60 of Hair)</p>
 <p>summarize output</p>
 </div>
