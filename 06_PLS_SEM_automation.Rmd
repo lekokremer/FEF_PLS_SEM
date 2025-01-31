@@ -2449,7 +2449,7 @@ model_df <- data.frame(matrix(ncol = 0, nrow = nrow(filtered_df)))
 indicators <- list(
   topo = c("twi_mean"),
   hydro = c("discharge_m2"),
-  landcover = c("percent_Beetle.kill", "ndvi_raster_mean"),
+  landcover = c("percent_Beetle.kill", "ndvi_raster_mean",         "percent_cut.regenerating"),
   doc = c( "relative_load_comp_3", "norm_PARAF_c3","Fluorescence_Index" )
 )
 ```

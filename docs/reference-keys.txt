@@ -45,6 +45,7 @@ about
 usage
 addition-of-precipitation-and-runoff-data
 relating-parafac-components-to-fef-watersheds-correlations-plots
+eems-methods-and-indices
 parafac-results-summary-figures
 structure
 relative-loadings
