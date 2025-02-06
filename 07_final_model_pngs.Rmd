@@ -16,20 +16,13 @@ neededPackages <- c('seminr', 'tidyr', 'dplyr', 'lubridate', 'ggplot2')
 for (package in neededPackages){pkgTest(package)}
 ```
 
-**Addendum Figures**
-
-### 1. PARAFAC results summary figures:
-Emission-Excitation matrices for the 3 components identified by the 3 component PARAFAC model. Components 1 and 2 correspond with peaks for humic components, while component 3 is protein-like. 
-![EEM matrices for final model](images/comp3 8outliersremoved.png)
-
-### 2. Relative loadings
-Relative loadings for each sample (i.e., loading for each component/total loading for the sample in the 3 component model). This tells us how much of each component contributes to the total fluorescence of that particular sample. 
-![Relative fluoresence of each component im each sample](images/component3_loadings_proportions_plot.png)
 
 **Final figures**
+Study Area - 
 
-Exploration of DOC concentrations across watersheds
-![Mean DOC during high flows 2022](images/3D_DEM_DOC_high_flows_2022_Fool.png)
+![Fraser Experimental Forest](images/CONUS_CO_RM.png)
+
+![Study sites & Canopy height models](images/CHM_all_ws.png)
 
 ![Mean DOC during high flows 2022](images/3D_DEM_DOC_high_flows_2022_Deadhorse.png)
 ![Mean DOC during high flows 2022](images/3D_DEM_DOC_high_flows_2022_Lexen.png)
@@ -89,3 +82,13 @@ indicators <- list(
   landcover = c("percent_Tundra"),
   doc = c( "Fluorescence_Index")
 )
+
+**Addendum Figures**
+
+### 1. PARAFAC results summary figures:
+Emission-Excitation matrices for the 3 components identified by the 3 component PARAFAC model. Components 1 and 2 correspond with peaks for humic components, while component 3 is protein-like. 
+![EEM matrices for final model](images/comp3 8outliersremoved.png)
+
+### 2. Relative loadings
+Relative loadings for each sample (i.e., loading for each component/total loading for the sample in the 3 component model). This tells us how much of each component contributes to the total fluorescence of that particular sample. 
+![Relative fluoresence of each component im each sample](images/component3_loadings_proportions_plot.png)

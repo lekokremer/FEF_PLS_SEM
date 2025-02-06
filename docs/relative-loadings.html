@@ -23,7 +23,7 @@
 <meta name="author" content="Lauren Kremer" />
 
 
-<meta name="date" content="2025-01-31" />
+<meta name="date" content="2025-02-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -343,7 +343,7 @@ Figure 3.3: Figure. Box plots showing the relationships between the sample propo
 <span id="cb3-42"><a href="relative-loadings.html#cb3-42" tabindex="-1"></a><span class="fu">print</span>(plot)</span></code></pre></div>
 <p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="relative-loadings.html#cb4-1" tabindex="-1"></a><span class="co"># Save the plot as a .png</span></span>
-<span id="cb4-2"><a href="relative-loadings.html#cb4-2" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="st">&quot;images/comp_ws_boxplot.png&quot;</span>, <span class="at">plot =</span> plot, <span class="at">width =</span> <span class="dv">8</span>, <span class="at">height =</span> <span class="dv">6</span>, <span class="at">dpi =</span> <span class="dv">300</span>)</span></code></pre></div>
+<span id="cb4-2"><a href="relative-loadings.html#cb4-2" tabindex="-1"></a><span class="co">#ggsave(filename = &quot;images/comp_ws_boxplot.png&quot;, plot = plot, width = 8, height = 6, dpi = 300)</span></span></code></pre></div>
 <p>####By REACH</p>
 <div class="figure"><span style="display:block;" id="fig:unnamed-chunk-17"></span>
 <img src="PLSbookdownproj_files/figure-html/unnamed-chunk-17-1.png" alt="Figure. Box plots showing the relationships between the sample proportion of PARAFAC component 1 (humic-type) and reach. dh= Deadhorse, lx = Lexen Creek, fc = Fool Creek" width="960" />
@@ -613,8 +613,10 @@ Figure 3.21: Figure. relative loadings over time from Deadhorse NORTH outlet str
 <span id="cb6-51"><a href="relative-loadings.html#cb6-51" tabindex="-1"></a></span>
 <span id="cb6-52"><a href="relative-loadings.html#cb6-52" tabindex="-1"></a><span class="co"># Display the plot</span></span>
 <span id="cb6-53"><a href="relative-loadings.html#cb6-53" tabindex="-1"></a><span class="fu">print</span>(gg)</span></code></pre></div>
-<pre><code>## Warning: Removed 2 rows containing missing values or values outside the scale range (`geom_point()`).</code></pre>
-<pre><code>## Warning: Removed 2 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
+<pre><code>## Warning: Removed 2 rows containing missing values or values outside the scale range
+## (`geom_point()`).</code></pre>
+<pre><code>## Warning: Removed 2 rows containing missing values or values outside the scale range
+## (`geom_line()`).</code></pre>
 <p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-54-1.png" width="672" /></p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="relative-loadings.html#cb9-1" tabindex="-1"></a><span class="co"># Combine specific watersheds into one category</span></span>
 <span id="cb9-2"><a href="relative-loadings.html#cb9-2" tabindex="-1"></a>plot_df <span class="ot">&lt;-</span> sample_vege_fluro_topo <span class="sc">%&gt;%</span></span>
@@ -669,8 +671,10 @@ Figure 3.21: Figure. relative loadings over time from Deadhorse NORTH outlet str
 <span id="cb9-51"><a href="relative-loadings.html#cb9-51" tabindex="-1"></a></span>
 <span id="cb9-52"><a href="relative-loadings.html#cb9-52" tabindex="-1"></a><span class="co"># Display the plot</span></span>
 <span id="cb9-53"><a href="relative-loadings.html#cb9-53" tabindex="-1"></a><span class="fu">print</span>(gg)</span></code></pre></div>
-<pre><code>## Warning: Removed 2 rows containing missing values or values outside the scale range (`geom_point()`).</code></pre>
-<pre><code>## Warning: Removed 2 rows containing missing values or values outside the scale range (`geom_line()`).</code></pre>
+<pre><code>## Warning: Removed 2 rows containing missing values or values outside the scale range
+## (`geom_point()`).</code></pre>
+<pre><code>## Warning: Removed 2 rows containing missing values or values outside the scale range
+## (`geom_line()`).</code></pre>
 <p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-55-1.png" width="672" /></p>
 </div>
 <div id="data-preparation-for-multivariate-statistical-analysis---dimension-reduction-techniques" class="section level3 hasAnchor" number="3.4.16">
@@ -683,25 +687,31 @@ If VIF is between 5 and 10, there may be some moderate multicollinearity.<br>
 If VIF is greater than 10, multicollinearity is likely a serious issue, and you may want to consider removing or transforming variables.</p>
 <div id="multicollinearity" class="section level4 hasAnchor" number="3.4.16.1">
 <h4><span class="header-section-number">3.4.16.1</span> Multicollinearity<a href="relative-loadings.html#multicollinearity" class="anchor-section" aria-label="Anchor link to header"></a></h4>
-<pre><code>##                 doc_mg.l                  na_mg.l                 nh4_mg.l                   K_mg.l 
-##                 2.773422                 3.836951                 1.776459                 3.174043 
-##                  Mg_mg.l                  Ca_mg.l                   F_mg.l                  Cl_mg.l 
-##                 4.692212                 6.557847                 1.805230                 2.401802 
-##                 NO3_mg.l                  area_km                    Qm3_s              percent_1.5 
-##                 2.222772                 5.890812                 1.183790              1810.657331 
-##             percent_6.10            percent_11.15               slope_mean              aspect_mean 
-##              1026.835121               559.358510                 8.325173                 6.799846 
-##         ndmi_raster_mean         ndvi_raster_mean       disttostreams_mean      percent_Beetle.kill 
-##                12.823483                 6.024474                 4.572233               167.668833 
-##       percent_Old.Forest percent_cut.regenerating           percent_Tundra       distance.to.outlet 
-##               135.680021                40.850573               113.775325                10.038567</code></pre>
+<pre><code>##                 doc_mg.l                  na_mg.l                 nh4_mg.l 
+##                 2.773422                 3.836951                 1.776459 
+##                   K_mg.l                  Mg_mg.l                  Ca_mg.l 
+##                 3.174043                 4.692212                 6.557847 
+##                   F_mg.l                  Cl_mg.l                 NO3_mg.l 
+##                 1.805230                 2.401802                 2.222772 
+##                  area_km                    Qm3_s              percent_1.5 
+##                 5.890812                 1.183790              1810.657331 
+##             percent_6.10            percent_11.15               slope_mean 
+##              1026.835121               559.358510                 8.325173 
+##              aspect_mean         ndmi_raster_mean         ndvi_raster_mean 
+##                 6.799846                12.823483                 6.024474 
+##       disttostreams_mean      percent_Beetle.kill       percent_Old.Forest 
+##                 4.572233               167.668833               135.680021 
+## percent_cut.regenerating           percent_Tundra       distance.to.outlet 
+##                40.850573               113.775325                10.038567</code></pre>
 <p>So given that we have a lot of mulitcollinearity, we can systematically remove variables that are non-essential or redundant:</p>
-<pre><code>##                  area_km               slope_mean              aspect_mean         ndmi_raster_mean 
-##                 1.821739                 3.137001                 4.071621                 4.811914 
-##         ndvi_raster_mean       disttostreams_mean      percent_Beetle.kill       percent_Old.Forest 
-##                 3.600649                 3.860539                84.413534                77.730036 
-## percent_cut.regenerating           percent_Tundra 
-##                22.383774                54.771818</code></pre>
+<pre><code>##                  area_km               slope_mean              aspect_mean 
+##                 1.821739                 3.137001                 4.071621 
+##         ndmi_raster_mean         ndvi_raster_mean       disttostreams_mean 
+##                 4.811914                 3.600649                 3.860539 
+##      percent_Beetle.kill       percent_Old.Forest percent_cut.regenerating 
+##                84.413534                77.730036                22.383774 
+##           percent_Tundra 
+##                54.771818</code></pre>
 <p>But ultimately we have several variables contributing to a high VIF that are all important to our question. Therefore, we can try RDA and PCA as a dimension reduction technique, assuming we remove some of the most redundant variables. This should transform() the predictors into a smaller set of uncorrelated PCs (components) that still explain most of the variance.</p>
 </div>
 <div id="distributions-and-standardization" class="section level4 hasAnchor" number="3.4.16.2">
@@ -743,14 +753,14 @@ I want to include all response variables at this point, so this is adapted from 
 ##          keepY), ncomp = comp, mode = mode, ...)</code></pre>
 <p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-67-1.png" width="672" /></p>
 <pre><code>## Importance of components:
-##                           PC1    PC2    PC3    PC4     PC5     PC6    PC7     PC8    PC9    PC10
-## Standard deviation     2.1860 1.4916 1.3046 1.1224 0.91363 0.68046 0.6681 0.36959 0.3305 0.18584
-## Proportion of Variance 0.3982 0.1854 0.1418 0.1050 0.06956 0.03859 0.0372 0.01138 0.0091 0.00288
-## Cumulative Proportion  0.3982 0.5836 0.7254 0.8304 0.89997 0.93856 0.9758 0.98714 0.9962 0.99911
-##                           PC11      PC12
-## Standard deviation     0.10306 8.348e-11
-## Proportion of Variance 0.00089 0.000e+00
-## Cumulative Proportion  1.00000 1.000e+00</code></pre>
+##                           PC1    PC2    PC3    PC4     PC5     PC6    PC7     PC8
+## Standard deviation     2.1860 1.4916 1.3046 1.1224 0.91363 0.68046 0.6681 0.36959
+## Proportion of Variance 0.3982 0.1854 0.1418 0.1050 0.06956 0.03859 0.0372 0.01138
+## Cumulative Proportion  0.3982 0.5836 0.7254 0.8304 0.89997 0.93856 0.9758 0.98714
+##                           PC9    PC10    PC11      PC12
+## Standard deviation     0.3305 0.18584 0.10306 8.348e-11
+## Proportion of Variance 0.0091 0.00288 0.00089 0.000e+00
+## Cumulative Proportion  0.9962 0.99911 1.00000 1.000e+00</code></pre>
 <pre><code>## Warning: The SGCCA algorithm did not converge</code></pre>
 <p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-68-1.png" width="672" /></p>
 </div>
@@ -868,7 +878,7 @@ Similar to PCA, but RDA is a <u>constrained</u> method that requries two dataset
 ## Model: rda(formula = standardized_resp ~ aspect_mean + twi_mean + ndvi_raster_mean + disttostreams_mean + percent_Beetle.kill + percent_Old.Forest + percent_cut.regenerating + area_km + Qm3_s, data = explanatory_standardized, na.action = na.exclude)
 ##          Df Variance       F Pr(&gt;F)    
 ## RDA1      1  2.01775 89.9920  0.001 ***
-## RDA2      1  0.15266  6.8087  0.773    
+## RDA2      1  0.15266  6.8087  0.774    
 ## Residual 37  0.82959                   
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
@@ -880,15 +890,15 @@ Similar to PCA, but RDA is a <u>constrained</u> method that requries two dataset
 ## 
 ## Model: rda(formula = standardized_resp ~ aspect_mean + twi_mean + ndvi_raster_mean + disttostreams_mean + percent_Beetle.kill + percent_Old.Forest + percent_cut.regenerating + area_km + Qm3_s, data = explanatory_standardized, na.action = na.exclude)
 ##                          Df Variance       F Pr(&gt;F)    
-## aspect_mean               1  0.09478  3.4274  0.058 .  
+## aspect_mean               1  0.09478  3.4274  0.052 .  
 ## twi_mean                  1  1.06887 38.6529  0.001 ***
-## ndvi_raster_mean          1  0.20600  7.4496  0.011 *  
-## disttostreams_mean        1  0.43123 15.5942  0.002 ** 
-## percent_Beetle.kill       1  0.01110  0.4013  0.623    
-## percent_Old.Forest        1  0.21447  7.7558  0.012 *  
-## percent_cut.regenerating  1  0.00007  0.0025  0.996    
-## area_km                   1  0.10385  3.7556  0.048 *  
-## Qm3_s                     1  0.04004  1.4478  0.232    
+## ndvi_raster_mean          1  0.20600  7.4496  0.012 *  
+## disttostreams_mean        1  0.43123 15.5942  0.001 ***
+## percent_Beetle.kill       1  0.01110  0.4013  0.648    
+## percent_Old.Forest        1  0.21447  7.7558  0.013 *  
+## percent_cut.regenerating  1  0.00007  0.0025  0.992    
+## area_km                   1  0.10385  3.7556  0.044 *  
+## Qm3_s                     1  0.04004  1.4478  0.213    
 ## Residual                 30  0.82959                   
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>

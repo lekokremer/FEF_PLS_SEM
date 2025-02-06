@@ -23,7 +23,7 @@
 <meta name="author" content="Lauren Kremer" />
 
 
-<meta name="date" content="2025-01-31" />
+<meta name="date" content="2025-02-05" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -416,9 +416,10 @@ Also, our response variables are right-skewed unimodal. We need to make the data
 <p>Ok, now our responses are approximately normal. The scales are similar, the units are the same. I am not sure if we want to standardize/z-score these as well. This can ensure that they contribute equally to the analysis…lets try both and see if scaling makes a difference:</p>
 <p><strong>scaled:</strong>
 <img src="PLSbookdownproj_files/figure-html/unnamed-chunk-146-1.png" width="672" /></p>
-<pre><code>## Call: rda(formula = standardized_resp ~ aspect_mean + twi_mean + ndvi_raster_mean +
-## disttostreams_mean + percent_Beetle.kill + percent_Old.Forest + percent_cut.regenerating +
-## area_km + Qm3_s, data = explanatory_standardized, na.action = na.exclude)
+<pre><code>## Call: rda(formula = standardized_resp ~ aspect_mean + twi_mean +
+## ndvi_raster_mean + disttostreams_mean + percent_Beetle.kill +
+## percent_Old.Forest + percent_cut.regenerating + area_km + Qm3_s, data =
+## explanatory_standardized, na.action = na.exclude)
 ## 
 ## -- Model Summary --
 ## 
@@ -445,9 +446,10 @@ Some constraints or conditions were aliased because they were redundant. This ca
 <p>-Similar to PCA, but it is a <u>constrained</u> method that requries two datasets, one for response variables (e.g., PARAFAC component fractions) and one for explanatory variables (watershed characteristics)</p>
 <p>RDA identifies the portion of the variation in the response dataset that can be explained by the explanatory variables. So this tells us how much of the variability in the response variables is explained by the predictors.</p>
 <p><img src="PLSbookdownproj_files/figure-html/unnamed-chunk-148-1.png" width="672" /></p>
-<pre><code>## Call: rda(formula = response_matrix ~ aspect_mean + twi_mean + ndvi_raster_mean +
-## disttostreams_mean + percent_Beetle.kill + percent_Old.Forest + percent_cut.regenerating +
-## area_km + Qm3_s, data = explanatory_matrix, na.action = na.exclude)
+<pre><code>## Call: rda(formula = response_matrix ~ aspect_mean + twi_mean +
+## ndvi_raster_mean + disttostreams_mean + percent_Beetle.kill +
+## percent_Old.Forest + percent_cut.regenerating + area_km + Qm3_s, data =
+## explanatory_matrix, na.action = na.exclude)
 ## 
 ## -- Model Summary --
 ## 

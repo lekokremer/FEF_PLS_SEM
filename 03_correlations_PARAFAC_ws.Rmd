@@ -19,7 +19,18 @@ FI around 1.3: Indicates terrestrial (allochthonous) DOM, typically derived from
 
 FI around 1.8: Indicates microbial (autochthonous) DOM, typically produced within the aquatic environment. (McKnight et al., 2001)
 
-b : a ratio = Description from Williams et al. 2010 ‘…ratio calculated at excitation 310 nm from emission intensity at 380 nm (b region) divided by the emission intensity maximum observed between 420 and 435 nm (a region; Parlanti et al. 2000; Wilson and Xenopoulos 2009). The b : a ratio is used to access the relative contribution of recently produced DOM to highly degraded DOM (Wilson and Xenopoulos 2009). Higher fluorescence intensities in the b region have been associated with the rapid degradation or transformation of microbially derived, protein-like DOM, whereas fluorescence intensity in the a region is controlled by loading of more highly degraded humic-like compounds (Huguet et al. 2009; Wilson and Xenopoulos 2009). In incubation experiments containing labile DOM, the b : a ratio tends to decrease over longer time periods and as labile DOM is reduced (Parlanti et al. 2000; Wilson and Xenopoulos 2009). b : a values . 1 indicate that DOM is primarily of autochthonous origin and values , 0.6 indicate primarily allochthonous origin (Huguet et al. 2009).’​
+From the matrices we calculated: 
+Peak A – high value at this Excitation/Emission point (around 250 ex, 450 em) suggests greater concentration of terrestrial humic-like part (plant or animal decay). Characterized by high molecular weights, more stable form of carbon.
+
+Peak C – These can indicate microbial humic compounds or terrestrial microbial processing of organic matter. Similar to peak A in that they tend to be more stable than ‘labile’ compounds but may be slightly less complex than Peak A compounds. 
+
+Peak T – protein-like compounds, these can be considered part of the ‘labile’ pool, where they can be available for microbial breakdown/degradation and therefore have a faster turnover rate in the carbon cycle. 
+
+The ratios of these 3 looks at the relative abundances of humic-like compounds to protein-like compounds. So, for example, a low A/T ratio indicates a dominance of protein-like materials vs humic compounds and should therefore be more labile. So, we might expect these to be low in studies that look at lakes with blooms or wastewater inputs. 
+
+SUV254 – This is the ratio of absorbance of 254 nm normalized by the DOC concentration. This can be an indication of aromatic content, where aromatic compounds are typically derived from allochthonous or terrestrial plant material and soil. High values indicate reduced lability, where low values might mean a higher proportion of aliphatic compounds, that are more bioavailable to microorganisms. 
+The Fluorescence Index: FI around 1.3: Indicates terrestrial (allochthonous) DOM, typically derived from soil and plant material. dominant terrestrial, higher-plant DOM source
+FI around 1.8: Indicates microbial (autochthonous) DOM, typically produced within the aquatic environment. (McKnight et al., 2001)
 
 HIX was calculated by dividing the integrated fluorescence intensity between 435 nm and 480 nm emission wavelengths with excitation at 254 nm by the integrated fluorescence intensity between 300 nm and 345 nm emission wavelengths with excitation at 254 nm. Larger HIX values are indicative of increasing humification and the presence of fulvic acids [Ohno, 2002; Zsolnay et al., 1999]. 
 
@@ -43,6 +54,7 @@ library(FactoMineR)
 library(mixOmics) # for PLS-DA
 library(energy)
 library(car)
+library(stringr)
 ```
 
 ```{r changecorrplot, include=FALSE}
@@ -207,7 +219,7 @@ plot <- ggplot(merged_df, aes(x = watershed, y = relative_load_comp_1)) +
 print(plot)
 
 # Save the plot as a .png
-ggsave(filename = "images/comp1_boxplot.png", plot = plot, width = 8, height = 6, dpi = 300)
+#ggsave(filename = "images/comp1_boxplot.png", plot = plot, width = 8, height = 6, dpi = 300)
 ```
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width=10, fig.height=6, fig.cap="Figure. Box plots showing the relationships between the sample proportion of PARAFAC component 2 (humic-type) and watershed. dh,dhn and dhs = Deadhorse, fc = Fool Creek"}
@@ -318,7 +330,7 @@ plot <- ggplot(long_df, aes(x = watershed_group, y = value, fill = component)) +
 print(plot)
 
 # Save the plot as a .png
-ggsave(filename = "images/comp_ws_boxplot.png", plot = plot, width = 8, height = 6, dpi = 300)
+#ggsave(filename = "images/comp_ws_boxplot.png", plot = plot, width = 8, height = 6, dpi = 300)
 
 ```
 
@@ -689,7 +701,7 @@ p <- ggplot(plot_data, aes(x = Var1, y = Var2)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 # Export to PNG
-ggsave("correlationplot_PLSvariables_spearman.png", plot = p, width = 8, height = 6, dpi = 300)
+#ggsave("correlationplot_PLSvariables_spearman.png", plot = p, width = 8, height = 6, dpi = 300)
 
 print(p)
 ```
@@ -766,7 +778,7 @@ p <- ggplot(plot_data, aes(x = Var1, y = Var2)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 # Export to PNG
-ggsave("correlationplot_PLSvariablesonly_spearman.png", plot = p, width = 8, height = 6, dpi = 300)
+#ggsave("correlationplot_PLSvariablesonly_spearman.png", plot = p, width = 8, height = 6, dpi = 300)
 
 print(p)
 ```
@@ -956,7 +968,7 @@ gg <- ggplot() +
   #geom_line(data = plot_data_long, aes(x = datetime, y = value, color = variable))+
   
   # Add the hydrograph as a line in the background
-  geom_line(data = filtered_hydro, aes(x = DATE, y = Q..cfs. / max(Q..cfs.) * max(plot_data_long$value)), 
+  geom_line(data = filtered_hydro, aes(x = DATE, y = Q..cfs. / max(Q..cfs.) * max(fchydrograph2122$Q..cfs.)), 
             color = "blue", linetype = "solid", alpha = 0.5) +
   # Add secondary y-axis for the hydrograph
   scale_y_continuous(
@@ -975,7 +987,7 @@ gg <- ggplot() +
 plot(gg)
 
 # Save the plot as a .png
-ggsave(filename = "images/full_FChydro_and_chem.png", plot = plot, width = 8, height = 6, dpi = 300)
+#ggsave(filename = "images/full_FChydro_and_chem.png", plot = plot, width = 8, height = 6, dpi = 300)
 ```
 
 
